@@ -3,7 +3,7 @@
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList/>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_DfWf4le8EemRWbv25WUXxg" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_FQiJoFe8EemRWbv25WUXxg" label="%trimmedwindow.label.eclipseSDK" x="260" y="58" width="1024" height="768">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_DfWf4le8EemRWbv25WUXxg" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_FQiJoFe8EemRWbv25WUXxg" label="%trimmedwindow.label.eclipseSDK" x="207" y="0" width="1024" height="768">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="isRestored" value="true"/>
@@ -212,7 +212,7 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_F1Ck4Fe8EemRWbv25WUXxg" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Project Explorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.navigator.resources.ProjectExplorer"/>
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.ui.navigator.resources"/>
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1554480113011&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
       <tags>active</tags>
@@ -344,7 +344,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Fa0uEFe8EemRWbv25WUXxg" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_FbHB8Fe8EemRWbv25WUXxg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_Dhvsyle8EemRWbv25WUXxg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_gaH7wFgtEemaivSJd-V3AA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_Dhvsyle8EemRWbv25WUXxg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Fa0uEVe8EemRWbv25WUXxg" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -356,6 +356,12 @@
       <children xsi:type="menu:ToolBar" xmi:id="_Fa1VIVe8EemRWbv25WUXxg" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_Fa1VIle8EemRWbv25WUXxg" elementId="additions" toBeRendered="false"/>
+      </children>
+      <children xsi:type="menu:ToolBar" xmi:id="_iJnjcFgtEemaivSJd-V3AA">
+        <tags>Draggable</tags>
+      </children>
+      <children xsi:type="menu:ToolBar" xmi:id="_TljdEFgtEemc9dQ2EzliBw" visible="false">
+        <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_GPPNkFe8EemRWbv25WUXxg" elementId="org.eclipse.debug.ui.launchActionSet">
         <tags>Draggable</tags>
@@ -372,7 +378,7 @@
       <children xsi:type="menu:ToolBar" xmi:id="_GOm7cFe8EemRWbv25WUXxg" elementId="org.eclipse.wst.ws.explorer.explorer">
         <tags>Draggable</tags>
       </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_ITiAkFe8EemRWbv25WUXxg">
+      <children xsi:type="menu:ToolBar" xmi:id="_ITiAkFe8EemRWbv25WUXxg" visible="false">
         <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Fa1VI1e8EemRWbv25WUXxg" elementId="group.nav" toBeRendered="false">
@@ -381,7 +387,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Fa18MFe8EemRWbv25WUXxg" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_FbJeMFe8EemRWbv25WUXxg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_DhvFmFe8EemRWbv25WUXxg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_gaOCYFgtEemaivSJd-V3AA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_DhvFmFe8EemRWbv25WUXxg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_Fa18MVe8EemRWbv25WUXxg" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

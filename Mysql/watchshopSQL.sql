@@ -152,7 +152,7 @@ CREATE TABLE `firm` (
   `id_firm` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_firm`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +161,7 @@ CREATE TABLE `firm` (
 
 LOCK TABLES `firm` WRITE;
 /*!40000 ALTER TABLE `firm` DISABLE KEYS */;
+INSERT INTO `firm` VALUES (1,'Citizen'),(2,'Ogival'),(3,'Elixa'),(4,'Bulova'),(5,'OP'),(6,'Orient'),(7,'Seiko');
 /*!40000 ALTER TABLE `firm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +200,7 @@ CREATE TABLE `model` (
   `id_model` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_model`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +209,7 @@ CREATE TABLE `model` (
 
 LOCK TABLES `model` WRITE;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
+INSERT INTO `model` VALUES (1,'Quartz'),(2,'Eco-Drive'),(3,'Cơ');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +299,7 @@ CREATE TABLE `origin` (
   `id_origin` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_origin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,6 +308,7 @@ CREATE TABLE `origin` (
 
 LOCK TABLES `origin` WRITE;
 /*!40000 ALTER TABLE `origin` DISABLE KEYS */;
+INSERT INTO `origin` VALUES (1,'Japan'),(2,'South Korea'),(3,'China'),(4,'Viet Nam'),(5,'Thailand'),(6,'Singapore'),(7,'America');
 /*!40000 ALTER TABLE `origin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +323,7 @@ CREATE TABLE `payment` (
   `id_payment` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_payment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,6 +332,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (1,'Thanh toán khi nhận hàng'),(2,'Thanh toán tại cửa hàng');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,13 +345,17 @@ DROP TABLE IF EXISTS `product`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `product` (
   `id_product` int(11) NOT NULL AUTO_INCREMENT,
-  `codeName` varchar(45) NOT NULL,
+  `code_name` varchar(45) NOT NULL,
   `image` varchar(45) NOT NULL,
   `price` double NOT NULL,
   `available` int(3) NOT NULL,
   `id_firm` int(11) NOT NULL,
   `id_product_detail` int(11) NOT NULL,
-  PRIMARY KEY (`id_product`)
+  PRIMARY KEY (`id_product`),
+  KEY `FK5f4ibcghig5y7cruslir1yum1` (`id_firm`),
+  KEY `FK6llohb4k4u6kjoipyofhsat89` (`id_product_detail`),
+  CONSTRAINT `FK5f4ibcghig5y7cruslir1yum1` FOREIGN KEY (`id_firm`) REFERENCES `firm` (`id_firm`),
+  CONSTRAINT `FK6llohb4k4u6kjoipyofhsat89` FOREIGN KEY (`id_product_detail`) REFERENCES `product_detail` (`id_product_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -378,7 +386,11 @@ CREATE TABLE `product_detail` (
   `insurance` int(1) DEFAULT NULL,
   `id_origin` int(11) NOT NULL,
   `id_model` int(11) NOT NULL,
-  PRIMARY KEY (`id_product_detail`)
+  PRIMARY KEY (`id_product_detail`),
+  KEY `FKcridlmc61cwcktec2poptvrup` (`id_model`),
+  KEY `FK8hjsfqnk2o75yhv13rvxh2t2b` (`id_origin`),
+  CONSTRAINT `FK8hjsfqnk2o75yhv13rvxh2t2b` FOREIGN KEY (`id_origin`) REFERENCES `origin` (`id_origin`),
+  CONSTRAINT `FKcridlmc61cwcktec2poptvrup` FOREIGN KEY (`id_model`) REFERENCES `model` (`id_model`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -428,7 +440,7 @@ CREATE TABLE `user` (
   `password` varchar(60) NOT NULL,
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +449,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','$2a$12$2vHdN7I1z3xbj4/iFd/Lf.XDZAvNt1V/wdmUN71GayJsQedU49Qzi','admin@gmail.com');
+INSERT INTO `user` VALUES (1,'admin','$2a$12$2vHdN7I1z3xbj4/iFd/Lf.XDZAvNt1V/wdmUN71GayJsQedU49Qzi','admin@gmail.com'),(2,'manager','$2a$12$X6CAKxCZbJ3T2Px2Be1k9.A400hg8xOujijiEQFmYORo9rpO9024i','manager@gmail.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,7 +476,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1);
+INSERT INTO `user_role` VALUES (1,1),(2,2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -477,4 +489,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-06  1:41:27
+-- Dump completed on 2019-04-06 19:59:19
