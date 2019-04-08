@@ -1,11 +1,13 @@
 package com.seuit.spring.watchshop.entity;
 
-import javax.validation.constraints.NotBlank;
+import java.util.Set;
+
 import javax.validation.constraints.NotNull;
 
 public class ProductApi {
 	private Product product;
 	private ProductDetail productDetail;
+	private Set<Image> images;
 	
 	@NotNull
 	private Integer idFirm;
@@ -13,6 +15,7 @@ public class ProductApi {
 	private Integer idOrigin;
 	@NotNull
 	private Integer idModel;
+	
 	
 	
 	
@@ -47,11 +50,19 @@ public class ProductApi {
 		this.productDetail = productDetail;
 	}
 	
+	public Set<Image> getImages() {
+		return images;
+	}
+	public void setImages(Set<Image> images) {
+		this.images = images;
+	}
 	
-	public ProductApi(Product product, ProductDetail productDetail, Integer idFirm, Integer idOrigin, Integer idModel) {
+	public ProductApi(Product product, ProductDetail productDetail, Set<Image> images, @NotNull Integer idFirm,
+			@NotNull Integer idOrigin, @NotNull Integer idModel) {
 		super();
 		this.product = product;
 		this.productDetail = productDetail;
+		this.images = images;
 		this.idFirm = idFirm;
 		this.idOrigin = idOrigin;
 		this.idModel = idModel;
@@ -62,9 +73,10 @@ public class ProductApi {
 	}
 	@Override
 	public String toString() {
-		return "ProductApi [product=" + product + ", productDetail=" + productDetail + ", idFirm=" + idFirm
-				+ ", idOrigin=" + idOrigin + ", idModel=" + idModel + "]";
+		return "ProductApi [product=" + product + ", productDetail=" + productDetail + ", images=" + images
+				+ ", idFirm=" + idFirm + ", idOrigin=" + idOrigin + ", idModel=" + idModel + "]";
 	}
+	
 	
 	
 	

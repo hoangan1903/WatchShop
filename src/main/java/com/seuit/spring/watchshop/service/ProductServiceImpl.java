@@ -6,12 +6,16 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seuit.spring.watchshop.entity.Firm;
+import com.seuit.spring.watchshop.entity.Image;
 import com.seuit.spring.watchshop.entity.Model;
 import com.seuit.spring.watchshop.entity.Origin;
 import com.seuit.spring.watchshop.entity.Product;
@@ -29,9 +33,13 @@ import javassist.NotFoundException;
 public class ProductServiceImpl implements ProductService {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+
+	@Autowired
+	private EntityManagerFactory entityManagerFactory;
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Autowired
 	private ProductDetailRepository productDetailRepository;
 
@@ -67,17 +75,19 @@ public class ProductServiceImpl implements ProductService {
 		}
 		// Add Product without ID
 		if (id == null) {
-			ProductDetail productDetail = productApi.getProductDetail();
-			productDetail.setModel(model.get());
-			productDetail.setOrigin(origin.get());
-			productDetail.setProduct(product);
-			product.setFirm(firm.get());
-			product.setProductDetail(productDetail);
-			productRepository.save(product);
+			productRepository.save(ExecProductAPI(productApi, product, firm, model, origin));
 		} else {
-			//Update Product With ID 
+			// Update Product With ID
 			productRepository.findById(id).map(x -> {
+				//Get ProductDetail & Images From x
 				ProductDetail productDetail = x.getProductDetail();
+				Set<Image> images = x.getProductDetail().getImages();
+				
+				images = productApi.getImages();
+				images.stream().forEach((image)->{
+					image.setProductDetail(productDetail);
+				});
+				productDetail.setImages(images);
 				productDetail.setModel(model.get());
 				productDetail.setOrigin(origin.get());
 				productDetail.setSize(productApi.getProductDetail().getSize());
@@ -87,7 +97,6 @@ public class ProductServiceImpl implements ProductService {
 				productDetail.setInsurance(productApi.getProductDetail().getInsurance());
 				productDetail.setOtherFunction(productApi.getProductDetail().getOtherFunction());
 				productDetail.setWaterResistance(productApi.getProductDetail().getWaterResistance());
-				
 				x.setCodeName(product.getCodeName());
 				x.setImage(product.getImage());
 				x.setPrice(product.getPrice());
@@ -95,38 +104,93 @@ public class ProductServiceImpl implements ProductService {
 				x.setFirm(firm.get());
 				x.setProductDetail(productDetail);
 				return productRepository.save(x);
-			}).orElseGet(()->{
-				//Add Product With ID 
-				ProductDetail productDetail = productApi.getProductDetail();
-				productDetail.setModel(model.get());
-				productDetail.setOrigin(origin.get());
-				productDetail.setProduct(product);
-				logger.info(productDetail.getInsurance().toString());
-				product.setFirm(firm.get());
-				product.setProductDetail(productDetail);
-				return productRepository.save(product);
+			}).orElseGet(() -> {
+				// Add Product With ID
+				return productRepository.save(ExecProductAPI(productApi, product, firm, model, origin));
 			});
 		}
 	}
 
+	private Product ExecProductAPI(ProductApi productApi, Product product, Optional<Firm> firm, Optional<Model> model,
+			Optional<Origin> origin) {
+		ProductDetail productDetail = productApi.getProductDetail();
+		Set<Image> images = productApi.getImages();
+		images.stream().forEach((image) -> {
+			image.setProductDetail(productDetail);
+		});
+		productDetail.setImages(images);
+		productDetail.setModel(model.get());
+		productDetail.setOrigin(origin.get());
+		productDetail.setProduct(product);
+		product.setFirm(firm.get());
+		product.setProductDetail(productDetail);
+		return product;
+	}
+
 	@Override
+	@Transactional
 	public List<Product> listProduct() {
 		// TODO Auto-generated method stub
-		return  productRepository.findAll();
+		return productRepository.findAll();
 	}
 
 	@Override
+	@Transactional
 	public List<ProductDetail> listProductDetail() {
 		// TODO Auto-generated method stub
-		return  productDetailRepository.findAll();
+		return productDetailRepository.findAll();
+	}
+
+
+	@Override
+	@Transactional
+	public ProductDetail getProductDetailByProductId(Integer id) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return productRepository.findById(id).map((x)->{
+			return x.getProductDetail();
+		}).orElseThrow(()->new NotFoundException("Cant find product with id : "+id));
 	}
 
 	@Override
-	public Product productById(Integer id) throws NotFoundException {
+	@Transactional
+	public Product getProductById(Integer id) throws NotFoundException {
 		// TODO Auto-generated method stub
-		return productRepository.findById(id).map((x)->{return x;}).orElseThrow(()->new NotFoundException("Cant find product with id : "+id));
+		return productRepository.findById(id).map((x) -> {
+			return x;
+		}).orElseThrow(() -> new NotFoundException("Cant find product with id : " + id));
 	}
 
-	
+	@Override
+	@Transactional
+	public Set<Product> listProductByIdFirm(Integer id) throws NotFoundException {
+		// TODO Auto-generated method stub
+		return firmRepository.findById(id).map((firm) -> {
+			return firm.getProducts();
+		}).orElseThrow(() -> new NotFoundException("Find not Id Firm"));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Product> listProductByIdModel(Integer id) {
+		// TODO Auto-generated method stub
+		EntityManager entity = entityManagerFactory.createEntityManager();
+		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Model m on pd.model=m.id WHERE m.id=:id";
+		Query query = entity.createQuery(sql);
+		query.setParameter("id", id);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Product> listProductByIdOrigin(Integer id) {
+		// TODO Auto-generated method stub
+		EntityManager entity = entityManagerFactory.createEntityManager();
+		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Origin o on pd.origin=o.id WHERE o.id=:id";
+		Query query = entity.createQuery(sql);
+		query.setParameter("id", id);
+		return query.getResultList();
+	}
 
 }

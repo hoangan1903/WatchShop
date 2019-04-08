@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -54,14 +56,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/admin/**").hasRole("admin")
 		.antMatchers("/manager/**").hasRole("manager")
 		.antMatchers("/employee/**").hasRole("employee")
+		.antMatchers(HttpMethod.GET,"/rest/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/rest/products").hasRole("manager")
 		.antMatchers(HttpMethod.DELETE,"/rest/products/**").hasRole("manager")
 		.antMatchers(HttpMethod.PUT,"/rest/products/**").hasRole("manager")
 		.antMatchers("/**").permitAll()
 		.and()
-		.formLogin().defaultSuccessUrl("/")
+		.formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll()
 		.and()
-		.logout().permitAll().invalidateHttpSession(true)
+		.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")).deleteCookies("JSESSIONID")
+		.and()
+		.rememberMe().rememberMeParameter("userRememberMe").rememberMeCookieName("userRememberMe")
 		.and()
 		.exceptionHandling()
 		.and()

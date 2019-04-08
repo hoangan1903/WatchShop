@@ -52,13 +52,33 @@ public class ProductRestController {
 		return productService.listProduct();
 	}
 	
+	@GetMapping("/products/{id}")
+	Product findProductByProductId(@PathVariable(value = "id") @Min(1) Integer id) throws NotFoundException {
+		return productService.getProductById(id);
+	}
+	
 	@GetMapping("/products/details")
 	List<ProductDetail> findAllProductDetail() {
 		return productService.listProductDetail();
 	}
 	
-	@GetMapping("/products/{id}")
-	Product findAllProductDetail(@PathVariable(value = "id") @Min(1) Integer id) throws NotFoundException {
-		return productService.productById(id);
+	@GetMapping("/products/details/{id}")
+	ProductDetail findAllProductDetail(@PathVariable(value = "id") @Min(1) Integer id) throws NotFoundException {
+		return productService.getProductDetailByProductId(id);
+	}
+	
+	@GetMapping("/products/firm/{id}")
+	Set<Product> findAllProductByIdFirm(@PathVariable(value = "id") Integer id) throws NotFoundException{
+		return productService.listProductByIdFirm(id);
+	}
+	
+	@GetMapping("/products/model/{id}")
+	List<Product> findAllProductByIdModel(@PathVariable(value = "id") Integer id){
+		return productService.listProductByIdModel(id);
+	}
+	
+	@GetMapping("/products/origin/{id}")
+	List<Product> findAllProductByIdOrigin(@PathVariable(value = "id") Integer id) {
+		return productService.listProductByIdOrigin(id);
 	}
 }

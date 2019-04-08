@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,15 +11,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="product_detail")
+
 public class ProductDetail {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -62,6 +67,10 @@ public class ProductDetail {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_model")
 	private Model model;
+	
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "productDetail")
+	private Set<Image> images;
+	
 
 	public Integer getId() {
 		return id;
@@ -150,6 +159,16 @@ public class ProductDetail {
 	public void setModel(Model model) {
 		this.model = model;
 	}
+	
+	
+
+	public Set<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<Image> images) {
+		this.images = images;
+	}
 
 	public ProductDetail(Integer size, String caseMaterial, String chainMaterial, String glassMaterial,
 			Integer waterResistance, String otherFunction, Integer insurance) {
@@ -173,8 +192,10 @@ public class ProductDetail {
 		return "ProductDetail [id=" + id + ", size=" + size + ", caseMaterial=" + caseMaterial + ", chainMaterial="
 				+ chainMaterial + ", glassMaterial=" + glassMaterial + ", waterResistance=" + waterResistance
 				+ ", otherFunction=" + otherFunction + ", insurance=" + insurance + ", product=" + product + ", origin="
-				+ origin + ", model=" + model + "]";
+				+ origin + ", model=" + model + ", images=" + images + "]";
 	}
+
+	
 	
 	
 }

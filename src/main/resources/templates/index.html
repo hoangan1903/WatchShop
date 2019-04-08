@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Trang chủ</title>
 </head>
 <body>
-	<p>Index</p>
+	<p>Index Page</p>
+	<a th:href="@{/manager}" >Link to Manager Page</a>
+	<br>
+	<a th:href="@{/admin}">Link to Admin Page</a>
 </body>
 </html>

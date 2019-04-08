@@ -1,6 +1,7 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.seuit.spring.watchshop.entity.Product;
@@ -14,5 +15,9 @@ public interface ProductService {
 	void saveOrUpdate(ProductApi productApi,Integer id);
 	List<Product> listProduct();
 	List<ProductDetail> listProductDetail();
-	Product productById(Integer id) throws NotFoundException;
+	Product getProductById(Integer id) throws NotFoundException;
+	ProductDetail getProductDetailByProductId(Integer id) throws NotFoundException;
+	Set<Product> listProductByIdFirm(Integer id) throws NotFoundException;
+	List<Product> listProductByIdModel(Integer id);
+	List<Product> listProductByIdOrigin(Integer id);
 }
