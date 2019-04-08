@@ -176,8 +176,10 @@ CREATE TABLE `image` (
   `id_image` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(100) NOT NULL,
   `id_product_detail` int(11) NOT NULL,
-  PRIMARY KEY (`id_image`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_image`),
+  KEY `FKs4kpgowlj28nnxbw7r2gk3m9r` (`id_product_detail`),
+  CONSTRAINT `FKs4kpgowlj28nnxbw7r2gk3m9r` FOREIGN KEY (`id_product_detail`) REFERENCES `product_detail` (`id_product_detail`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,6 +188,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
+INSERT INTO `image` VALUES (1,'dsdsdsdsd',8),(2,'abcdefg',8),(3,'q',9),(4,'c',9),(13,'c',10),(14,'q',10),(15,'q',11),(16,'c',11),(17,'q',12),(18,'c',12);
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,7 +359,7 @@ CREATE TABLE `product` (
   KEY `FK6llohb4k4u6kjoipyofhsat89` (`id_product_detail`),
   CONSTRAINT `FK5f4ibcghig5y7cruslir1yum1` FOREIGN KEY (`id_firm`) REFERENCES `firm` (`id_firm`),
   CONSTRAINT `FK6llohb4k4u6kjoipyofhsat89` FOREIGN KEY (`id_product_detail`) REFERENCES `product_detail` (`id_product_detail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,6 +368,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'b','b',1,1,2,1),(2,'b','b',1,1,2,2),(3,'b','b',1,1,1,3),(4,'b','b',1,1,1,4),(5,'b','b',1,1,1,5),(6,'b','b',1,1,1,6),(7,'b','b',1,1,1,7),(8,'b','b',1,1,1,8),(9,'b','b',1,1,2,9),(10,'b','b',1,1,2,10),(11,'b','b',1,1,2,11),(12,'b','b',1,1,2,12);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,7 +395,7 @@ CREATE TABLE `product_detail` (
   KEY `FK8hjsfqnk2o75yhv13rvxh2t2b` (`id_origin`),
   CONSTRAINT `FK8hjsfqnk2o75yhv13rvxh2t2b` FOREIGN KEY (`id_origin`) REFERENCES `origin` (`id_origin`),
   CONSTRAINT `FKcridlmc61cwcktec2poptvrup` FOREIGN KEY (`id_model`) REFERENCES `model` (`id_model`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -400,6 +404,7 @@ CREATE TABLE `product_detail` (
 
 LOCK TABLES `product_detail` WRITE;
 /*!40000 ALTER TABLE `product_detail` DISABLE KEYS */;
+INSERT INTO `product_detail` VALUES (1,1,'b','b','b',2,'b',2,2,2),(2,1,'b','b','b',2,'b',2,2,2),(3,1,'b','b','b',2,'b',2,2,2),(4,1,'b','b','b',2,'b',2,1,2),(5,1,'b','b','b',2,'b',2,1,2),(6,1,'b','b','b',2,'b',2,1,3),(7,1,'b','b','b',2,'b',2,1,3),(8,1,'b','b','b',2,'b',2,1,3),(9,1,'b','b','b',2,'b',2,2,2),(10,1,'b','b','b',2,'b',2,2,2),(11,1,'b','b','b',2,'b',2,2,2),(12,1,'b','b','b',2,'b',2,2,2);
 /*!40000 ALTER TABLE `product_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,4 +494,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-06 19:59:19
+-- Dump completed on 2019-04-08 10:31:29
