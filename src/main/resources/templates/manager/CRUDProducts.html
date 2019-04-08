@@ -4,10 +4,254 @@
 <head>
 <title>Manager Page - Dashboard</title>
 <th:block th:include="fragments/managerPageFragment.html :: headerfiles"></th:block>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	$(document)
+			.ready(
+
+					function() {
+						var url = "/rest/products";
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								obj = JSON.parse(this.responseText);
+								console.log(obj);
+								$
+										.each(
+												obj,
+												function(key, value) {
+													$('#mytable tbody')
+															.append(
+																	'<tr>'
+																			+ '<td><input type="checkbox" class="checkthis" /></td>'
+																			+ '<td>'
+																			+ value.id
+																			+ '</td>'
+																			+ '<td>'
+																			+ value.codeName
+																			+ '</td>'
+																			+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
+																			+ '<td>'
+																			+ value.price
+																			+ '</td>'
+																			+ '<td>'
+																			+ value.available
+																			+ '</td>'
+																			+ '<td>'
+																			+ '<button class="btn btn-primary" data-title="Edit"'
+																			+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
+																			+ value.id
+																			+ ')">'
+																			+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+																			+ '</span>'
+																			+ '</button>'
+																			+ '</p>'
+																			+ '</td>'
+																			+ '<td>'
+																			+ '<button class="btn btn-danger" data-title="Delete"'+
+										'data-toggle="modal" data-target="#delete">'
+																			+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
+																			+ '</span>'
+																			+ '</button>'
+																			+ '</p>'
+																			+ '</td>'
+																			+ '</tr>');
+
+												});
+							}
+						};
+						xhttp.open("GET", url, true);
+						xhttp.send();
+					});
+	function editOnClick(id) {
+		console.log("idProduct :" + id);
+		document.getElementById("id").value = id;
+		$(document)
+				.ready(
+						function() {
+							var url = "/rest/products/details/" + id;
+							var xhttp = new XMLHttpRequest();
+							xhttp.onreadystatechange = function() {
+								if (this.readyState == 4 && this.status == 200) {
+									//convert to JSON 
+									obj = JSON.parse(this.responseText);
+									document.getElementById("codeName").value = obj.product.codeName;
+									document.getElementById("image").value = obj.product.image;
+									document.getElementById("price").value = obj.product.price;
+									document.getElementById("available").value = obj.product.available;
+									document.getElementById("size").value = obj.size;
+									document.getElementById("caseMaterial").value = obj.caseMaterial;
+									document.getElementById("chainMaterial").value = obj.chainMaterial;
+									document.getElementById("glassMaterial").value = obj.glassMaterial;
+									document.getElementById("waterResistance").value = obj.waterResistance;
+									document.getElementById("otherFunction").value = obj.otherFunction;
+									document.getElementById("insurance").value = obj.insurance;
+
+									//DELETE OLD IMAGES
+									//CREATE TITLE FOR INPUT
+									//LOOP FOR IMAGES
+									$('#imagesDiv').empty();
+									$('#imagesDiv').append('Other image :');
+									$
+											.each(
+													obj.images,
+													function(key, value) {
+														$('#imagesDiv')
+																.append(
+																		'<input class="form-control" type="hidden" id="imageId'+key+'" value="'+value.id+'">');
+														$('#imagesDiv')
+																.append(
+																		'<input class="form-control" type="text" id="imageUrl'+key+'" value="'+value.url+'"></br>');
+													});
+
+									document.getElementById("idFirm").value = obj.product.firm.id;
+									document.getElementById("nameFirm").value = obj.product.firm.name;
+
+									document.getElementById("idOrigin").value = obj.origin.id;
+									document.getElementById("nameOrigin").value = obj.origin.name;
+
+									document.getElementById("idModel").value = obj.model.id;
+									document.getElementById("nameModel").value = obj.origin.name;
+
+								}
+							};
+							xhttp.open("GET", url, true);
+							xhttp.send();
+
+							//GET API LIST FIRM USING JQUERY
+							<!-- > BEGIN<-->
+							let dropdownFirm = $('#firmDropDownList');
+							dropdownFirm.empty();
+							dropdownFirm
+									.append('<option selected="true" disabled>Choose Firm</option>');
+							dropdownFirm.prop('selectedIndex', 0);
+							// Populate dropdown with list of provinces
+							$.getJSON('/rest/firm', function(data) {
+								$.each(data, function(key, entry) {
+									dropdownFirm.append($('<option></option>')
+											.attr('value', entry.id).text(
+													entry.name));
+								})
+							});
+							<!-- > END<-->
+
+							//GET API LIST MODEL USING JQUERY
+							<!-- > BEGIN<-->
+							let dropdownModel = $('#modelDropDownList');
+							dropdownModel.empty();
+							dropdownModel
+									.append('<option selected="true" disabled>Choose Model</option>');
+							dropdownModel.prop('selectedIndex', 0);
+							// Populate dropdown with list of provinces
+							$.getJSON('/rest/model', function(data) {
+								$.each(data, function(key, entry) {
+									dropdownModel.append($('<option></option>')
+											.attr('value', entry.id).text(
+													entry.name));
+								})
+							});
+							<!-- > END<-->
+
+							//GET API LIST ORIGIN USING JQUERY
+							<!-- > BEGIN<-->
+							let dropdownOrigin = $('#originDropDownList');
+							dropdownOrigin.empty();
+							dropdownOrigin
+									.append('<option selected="true" disabled>Choose Origin</option>');
+							dropdownOrigin.prop('selectedIndex', 0);
+							// Populate dropdown with list of provinces
+							$.getJSON('/rest/origin', function(data) {
+								$.each(data, function(key, entry) {
+									dropdownOrigin
+											.append($('<option></option>')
+													.attr('value', entry.id)
+													.text(entry.name));
+								})
+							});
+							<!-- > END<-->
+
+						});
+	}
+
+	function submitEdit() {
+		$(document)
+				.ready(
+						function() {
+							var data = {};
+							var product = {};
+							var productDetail = {};
+							var images = [];
+							
+							var url = "/rest/products/" + 12;
+							var xhttp = new XMLHttpRequest();
+
+							product.codeName = $('#codeName').val();
+							product.image = $('#image').val();
+							product.price = Number($('#price').val());
+							product.available = Number($('#available').val());
+
+							productDetail.size = Number($('#size').val());
+							productDetail.caseMaterial = $('#caseMaterial')
+									.val();
+							productDetail.chainMaterial = $('#chainMaterial')
+									.val();
+							productDetail.glassMaterial = $('#glassMaterial')
+									.val();
+							productDetail.waterResistance = Number($(
+									'#waterResistance').val());
+							productDetail.otherFunction = $('#otherFunction')
+									.val();
+							productDetail.insurance = Number($('#insurance').val());
+
+							var countImage = $('#imagesDiv').children('input').length / 2;
+							var num = Number(countImage);
+							console.log(num + 1);
+
+							for (var i = 0; i < num; i++) {
+								var imageIdKey = "#imageId" + i;
+								var imageUrlKey = "#imageUrl" + i;
+								var idImage = $(imageIdKey).val();
+								var urlImage = $(imageUrlKey).val();
+								console.log("id image :" + idImage);
+								console.log("url image :" + urlImage);
+								var imageJson = {};
+								imageJson.id = Number(idImage);
+								imageJson.url = urlImage;
+								console.log(imageJson);
+								images.push(imageJson);
+								
+							}
+							console.log(images);
+
+							data.product = product;
+							data.productDetail = productDetail;
+							data.images = images;
+							data.idFirm = Number($('#firmDropDownList').val());
+							data.idModel = Number($('#modelDropDownList').val());
+							data.idOrigin = Number($('#originDropDownList').val());
+
+							var json = JSON.stringify(data);
+							console.log("json edit : "+json);
+							xhttp.open("PUT", url, true);
+							xhttp.setRequestHeader('Content-type',
+									'application/json; charset=utf-8');
+							xhttp.onload = function() {
+								
+								if (xhttp.readyState == 4 && xhttp.status == "200") {
+									console.log("edit ok");
+									alert("Edit Product Success");
+									location.reload();
+								} else {
+									console.log("edit error");
+									alert("Edit Product Error");
+								}
+							}
+							xhttp.send(json);
+						});
+	}
+</script>
 </head>
-
 <body id="page-top">
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -29,12 +273,12 @@
 				<!-- Begin Page Content -->
 
 				<!-- content -->
-				<div class="group-control" >
+				<div class="group-control">
 					<div class="row">
 
 
 						<div class="col-md-12">
-							<h4>Bootstrap Snipp for Datatable</h4>
+							<h4>Products</h4>
 							<div class="table-responsive">
 
 
@@ -43,40 +287,17 @@
 									<thead>
 
 										<th><input type="checkbox" id="checkall" /></th>
-										<th>First Name</th>
-										<th>Last Name</th>
-										<th>Address</th>
-										<th>Email</th>
-										<th>Contact</th>
+										<th>ID</th>
+										<th>Code</th>
+										<th>Image</th>
+										<th>Price</th>
+										<th>Available</th>
 										<th>Edit</th>
-
 										<th>Delete</th>
 									</thead>
+
 									<tbody>
-										<tr>
-											<td><input type="checkbox" class="checkthis" /></td>
-											<td>Mohsin</td>
-											<td>Irshad</td>
-											<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-											<td>isometric.mohsin@gmail.com</td>
-											<td>+923335586757</td>
-											<td>
-													<button class="btn btn-primary" data-title="Edit"
-														data-toggle="modal" data-target="#edit">
-														<span class="icon text-white-50" > <i
-															class="fas fa-edit"></i>
-														</span> 
-													</button>
-												</p></td>
-											<td>
-													<button class="btn btn-danger" data-title="Delete"
-														data-toggle="modal" data-target="#delete">
-														<span class="icon text-white-50"> <i
-															class="fas fa-trash"></i>
-														</span> 
-													</button>
-												</p></td>
-										</tr>
+
 									</tbody>
 
 								</table>
@@ -108,27 +329,80 @@
 									aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
-								<h4 class="modal-title custom_align" id="Heading">Edit Your
-									Detail</h4>
+								<h4 class="modal-title custom_align" id="Heading">Edit
+									Product Detail</h4>
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
-									<input class="form-control " type="text" placeholder="Mohsin">
+									<input class="form-control " type="hidden" id="id">
 								</div>
 								<div class="form-group">
-
-									<input class="form-control " type="text" placeholder="Irshad">
+									Code : <input class="form-control " type="text" id="codeName">
 								</div>
 								<div class="form-group">
-									<textarea rows="2" class="form-control"
-										placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
-
-
+									Image : <input class="form-control " type="text" id="image">
 								</div>
+								<div class="form-group">
+									Price : <input class="form-control " type="number" id="price">
+								</div>
+								<div class="form-group">
+									Available : <input class="form-control " type="number"
+										id="available">
+								</div>
+								<div class="form-group">
+									Size : <input class="form-control " type="number" id="size">
+								</div>
+								<div class="form-group">
+									Case Material : <input class="form-control " type="text"
+										id="caseMaterial">
+								</div>
+								<div class="form-group">
+									Chain Material : <input class="form-control " type="text"
+										id="chainMaterial">
+								</div>
+								<div class="form-group">
+									Glass Material : <input class="form-control " type="text"
+										id="glassMaterial">
+								</div>
+								<div class="form-group">
+									Water Resistance(m) : <input class="form-control "
+										type="number" id="waterResistance">
+								</div>
+								<div class="form-group">
+									Other Function : <input class="form-control " type="text"
+										id="otherFunction">
+								</div>
+								<div class="form-group">
+									Insurance Time (Year) : <input class="form-control "
+										type="number" id="insurance">
+								</div>
+								<div class="form-group" id="imagesDiv"></div>
+								<!-- Drop Down List Firm -->
+								<div class="form-group">
+									<select class="form-control" name="firmDropDownList"
+										id="firmDropDownList">
+									</select>
+								</div>
+
+								<!-- Drop Down List Model -->
+								<div class="form-group">
+									<select class="form-control" name="modelDropDownList"
+										id="modelDropDownList">
+									</select>
+								</div>
+
+								<!-- Drop Down List Origin -->
+								<div class="form-group">
+									<select class="form-control" name="originDropDownList"
+										id="originDropDownList">
+									</select>
+								</div>
+
+
 							</div>
 							<div class="modal-footer ">
 								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;">
+									style="width: 100%;" onclick="submitEdit()">
 									<span class="glyphicon glyphicon-ok-sign"></span> Update
 								</button>
 							</div>

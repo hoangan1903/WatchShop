@@ -349,7 +349,7 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id_product` int(11) NOT NULL AUTO_INCREMENT,
   `code_name` varchar(45) NOT NULL,
-  `image` varchar(45) NOT NULL,
+  `image` mediumtext NOT NULL,
   `price` double NOT NULL,
   `available` int(3) NOT NULL,
   `id_firm` int(11) NOT NULL,
@@ -368,7 +368,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'b','b',1,1,2,1),(2,'b','b',1,1,2,2),(3,'b','b',1,1,1,3),(4,'b','b',1,1,1,4),(5,'b','b',1,1,1,5),(6,'b','b',1,1,1,6),(7,'b','b',1,1,1,7),(8,'b','b',1,1,1,8),(9,'b','b',1,1,2,9),(10,'b','b',1,1,2,10),(11,'b','b',1,1,2,11),(12,'b','b',1,1,2,12);
+INSERT INTO `product` VALUES (1,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,2,1),(2,'bĐồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,2,2),(3,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,1,3),(4,'bĐồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',1,1,1,4),(5,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,1,5),(6,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',1,1,1,6),(7,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',1,1,1,7),(8,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,1,8),(9,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',1,1,2,9),(10,'Đồng hồ thuỵ sĩĐồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,2,10),(11,'Đồng hồ thuỵ sĩ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',1,1,2,11),(12,'Đồng hồ thuỵ sĩ ','https://vn-live-01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg',250,1,2,12);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,7 +404,7 @@ CREATE TABLE `product_detail` (
 
 LOCK TABLES `product_detail` WRITE;
 /*!40000 ALTER TABLE `product_detail` DISABLE KEYS */;
-INSERT INTO `product_detail` VALUES (1,1,'b','b','b',2,'b',2,2,2),(2,1,'b','b','b',2,'b',2,2,2),(3,1,'b','b','b',2,'b',2,2,2),(4,1,'b','b','b',2,'b',2,1,2),(5,1,'b','b','b',2,'b',2,1,2),(6,1,'b','b','b',2,'b',2,1,3),(7,1,'b','b','b',2,'b',2,1,3),(8,1,'b','b','b',2,'b',2,1,3),(9,1,'b','b','b',2,'b',2,2,2),(10,1,'b','b','b',2,'b',2,2,2),(11,1,'b','b','b',2,'b',2,2,2),(12,1,'b','b','b',2,'b',2,2,2);
+INSERT INTO `product_detail` VALUES (1,1,'b','b','b',2,'b',2,2,2),(2,1,'b','b','b',2,'b',2,2,2),(3,1,'b','b','b',2,'b',2,2,2),(4,1,'b','b','b',2,'b',2,1,2),(5,1,'b','b','b',2,'b',2,1,2),(6,1,'b','b','b',2,'b',2,1,3),(7,1,'b','b','b',2,'b',2,1,3),(8,1,'b','b','b',2,'b',2,1,3),(9,1,'b','b','b',2,'b',2,2,2),(10,1,'b','b','b',2,'b',2,2,2),(11,1,'b','b','b',2,'b',2,2,2),(12,1,'b','b','b',2,'b',2,6,1);
 /*!40000 ALTER TABLE `product_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,4 +494,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-08 10:31:29
+-- Dump completed on 2019-04-08 19:45:13
