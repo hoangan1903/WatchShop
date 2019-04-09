@@ -2,14 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
 <title>Manager Page - Dashboard</title>
 <th:block th:include="fragments/managerPageFragment.html :: headerfiles"></th:block>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
 <script type="text/javascript">
+
 	$(document)
 			.ready(
 					function() {
-						var url = "/rest/products";
+						var pageId = Number(selectPage());
+						console.log("page id : " + pageId);
+						var size = Number(5);
+						var countProduct = null;
+						var numberPage = null;
+						var url = "/rest/products/count";
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								countProduct = Number(this.responseText);
+								console.log(countProduct);
+								numberPage = countProduct / size;
+								console.log(numberPage);
+								
+								for (var i = 0; i < numberPage; i++) {
+									$('#ulPagination').append(
+											'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
+													+ i + '&size=3">' + (i + 1)
+													+ '</a></li>')
+								}
+								
+
+							}
+						};
+						xhttp.open("GET", url, true);
+						xhttp.send();
+
+						var url = '/rest/products?page=' + String(pageId)
+								+ '&size=' + String(size);
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function() {
 							if (this.readyState == 4 && this.status == 200) {
@@ -22,7 +54,6 @@
 													$('#mytable tbody')
 															.append(
 																	'<tr>'
-																			+ '<td><input type="checkbox" class="checkthis" /></td>'
 																			+ '<td>'
 																			+ value.id
 																			+ '</td>'
@@ -119,146 +150,135 @@
 							xhttp.open("GET", url, true);
 							xhttp.send();
 
-							//GET API LIST FIRM USING JQUERY
-							<!-- > BEGIN<-->
 							let dropdownFirm = $('#firmDropDownList');
-							dropdownFirm.empty();
-							dropdownFirm
-									.append('<option selected="true" disabled>Choose Firm</option>');
-							dropdownFirm.prop('selectedIndex', 0);
-							// Populate dropdown with list of provinces
-							$.getJSON('/rest/firm', function(data) {
-								$.each(data, function(key, entry) {
-									dropdownFirm.append($('<option></option>')
-											.attr('value', entry.id).text(
-													entry.name));
-								})
-							});
-							<!-- > END<-->
-
-							//GET API LIST MODEL USING JQUERY
-							<!-- > BEGIN<-->
 							let dropdownModel = $('#modelDropDownList');
-							dropdownModel.empty();
-							dropdownModel
-									.append('<option selected="true" disabled>Choose Model</option>');
-							dropdownModel.prop('selectedIndex', 0);
-							// Populate dropdown with list of provinces
-							$.getJSON('/rest/model', function(data) {
-								$.each(data, function(key, entry) {
-									dropdownModel.append($('<option></option>')
-											.attr('value', entry.id).text(
-													entry.name));
-								})
-							});
-							<!-- > END<-->
-
-							//GET API LIST ORIGIN USING JQUERY
-							<!-- > BEGIN<-->
 							let dropdownOrigin = $('#originDropDownList');
-							dropdownOrigin.empty();
-							dropdownOrigin
-									.append('<option selected="true" disabled>Choose Origin</option>');
-							dropdownOrigin.prop('selectedIndex', 0);
-							// Populate dropdown with list of provinces
-							$.getJSON('/rest/origin', function(data) {
-								$.each(data, function(key, entry) {
-									dropdownOrigin
-											.append($('<option></option>')
-													.attr('value', entry.id)
-													.text(entry.name));
-								})
-							});
-							<!-- > END<-->
-
+							getApiFirmOriginModel(dropdownFirm, dropdownModel,
+									dropdownOrigin);
 						});
+	}
+
+	function getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin) {
+		//GET API LIST FIRM USING JQUERY
+		<!-- > BEGIN<-->
+
+		dropdownFirm.empty();
+		dropdownFirm
+				.append('<option selected="true" disabled>Choose Firm</option>');
+		dropdownFirm.prop('selectedIndex', 0);
+		// Populate dropdown with list of provinces
+		$.getJSON('/rest/firm', function(data) {
+			$.each(data, function(key, entry) {
+				dropdownFirm.append($('<option></option>').attr('value',
+						entry.id).text(entry.name));
+			})
+		});
+		<!-- > END<-->
+
+		//GET API LIST MODEL USING JQUERY
+		<!-- > BEGIN<-->
+		dropdownModel.empty();
+		dropdownModel
+				.append('<option selected="true" disabled>Choose Model</option>');
+		dropdownModel.prop('selectedIndex', 0);
+		// Populate dropdown with list of provinces
+		$.getJSON('/rest/model', function(data) {
+			$.each(data, function(key, entry) {
+				dropdownModel.append($('<option></option>').attr('value',
+						entry.id).text(entry.name));
+			})
+		});
+		<!-- > END<-->
+
+		//GET API LIST ORIGIN USING JQUERY
+		<!-- > BEGIN<-->
+		dropdownOrigin.empty();
+		dropdownOrigin
+				.append('<option selected="true" disabled>Choose Origin</option>');
+		dropdownOrigin.prop('selectedIndex', 0);
+		// Populate dropdown with list of provinces
+		$.getJSON('/rest/origin', function(data) {
+			$.each(data, function(key, entry) {
+				dropdownOrigin.append($('<option></option>').attr('value',
+						entry.id).text(entry.name));
+			})
+		});
+		<!-- > END<-->
 	}
 
 	function submitEdit() {
-		$(document)
-				.ready(
-						function() {
-							var data = {};
-							var product = {};
-							var productDetail = {};
-							var images = [];
-							if(document.getElementById("id")){
-								var id = document.getElementById("id").value;
-							}
-							
-							var url = "/rest/products/" + id;
-							var xhttp = new XMLHttpRequest();
+		var data = {};
+		var product = {};
+		var productDetail = {};
+		var images = [];
+		if (document.getElementById("id")) {
+			var id = document.getElementById("id").value;
+		}
 
-							product.codeName = $('#codeName').val();
-							product.image = $('#image').val();
-							product.price = Number($('#price').val());
-							product.available = Number($('#available').val());
+		var url = "/rest/products/" + id;
+		var xhttp = new XMLHttpRequest();
 
-							productDetail.size = Number($('#size').val());
-							productDetail.caseMaterial = $('#caseMaterial')
-									.val();
-							productDetail.chainMaterial = $('#chainMaterial')
-									.val();
-							productDetail.glassMaterial = $('#glassMaterial')
-									.val();
-							productDetail.waterResistance = Number($(
-									'#waterResistance').val());
-							productDetail.otherFunction = $('#otherFunction')
-									.val();
-							productDetail.insurance = Number($('#insurance')
-									.val());
+		product.codeName = $('#codeName').val();
+		product.image = $('#image').val();
+		product.price = Number($('#price').val());
+		product.available = Number($('#available').val());
 
-							var countImage = $('#imagesDiv').children('input').length / 2;
-							var num = Number(countImage);
-							console.log(num + 1);
+		productDetail.size = Number($('#size').val());
+		productDetail.caseMaterial = $('#caseMaterial').val();
+		productDetail.chainMaterial = $('#chainMaterial').val();
+		productDetail.glassMaterial = $('#glassMaterial').val();
+		productDetail.waterResistance = Number($('#waterResistance').val());
+		productDetail.otherFunction = $('#otherFunction').val();
+		productDetail.insurance = Number($('#insurance').val());
 
-							for (var i = 0; i < num; i++) {
-								var imageIdKey = "#imageId" + i;
-								var imageUrlKey = "#imageUrl" + i;
-								var idImage = $(imageIdKey).val();
-								var urlImage = $(imageUrlKey).val();
-								console.log("id image :" + idImage);
-								console.log("url image :" + urlImage);
-								var imageJson = {};
-								imageJson.id = Number(idImage);
-								imageJson.url = urlImage;
-								console.log(imageJson);
-								images.push(imageJson);
+		var countImage = $('#imagesDiv').children('input').length / 2;
+		var num = Number(countImage);
+		console.log(num + 1);
 
-							}
-							console.log(images);
+		for (var i = 0; i < num; i++) {
+			var imageIdKey = "#imageId" + i;
+			var imageUrlKey = "#imageUrl" + i;
+			var idImage = $(imageIdKey).val();
+			var urlImage = $(imageUrlKey).val();
+			console.log("id image :" + idImage);
+			console.log("url image :" + urlImage);
+			var imageJson = {};
+			imageJson.id = Number(idImage);
+			imageJson.url = urlImage;
+			console.log(imageJson);
+			images.push(imageJson);
 
-							data.product = product;
-							data.productDetail = productDetail;
-							data.images = images;
-							data.idFirm = Number($('#firmDropDownList').val());
-							data.idModel = Number($('#modelDropDownList').val());
-							data.idOrigin = Number($('#originDropDownList')
-									.val());
+		}
+		console.log(images);
 
-							var json = JSON.stringify(data);
-							console.log("json edit : " + json);
-							xhttp.open("PUT", url, true);
-							xhttp.setRequestHeader('Content-type',
-									'application/json; charset=utf-8');
-							xhttp.onload = function() {
+		data.product = product;
+		data.productDetail = productDetail;
+		data.images = images;
+		data.idFirm = Number($('#firmDropDownList').val());
+		data.idModel = Number($('#modelDropDownList').val());
+		data.idOrigin = Number($('#originDropDownList').val());
 
-								if (xhttp.readyState == 4
-										&& xhttp.status == "200") {
-									console.log("edit ok");
-									alert("Edit Product Success");
-									location.reload();
-								} else {
-									console.log("edit error");
-									alert("Edit Product Error");
-								}
-							}
-							xhttp.send(json);
-						});
+		var json = JSON.stringify(data);
+		console.log("json edit : " + json);
+		xhttp.open("PUT", url, true);
+		xhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
+		xhttp.onload = function() {
+
+			if (xhttp.readyState == 4 && xhttp.status == "200") {
+				console.log("edit ok");
+				alert("Edit Product Success");
+				location.reload();
+			} else {
+				console.log("edit error");
+				alert("Edit Product Error");
+			}
+		}
+		xhttp.send(json);
 	}
 	function deleteProduct() {
 		var xhttp = new XMLHttpRequest();
-		if(document.getElementById("id")){
+		if (document.getElementById("id")) {
 			var id = document.getElementById("id").value;
 		}
 		var url = "/rest/products/" + id;
@@ -275,8 +295,130 @@
 		}
 		xhttp.send();
 	}
-	function deleteOnClick(id){
+	function deleteOnClick(id) {
 		document.getElementById("id").value = id;
+	}
+
+	function addOnClick() {
+		let dropdownFirm = $('#addFirmDropDownList');
+		let dropdownModel = $('#addModelDropDownList');
+		let dropdownOrigin = $('#addOriginDropDownList');
+		getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin);
+	}
+	function submitSave() {
+		$(document)
+				.ready(
+						function() {
+							var data = {};
+							var product = {};
+							var productDetail = {};
+							var images = [];
+							var url = "/rest/products";
+							var xhttp = new XMLHttpRequest();
+
+							product.codeName = $('#addCodeName').val();
+							product.image = $('#addImage').val();
+							product.price = Number($('#addPrice').val());
+							product.available = Number($('#addAvailable').val());
+
+							productDetail.size = Number($('#addSize').val());
+							productDetail.caseMaterial = $('#addCaseMaterial')
+									.val();
+							productDetail.chainMaterial = $('#addChainMaterial')
+									.val();
+							productDetail.glassMaterial = $('#addGlassMaterial')
+									.val();
+							productDetail.waterResistance = Number($(
+									'#addWaterResistance').val());
+							productDetail.otherFunction = $('#addOtherFunction')
+									.val();
+							productDetail.insurance = Number($('#addInsurance')
+									.val());
+
+							var countImage = $('#addDivImage')
+									.children('input').length;
+							var num = Number(countImage);
+							console.log(num + 1);
+
+							for (var i = 0; i < num; i++) {
+								var imageUrlKey = "#addImageUrl" + i;
+								var urlImage = $(imageUrlKey).val();
+								console.log("url image :" + urlImage);
+								var imageJson = {};
+								imageJson.url = urlImage;
+								console.log(imageJson);
+								images.push(imageJson);
+
+							}
+							console.log(images);
+
+							data.product = product;
+							data.productDetail = productDetail;
+							data.images = images;
+							data.idFirm = Number($('#addFirmDropDownList')
+									.val());
+							data.idModel = Number($('#addModelDropDownList')
+									.val());
+							data.idOrigin = Number($('#addOriginDropDownList')
+									.val());
+
+							var json = JSON.stringify(data);
+							console.log("json add : " + json);
+							xhttp.open("POST", url, true);
+							xhttp.setRequestHeader('Content-type',
+									'application/json; charset=utf-8');
+							xhttp.onload = function() {
+
+								if (xhttp.readyState == 4
+										&& xhttp.status == "200") {
+									console.log("Add ok");
+									alert("Add Product Success");
+									location.reload();
+								} else {
+									console.log("Add error");
+									alert("Add Product Error");
+								}
+							}
+							xhttp.send(json);
+						});
+	}
+	function addInputOtherImages(i) {
+		$('#buttonAddOtherImage1').attr("disabled", "disabled");
+		$('#buttonAddOtherImage2').attr("disabled", "disabled");
+		$('#buttonAddOtherImage3').attr("disabled", "disabled");
+		$('#buttonAddOtherImage4').attr("disabled", "disabled");
+		$('#buttonAddOtherImage5').attr("disabled", "disabled");
+		if (i == 'delete') {
+			$('#buttonAddOtherImage1').removeAttr("disabled");
+			$('#buttonAddOtherImage2').removeAttr("disabled");
+			$('#buttonAddOtherImage3').removeAttr("disabled");
+			$('#buttonAddOtherImage4').removeAttr("disabled");
+			$('#buttonAddOtherImage5').removeAttr("disabled");
+			$('#addDivImage').empty();
+		} else {
+			var buttonAddOtherImageId = "#buttonAddOtherImage" + j;
+			for (var j = 0; j < i; j++) {
+				$('#addDivImage')
+						.append(
+								'<br><input class="form-control " type="text" id="addImageUrl'+j+'" required="required" placeholder="E.g : 01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg">');
+			}
+		}
+
+	}
+	function selectPage() {
+		$.urlParam = function(name) {
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+					.exec(window.location.href);
+			if (results == null) {
+				return null;
+			}
+			return decodeURI(results[1]) || 0;
+		}
+		if ($.urlParam('page') == null)
+			return 0;
+		else {
+			return $.urlParam('page');
+		}
 	}
 </script>
 </head>
@@ -293,7 +435,6 @@
 
 			<!-- Main Content -->
 			<div id="content">
-
 				<!-- Topbar -->
 				<nav th:replace="fragments/managerPageFragment.html :: topBar">
 				</nav>
@@ -304,18 +445,25 @@
 				<!-- content -->
 				<div class="group-control">
 					<div class="row">
-
-
 						<div class="col-md-12">
-							<h4>Products</h4>
+							<div class="row">
+								<div class="col-sm-9">
+									<h4>Products</h4>
+								</div>
+								<div class="col-sm-2">
+									<button class="btn btn-info add-new" data-title="add"
+										data-toggle="modal" data-target="#add" onclick="addOnClick()">Add
+										Product</button>
+								</div>
+							</div>
+							</br>
 							<div class="table-responsive">
-
 
 								<table id="mytable" class="table table-bordred table-striped">
 
 									<thead>
 
-										<th><input type="checkbox" id="checkall" /></th>
+									
 										<th>ID</th>
 										<th>Code</th>
 										<th>Image</th>
@@ -333,12 +481,8 @@
 
 								<div class="clearfix">
 									<nav aria-label="Page navigation example">
-										<ul class="pagination">
-											<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-											<li class="page-item"><a class="page-link" href="#">1</a></li>
-											<li class="page-item"><a class="page-link" href="#">2</a></li>
-											<li class="page-item"><a class="page-link" href="#">3</a></li>
-											<li class="page-item"><a class="page-link" href="#">Next</a></li>
+										<ul class="pagination" id="ulPagination">
+
 										</ul>
 									</nav>
 								</div>
@@ -362,6 +506,7 @@
 									Product Detail</h4>
 							</div>
 							<div class="modal-body">
+
 								<div class="form-group">
 									<input class="form-control " type="hidden" id="id">
 								</div>
@@ -432,7 +577,7 @@
 							<div class="modal-footer ">
 								<button type="button" class="btn btn-warning btn-lg"
 									style="width: 100%;" onclick="submitEdit()">
-									<span class="glyphicon glyphicon-ok-sign"></span>�Update
+									<span class="glyphicon glyphicon-ok-sign"></span> Update
 								</button>
 							</div>
 						</div>
@@ -441,7 +586,117 @@
 					<!-- /.modal-dialog -->
 				</div>
 
+				<div class="modal fade" id="add" tabindex="-1" role="dialog"
+					aria-labelledby="add" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+								<h4 class="modal-title custom_align" id="Heading">Add
+									Product</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									Code : <input class="form-control " type="text"
+										id="addCodeName" required="required"
+										placeholder="E.g : SDE00001W0">
+								</div>
+								<div class="form-group">
+									Image : <input class="form-control " type="text" id="addImage"
+										required="required"
+										placeholder="E.g : 01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg">
+								</div>
+								<div class="form-group">
+									Price : <input class="form-control " type="number"
+										id="addPrice" required="required" placeholder="E.g : 200">
+								</div>
+								<div class="form-group">
+									Available : <input class="form-control " type="number"
+										id="addAvailable" required="required" placeholder="E.g : 1">
+								</div>
+								<div class="form-group">
+									Size : <input class="form-control " type="number" id="addSize"
+										required="required" placeholder="E.g : 39.5">
+								</div>
+								<div class="form-group">
+									Case Material : <input class="form-control " type="text"
+										id="addCaseMaterial" required="required"
+										placeholder="E.g : Thép không gỉ 316L">
+								</div>
+								<div class="form-group">
+									Chain Material : <input class="form-control " type="text"
+										id="addChainMaterial" required="required"
+										placeholder="E.g : Thép không gỉ 316L">
+								</div>
+								<div class="form-group">
+									Glass Material : <input class="form-control " type="text"
+										id="addGlassMaterial" required="required"
+										placeholder="E.g : Kính Sapphire">
+								</div>
+								<div class="form-group">
+									Water Resistance(m) : <input class="form-control "
+										type="number" id="addWaterResistance" required="required"
+										placeholder="E.g : 100">
+								</div>
+								<div class="form-group">
+									Other Function : <input class="form-control " type="text"
+										id="addOtherFunction" required="required"
+										placeholder="E.g : Chống va đập">
+								</div>
+								<div class="form-group">
+									Insurance Time (Year) : <input class="form-control "
+										type="number" id="addInsurance" required="required"
+										placeholder="E.g : 5">
+								</div>
+								Other images : <br>
+								<Button type="button" id="buttonAddOtherImage1"
+									onclick="addInputOtherImages(1)">+1 Image</Button>
+								<Button type="button" id="buttonAddOtherImage2"
+									onclick="addInputOtherImages(2)">+2 Image</Button>
+								<Button type="button" id="buttonAddOtherImage3"
+									onclick="addInputOtherImages(3)">+3 Image</Button>
+								<Button type="button" id="buttonAddOtherImage4"
+									onclick="addInputOtherImages(4)">+4 Image</Button>
+								<Button type="button" id="buttonAddOtherImageDelete"
+									onclick="addInputOtherImages('delete')">Delete Input</Button>
+								<div class="form-group" id="addDivImage"></div>
+								<!-- Drop Down List Firm -->
+								<div class="form-group">
+									<select class="form-control" name="addFirmDropDownList"
+										id="addFirmDropDownList">
+									</select>
+								</div>
 
+								<!-- Drop Down List Model -->
+								<div class="form-group">
+									<select class="form-control" name="addModelDropDownList"
+										id="addModelDropDownList">
+									</select>
+								</div>
+
+								<!-- Drop Down List Origin -->
+								<div class="form-group">
+									<select class="form-control" name="addOriginDropDownList"
+										id="addOriginDropDownList">
+									</select>
+								</div>
+
+
+							</div>
+							<div class="modal-footer ">
+								<button type="button" class="btn btn-warning btn-lg"
+									style="width: 100%;" onclick="submitSave()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Save
+								</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
 
 				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 					aria-labelledby="edit" aria-hidden="true">
@@ -449,7 +704,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true" >
+									aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 								<h4 class="modal-title custom_align" id="Heading">Delete
@@ -464,12 +719,13 @@
 
 							</div>
 							<div class="modal-footer ">
-								<button type="button" class="btn btn-success" onclick="deleteProduct()">
-									<span class="glyphicon glyphicon-ok-sign"></span>�Yes
+								<button type="button" class="btn btn-success"
+									onclick="deleteProduct()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Yes
 								</button>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span>�No
+									<span class="glyphicon glyphicon-remove"></span> No
 								</button>
 							</div>
 						</div>
@@ -513,10 +769,10 @@
 	<script src="../../js/sb-admin-2.min.js"></script>
 
 	<!-- Page level plugins -->
-	
+
 
 	<!-- Page level custom scripts -->
-	
+
 
 </body>
 

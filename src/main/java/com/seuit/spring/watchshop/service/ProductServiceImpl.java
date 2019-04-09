@@ -12,6 +12,9 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.seuit.spring.watchshop.entity.Firm;
@@ -129,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Product> listProduct() {
+	public List<Product> listProduct( ) {
 		// TODO Auto-generated method stub
 		return productRepository.findAll();
 	}
@@ -192,5 +195,35 @@ public class ProductServiceImpl implements ProductService {
 		query.setParameter("id", id);
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Product> findPaginated(Integer page, Integer size) {
+		EntityManager entity = entityManagerFactory.createEntityManager();
+		String sql = "FROM Product";
+		Query query = entity.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
+		
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public Long countProduct() {
+		// TODO Auto-generated method stub
+		EntityManager entity = entityManagerFactory.createEntityManager();
+		String sqlCount = "SELECT count(p.id) FROM Product p";
+		Query queryCount = entity.createQuery(sqlCount);
+		Long count =  (Long) queryCount.getSingleResult();
+		logger.info(count.toString());
+		return count;
+	}
+	
+	
+	
+
+	
+	
+	
 
 }
