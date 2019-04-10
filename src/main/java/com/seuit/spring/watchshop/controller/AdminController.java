@@ -1,7 +1,12 @@
 package com.seuit.spring.watchshop.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
+import com.seuit.spring.watchshop.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +23,18 @@ import com.seuit.spring.watchshop.service.UserService;
 
 import javassist.NotFoundException;
 
+import javax.transaction.Transactional;
+
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RoleRepository roleRepository;
+
+	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@GetMapping("/CRUD_User")
 	public String showCRUDUserPage(Model model) {
