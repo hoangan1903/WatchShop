@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -21,8 +23,8 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_user")
 	private Integer id;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
 
 	@Column(name = "email")
@@ -31,8 +33,9 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	@ManyToMany(fetch=FetchType.EAGER,cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
+	@JsonIgnore
 	private Set<Role> roles;
 
 	public Integer getId() {
@@ -42,8 +45,6 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
 
 	public String getUsername() {
 		return username;
@@ -77,12 +78,10 @@ public class User {
 		this.roles = roles;
 	}
 
-	
-
 	public User(User user) {
-		this.id=user.id;
-		this.username=user.username;
-		this.password=user.password;
+		this.id = user.id;
+		this.username = user.username;
+		this.password = user.password;
 		this.email = user.email;
 		this.roles = user.roles;
 	}
@@ -92,9 +91,4 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	
-	
-	 
 }

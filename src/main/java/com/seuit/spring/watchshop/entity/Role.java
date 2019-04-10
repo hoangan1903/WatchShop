@@ -23,7 +23,7 @@ public class Role {
 	@Column(name="name")
 	private String name;
 	
-	@ManyToMany(mappedBy="roles",fetch=FetchType.EAGER,cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+	@ManyToMany(mappedBy="roles",fetch=FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<User> users;
 
 	public Integer getId() {
