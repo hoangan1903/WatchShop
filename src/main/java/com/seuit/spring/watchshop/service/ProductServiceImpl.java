@@ -8,9 +8,13 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
@@ -38,7 +42,14 @@ public class ProductServiceImpl implements ProductService {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@Autowired
-	private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+
+    private Session getSession() {
+        return entityManager.unwrap(Session.class);
+    }
+	
+  
+	
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -177,10 +188,11 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public List<Product> listProductByIdModel(Integer id) {
 		// TODO Auto-generated method stub
-		EntityManager entity = entityManagerFactory.createEntityManager();
+		Session session = getSession();
 		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Model m on pd.model=m.id WHERE m.id=:id";
-		Query query = entity.createQuery(sql);
+		Query query = session.createQuery(sql);
 		query.setParameter("id", id);
+		
 		return query.getResultList();
 	}
 
@@ -189,10 +201,11 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public List<Product> listProductByIdOrigin(Integer id) {
 		// TODO Auto-generated method stub
-		EntityManager entity = entityManagerFactory.createEntityManager();
+		Session session = getSession();
 		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Origin o on pd.origin=o.id WHERE o.id=:id";
-		Query query = entity.createQuery(sql);
+		Query query = session.createQuery(sql);
 		query.setParameter("id", id);
+		
 		return query.getResultList();
 	}
 
@@ -200,9 +213,9 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<Product> findPaginated(Integer page, Integer size) {
-		EntityManager entity = entityManagerFactory.createEntityManager();
+		Session session = getSession();
 		String sql = "FROM Product";
-		Query query = entity.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
+		Query query = session.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
 		
 		return query.getResultList();
 	}
@@ -211,12 +224,26 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public Long countProduct() {
 		// TODO Auto-generated method stub
-		EntityManager entity = entityManagerFactory.createEntityManager();
+		Session session = getSession();
 		String sqlCount = "SELECT count(p.id) FROM Product p";
-		Query queryCount = entity.createQuery(sqlCount);
+		Query queryCount = session.createQuery(sqlCount);
 		Long count =  (Long) queryCount.getSingleResult();
 		logger.info(count.toString());
+		
 		return count;
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<Product> getListProductBykeyword(String keyword) {
+		// TODO Auto-generated method stub
+		Session session = getSession();
+		String sql = "SELECT p FROM Product p WHERE p.codeName like :code";
+		javax.persistence.Query query = session.createQuery(sql).setMaxResults(10);
+		query.setParameter("code", "%" + keyword + "%");
+		return query.getResultList();
 	}
 	
 	

@@ -101,4 +101,9 @@ public class ProductRestController {
 	List<Product> findAllProductByIdOrigin(@PathVariable(value = "id") Integer id) {
 		return productService.listProductByIdOrigin(id);
 	}
+	
+	@GetMapping("/products/find/{keyword}")
+	List<Product> findProductByKeyword(@PathVariable(value = "keyword") String keyword	) {
+		return productService.getListProductBykeyword(keyword);
+	}
 }

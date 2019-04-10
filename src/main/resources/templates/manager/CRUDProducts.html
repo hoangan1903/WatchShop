@@ -9,91 +9,218 @@
 
 
 <script type="text/javascript">
+	var pageId = Number(selectPage());
+	console.log("page id : " + pageId);
+	var size = Number(5);
+	var countProduct = null;
+	var numberPage = null;
+	window.onload = function() {
+
+		getCountAllProduct(size);
+		$('#mytable tbody').empty();
+		var url = selectUrlGetProduct(pageId, size, $("#myInput").val());
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				obj = JSON.parse(this.responseText);
+				console.log(obj);
+				$
+						.each(
+								obj,
+								function(key, value) {
+									$('#mytable tbody')
+											.append(
+													'<tr>' + '<td>'
+															+ value.id
+															+ '</td>'
+															+ '<td>'
+															+ value.codeName
+															+ '</td>'
+															+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
+															+ '<td>'
+															+ value.price
+															+ '</td>'
+															+ '<td>'
+															+ value.available
+															+ '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-primary" data-title="Edit"'
+															+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>'
+															+ '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-danger" data-title="Delete"'
+															+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>' + '</td>'
+															+ '</tr>');
+
+								});
+			}
+		};
+		xhttp.open("GET", url, true);
+		xhttp.send();
+
+		//GET API FOR FIRM , MODEL , ORIGIN
+		let dropdownFirm = $('#firmDropDownList');
+		let dropdownModel = $('#modelDropDownList');
+		let dropdownOrigin = $('#originDropDownList');
+		getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin);
+		function getApiFirmOriginModel(dropdownFirm, dropdownModel,
+				dropdownOrigin) {
+			//GET API LIST FIRM USING JQUERY
+			<!-- > BEGIN<-->
+
+			dropdownFirm.empty();
+			dropdownFirm
+					.append('<option selected="true" disabled>Choose Firm</option>');
+			dropdownFirm.prop('selectedIndex', 0);
+			// Populate dropdown with list of provinces
+			$.getJSON('/rest/firm', function(data) {
+				$.each(data, function(key, entry) {
+					dropdownFirm.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+				})
+			});
+			<!-- > END<-->
+
+			//GET API LIST MODEL USING JQUERY
+			<!-- > BEGIN<-->
+			dropdownModel.empty();
+			dropdownModel
+					.append('<option selected="true" disabled>Choose Model</option>');
+			dropdownModel.prop('selectedIndex', 0);
+			// Populate dropdown with list of provinces
+			$.getJSON('/rest/model', function(data) {
+				$.each(data, function(key, entry) {
+					dropdownModel.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+				})
+			});
+			<!-- > END<-->
+
+			//GET API LIST ORIGIN USING JQUERY
+			<!-- > BEGIN<-->
+			dropdownOrigin.empty();
+			dropdownOrigin
+					.append('<option selected="true" disabled>Choose Origin</option>');
+			dropdownOrigin.prop('selectedIndex', 0);
+			// Populate dropdown with list of provinces
+			$.getJSON('/rest/origin', function(data) {
+				$.each(data, function(key, entry) {
+					dropdownOrigin.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+				})
+			});
+			<!-- > END<-->
+		}
+	}
 
 	$(document)
 			.ready(
 					function() {
-						var pageId = Number(selectPage());
-						console.log("page id : " + pageId);
-						var size = Number(5);
-						var countProduct = null;
-						var numberPage = null;
-						var url = "/rest/products/count";
-						var xhttp = new XMLHttpRequest();
-						xhttp.onreadystatechange = function() {
-							if (this.readyState == 4 && this.status == 200) {
-								countProduct = Number(this.responseText);
-								console.log(countProduct);
-								numberPage = countProduct / size;
-								console.log(numberPage);
-								
-								for (var i = 0; i < numberPage; i++) {
-									$('#ulPagination').append(
-											'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
-													+ i + '&size=3">' + (i + 1)
-													+ '</a></li>')
-								}
-								
 
-							}
-						};
-						xhttp.open("GET", url, true);
-						xhttp.send();
+						//search Input field
+						$("#myInput")
+								.on(
+										"keyup",
+										function() {
+											$('#mytable tbody').empty();
+											$('#ulPagination').empty();
 
-						var url = '/rest/products?page=' + String(pageId)
-								+ '&size=' + String(size);
-						var xhttp = new XMLHttpRequest();
-						xhttp.onreadystatechange = function() {
-							if (this.readyState == 4 && this.status == 200) {
-								obj = JSON.parse(this.responseText);
-								console.log(obj);
-								$
-										.each(
-												obj,
-												function(key, value) {
-													$('#mytable tbody')
-															.append(
-																	'<tr>'
-																			+ '<td>'
-																			+ value.id
-																			+ '</td>'
-																			+ '<td>'
-																			+ value.codeName
-																			+ '</td>'
-																			+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
-																			+ '<td>'
-																			+ value.price
-																			+ '</td>'
-																			+ '<td>'
-																			+ value.available
-																			+ '</td>'
-																			+ '<td>'
-																			+ '<button class="btn btn-primary" data-title="Edit"'
-																			+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-																			+ value.id
-																			+ ')">'
-																			+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-																			+ '</span>'
-																			+ '</button>'
-																			+ '</p>'
-																			+ '</td>'
-																			+ '<td>'
-																			+ '<button class="btn btn-danger" data-title="Delete"'
-																			+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
-																			+ value.id
-																			+ ')">'
-																			+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
-																			+ '</span>'
-																			+ '</button>'
-																			+ '</p>'
-																			+ '</td>'
-																			+ '</tr>');
+											if (isSelectSearchInputEmpty() == true) {
+												getCountAllProduct(size);
+											}
+											var url = selectUrlGetProduct(
+													pageId, size, $("#myInput")
+															.val());
+											var xhttp = new XMLHttpRequest();
+											xhttp.onreadystatechange = function() {
+												if (this.readyState == 4
+														&& this.status == 200) {
+													obj = JSON
+															.parse(this.responseText);
 
-												});
-							}
-						};
-						xhttp.open("GET", url, true);
-						xhttp.send();
+													console.log(obj);
+													if (isSelectSearchInputEmpty() == false) {
+														countProduct = Object
+																.keys(obj).length;
+														numberPage = countProduct
+																/ size;
+														console.log(numberPage);
+
+														for (var i = 0; i < numberPage; i++) {
+															$('#ulPagination')
+																	.append(
+																			'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
+																					+ i
+																					+ '&size=3">'
+																					+ (i + 1)
+																					+ '</a></li>')
+														}
+													}
+
+													$
+															.each(
+																	obj,
+																	function(
+																			key,
+																			value) {
+																		$(
+																				'#mytable tbody')
+																				.append(
+																						'<tr>'
+																								+ '<td>'
+																								+ value.id
+																								+ '</td>'
+																								+ '<td>'
+																								+ value.codeName
+																								+ '</td>'
+																								+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
+																								+ '<td>'
+																								+ value.price
+																								+ '</td>'
+																								+ '<td>'
+																								+ value.available
+																								+ '</td>'
+																								+ '<td>'
+																								+ '<button class="btn btn-primary" data-title="Edit"'
+																								+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
+																								+ value.id
+																								+ ')">'
+																								+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+																								+ '</span>'
+																								+ '</button>'
+																								+ '</p>'
+																								+ '</td>'
+																								+ '<td>'
+																								+ '<button class="btn btn-danger" data-title="Delete"'
+																								+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
+																								+ value.id
+																								+ ')">'
+																								+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
+																								+ '</span>'
+																								+ '</button>'
+																								+ '</p>'
+																								+ '</td>'
+																								+ '</tr>');
+
+																	});
+												}
+											};
+											xhttp.open("GET", url, true);
+											xhttp.send();
+										});
+
 					});
 	function editOnClick(id) {
 		console.log("idProduct :" + id);
@@ -149,61 +276,7 @@
 							};
 							xhttp.open("GET", url, true);
 							xhttp.send();
-
-							let dropdownFirm = $('#firmDropDownList');
-							let dropdownModel = $('#modelDropDownList');
-							let dropdownOrigin = $('#originDropDownList');
-							getApiFirmOriginModel(dropdownFirm, dropdownModel,
-									dropdownOrigin);
 						});
-	}
-
-	function getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin) {
-		//GET API LIST FIRM USING JQUERY
-		<!-- > BEGIN<-->
-
-		dropdownFirm.empty();
-		dropdownFirm
-				.append('<option selected="true" disabled>Choose Firm</option>');
-		dropdownFirm.prop('selectedIndex', 0);
-		// Populate dropdown with list of provinces
-		$.getJSON('/rest/firm', function(data) {
-			$.each(data, function(key, entry) {
-				dropdownFirm.append($('<option></option>').attr('value',
-						entry.id).text(entry.name));
-			})
-		});
-		<!-- > END<-->
-
-		//GET API LIST MODEL USING JQUERY
-		<!-- > BEGIN<-->
-		dropdownModel.empty();
-		dropdownModel
-				.append('<option selected="true" disabled>Choose Model</option>');
-		dropdownModel.prop('selectedIndex', 0);
-		// Populate dropdown with list of provinces
-		$.getJSON('/rest/model', function(data) {
-			$.each(data, function(key, entry) {
-				dropdownModel.append($('<option></option>').attr('value',
-						entry.id).text(entry.name));
-			})
-		});
-		<!-- > END<-->
-
-		//GET API LIST ORIGIN USING JQUERY
-		<!-- > BEGIN<-->
-		dropdownOrigin.empty();
-		dropdownOrigin
-				.append('<option selected="true" disabled>Choose Origin</option>');
-		dropdownOrigin.prop('selectedIndex', 0);
-		// Populate dropdown with list of provinces
-		$.getJSON('/rest/origin', function(data) {
-			$.each(data, function(key, entry) {
-				dropdownOrigin.append($('<option></option>').attr('value',
-						entry.id).text(entry.name));
-			})
-		});
-		<!-- > END<-->
 	}
 
 	function submitEdit() {
@@ -420,6 +493,46 @@
 			return $.urlParam('page');
 		}
 	}
+	//select url 
+	function selectUrlGetProduct(pageId, size, keyword) {
+		var url = "";
+		if (isSelectSearchInputEmpty() == true) {
+			url = '/rest/products?page=' + String(pageId) + '&size='
+					+ String(size);
+		} else {
+			url = "/rest/products/find/" + keyword;
+		}
+		console.log(url);
+		return url;
+	}
+	function isSelectSearchInputEmpty() {
+		if ($('#myInput').val().toLowerCase() == "") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function getCountAllProduct(size) {
+		var url = "/rest/products/count";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				countProduct = Number(this.responseText);
+				console.log(countProduct);
+				numberPage = countProduct / size;
+				console.log(numberPage);
+
+				for (var i = 0; i < numberPage; i++) {
+					$('#ulPagination').append(
+							'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
+									+ i + '&size=3">' + (i + 1) + '</a></li>')
+				}
+
+			}
+		};
+		xhttp.open("GET", url, true);
+		xhttp.send();
+	}
 </script>
 </head>
 <body id="page-top">
@@ -445,6 +558,7 @@
 				<!-- content -->
 				<div class="group-control">
 					<div class="row">
+
 						<div class="col-md-12">
 							<div class="row">
 								<div class="col-sm-9">
@@ -456,14 +570,17 @@
 										Product</button>
 								</div>
 							</div>
-							</br>
+							<br> <br>
+							<p>Type name of Product in the Search</p>
+							<input class="form-control" id="myInput" type="text"
+								placeholder="Search.."> <br> <br>
 							<div class="table-responsive">
 
 								<table id="mytable" class="table table-bordred table-striped">
 
 									<thead>
 
-									
+
 										<th>ID</th>
 										<th>Code</th>
 										<th>Image</th>

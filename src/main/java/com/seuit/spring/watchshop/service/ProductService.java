@@ -25,4 +25,5 @@ public interface ProductService {
 	List<Product> listProductByIdOrigin(Integer id);
 	List<Product> findPaginated(Integer page,Integer size);
 	Long countProduct();
+	List<Product> getListProductBykeyword(String keyword);
 }
