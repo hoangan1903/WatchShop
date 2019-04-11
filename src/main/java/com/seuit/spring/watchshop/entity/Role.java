@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,7 @@ public class Role {
 	private String name;
 	
 	@ManyToMany(mappedBy="roles",fetch=FetchType.EAGER)
-	private Set<User> users;
+	private Set<User> users = new HashSet<>();
 
 	public Integer getId() {
 		return id;

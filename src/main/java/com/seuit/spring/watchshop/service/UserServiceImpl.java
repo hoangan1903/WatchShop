@@ -1,15 +1,15 @@
 package com.seuit.spring.watchshop.service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.repository.RoleRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +22,13 @@ import javassist.NotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private EntityManager entityManager;
+
+	private Session getSession() {
+		return entityManager.unwrap(Session.class);
+	}
 
 	@Autowired 
 	private UserRepository userRepository;
@@ -42,34 +49,41 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void addUser(User user) {
+		//Mở phiên @Transactional
 		Optional<User> userTemp = userRepository.findByUsername(user.getUsername());
 		if(userTemp.isPresent()) {
 			return;
 		}else {
-			//2 = manager
 
-			// Lỗi logic :
+			//Note : @ManyToMany bidirectional
 
-			//NOTE : Nên setUsers của Role
-			// NOTE : Không được setRoles của users
+			//Tạo Session để kết nối tới database
+			Session session = this.getSession();
 
-			////////////////Lý do Nên setUsers của Role ://////////////////
+			//user trước khi thêm đang ở trạng thái Transient của hibernate Sau khi mở session
 
-			// Khi xoá tất cả User có cùng Role thì sẽ không ảnh hưỡng đến Role trong database
-			// ( Role Tồn tại để thêm User mới )
+			//Tạo truy vấn sql để lấy role với id = 2 ( manager )
+			String sql = "FROM Role r WHERE r.id=:id";
+			Query query = session.createQuery(sql);
+			query.setParameter("id", 2);
+			Role role = (Role) query.getSingleResult();
 
-			// Khi xoá tất cả Role của cùng user đó thì sẽ xoá luôn user đó
-			// (Không có Role : Không có lý do để user tồn tại )
+			//Khởi tạo HashSet
+			Set<Role> roles = new HashSet<>();
 
+			// Thêm vai trò vào HashSet
+			roles.add(role);
 
-			Role role = roleRepository.findById(2).get();
-			Set<User> users = new HashSet<>();
-			users.add(user);
+			//Set một list HashSet vai trò cho user .
+			user.setRoles(roles);
 
-			role.setUsers(users);
-
+			//Mã hoá mật khẩu user
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			userRepository.save(user);
+
+			//Quan trọng : Khi lưu user vào session
+			// Sẽ thực hiện Persist user -> chuyển trạng thái của user vào persistence context = flush
+			session.persist(user);
+			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
 	}
 
