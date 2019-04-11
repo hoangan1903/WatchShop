@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.repository.RoleRepository;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +40,25 @@ public class UserServiceImpl implements UserService {
 	private RoleRepository roleRepository;
 	
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+
+	private Integer findRoleIdByRoleName(String roleName) {
+		Integer roleId = null;
+		switch (roleName) {
+			case "admin":
+				roleId = 1;
+				break;
+			case "manager":
+				roleId = 2;
+				break;
+			case "employee":
+				roleId = 3;
+				break;
+			case "customer":
+				roleId = 4;
+				break;
+		}
+		return roleId;
+	}
 	
 	@Override
 	@Transactional
@@ -48,13 +68,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void addUser(User user) {
+	public void addUser(User user, String roleName) {
+
+		Integer roleId = findRoleIdByRoleName(roleName);
+
 		//Mở phiên @Transactional
 		Optional<User> userTemp = userRepository.findByUsername(user.getUsername());
 		if(userTemp.isPresent()) {
 			return;
 		}else {
-
+			logger.info(user.getEmail());
 			//Note : @ManyToMany bidirectional
 
 			//Tạo Session để kết nối tới database
@@ -62,27 +85,36 @@ public class UserServiceImpl implements UserService {
 
 			//user trước khi thêm đang ở trạng thái Transient của hibernate Sau khi mở session
 
-			//Tạo truy vấn sql để lấy role với id = 2 ( manager )
-			String sql = "FROM Role r WHERE r.id=:id";
-			Query query = session.createQuery(sql);
-			query.setParameter("id", 2);
-			Role role = (Role) query.getSingleResult();
-
-			//Khởi tạo HashSet
-			Set<Role> roles = new HashSet<>();
-
-			// Thêm vai trò vào HashSet
-			roles.add(role);
-
-			//Set một list HashSet vai trò cho user .
-			user.setRoles(roles);
-
 			//Mã hoá mật khẩu user
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 			//Quan trọng : Khi lưu user vào session
 			// Sẽ thực hiện Persist user -> chuyển trạng thái của user vào persistence context = flush
-			session.persist(user);
+			if (user.getId() == null) {
+				//Tạo truy vấn sql để lấy role với id = 2 ( manager )
+				String sql = "FROM Role r WHERE r.id=:id";
+				Query query = session.createQuery(sql);
+				query.setParameter("id", roleId);
+				Role role = (Role) query.getSingleResult();
+
+				//Khởi tạo HashSet
+				Set<Role> roles = new HashSet<>();
+
+				// Thêm vai trò vào HashSet
+				roles.add(role);
+
+				//Set một list HashSet vai trò cho user .
+				user.setRoles(roles);
+				session.persist(user);
+			} else {
+
+				User userOld = session.get(User.class, user.getId());
+				userOld.setUsername(user.getUsername());
+				userOld.setEmail(user.getEmail());
+				userOld.setPassword(user.getPassword());
+				session.merge(userOld);
+			}
+
 			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
 	}
@@ -99,4 +131,13 @@ public class UserServiceImpl implements UserService {
 		user.orElseThrow(()-> new UsernameNotFoundException("Cann't find user"));
 		return user.get();
 	}
+
+	@Override
+	@Transactional
+	public Set<User> getAllEmployee() {
+		Session session = this.getSession();
+		Role role = roleRepository.findById(findRoleIdByRoleName("employee")).get();
+		return role.getUsers();
+	}
+
 }

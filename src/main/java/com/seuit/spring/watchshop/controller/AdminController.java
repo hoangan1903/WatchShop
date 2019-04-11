@@ -52,7 +52,7 @@ public class AdminController {
 	
 	@PostMapping("/CRUD_User/saveUser")
 	public String saveUser(@ModelAttribute("user") User user, RedirectAttributes redirect) {
-		userService.addUser(user);
+        userService.addUser(user, "manager");
 		return "redirect:/admin/CRUD_User";
 	}
 
