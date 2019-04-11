@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void addUser(User user, String roleName) {
-
+		//Mã hoá mật khẩu user
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		Integer roleId = findRoleIdByRoleName(roleName);
 
 		//Mở phiên @Transactional
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
 		if(userTemp.isPresent()) {
 			return;
 		}else {
+			
 			logger.info(user.getEmail());
 			//Note : @ManyToMany bidirectional
 
@@ -84,10 +86,9 @@ public class UserServiceImpl implements UserService {
 			Session session = this.getSession();
 
 			//user trước khi thêm đang ở trạng thái Transient của hibernate Sau khi mở session
-
-			//Mã hoá mật khẩu user
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+			
+			
+			
 			//Quan trọng : Khi lưu user vào session
 			// Sẽ thực hiện Persist user -> chuyển trạng thái của user vào persistence context = flush
 			if (user.getId() == null) {
@@ -112,6 +113,7 @@ public class UserServiceImpl implements UserService {
 				userOld.setUsername(user.getUsername());
 				userOld.setEmail(user.getEmail());
 				userOld.setPassword(user.getPassword());
+				
 				session.merge(userOld);
 			}
 

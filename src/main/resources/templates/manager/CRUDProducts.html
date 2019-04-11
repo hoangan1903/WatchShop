@@ -123,6 +123,10 @@
 			});
 			<!-- > END<-->
 		}
+		let addDropdownFirm = $('#addFirmDropDownList');
+		let addDropdownModel = $('#addModelDropDownList');
+		let addDropdownOrigin = $('#addOriginDropDownList');
+		getApiFirmOriginModel(addDropdownFirm, addDropdownModel, addDropdownOrigin);
 	}
 
 	$(document)
@@ -372,12 +376,7 @@
 		document.getElementById("id").value = id;
 	}
 
-	function addOnClick() {
-		let dropdownFirm = $('#addFirmDropDownList');
-		let dropdownModel = $('#addModelDropDownList');
-		let dropdownOrigin = $('#addOriginDropDownList');
-		getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin);
-	}
+	
 	function submitSave() {
 		$(document)
 				.ready(
@@ -566,7 +565,7 @@
 								</div>
 								<div class="col-sm-2">
 									<button class="btn btn-info add-new" data-title="add"
-										data-toggle="modal" data-target="#add" onclick="addOnClick()">Add
+										data-toggle="modal" data-target="#add">Add
 										Product</button>
 								</div>
 							</div>
