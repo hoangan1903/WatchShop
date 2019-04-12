@@ -1,13 +1,14 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
 public class ProductApi {
-	private Product product;
-	private ProductDetail productDetail;
-	private Set<Image> images;
+	private Product product = new Product();
+	private ProductDetail productDetail = new ProductDetail();
+	private Set<Image> images = new HashSet<Image>();
 	
 	@NotNull
 	private Integer idFirm;

@@ -126,7 +126,8 @@
 		let addDropdownFirm = $('#addFirmDropDownList');
 		let addDropdownModel = $('#addModelDropDownList');
 		let addDropdownOrigin = $('#addOriginDropDownList');
-		getApiFirmOriginModel(addDropdownFirm, addDropdownModel, addDropdownOrigin);
+		getApiFirmOriginModel(addDropdownFirm, addDropdownModel,
+				addDropdownOrigin);
 	}
 
 	$(document)
@@ -376,7 +377,6 @@
 		document.getElementById("id").value = id;
 	}
 
-	
 	function submitSave() {
 		$(document)
 				.ready(
@@ -560,13 +560,18 @@
 
 						<div class="col-md-12">
 							<div class="row">
-								<div class="col-sm-9">
+								<div class="col-sm-8">
 									<h4>Products</h4>
+								</div>
+
+								<div class="col-sm-2">
+									<button class="btn btn-info add-new" data-title="import"
+										data-toggle="modal" data-target="#import">Import
+										Products</button>
 								</div>
 								<div class="col-sm-2">
 									<button class="btn btn-info add-new" data-title="add"
-										data-toggle="modal" data-target="#add">Add
-										Product</button>
+										data-toggle="modal" data-target="#add">Add Product</button>
 								</div>
 							</div>
 							<br> <br>
@@ -844,6 +849,40 @@
 									<span class="glyphicon glyphicon-remove"></span> No
 								</button>
 							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<div class="modal fade" id="import" tabindex="-1" role="dialog"
+					aria-labelledby="import" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+								<h4 class="modal-title custom_align" id="Heading">Import
+									Products From Excel File</h4>
+							</div>
+							<form enctype="multipart/form-data"
+								th:action="@{/manager/CRUD_Products/importFromExcel}"
+								method="POST">
+								<div class="modal-body">
+								<input type="file" name="file" id="fileInput">
+								</div>
+								
+								<div class="modal-footer ">
+									<button type="submit" class="btn btn-success">
+										<span class="glyphicon glyphicon-ok-sign"></span> Import
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="glyphicon glyphicon-remove"></span> No
+									</button>
+								</div>
+							</form>
 						</div>
 						<!-- /.modal-content -->
 					</div>
