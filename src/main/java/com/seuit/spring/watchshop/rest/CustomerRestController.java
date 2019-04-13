@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.CustomerAPI;
-import com.seuit.spring.watchshop.entity.EmployeeApi;
 import com.seuit.spring.watchshop.service.CustomerService;
 
 @RestController
@@ -25,8 +24,12 @@ public class CustomerRestController {
 	
 	@PostMapping("/customers")
     String newCustomer(@Valid @RequestBody CustomerAPI customerApi) {
-		customerService.saveOrUpdateCustomer(customerApi, null);
-        return "Add success";
+		boolean boo =  customerService.saveOrUpdateCustomer(customerApi, null);
+        if(boo==true) {
+        	return "success";
+        }else {
+        	return "fail";
+        }
     }
 	@PutMapping("/customers/{id}")
     String updateCustomer(@Valid @RequestBody CustomerAPI customerAPI, BindingResult result, @PathVariable(value = "id") @Min(1) Integer id) {

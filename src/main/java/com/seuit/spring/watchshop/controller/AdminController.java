@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,10 +17,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.entity.User;
+import com.seuit.spring.watchshop.helper.ProductExcelHelper;
+import com.seuit.spring.watchshop.service.DBFileStorageService;
+import com.seuit.spring.watchshop.service.ProductService;
 import com.seuit.spring.watchshop.service.UserService;
 
 import javassist.NotFoundException;
@@ -30,12 +38,15 @@ import javax.transaction.Transactional;
 public class AdminController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
-	private RoleRepository roleRepository;
+	private DBFileStorageService dbFileStorageService;
 
-	private Logger logger = Logger.getLogger(this.getClass().getName());
-
+	
+	//ADMIN AREA
 	@GetMapping("/CRUD_User")
 	public String showCRUDUserPage(Model model) {
 		List<User> listUser = userService.getAllUser();
@@ -71,5 +82,34 @@ public class AdminController {
 			e.printStackTrace();
 		}
 		return "admin/userForm";
+	}
+	
+	//MANAGEMENT AREA
+
+	@GetMapping(value = "/CRUD_Products")
+	public String showCRUDProductPage() {
+		return "admin/CRUDProducts";
+	}
+
+	@GetMapping(value = "/CRUD_Employees")
+	public String showCRUDEmployeePage() {
+		return "admin/CRUDEmployee";
+	}
+
+	@PostMapping(value = "/CRUD_Products/importFromExcel")
+	public String importExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirect) {
+		ProductExcelHelper productExcelHelper = new ProductExcelHelper();
+		File excelFile = dbFileStorageService.convert(file);
+		List<ProductApi> productApis;
+		try {
+			productApis = productExcelHelper.saveProductsFromExcelFile(excelFile);
+			productApis.stream().forEach((productApi) -> {
+				productService.saveOrUpdate(productApi, null);
+			});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/admin/CRUD_Products";
 	}
 }

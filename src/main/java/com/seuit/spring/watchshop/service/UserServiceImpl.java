@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void addUser(User user, String roleName) {
+	public Boolean addUser(User user, String roleName) {
 		//Mã hoá mật khẩu user
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		Integer roleId = findRoleIdByRoleName(roleName);
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 		//Mở phiên @Transactional
 		Optional<User> userTemp = userRepository.findByUsername(user.getUsername());
 		if(userTemp.isPresent()) {
-			return;
+			return false;
 		}else {
 			
 			logger.info(user.getEmail());
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
 				
 				session.merge(userOld);
 			}
-
+			return true;
 			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
 	}

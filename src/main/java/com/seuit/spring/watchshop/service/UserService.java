@@ -10,7 +10,7 @@ import javassist.NotFoundException;
 public interface UserService {
 	void deleteUserById(Integer id);
 
-    void addUser(User user, String roleName);
+    Boolean addUser(User user, String roleName);
 
 	List<User> getAllUser();
 

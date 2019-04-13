@@ -3,6 +3,7 @@ package com.seuit.spring.watchshop.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
@@ -28,5 +29,14 @@ public class HomeController {
 	@GetMapping("/logout")
 	public String execLogout() {
 		return "login";
+	}
+	@RequestMapping("/403")
+	public String accessDenied() {
+	    return "exception/403";
+	}
+	
+	@GetMapping("/register")
+	public String showRegisterPage() {
+	    return "register";
 	}
 }

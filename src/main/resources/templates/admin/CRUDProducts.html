@@ -3,8 +3,8 @@
 
 <head>
 
-<title>Manager Page - Dashboard</title>
-<th:block th:include="fragments/managerPageFragment.html :: headerfiles"></th:block>
+<title>admin Page - Dashboard</title>
+<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 
@@ -166,7 +166,7 @@
 														for (var i = 0; i < numberPage; i++) {
 															$('#ulPagination')
 																	.append(
-																			'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
+																			'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page='
 																					+ i
 																					+ '&size=3">'
 																					+ (i + 1)
@@ -523,7 +523,7 @@
 
 				for (var i = 0; i < numberPage; i++) {
 					$('#ulPagination').append(
-							'<li class="page-item"><a class="page-link" href="/manager/CRUD_Products?page='
+							'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page='
 									+ i + '&size=3">' + (i + 1) + '</a></li>')
 				}
 
@@ -539,7 +539,7 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<ul th:replace="fragments/managerPageFragment.html :: sideBar"></ul>
+		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
@@ -548,7 +548,7 @@
 			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
-				<nav th:replace="fragments/managerPageFragment.html :: topBar">
+				<nav th:replace="fragments/adminPageFragment.html :: topBar">
 				</nav>
 				<!-- End of Topbar -->
 
@@ -867,7 +867,7 @@
 									Products From Excel File</h4>
 							</div>
 							<form enctype="multipart/form-data"
-								th:action="@{/manager/CRUD_Products/importFromExcel}"
+								th:action="@{/admin/CRUD_Products/importFromExcel}"
 								method="POST">
 								<div class="modal-body">
 								<input type="file" name="file" id="fileInput">
@@ -893,7 +893,7 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer th:replace="fragments/managerPageFragment.html :: footer">
+			<footer th:replace="fragments/adminPageFragment.html :: footer">
 			</footer>
 			<!-- End of Footer -->
 
@@ -904,12 +904,12 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a th:replace="fragments/managerPageFragment.html :: scrollTopButton">
+	<a th:replace="fragments/adminPageFragment.html :: scrollTopButton">
 
 	</a>
 
 	<!-- Logout Modal-->
-	<div th:replace="fragments/managerPageFragment.html :: logoutModal">
+	<div th:replace="fragments/adminPageFragment.html :: logoutModal">
 
 	</div>
 

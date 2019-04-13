@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public void saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
+	public Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
 		// TODO Auto-generated method stub
 		if(id==null){
             User user = new User();
@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
             setUserAndCustomer(customerApi, user, customer);
             user.setCustomer(customer);
             customer.setUser(user);
-            userService.addUser(user,"customer");
+            return checkAddUser(user);
         }else{
             try {
             	
@@ -41,13 +41,21 @@ public class CustomerServiceImpl implements CustomerService {
                 if(customerPersis.isPresent()==true){
                     User userPersis = customerPersis.get().getUser();
                     setUserAndCustomer(customerApi,userPersis,customerPersis.get());
-                    userService.addUser(userPersis,"customer");
+                    return checkAddUser(userPersis);
                 }
 
             } catch (NotFoundException e) {
                 e.printStackTrace();
             }
         }
+		return true;
+	}
+	private Boolean checkAddUser(User user) {
+		if(userService.addUser(user,"customer")==true) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	 private void setUserAndCustomer(CustomerAPI customerApi, User user, Customer customer) {
 	        user.setUsername(customerApi.getUser().getUsername());

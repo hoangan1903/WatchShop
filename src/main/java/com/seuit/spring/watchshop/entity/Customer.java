@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "customer")
@@ -19,13 +22,14 @@ public class Customer {
 	@Column(name="id_customer")
 	private Integer id;
 	
-	@Column(name="name")
+	@NotBlank
+	@Column(name="name",nullable = false)
 	private String name;
 	
-	@Column(name="phone")
+	@Column(name="phone",nullable = true)
 	private String phone;
 	
-	@Column(name="address")
+	@Column(name="address",nullable = true)
 	private String address;
 	
 	

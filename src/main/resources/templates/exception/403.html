@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Admin Page - Dashboard</title>
+<title>Manager Page - Dashboard</title>
 <th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
 </head>
 
@@ -12,8 +12,7 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<ul
-			th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
+		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
@@ -29,17 +28,55 @@
 
 				<!-- Begin Page Content -->
 				
+				<div class="container-fluid">
+
+					<!-- 403 Error Text -->
+					<div class="text-center">
+						<div class="error mx-auto" data-text="403">403</div>
+						<p class="lead text-gray-800 mb-5">OPPSSS!!!! Sorry...</p>
+						<p class="text-gray-500 mb-0">Sorry, your access is refused due to security reasons of our server and also our sensitive data.
+Please go back to the previous page to continue browsing.</p>
+						<a th:href="@{/admin}">&larr; Back to Dashboard</a>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
 
 			</div>
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer th:replace="fragments/adminPageFragment.html :: footer">
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2019</span>
+					</div>
+				</div>
 			</footer>
 			<!-- End of Footer -->
 
 		</div>
 		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+
+	</div>
+	<!-- End of Main Content -->
+
+	<!-- Footer -->
+	<footer th:replace="fragments/adminPageFragment.html :: footer">
+	</footer>
+	<!-- End of Footer -->
+
+	</div>
+	<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->

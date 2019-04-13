@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,12 +40,16 @@ public class User {
 	@Column(name = "id_user")
 	private Integer id;
 
+	@NotBlank
 	@Column(name = "username")
 	private String username;
 
+	@NotBlank
+	@Email
 	@Column(name = "email")
 	private String email;
 
+	@NotBlank
 	@Column(name = "password")
 	private String password;
 	

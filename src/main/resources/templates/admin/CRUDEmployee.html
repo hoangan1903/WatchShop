@@ -3,8 +3,8 @@
 
 <head>
 
-<title>Manager Page - Dashboard</title>
-<th:block th:include="fragments/managerPageFragment.html :: headerfiles"></th:block>
+<title>Admin Page - Dashboard</title>
+<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 
@@ -75,7 +75,7 @@
 	$(document)
 			.ready(
 					function() {
-
+						
 						//search Input field
 						$("#myInput")
 								.on(
@@ -108,7 +108,7 @@
 														for (var i = 0; i < numberPage; i++) {
 															$('#ulPagination')
 																	.append(
-																			'<li class="page-item"><a class="page-link" href="/manager/CRUD_Employees?page='
+																			'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
 																					+ i
 																					+ '&size=3">'
 																					+ (i + 1)
@@ -378,7 +378,7 @@
 				for (var i = 0; i < numberPage; i++) {
 					$('#ulPagination')
 							.append(
-									'<li class="page-item"><a class="page-link" href="/manager/CRUD_Employees?page='
+									'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
 											+ i
 											+ '&size=3">'
 											+ (i + 1)
@@ -397,7 +397,7 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<ul th:replace="fragments/managerPageFragment.html :: sideBar"></ul>
+		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
@@ -406,7 +406,7 @@
 			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
-				<nav th:replace="fragments/managerPageFragment.html :: topBar">
+				<nav th:replace="fragments/adminPageFragment.html :: topBar">
 				</nav>
 				<!-- End of Topbar -->
 
@@ -612,7 +612,7 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer th:replace="fragments/managerPageFragment.html :: footer">
+			<footer th:replace="fragments/adminPageFragment.html :: footer">
 			</footer>
 			<!-- End of Footer -->
 
@@ -623,12 +623,12 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a th:replace="fragments/managerPageFragment.html :: scrollTopButton">
+	<a th:replace="fragments/adminPageFragment.html :: scrollTopButton">
 
 	</a>
 
 	<!-- Logout Modal-->
-	<div th:replace="fragments/managerPageFragment.html :: logoutModal">
+	<div th:replace="fragments/adminPageFragment.html :: logoutModal">
 
 	</div>
 
