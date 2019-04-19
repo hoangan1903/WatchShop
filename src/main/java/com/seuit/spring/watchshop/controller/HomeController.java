@@ -30,10 +30,6 @@ public class HomeController {
 	public String execLogout() {
 		return "login";
 	}
-	@RequestMapping("/403")
-	public String accessDenied() {
-	    return "exception/403";
-	}
 	
 	@GetMapping("/register")
 	public String showRegisterPage() {

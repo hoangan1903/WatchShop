@@ -68,7 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login?error=true").permitAll()
 		.and()
 		.exceptionHandling()
-		.accessDeniedPage("/403")
 		.and()
 		.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")).deleteCookies("JSESSIONID")
 		.and()
