@@ -9,7 +9,7 @@
 $spacing-brand-logo: 50px;
 $height-brand-logo: 100px;
 
-// Header and footer are in the reusable file
+// Header and footer are in the _components file
 
 /* Section: Banners */
 
@@ -45,19 +45,40 @@ section.section-products {
 }
 
 /* Section: Citizen */
+section.section-citizen {
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
 
 /* Section: Ogival */
 
 section.section-ogival {
     background-color: $color-background-silver;
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
 }
 
 /* Section: Orient */
+
+section.section-orient {
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
 
 /* Section: Bulova */
 
 section.section-bulova {
     background-color: $color-background-silver;
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
 }
 
 /* Section: Testimonials */

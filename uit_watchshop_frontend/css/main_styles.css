@@ -153,6 +153,9 @@ a.nav-link.nav-link-active {
   font-weight: 600;
   border-bottom: 2px solid #28a745;
 }
+a.show-more {
+  font-size: 90%;
+}
 
 ion-icon.extra-small-icon {
   font-size: 20px;
@@ -189,6 +192,23 @@ ion-icon.extra-large-icon {
 .card.product-card {
   height: auto;
   width: auto;
+}
+
+.custom_slider_nav {
+  background: #28a745;
+  position: absolute;
+  top: 50%;
+  right: -9px;
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: all 0.25s ease;
+}
+.custom_slider_nav:hover {
+  opacity: 0.8;
 }
 
 /* Defines big reusable components like the header and the footer */
@@ -286,15 +306,29 @@ section.section-products {
 }
 
 /* Section: Citizen */
+section.section-citizen h2.section-heading {
+  margin-bottom: 12px;
+}
+
 /* Section: Ogival */
 section.section-ogival {
   background-color: #f4f4f4;
 }
+section.section-ogival h2.section-heading {
+  margin-bottom: 12px;
+}
 
 /* Section: Orient */
+section.section-orient h2.section-heading {
+  margin-bottom: 12px;
+}
+
 /* Section: Bulova */
 section.section-bulova {
   background-color: #f4f4f4;
+}
+section.section-bulova h2.section-heading {
+  margin-bottom: 12px;
 }
 
 /* Section: Testimonials */
