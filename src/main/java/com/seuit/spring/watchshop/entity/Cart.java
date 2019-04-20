@@ -32,7 +32,7 @@ public class Cart {
 	@JoinColumn(name = "id_customer")
 	private Customer customer;
 	
-	@OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 	private Set<CartDetail> CartDetails = new HashSet<CartDetail>();
 
 	public Integer getId() {

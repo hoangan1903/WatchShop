@@ -185,6 +185,7 @@ public class CartServiceImpl implements CartService{
 		}
 		cart = customer.get().getCart();
 		cart.getCartDetails().clear();
+		
 		return result;
 	}
 }
