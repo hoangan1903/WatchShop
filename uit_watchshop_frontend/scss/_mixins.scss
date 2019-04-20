@@ -1,0 +1,26 @@
+/* Mixins */
+
+@mixin bottom-indicator($indicator-color) {
+    border-bottom: 2px solid $indicator-color;
+}
+
+@mixin hover-color($hover-color) {
+
+    &:hover,
+    &:active {
+        color: $hover-color;
+    }
+}
+
+@mixin hover-indicator($hover-color) {
+
+    &:link,
+    &:visited {
+        @include bottom-indicator($color-tranparent);
+    }
+
+    &:hover,
+    &:active {
+        @include bottom-indicator($hover-color);
+    }
+}
