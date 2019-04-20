@@ -47,33 +47,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http
-		.httpBasic()
-		.and()
-		.cors()
-		.and()
-		.authorizeRequests()
-		.antMatchers("/admin/CRUD_User/**").hasRole("admin")
-		.antMatchers("/admin/CRUD_Employees/**").hasRole("manager")
-		.antMatchers("/admin/CRUD_Products/**").hasRole("manager")
-		.antMatchers(HttpMethod.GET,"/rest/products").permitAll()
-		.antMatchers(HttpMethod.POST,"/rest/products").hasRole("manager")
-		.antMatchers(HttpMethod.DELETE,"/rest/products/**").hasRole("manager")
-		.antMatchers(HttpMethod.PUT,"/rest/products/**").hasRole("manager")
-		.antMatchers(HttpMethod.POST,"/rest/customers/**").hasRole("manager")
-		.antMatchers(HttpMethod.PUT,"/rest/customers/**").hasRole("manager")
-		.antMatchers("/admin/**").hasAnyRole("admin","manager","employee")
-		.antMatchers("/**").permitAll()
-		.and()
-		.formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login?error=true").permitAll()
-		.and()
-		.exceptionHandling()
-		.and()
-		.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")).deleteCookies("JSESSIONID")
-		.and()
-		.rememberMe().rememberMeParameter("userRememberMe").rememberMeCookieName("userRememberMe")
-		.and()
-		.csrf().disable();
+		http.httpBasic().and().cors().and().authorizeRequests().antMatchers("/admin/CRUD_User/**").hasRole("admin")
+				.antMatchers("/admin/CRUD_Employees/**").hasRole("manager").antMatchers("/admin/CRUD_Products/**")
+				.hasRole("manager").antMatchers(HttpMethod.GET, "/rest/products").permitAll()
+				.antMatchers(HttpMethod.POST, "/rest/products").hasRole("manager")
+				.antMatchers(HttpMethod.DELETE, "/rest/products/**").hasRole("manager")
+				.antMatchers(HttpMethod.PUT, "/rest/products/**").hasRole("manager")
+				.antMatchers(HttpMethod.POST, "/rest/employees/**").hasRole("manager")
+				.antMatchers(HttpMethod.PUT, "/rest/employees/**").hasRole("manager")
+				.antMatchers(HttpMethod.DELETE, "/rest/employees/**").hasRole("manager")
+				.antMatchers(HttpMethod.GET, "/rest/employees/**").hasRole("manager").antMatchers("/admin/**")
+				.hasAnyRole("admin", "manager", "employee").antMatchers("/**").permitAll().and().formLogin()
+				.loginPage("/login").defaultSuccessUrl("/", true)
+				.failureUrl("/login?error=true").permitAll().and().exceptionHandling().and().logout().permitAll()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")).deleteCookies("JSESSIONID").and()
+				.rememberMe().rememberMeParameter("userRememberMe").rememberMeCookieName("userRememberMe").and().csrf()
+				.disable();
 	}
 
 }

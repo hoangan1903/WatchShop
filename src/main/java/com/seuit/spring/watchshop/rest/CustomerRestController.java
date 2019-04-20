@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.CustomerAPI;
+import com.seuit.spring.watchshop.service.CartService;
 import com.seuit.spring.watchshop.service.CustomerService;
 
 @RestController
 @RequestMapping(value= {"/rest"})
 public class CustomerRestController {
-	
 	@Autowired
 	private CustomerService customerService;
 	

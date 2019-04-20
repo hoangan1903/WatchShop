@@ -5,6 +5,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.seuit.spring.watchshop.entity.Cart;
 import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
 import com.seuit.spring.watchshop.entity.User;
@@ -21,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private CustomerRepository customerRepository;
-
+	
 	@Override
 	@Transactional
 	public Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
@@ -32,6 +34,13 @@ public class CustomerServiceImpl implements CustomerService {
             setUserAndCustomer(customerApi, user, customer);
             user.setCustomer(customer);
             customer.setUser(user);
+            
+            //create cart for customer
+            Cart cart = new Cart();
+            cart.setCustomer(customer);
+            customer.setCart(cart);
+            cart.setPrice((double) 0);   
+            
             return checkAddUser(user);
         }else{
             try {

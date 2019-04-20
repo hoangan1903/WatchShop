@@ -36,6 +36,9 @@ public class Customer {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_user")
 	private User user;
+	
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
+	private Cart cart;
 
 
 	public Integer getId() {
@@ -86,6 +89,17 @@ public class Customer {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+
+
+	public Cart getCart() {
+		return cart;
+	}
+
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 
 
 	public Customer(String name, String phone, String address) {
@@ -105,8 +119,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address + ", user=" + user
-				+ "]";
+				+ ", cart=" + cart + "]";
 	}
+
+
+	
 
 
 	

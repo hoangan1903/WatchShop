@@ -15,7 +15,6 @@ public class CustomUserDetail extends User implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Logger logger = Logger.getLogger(this.getClass().getName());
 	public CustomUserDetail() {
 		super();
 		// TODO Auto-generated constructor stub
