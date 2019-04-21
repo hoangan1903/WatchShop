@@ -145,6 +145,8 @@ public class User {
 		this.email = user.email;
 		this.roles = user.roles;
 	}
+	
+	
 
 	public User() {
 		super();

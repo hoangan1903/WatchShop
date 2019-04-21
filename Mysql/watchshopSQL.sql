@@ -26,8 +26,10 @@ CREATE TABLE `cart` (
   `id_cart` int(11) NOT NULL AUTO_INCREMENT,
   `price` double NOT NULL,
   `id_customer` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_cart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_cart`),
+  KEY `FK5k8xccwxat02pgimx7bhmkkme` (`id_customer`),
+  CONSTRAINT `FK5k8xccwxat02pgimx7bhmkkme` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +38,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (1,0,6);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -47,11 +50,12 @@ DROP TABLE IF EXISTS `cart_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `cart_detail` (
-  `id_cart` int(11) NOT NULL,
+  `amount` int(11) DEFAULT NULL,
   `id_product` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  PRIMARY KEY (`id_cart`,`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_cart` int(11) NOT NULL,
+  PRIMARY KEY (`id_product`,`id_cart`),
+  KEY `FKh5pbblis7iw2kog1cponwqb9c` (`id_cart`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,6 +64,7 @@ CREATE TABLE `cart_detail` (
 
 LOCK TABLES `cart_detail` WRITE;
 /*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
+INSERT INTO `cart_detail` VALUES (2,22,1),(2,23,1);
 /*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +109,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id_customer`),
   KEY `FKl4ks6xjcbcnsionlv8stck4c1` (`id_user`),
   CONSTRAINT `FKl4ks6xjcbcnsionlv8stck4c1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +118,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'sdsad','0121212','sdsds',76),(2,'sdsad',NULL,NULL,78),(3,'3',NULL,NULL,79),(4,'sdsad',NULL,NULL,80),(5,'5',NULL,NULL,81),(6,'customer',NULL,NULL,82),(8,'3',NULL,NULL,84),(9,'',NULL,NULL,85),(10,'',NULL,NULL,86),(11,'',NULL,NULL,87),(12,'ssss',NULL,NULL,96),(13,'ssss',NULL,NULL,97),(14,'dsds',NULL,NULL,98),(15,'sdsdsdsds',NULL,NULL,99),(16,'duy anh',NULL,NULL,100),(17,'12121',NULL,NULL,101),(18,'13131',NULL,NULL,102),(19,'asdasd',NULL,NULL,103),(20,'3',NULL,NULL,104),(21,'sds',NULL,NULL,105),(22,'sấ',NULL,NULL,108);
+INSERT INTO `customer` VALUES (1,'sdsad','0121212','sdsds',76),(2,'sdsad',NULL,NULL,78),(3,'3',NULL,NULL,79),(4,'sdsad',NULL,NULL,80),(5,'5',NULL,NULL,81),(6,'customer',NULL,NULL,82),(8,'3',NULL,NULL,84),(9,'',NULL,NULL,85),(10,'',NULL,NULL,86),(11,'',NULL,NULL,87),(12,'ssss',NULL,NULL,96),(13,'ssss',NULL,NULL,97),(14,'dsds',NULL,NULL,98),(15,'sdsdsdsds',NULL,NULL,99),(16,'duy anh',NULL,NULL,100),(17,'12121',NULL,NULL,101),(18,'13131',NULL,NULL,102),(19,'asdasd',NULL,NULL,103),(20,'3',NULL,NULL,104),(21,'sds',NULL,NULL,105),(22,'sấ',NULL,NULL,108),(23,'test',NULL,NULL,110);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,33 +253,6 @@ INSERT INTO `model` VALUES (1,'Quartz'),(2,'Eco-Drive'),(3,'Cơ');
 UNLOCK TABLES;
 
 --
--- Table structure for table `order`
---
-
-DROP TABLE IF EXISTS `order`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `order` (
-  `id_order` int(11) NOT NULL AUTO_INCREMENT,
-  `price` double NOT NULL,
-  `time` datetime NOT NULL,
-  `id_order_status` int(11) NOT NULL,
-  `id_customer` int(11) NOT NULL,
-  `id_payment` int(11) NOT NULL,
-  PRIMARY KEY (`id_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order`
---
-
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `order_detail`
 --
 
@@ -282,11 +260,12 @@ DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `order_detail` (
-  `id_order` int(11) NOT NULL,
+  `amount` int(11) DEFAULT NULL,
   `id_product` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  PRIMARY KEY (`id_order`,`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_order` int(11) NOT NULL,
+  PRIMARY KEY (`id_product`,`id_order`),
+  KEY `FKsta0q8hk1lt2vdu92u4e5vr4a` (`id_order`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,6 +274,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+INSERT INTO `order_detail` VALUES (2,23,3),(2,22,3);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,9 +287,9 @@ DROP TABLE IF EXISTS `order_status`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `order_status` (
   `id_order_status` int(11) NOT NULL AUTO_INCREMENT,
-  `order_status` varchar(45) NOT NULL,
+  `order_status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_order_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,6 +300,37 @@ LOCK TABLES `order_status` WRITE;
 /*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
 INSERT INTO `order_status` VALUES (1,'unconfirmed'),(2,'confirmed'),(3,'paid'),(4,'unpaid');
 /*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `orders` (
+  `id_order` int(11) NOT NULL AUTO_INCREMENT,
+  `create_at` datetime NOT NULL,
+  `price` double DEFAULT NULL,
+  `id_customer` int(11) DEFAULT NULL,
+  `id_order_status` int(11) DEFAULT NULL,
+  `id_payment` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_order`),
+  KEY `FKm3ritehtix5ub7jte0bxu41ik` (`id_customer`),
+  KEY `FKbp6k71rsko970ooke8me82k9` (`id_order_status`),
+  KEY `FK5phng0rr9yex7v321tef65svq` (`id_payment`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (3,'2019-04-21 21:36:12',0,6,1,2);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -355,9 +366,9 @@ DROP TABLE IF EXISTS `payment`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `payment` (
   `id_payment` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_payment`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,7 +489,7 @@ CREATE TABLE `user` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,7 +498,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (73,'manager','$2a$10$XLLnMc..fv/WAGPfq17S6.M/cVechthr9xA6APkKIw5GOgQ7.4A6q','manager@gmail.com','2019-04-13 12:33:32','2019-04-13 12:35:37'),(74,'admin','$2a$10$IvV9blYcBOjirpoghTowPO0h4A/GcmfLtMzCepbkhWHTeiR6ozUYK','admin@gmail.com','2019-04-13 12:35:37','2019-04-13 12:35:37'),(75,'employee','$2a$10$F8qM5Y5DvOmt3hVtOgyRA.C/KnQz6YRAmR0rYJ.gNW7J3xRzxoO0i','employee@gmail.com','2019-04-13 12:40:07','2019-04-13 12:40:07'),(76,'1','$2a$10$rN7Yay76wsgs2v8RQf3kLOidJrAvyb1GamgbHdp9ylVpuK3h4J6g.','sdsdsdsds','2019-04-13 12:52:52','2019-04-13 12:52:52'),(78,'2','$2a$10$YPA3kTvD6w1q.EuG8cPeVemRR7AmRYCizd/nuaR2831Oy1iubK04a','sdsdsdsds','2019-04-13 22:39:29','2019-04-13 22:39:29'),(79,'3','$2a$10$sY8n9pyOxS18bUwcQuKCze3ZCRl6azJ2rKVNt3FF7KcbaKs/TJgey','3@gmail.com','2019-04-13 22:54:46','2019-04-13 22:54:46'),(80,'4','$2a$10$jebaddUxcILSLJZnh7aD8eSvf5.5YRh8WhS6k2GXdjEsNOvTnG.F6','sdsdsdsds','2019-04-13 23:06:22','2019-04-13 23:06:22'),(81,'5','$2a$10$HGmfPdyEjGdpiLEGScYHAeoTdp6WooXRNhw/sVKHq87hgQnu.Smw2','3@gmail.com','2019-04-13 23:11:48','2019-04-13 23:11:48'),(82,'customer','$2a$10$UnjybIC6NCEieUZYjOF9x.5rqGSbgy3vvc8LKPXFHPerm7JkX1zq.','customer','2019-04-13 23:13:41','2019-04-13 23:13:41'),(84,'customer1','$2a$10$B62/Dj6prL4krUaHU52N.u46CU9K23cYUgB1QoSi47b/T7Ntp5YK.','3@gmail.com','2019-04-13 23:19:35','2019-04-13 23:19:35'),(85,'','$2a$10$kNTO7PehPbQjON9fSwOOOe1yq.JsLw.7fEfY7l4A1m6gAxf5oHG/a','','2019-04-13 23:22:05','2019-04-13 23:22:05'),(86,'s','$2a$10$J.yhgNlC7LjqJjIQG2crSuHw5vl/Tn6HCVQBfi4lnBSbEdBeuDiF6','','2019-04-13 23:28:16','2019-04-13 23:28:16'),(87,'sssss','$2a$10$OObufLE/ymraagITTv6w4uFBgBH1MKC7xZJo9g7XTbjx59RxxDo4u','','2019-04-13 23:28:29','2019-04-13 23:28:29'),(96,'ssasasasasa','$2a$10$rnmBgkHhVD8xWpkZTQ05jOi1HYRZT9RzCVRo1jpGFoMQOJYOHVGTe','ssssss','2019-04-13 23:31:23','2019-04-13 23:31:23'),(97,'ssasasasasaddd','$2a$10$CsUKXQRUm.GzXbvVkm0OK.e1QKtMcXIHRbMmYKgcgZ/zuu3rZHhU2','ssssss','2019-04-13 23:31:49','2019-04-13 23:31:49'),(98,'sdsds','$2a$10$TCKDUbl8KTfkkGG4SPRXYeYwSRq/ONeuPRZ8/qtqpgnVPrdKpm1gO','sdsds','2019-04-13 23:43:02','2019-04-13 23:43:02'),(99,'sdsdsdsdsdsds','$2a$10$mcItpkZMp1uzZjs5N8hObeR4ataLKacDFNL6NfBVFzyPKQCW1oRMe','3@gmail.com','2019-04-13 23:43:48','2019-04-13 23:43:48'),(100,'final','$2a$10$J.3vCsdCV4/1MakzrvQUn.IWhwaBa1UFKCFg6Jyeyp/QBYqadK7CK','danhy989@gmail.com','2019-04-14 00:03:11','2019-04-14 00:03:11'),(101,'1213131','$2a$10$47cPkXQNnpUelgldXCmHRO1.FxKWh6.n17/QgGMEOxvS.t6TSkvBK','danhy989@gmail.com','2019-04-14 00:05:30','2019-04-14 00:05:30'),(102,'1313131313','$2a$10$4pUS.We/m5MbedpaS5nnbuWWszd4XOyxB76O4ESTbawyoLMLTswYK','danhy989@gmail.com','2019-04-14 00:05:56','2019-04-14 00:05:56'),(103,'sdadss','$2a$10$qFaZ2aa57mUB1IuIaxMS1u4OfDXDDhRpnNmvvgIVrLz5e/dc4KJp2','danhy989@gmail.com','2019-04-14 00:15:10','2019-04-14 00:15:10'),(104,'sdsdsdsadsa','$2a$10$0L9hK0M7dyWtPMvhOr8c3.TtfQs7/qm7jevrbQqCJ1hxtuWeRcf6e','danhy989@gmail.com','2019-04-14 00:15:39','2019-04-14 00:15:39'),(105,'sdsdsdsdssds','$2a$10$bt0.he/GUE1M1ThmxT93l.zdMNJS4HHYsksqkJQoqBFeSIG3l61k6','danhy989@gmail.com','2019-04-14 00:19:51','2019-04-14 00:19:51'),(108,'manager1212','$2a$10$gVpxnwb8fbk7TaOPnjXU5ueRcTy1USJRfZM9PmCEFLU9dSQKCHV.S','danhy989@gmail.com','2019-04-16 01:35:46','2019-04-16 01:35:46');
+INSERT INTO `user` VALUES (74,'admin','$2a$10$IvV9blYcBOjirpoghTowPO0h4A/GcmfLtMzCepbkhWHTeiR6ozUYK','admin@gmail.com','2019-04-13 12:35:37','2019-04-13 12:35:37'),(75,'employee','$2a$10$F8qM5Y5DvOmt3hVtOgyRA.C/KnQz6YRAmR0rYJ.gNW7J3xRzxoO0i','employee@gmail.com','2019-04-13 12:40:07','2019-04-13 12:40:07'),(76,'1','$2a$10$rN7Yay76wsgs2v8RQf3kLOidJrAvyb1GamgbHdp9ylVpuK3h4J6g.','sdsdsdsds','2019-04-13 12:52:52','2019-04-13 12:52:52'),(78,'2','$2a$10$YPA3kTvD6w1q.EuG8cPeVemRR7AmRYCizd/nuaR2831Oy1iubK04a','sdsdsdsds','2019-04-13 22:39:29','2019-04-13 22:39:29'),(79,'3','$2a$10$sY8n9pyOxS18bUwcQuKCze3ZCRl6azJ2rKVNt3FF7KcbaKs/TJgey','3@gmail.com','2019-04-13 22:54:46','2019-04-13 22:54:46'),(80,'4','$2a$10$jebaddUxcILSLJZnh7aD8eSvf5.5YRh8WhS6k2GXdjEsNOvTnG.F6','sdsdsdsds','2019-04-13 23:06:22','2019-04-13 23:06:22'),(81,'5','$2a$10$HGmfPdyEjGdpiLEGScYHAeoTdp6WooXRNhw/sVKHq87hgQnu.Smw2','3@gmail.com','2019-04-13 23:11:48','2019-04-13 23:11:48'),(82,'customer','$2a$10$UnjybIC6NCEieUZYjOF9x.5rqGSbgy3vvc8LKPXFHPerm7JkX1zq.','customer','2019-04-13 23:13:41','2019-04-13 23:13:41'),(84,'customer1','$2a$10$B62/Dj6prL4krUaHU52N.u46CU9K23cYUgB1QoSi47b/T7Ntp5YK.','3@gmail.com','2019-04-13 23:19:35','2019-04-13 23:19:35'),(85,'','$2a$10$kNTO7PehPbQjON9fSwOOOe1yq.JsLw.7fEfY7l4A1m6gAxf5oHG/a','','2019-04-13 23:22:05','2019-04-13 23:22:05'),(86,'s','$2a$10$J.yhgNlC7LjqJjIQG2crSuHw5vl/Tn6HCVQBfi4lnBSbEdBeuDiF6','','2019-04-13 23:28:16','2019-04-13 23:28:16'),(87,'sssss','$2a$10$OObufLE/ymraagITTv6w4uFBgBH1MKC7xZJo9g7XTbjx59RxxDo4u','','2019-04-13 23:28:29','2019-04-13 23:28:29'),(96,'ssasasasasa','$2a$10$rnmBgkHhVD8xWpkZTQ05jOi1HYRZT9RzCVRo1jpGFoMQOJYOHVGTe','ssssss','2019-04-13 23:31:23','2019-04-13 23:31:23'),(97,'ssasasasasaddd','$2a$10$CsUKXQRUm.GzXbvVkm0OK.e1QKtMcXIHRbMmYKgcgZ/zuu3rZHhU2','ssssss','2019-04-13 23:31:49','2019-04-13 23:31:49'),(98,'sdsds','$2a$10$TCKDUbl8KTfkkGG4SPRXYeYwSRq/ONeuPRZ8/qtqpgnVPrdKpm1gO','sdsds','2019-04-13 23:43:02','2019-04-13 23:43:02'),(99,'sdsdsdsdsdsds','$2a$10$mcItpkZMp1uzZjs5N8hObeR4ataLKacDFNL6NfBVFzyPKQCW1oRMe','3@gmail.com','2019-04-13 23:43:48','2019-04-13 23:43:48'),(100,'final','$2a$10$J.3vCsdCV4/1MakzrvQUn.IWhwaBa1UFKCFg6Jyeyp/QBYqadK7CK','danhy989@gmail.com','2019-04-14 00:03:11','2019-04-14 00:03:11'),(101,'1213131','$2a$10$47cPkXQNnpUelgldXCmHRO1.FxKWh6.n17/QgGMEOxvS.t6TSkvBK','danhy989@gmail.com','2019-04-14 00:05:30','2019-04-14 00:05:30'),(102,'1313131313','$2a$10$4pUS.We/m5MbedpaS5nnbuWWszd4XOyxB76O4ESTbawyoLMLTswYK','danhy989@gmail.com','2019-04-14 00:05:56','2019-04-14 00:05:56'),(103,'sdadss','$2a$10$qFaZ2aa57mUB1IuIaxMS1u4OfDXDDhRpnNmvvgIVrLz5e/dc4KJp2','danhy989@gmail.com','2019-04-14 00:15:10','2019-04-14 00:15:10'),(104,'sdsdsdsadsa','$2a$10$0L9hK0M7dyWtPMvhOr8c3.TtfQs7/qm7jevrbQqCJ1hxtuWeRcf6e','danhy989@gmail.com','2019-04-14 00:15:39','2019-04-14 00:15:39'),(105,'sdsdsdsdssds','$2a$10$bt0.he/GUE1M1ThmxT93l.zdMNJS4HHYsksqkJQoqBFeSIG3l61k6','danhy989@gmail.com','2019-04-14 00:19:51','2019-04-14 00:19:51'),(108,'manager1212','$2a$10$gVpxnwb8fbk7TaOPnjXU5ueRcTy1USJRfZM9PmCEFLU9dSQKCHV.S','danhy989@gmail.com','2019-04-16 01:35:46','2019-04-16 01:35:46'),(109,'manager','$2a$10$YzY.FzDqmfgNRpF8ZHetgOzPZtGTlkDDV4FJnV52kRp4EC2Z9OGRy','manager@gmail.com','2019-04-19 14:59:40','2019-04-19 14:59:40'),(110,'test','$2a$10$ZznLCPEj2iVtVmgXHTYBgu/4Sq/zz7Rz0g302VyQIG1hH/7E0u2Fu','danhy989@gmail.com','2019-04-20 15:00:18','2019-04-20 15:00:18');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -514,7 +525,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (74,1),(73,2),(75,3),(76,4),(78,4),(79,4),(80,4),(81,4),(82,4),(84,4),(85,4),(86,4),(87,4),(96,4),(97,4),(98,4),(99,4),(100,4),(101,4),(102,4),(103,4),(104,4),(105,4),(108,4);
+INSERT INTO `user_role` VALUES (74,1),(109,2),(75,3),(76,4),(78,4),(79,4),(80,4),(81,4),(82,4),(84,4),(85,4),(86,4),(87,4),(96,4),(97,4),(98,4),(99,4),(100,4),(101,4),(102,4),(103,4),(104,4),(105,4),(108,4),(110,4);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -527,4 +538,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-18 10:46:13
+-- Dump completed on 2019-04-21 22:20:50

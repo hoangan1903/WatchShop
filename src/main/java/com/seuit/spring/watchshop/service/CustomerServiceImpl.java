@@ -102,8 +102,15 @@ public class CustomerServiceImpl implements CustomerService {
 		return result;
 	}
 	
+	@Override
+	@Transactional
+	public Customer getInforMe() {
+		// TODO Auto-generated method stub
+		Integer idCustomer = this.getIdCustomerByPrincipal();
+		if(idCustomer==null) {
+			return null;
+		}
+		return customerRepository.findById(idCustomer).get();
+	}
 	
-	
-	 
-
 }

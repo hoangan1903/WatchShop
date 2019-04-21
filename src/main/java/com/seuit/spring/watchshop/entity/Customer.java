@@ -1,5 +1,8 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "customer")
@@ -34,12 +40,17 @@ public class Customer {
 	
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	@JoinColumn(name = "id_user")
 	private User user;
 	
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
+	@JsonIgnore
 	private Cart cart;
-
+	
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customerO")
+	@JsonIgnore
+	private List<Order> orders = new ArrayList<Order>();
 
 	public Integer getId() {
 		return id;
@@ -101,6 +112,17 @@ public class Customer {
 		this.cart = cart;
 	}
 
+	
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 
 	public Customer(String name, String phone, String address) {
 		super();
@@ -119,9 +141,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address + ", user=" + user
-				+ ", cart=" + cart + "]";
+				+ ", cart=" + cart + ", orders=" + orders + "]";
 	}
 
+
+	
 
 	
 

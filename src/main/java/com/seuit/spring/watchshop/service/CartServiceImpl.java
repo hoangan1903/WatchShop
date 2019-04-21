@@ -236,5 +236,4 @@ public class CartServiceImpl implements CartService {
 		}
 		return cart.getCartDetails().stream().collect(Collectors.toSet());
 	}
-
 }

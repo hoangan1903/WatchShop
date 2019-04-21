@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
 import com.seuit.spring.watchshop.service.CartService;
 import com.seuit.spring.watchshop.service.CustomerService;
@@ -23,7 +25,7 @@ public class CustomerRestController {
 	private CustomerService customerService;
 	
 	@PostMapping("/customers")
-    String newCustomer(@Valid @RequestBody CustomerAPI customerApi) {
+    private String newCustomer(@Valid @RequestBody CustomerAPI customerApi) {
 		boolean boo =  customerService.saveOrUpdateCustomer(customerApi, null);
         if(boo==true) {
         	return "success";
@@ -32,8 +34,14 @@ public class CustomerRestController {
         }
     }
 	@PutMapping("/customers/{id}")
-    String updateCustomer(@Valid @RequestBody CustomerAPI customerAPI, BindingResult result, @PathVariable(value = "id") @Min(1) Integer id) {
+    private String updateCustomer(@Valid @RequestBody CustomerAPI customerAPI, BindingResult result, @PathVariable(value = "id") @Min(1) Integer id) {
         customerService.saveOrUpdateCustomer(customerAPI,id);
         return "Update Success";
     }
+	
+	@GetMapping("/me")
+	private Customer getInforMe() {
+		return customerService.getInforMe();
+	}
+	
 }

@@ -11,41 +11,42 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="cart_detail")
-public class CartDetail implements Serializable{
+@Table
+public class OrderDetail implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id_cart")
-	private Cart cart;
+	@JoinColumn(name="id_order")
+	private Order orderO;
 	
 	@Id
 	@ManyToOne
 	@JoinColumn(name="id_product")
-	private Product productC;
+	private Product productO;
 	
 	@JoinColumn(name="amount")
 	private Integer amount;
 
-	public Cart getCart() {
-		return cart;
+	public Order getOrderO() {
+		return orderO;
 	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
+	public void setOrderO(Order orderO) {
+		this.orderO = orderO;
 	}
 
-	public Product getProduct() {
-		return productC;
+	public Product getProductO() {
+		return productO;
 	}
 
-	public void setProduct(Product product) {
-		this.productC = product;
+	public void setProductO(Product productO) {
+		this.productO = productO;
 	}
 
 	public Integer getAmount() {
@@ -56,24 +57,28 @@ public class CartDetail implements Serializable{
 		this.amount = amount;
 	}
 
-	public CartDetail(Cart cart, Product product, Integer amount) {
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
+
+	public OrderDetail(Order orderO, Product productO, Integer amount) {
 		super();
-		this.cart = cart;
-		this.productC = product;
+		this.orderO = orderO;
+		this.productO = productO;
 		this.amount = amount;
 	}
 
-	public CartDetail() {
+	public OrderDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String toString() {
-		return "CartDetail [cart=" + cart + ", product=" + productC + ", amount=" + amount + "]";
+		return "OrderDetail [orderO=" + orderO + ", productO=" + productO + ", amount=" + amount + "]";
 	}
-	
-	
-	
+
 	
 }

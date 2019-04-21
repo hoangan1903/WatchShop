@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -60,8 +59,12 @@ public class Product {
 	private ProductDetail productDetail;
 	
 	
-	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "productC",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<CartDetail> CartDetails = new HashSet<CartDetail>();
+	
+	@OneToMany(mappedBy = "productO",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<OrderDetail> OrderDetails =  new HashSet<OrderDetail>();
+	
 
 	public Integer getId() {
 		return id;
@@ -128,6 +131,15 @@ public class Product {
 	public void setCartDetails(Set<CartDetail> cartDetails) {
 		CartDetails = cartDetails;
 	}
+	
+	@JsonIgnore
+	public Set<OrderDetail> getOrderDetails() {
+		return OrderDetails;
+	}
+
+	public void setOrderDetails(Set<OrderDetail> orderDetails) {
+		OrderDetails = orderDetails;
+	}
 
 	public Product(String codeName, String image, Double price, Integer available) {
 		super();
@@ -146,12 +158,6 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", codeName=" + codeName + ", image=" + image + ", price=" + price + ", available="
 				+ available + ", firm=" + firm + ", productDetail=" + productDetail + ", CartDetails=" + CartDetails
-				+ "]";
+				+ ", OrderDetails=" + OrderDetails + "]";
 	}
-
-	
-
-	
-	
-	
 }
