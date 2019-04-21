@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.rest;
 
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.CartAPI;
+import com.seuit.spring.watchshop.entity.CartDetail;
 import com.seuit.spring.watchshop.service.CartService;
+import com.seuit.spring.watchshop.service.CustomerService;
 
 @RestController
 @RequestMapping(value="/rest")
@@ -21,6 +25,11 @@ public class CartRestController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@GetMapping("/cart")
+	private Set<CartDetail> listCartDetail(){
+		return cartService.listCartDetail();
+	}
 	
 	@PostMapping("/cart")
 	private String addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
@@ -30,10 +39,9 @@ public class CartRestController {
 		}
 		return "add product to cart fail";
 	}
-	
 	@PutMapping("/cart/up")
 	private String upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.upAmountProduct(cartAPI.getIdCustomer(), cartAPI.getIdProduct());
+		boolean boo = cartService.upAmountProduct(cartAPI.getIdProduct());
 		if(boo==true) {
 			return "up amount product to success";
 		}
@@ -41,29 +49,28 @@ public class CartRestController {
 	}
 	@PutMapping("/cart/down")
 	private String downAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.downAmountProduct(cartAPI.getIdCustomer(), cartAPI.getIdProduct());
+		boolean boo = cartService.downAmountProduct(cartAPI.getIdProduct());
 		if(boo==true) {
 			return "down amount product to success";
 		}
 		return "down amount product to fail";
 	}
 	//Have bug
-	@DeleteMapping("/cart")
-	private String deleteC(@RequestParam Integer idCustomer,@RequestParam Integer idProduct) {
-		boolean boo = cartService.deleteCartDetailByid(idCustomer, idProduct);
+	@DeleteMapping("/cart/product")
+	private String deleteC(@Valid @RequestBody CartAPI cartAPI) {
+		boolean boo = cartService.deleteCartDetailByid(cartAPI.getIdProduct());
 		if(boo==true) {
-			return "up amount product to success";
+			return "delete product to success";
 		}
-		return "up amount product to fail";
+		return "delete product to fail";
 	}
-	
-    //Have bug
-	@DeleteMapping("/cart/deleteAll")
-	private String deleteAllProductInCart(@RequestParam Integer idCustomer) {
-		boolean boo = cartService.deleteAllCartDetail(idCustomer);
+
+	@DeleteMapping("/cart/all")
+	private String deleteAllProductInCart() {
+		boolean boo = cartService.deleteAllCartDetail();
 		if(boo==true) {
-			return "up amount product to success";
+			return "delete all product to success";
 		}
-		return "up amount product to fail";
+		return "delete all amount product to fail";
 	}
 }

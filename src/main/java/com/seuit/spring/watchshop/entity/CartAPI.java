@@ -4,17 +4,10 @@ import javax.validation.constraints.NotNull;
 
 public class CartAPI {
 	@NotNull
-	private Integer idCustomer;
-	@NotNull
 	private Integer idProduct;
 	
 	private Integer amount;
-	public Integer getIdCustomer() {
-		return idCustomer;
-	}
-	public void setIdCustomer(Integer idCustomer) {
-		this.idCustomer = idCustomer;
-	}
+	
 	public Integer getIdProduct() {
 		return idProduct;
 	}
@@ -27,9 +20,8 @@ public class CartAPI {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-	public CartAPI(Integer idCustomer, Integer idProduct, Integer amount) {
+	public CartAPI( Integer idProduct, Integer amount) {
 		super();
-		this.idCustomer = idCustomer;
 		this.idProduct = idProduct;
 		this.amount = amount;
 	}
@@ -39,8 +31,10 @@ public class CartAPI {
 	}
 	@Override
 	public String toString() {
-		return "CartAPI [idCustomer=" + idCustomer + ", idProduct=" + idProduct + ", amount=" + amount + "]";
+		return "CartAPI [idProduct=" + idProduct + ", amount=" + amount + "]";
 	}
+	
+	
 	
 	
 }

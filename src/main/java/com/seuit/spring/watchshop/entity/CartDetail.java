@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="cart_detail")
 public class CartDetail implements Serializable{
@@ -18,6 +20,7 @@ public class CartDetail implements Serializable{
 
 	@Id
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_cart")
 	private Cart cart;
 	

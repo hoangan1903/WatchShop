@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "cart")
 public class Cart {
@@ -29,6 +31,7 @@ public class Cart {
 	private Double price;
 	
 	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinColumn(name = "id_customer")
 	private Customer customer;
 	
@@ -60,6 +63,7 @@ public class Cart {
 	}
 	
 	
+	@JsonIgnore
 	public Set<CartDetail> getCartDetails() {
 		return CartDetails;
 	}

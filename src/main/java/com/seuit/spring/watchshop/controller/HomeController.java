@@ -10,14 +10,7 @@ import com.seuit.spring.watchshop.entity.CustomUserDetail;
 @Controller
 public class HomeController {
 	@GetMapping(value = { "/" })
-	public String showIndex(Model model) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		System.out.println(auth);
-//		if(auth.getPrincipal()!="anonymousUser" ) {
-//			CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
-//			model.addAttribute("test", userDetails.getUsername());
-//			
-//		}
+	public String showIndex() {
 		return "index";
 	}
 

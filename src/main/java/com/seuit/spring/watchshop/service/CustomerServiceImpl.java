@@ -4,9 +4,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.seuit.spring.watchshop.entity.Cart;
+import com.seuit.spring.watchshop.entity.CustomUserDetail;
 import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
 import com.seuit.spring.watchshop.entity.User;
@@ -75,5 +78,32 @@ public class CustomerServiceImpl implements CustomerService {
 	        customer.setAddress(customerApi.getCustomer().getAddress());
 	    }
 	
+	@Override
+	@Transactional
+	public Integer getIdCustomerByPrincipal() {
+		// TODO Auto-generated method stub
+		Integer result = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth);
+		if(auth.getPrincipal()!="anonymousUser" ) {
+			CustomUserDetail userDetails = (CustomUserDetail) auth.getPrincipal();
+			try {
+				User user = userService.getUserById(userDetails.getId());
+				Customer customer = user.getCustomer();
+				result = customer.getId();
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
+				result = null;
+				e.printStackTrace();
+			}
+		}else {
+			result = null;
+		}
+		return result;
+	}
+	
+	
+	
+	 
 
 }

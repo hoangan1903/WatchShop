@@ -59,7 +59,8 @@ public class Product {
 	@JsonIgnore
 	private ProductDetail productDetail;
 	
-	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+	
+	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<CartDetail> CartDetails = new HashSet<CartDetail>();
 
 	public Integer getId() {
@@ -119,7 +120,7 @@ public class Product {
 	}
 	
 	
-
+	@JsonIgnore
 	public Set<CartDetail> getCartDetails() {
 		return CartDetails;
 	}

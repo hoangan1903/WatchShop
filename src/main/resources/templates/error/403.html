@@ -2,116 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Manager Page - Dashboard</title>
-<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<title>404 HTML</title>
+
+<!-- Google font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900"
+	rel="stylesheet">
+
+<!-- Custom stlylesheet -->
+<link type="text/css" rel="stylesheet" th:href="@{/css/style-error.css}" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
 </head>
 
-<body id="page-top">
+<body>
 
-	<!-- Page Wrapper -->
-	<div id="wrapper">
-
-		<!-- Sidebar -->
-		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
-		<!-- End of Sidebar -->
-
-		<!-- Content Wrapper -->
-		<div id="content-wrapper" class="d-flex flex-column">
-
-			<!-- Main Content -->
-			<div id="content">
-
-				<!-- Topbar -->
-				<nav th:replace="fragments/adminPageFragment.html :: topBar">
-				</nav>
-				<!-- End of Topbar -->
-
-				<!-- Begin Page Content -->
-				
-				<div class="container-fluid">
-
-					<!-- 403 Error Text -->
-					<div class="text-center">
-						<div class="error mx-auto" data-text="403">403</div>
-						<p class="lead text-gray-800 mb-5">OPPSSS!!!! Sorry...</p>
-						<p class="text-gray-500 mb-0">Sorry, your access is refused due to security reasons of our server and also our sensitive data.
-Please go back to the previous page to continue browsing.</p>
-						<br>
-						<a th:href="@{/admin}">&larr; Back to Dashboard</a>
-						<br>
-						<br>
-						<a th:href="@{/logout}">Logout</a>
-					</div>
-
-				</div>
-				<!-- /.container-fluid -->
-
+	<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>Oops!</h1>
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2019</span>
-					</div>
-				</div>
-			</footer>
-			<!-- End of Footer -->
-
+			<h2>403 - Forbidden</h2>
+			<p>Sorry, your access is refused due to security reasons of our server and also our sensitive data.
+Please go back to the previous page to continue browsing.</p>
+			<a th:href="@{/admin}">&larr; Back to Dashboard</a> <br> <br>
+			<a th:href="@{/logout}">Logout</a>
 		</div>
-		<!-- End of Content Wrapper -->
-
 	</div>
-	<!-- End of Page Wrapper -->
-
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
-	</a>
-
-
-	</div>
-	<!-- End of Main Content -->
-
-	<!-- Footer -->
-	<footer th:replace="fragments/adminPageFragment.html :: footer">
-	</footer>
-	<!-- End of Footer -->
-
-	</div>
-	<!-- End of Content Wrapper -->
-
-	</div>
-	<!-- End of Page Wrapper -->
-
-	<!-- Scroll to Top Button-->
-	<a th:replace="fragments/adminPageFragment.html :: scrollTopButton">
-
-	</a>
-
-	<!-- Logout Modal-->
-	<div th:replace="fragments/adminPageFragment.html :: logoutModal">
-
-	</div>
-
-	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
-
-	<!-- Page level custom scripts -->
-	<script src="js/demo/chart-area-demo.js"></script>
-	<script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
+<!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>
