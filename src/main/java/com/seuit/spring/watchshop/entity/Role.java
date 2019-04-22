@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="role")
 public class Role {
@@ -25,6 +27,7 @@ public class Role {
 	private String name;
 	
 	@ManyToMany(mappedBy="roles",fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Set<User> users = new HashSet<>();
 
 	public Integer getId() {
@@ -60,8 +63,4 @@ public class Role {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
-	
 }

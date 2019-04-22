@@ -142,4 +142,36 @@ public class UserServiceImpl implements UserService {
 		return role.getUsers();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<User> findPaginated(Integer page, Integer size) {
+		Session session = getSession();
+		String sql = "FROM User";
+		Query query = session.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
+		return query.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public Long countUser() {
+		Session session =getSession();
+		String sqlCount = "SELECT count(u.id) FROM User u";
+		Query queryCount = session.createQuery(sqlCount);
+		Long count = (Long)queryCount.getSingleResult();
+		System.out.println(count.toString());
+		return count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<User> getListUserByKeyword(String keyword) {
+		Session session = getSession();
+		String sql = "SELECT u FROM User u WHERE u.username like:username";
+		javax.persistence.Query query = session.createQuery(sql).setMaxResults(10);
+		query.setParameter("username", "%" +keyword + "%");
+		return query.getResultList();
+	}
+
 }

@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.entity.User;
 import com.seuit.spring.watchshop.helper.ProductExcelHelper;
+import com.seuit.spring.watchshop.service.CustomerService;
 import com.seuit.spring.watchshop.service.DBFileStorageService;
 import com.seuit.spring.watchshop.service.ProductService;
 import com.seuit.spring.watchshop.service.UserService;
@@ -45,7 +47,8 @@ public class AdminController {
 	@Autowired
 	private DBFileStorageService dbFileStorageService;
 
-	
+	@Autowired
+	private CustomerService customerService;
 	//ADMIN AREA
 	@GetMapping("/CRUD_User")
 	public String showCRUDUserPage(Model model) {
@@ -111,5 +114,14 @@ public class AdminController {
 			e.printStackTrace();
 		}
 		return "redirect:/admin/CRUD_Products";
+	}
+	
+	@GetMapping("/list_Customers")
+	public String showAllCustomer(Model model) {
+		List<Customer> listCustomeres = customerService.getAllCustomers();
+
+		model.addAttribute("listCustomers", listCustomeres);
+		model.addAttribute("customer", new Customer());
+		return "admin/listCustomers";
 	}
 }

@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
 allowGetters = true)
 public class User {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_user")
@@ -66,7 +67,6 @@ public class User {
     //Loại bỏ remove : Vì khi remove hết tất cả User có role X thì sẽ remove luôn role X đó .
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
-	@JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
 
@@ -138,6 +138,14 @@ public class User {
 		this.roles = roles;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
 	public User(User user) {
 		this.id = user.id;
 		this.username = user.username;
@@ -145,8 +153,6 @@ public class User {
 		this.email = user.email;
 		this.roles = user.roles;
 	}
-	
-	
 
 	public User() {
 		super();
