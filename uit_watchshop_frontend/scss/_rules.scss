@@ -19,6 +19,7 @@ section {
 }
 
 ul {
+    @extend .content-wrapper;
     list-style: none;
 
     li {

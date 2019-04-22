@@ -1,4 +1,4 @@
-/* Homepage's functionality implementation */
+/* Homepage functionality implementation */
 
 $(document).ready(function () {
 
@@ -19,10 +19,14 @@ $(document).ready(function () {
     function initSliders() {
         let sliders, nextButtons, length;
 
+        // get all sliders
         sliders = $('.custom_slider');
+        // get "next" buttons
         nextButtons = $('.custom_slider_nav');
+        // get number of sliders
         length = sliders.length;
 
+        // make every slider an Owl Carousel
         sliders.owlCarousel({
             loop: true,
             autoplay: false,
@@ -47,29 +51,38 @@ $(document).ready(function () {
         });
 
         for (let i = 0; i < length; i++) {
+            // get each and every slider and button
             let slider = sliders.eq(i),
                 next = nextButtons.eq(i);
 
+            // set click handler for each next button
+            // slide to the next item in the list (step = 1)
             next.click(function () {
                 slider.trigger('next.owl.carousel');
             });
         }
     }
 
-    $('body')
-        .on('mouseenter mouseleave', '.dropdown', toggleDropdown)
-        .on('click', '.dropdown-menu a', toggleDropdown);
+    function init() {
+        $('body')
+            .on('mouseenter mouseleave', '.dropdown', toggleDropdown)
+            .on('click', '.dropdown-menu a', toggleDropdown);
 
-    $('.section-banners').waypoint({
-        handler: function (direction) {
-            if (direction === 'down') {
-                $('.navigation').addClass('stick');
-            } else {
-                $('.navigation').removeClass('stick');
-            }
-        },
-        offset: -1
-    });
+        // Define sticky navigation bar behavior
+        // when to appear and when to disappear
+        $('.section-banners').waypoint({
+            handler: function (direction) {
+                if (direction === 'down') {
+                    $('.navigation').addClass('stick');
+                } else {
+                    $('.navigation').removeClass('stick');
+                }
+            },
+            offset: -1
+        });
 
-    initSliders();
+        initSliders();
+    }
+
+    init();
 });

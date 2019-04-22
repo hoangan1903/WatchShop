@@ -1,0 +1,96 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+html,
+body {
+    background-color: $color-background;
+}
+
+section.section-shopping-cart {
+    padding: $spacing-y-small 0;
+
+    a {
+        &.cart-product-link {
+            display: block;
+            font-size: $font-size-large;
+            font-weight: $font-wt-medium;
+            margin-bottom: 8px;
+
+            &:link,
+            &:visited {
+                text-decoration: none;
+                color: $color-primary-text;
+            }
+
+            @include hover-color($color-accent);
+            transition: color $transtion-time;
+        }
+    }
+
+    div {
+        &.product-quantity {
+            color: $color-primary-text;
+            border-top: 1px solid $color-quatity-button;
+            border-bottom: 1px solid $color-quatity-button;
+        }
+
+        &.card-item-actions {
+            margin-top: 16px;
+
+            a.card-item-action {
+                margin-left: 16px;
+
+                &:link,
+                &:visited {
+                    text-decoration: none;
+                    color: $color-secondary-text;
+                }
+
+                ion-icon {
+
+                    &.cart-action-icon {
+                        transition: color $transtion-time;
+                    }
+
+                    &.wishlist-icon {
+                        @include hover-color($color-wishlist-icon);
+                    }
+
+                    &.remove-icon {
+                        @include hover-color($color-primary-text);
+                    }
+                }
+            }
+        }
+    }
+
+    p {
+        &.card-text {
+            padding: 0;
+            margin: 0;
+
+            &.price {
+                color: $color-accent;
+                font-size: 120%;
+                font-weight: $font-wt-medium;
+            }
+
+            &.price-small {
+                color: $color-primary-text;
+                font-size: $font-size-regular;
+                font-weight: $font-wt-medium;
+            }
+
+            &.order-summary-entry {
+                color: $color-primary-text;
+                
+                &.total {
+                    font-weight: $font-wt-medium;
+                }
+            }
+        }
+    }
+}

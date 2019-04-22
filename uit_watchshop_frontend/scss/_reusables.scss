@@ -14,6 +14,10 @@
     height: 100%;
 }
 
+.half-height {
+    height: 50%;
+}
+
 .stretched-container {
     width: 100%;
     height: 100%;
@@ -78,7 +82,7 @@ div {
 
     // Images containers
     &.product-img-container {
-        height: 200px;
+        height: 270px;
         width: auto;
         display: flex;
         justify-content: center;
@@ -92,7 +96,7 @@ h2.section-heading {
     width: 100%;
     color: $color-primary-text;
     font-family: 'Montserrat', sans-serif;
-    font-size: $font-size-large;
+    font-size: $font-size-very-large;
     font-weight: $font-wt-medium;
     word-spacing: 2px;
     text-align: center;
@@ -197,12 +201,21 @@ ion-icon {
 
 .card {
     &.product-card {
-        height: auto;
+        min-height: 450px;
         width: auto;
+
+        .card-body {
+
+            a.btn {
+                position: absolute;
+                left: 20px;
+                bottom: 20px;
+            }
+        }
     }
 }
 
-// Slider
+// Sliders
 
 .custom_slider_nav {
     background: $color-accent;

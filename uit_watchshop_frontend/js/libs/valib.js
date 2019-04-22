@@ -430,10 +430,19 @@
             request.send();
 
             request.onload = function () {
-                let jsonText = this.responseText;
-                let obj = jsonText ? JSON.parse(jsonText) : {};
+                let jsonText, obj;
+                jsonText = this.responseText;
 
-                onReceive(obj);
+                if (jsonText) {
+                    try {
+                        obj = JSON.parse(jsonText);
+                    } catch (error) {
+                        console.log(error);
+                        obj = {};
+                    }
+
+                    onReceive(obj, jsonText);
+                }
             };
         }
     };
