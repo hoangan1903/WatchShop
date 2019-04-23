@@ -18,6 +18,7 @@
 	<link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+	<link th:href="@{/css/label.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<ul th:fragment="sideBar"
@@ -75,7 +76,7 @@
 		<div class="sidebar-heading">Area of Employee</div>
 
 		<!-- Nav Item - Employee -->
-		<li class="nav-item"><a href="#" class="nav-link" >
+		<li class="nav-item"><a th:href="@{/admin/order}" class="nav-link" >
 			<i class="fas fa-user"></i> <span>Orders</span>
 		</a></li>
 

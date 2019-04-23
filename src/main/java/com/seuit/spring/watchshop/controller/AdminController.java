@@ -124,4 +124,9 @@ public class AdminController {
 		model.addAttribute("customer", new Customer());
 		return "admin/listCustomers";
 	}
+	
+	@GetMapping("/order")
+	public String test() {
+		return "admin/Order";
+	}
 }
