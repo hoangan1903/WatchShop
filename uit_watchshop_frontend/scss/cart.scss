@@ -14,10 +14,8 @@ section.section-shopping-cart {
 
     a {
         &.cart-product-link {
-            display: block;
             font-size: $font-size-large;
             font-weight: $font-wt-medium;
-            margin-bottom: 8px;
 
             &:link,
             &:visited {
@@ -33,12 +31,11 @@ section.section-shopping-cart {
     div {
         &.product-quantity {
             color: $color-primary-text;
-            border-top: 1px solid $color-quatity-button;
-            border-bottom: 1px solid $color-quatity-button;
+            border-top: 1px solid $color-quantity-button;
+            border-bottom: 1px solid $color-quantity-button;
         }
 
         &.card-item-actions {
-            margin-top: 16px;
 
             a.card-item-action {
                 margin-left: 16px;

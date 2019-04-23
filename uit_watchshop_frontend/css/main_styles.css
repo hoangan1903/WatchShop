@@ -133,10 +133,6 @@ h2.section-heading::after {
   margin-top: 20px;
 }
 
-h5.price {
-  color: #28a745;
-}
-
 a.regular-link, a.nav-link {
   transition: color 0.25s;
 }
