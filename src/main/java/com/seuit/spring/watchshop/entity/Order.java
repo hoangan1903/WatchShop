@@ -110,4 +110,10 @@ public class Order {
 	public Date getCreateAt() {
 		return createAt;
 	}
+	public Integer getOrderStatusId() {
+		return this.orderStatusO.getId();
+	}
+	public Integer getOrderPaymentId() {
+		return this.paymentO.getId();
+	}
 }

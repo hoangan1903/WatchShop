@@ -1,12 +1,19 @@
 package com.seuit.spring.watchshop.service;
 
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.seuit.spring.watchshop.entity.Cart;
@@ -16,6 +23,7 @@ import com.seuit.spring.watchshop.entity.Order;
 import com.seuit.spring.watchshop.entity.OrderDetail;
 import com.seuit.spring.watchshop.entity.OrderStatus;
 import com.seuit.spring.watchshop.entity.Payment;
+import com.seuit.spring.watchshop.entity.Product;
 import com.seuit.spring.watchshop.repository.CustomerRepository;
 import com.seuit.spring.watchshop.repository.OrderRepository;
 import com.seuit.spring.watchshop.repository.OrderStatusRepository;
@@ -40,7 +48,11 @@ public class OrderServiceImpl implements OrderService {
 	private OrderStatusRepository orderStatusRepository;
 	
 	@Autowired
-	private CustomerRepository customerRepository;
+    private EntityManager entityManager;
+
+    private Session getSession() {
+        return entityManager.unwrap(Session.class);
+    }
 
 	
 	@Override
@@ -94,28 +106,83 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public List<Order> listOrder() {
+	public List<Order> listOrder(Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus) {
+		if(orderStatus!=0) {
+			return orderRepository.findAll().stream().filter((o)->o.getOrderStatusO().getId()==orderStatus).collect(Collectors.toList());
+		}
+		if(orderCreatedStatus!=0) {
+			if(orderCreatedStatus==1) {
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getCreateAt).reversed()).collect(Collectors.toList());
+			}else {
+				//create status = 2
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getCreateAt)).collect(Collectors.toList());
+			}
+		}
+		if(orderPriceStatus!=0) {
+			if(orderPriceStatus==1) {
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getPrice).reversed()).collect(Collectors.toList());
+			}else {
+				//price status = 2
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getPrice)).collect(Collectors.toList());
+			}
+		}
+		if(orderPaymentStatus!=0) {
+			if(orderPaymentStatus==1) {
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getOrderPaymentId).reversed()).collect(Collectors.toList());
+			}else {
+				//payment status = 2
+				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getOrderPaymentId)).collect(Collectors.toList());
+			}
+		}
 		return orderRepository.findAll();
 	}
 
 
 	@Override
 	@Transactional
-	public Set<OrderDetail> listOrderDetailByIdOrder(Integer idOrder) {
+	public Map<String, Object> listOrderDetailByIdOrder(Integer idOrder) {
 		// TODO Auto-generated method stub
 		Optional<Order> order = null;
+		Map<String, Object> objects = new HashMap<String, Object>();
 		try {
 			order = orderRepository.findById(idOrder);
-			return order.get().getOrderDetails();
+			objects.put("products", order.get().getOrderDetails()) ;
+			objects.put("customer", order.get().getCustomerO());
+			return objects;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;
 		}
 	}
-	
-	
-	
-	
-	
 
+
+	@Override
+	@Transactional
+	public String updateStatusOrder(Integer idOrder,boolean isSuccess) throws NotFoundException {
+		// TODO Auto-generated method stub
+		Optional<Order> order = orderRepository.findById(idOrder);
+		OrderStatus orderStatusAfterUpdate = this.chooseOrderStatusForUpdate(order.get(), isSuccess);
+		order.get().setOrderStatusO(orderStatusAfterUpdate);
+		return order.get().getOrderStatusO().getOrderStatus();
+	}
+	
+	@Transactional
+	private OrderStatus chooseOrderStatusForUpdate(Order order,boolean isSuccess) {
+		if(order.getOrderStatusO().getId()==1) {
+			return orderStatusRepository.findById(2).get();
+		}else {
+			if(order.getOrderStatusO().getId()==2) {
+					if(isSuccess==true) {
+					return orderStatusRepository.findById(3).get();
+				}else {
+					return orderStatusRepository.findById(4).get();
+				}
+			}else {
+				return orderStatusRepository.findById(order.getOrderStatusO().getId()).get();
+			}
+		}
+	}
+	
+	
+	
 }
