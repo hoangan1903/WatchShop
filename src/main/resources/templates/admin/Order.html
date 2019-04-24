@@ -27,9 +27,7 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
@@ -38,37 +36,52 @@
 						<div class="card-body">
 							<div class="table-responsive">
 								<p>
-									<font color="blue">Custom order by </font>
+									<font color="blue">Custom order by :</font>
 								</p>
-
-								<p>Created:</p>
-								<select id="selectCreate">
-									<option selected="selected" value="0">Default</option>
-									<option value="1">Latest</option>
-									<option value="2">Oldest</option>
-								</select>
-								<p>Price:</p>
-								<select id="selectPrice">
-									<option selected="selected" value="0">Default</option>
-									<option value="1">Highest to lowest</option>
-									<option value="2">Lowest to highest</option>
-								</select>
-								<p>Payments:</p>
-								<select id="selectPayment">
-									<option selected="selected" value="0">Default</option>
-									<option value="1">Payment at the store</option>
-									<option value="2">Payment with COD</option>
-								</select>
+								<div class="d-flex justify-content-around">
+									<div>
+										<p>Created:</p>
+										<select id="selectCreate">
+											<option selected="selected" value="0">Default</option>
+											<option value="1">Latest</option>
+											<option value="2">Oldest</option>
+										</select>
+									</div>
+									<div>
+										<p>Price:</p>
+										<select id="selectPrice">
+											<option selected="selected" value="0">Default</option>
+											<option value="1">Highest to lowest</option>
+											<option value="2">Lowest to highest</option>
+										</select>
+									</div>
+									<div>
+										<p>Payments:</p>
+										<select id="selectPayment">
+											<option selected="selected" value="0">Default</option>
+											<option value="1">Payment at the store</option>
+											<option value="2">Payment with COD</option>
+										</select>
+									</div>
+								</div>
+								<br>
 								<p>
 									<font color="blue">Fliter: </font>
 								</p>
-								<div id="buttonOrderStatus">
-									<button style="width: 12%; height: 12%;" onclick="fliterOrderStatus(0)" class="label other">All</button>
-									<button style="width: 12%; height: 12%;" onclick="fliterOrderStatus(1)" class="label warning">Unconfirmed</button>
-									<button style="width: 12%; height: 12%;" onclick="fliterOrderStatus(2)" class="label info">Confirmed</button>
-									<button style="width: 12%; height: 12%;" onclick="fliterOrderStatus(3)" class="label success">Paid</button>
-									<button style="width: 12%; height: 12%;" onclick="fliterOrderStatus(4)" class="label danger">Unpaid</button>
+								<div class="d-flex justify-content-center">
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOrderStatus(0)" class="label other">All</button>
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOrderStatus(1)" class="label warning">Unconfirmed</button>
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOrderStatus(2)" class="label info">Confirmed</button>
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOrderStatus(3)" class="label success">Paid</button>
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOrderStatus(4)" class="label danger">Unpaid</button>
 								</div>
+
+								<br>
 
 								<table class="table table-bordered" id="mytable" width="100%"
 									cellspacing="0">
@@ -86,11 +99,18 @@
 
 									</tbody>
 								</table>
-
 							</div>
 						</div>
 					</div>
-
+					<div class="d-flex justify-content-end">
+						<ul class="pagination">
+							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+							<li class="page-item active"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						</ul>
+					</div>
 				</div>
 				<!-- /.container-fluid -->
 
