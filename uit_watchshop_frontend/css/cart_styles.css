@@ -362,10 +362,44 @@ footer p.copyright-footer {
   color: #888;
 }
 
-section.section-pagination-links {
-  padding-top: 30px;
+html,
+body {
+  background-color: #fff;
 }
 
-section.section-product-list {
-  padding-bottom: 0;
+section.section-shopping-cart {
+  padding: 30px 0;
+}
+section.section-shopping-cart a.cart-remove-all {
+  font-size: 16px;
+  font-weight: 400;
+  transition: color 0.25s;
+}
+section.section-shopping-cart a.cart-remove-all:link, section.section-shopping-cart a.cart-remove-all:visited {
+  text-decoration: none;
+  color: #28a745;
+}
+section.section-shopping-cart a.cart-remove-all:hover, section.section-shopping-cart a.cart-remove-all:active {
+  color: #218c3a;
+}
+section.section-shopping-cart div.product-quantity {
+  color: #555;
+  border-top: 1px solid #6c757d;
+  border-bottom: 1px solid #6c757d;
+}
+section.section-shopping-cart div.card-item-actions a.card-item-action {
+  margin-left: 16px;
+}
+section.section-shopping-cart div.card-item-actions a.card-item-action:link, section.section-shopping-cart div.card-item-actions a.card-item-action:visited {
+  text-decoration: none;
+  color: #888;
+}
+section.section-shopping-cart div.card-item-actions a.card-item-action ion-icon.cart-action-icon {
+  transition: color 0.25s;
+}
+section.section-shopping-cart div.card-item-actions a.card-item-action ion-icon.wishlist-icon:hover, section.section-shopping-cart div.card-item-actions a.card-item-action ion-icon.wishlist-icon:active {
+  color: #ec5757;
+}
+section.section-shopping-cart div.card-item-actions a.card-item-action ion-icon.remove-icon:hover, section.section-shopping-cart div.card-item-actions a.card-item-action ion-icon.remove-icon:active {
+  color: #555;
 }

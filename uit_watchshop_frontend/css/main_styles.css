@@ -160,6 +160,22 @@ a.nav-link.nav-link-active {
 a.show-more {
   font-size: 90%;
 }
+a.cart-product-link, a.order-product-link {
+  font-size: 125%;
+  font-weight: 500;
+  transition: color 0.25s;
+}
+a.cart-product-link:link, a.order-product-link:link, a.cart-product-link:visited, a.order-product-link:visited {
+  text-decoration: none;
+  color: #555;
+}
+a.cart-product-link:hover, a.order-product-link:hover, a.cart-product-link:active, a.order-product-link:active {
+  color: #28a745;
+}
+a.order-product-link {
+  font-size: 16px;
+  font-weight: 400;
+}
 
 ion-icon.extra-small-icon {
   font-size: 20px;
@@ -198,9 +214,28 @@ ion-icon.extra-large-icon {
   width: auto;
 }
 .card.product-card .card-body a.btn {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
+  margin-top: 20px;
+}
+.card .card-header {
+  background-color: #fff;
+}
+.card .card-header a.card-header-action {
+  font-size: 90%;
+  font-weight: 400;
+  transition: color 0.25s;
+}
+.card .card-header a.card-header-action:link, .card .card-header a.card-header-action:visited {
+  text-decoration: none;
+  color: #28a745;
+}
+.card .card-header a.card-header-action:hover, .card .card-header a.card-header-action:active {
+  color: #218c3a;
+}
+.card h5.card-header-title {
+  font-size: 110%;
+  font-weight: 500;
+  margin: 0;
+  padding: 4px 0;
 }
 
 .custom_slider_nav {
@@ -218,6 +253,47 @@ ion-icon.extra-large-icon {
 }
 .custom_slider_nav:hover {
   opacity: 0.8;
+}
+
+p.card-text {
+  padding: 0;
+  margin: 0;
+}
+p.card-text.bold {
+  font-weight: 500;
+}
+p.card-text.price {
+  color: #28a745;
+  font-size: 120%;
+  font-weight: 500;
+}
+p.card-text.price.total {
+  font-size: 130%;
+}
+p.card-text.price-small {
+  color: #28a745;
+  font-size: 16px;
+  font-weight: 500;
+}
+p.card-text.price-secondary {
+  color: #555;
+  font-size: 110%;
+  font-weight: 500;
+}
+p.card-text.price-secondary-small {
+  color: #555;
+  font-size: 16px;
+  font-weight: 500;
+}
+p.card-text.cart-summary-entry {
+  color: #555;
+}
+p.card-text.cart-summary-entry.total {
+  font-weight: 500;
+}
+
+.card-item-divider {
+  border-bottom: 1px solid #dfdfdf;
 }
 
 /* Defines big reusable components like the header and the footer */

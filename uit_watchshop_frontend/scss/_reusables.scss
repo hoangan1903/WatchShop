@@ -146,6 +146,27 @@ a {
     &.show-more {
         font-size: $font-size-reduced;
     }
+
+    &.cart-product-link {
+        font-size: $font-size-large;
+        font-weight: $font-wt-medium;
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-primary-text;
+        }
+
+        @include hover-color($color-accent);
+        transition: color $transtion-time;
+    }
+
+    &.order-product-link {
+        font-size: $font-size-regular;
+        font-weight: $font-wt-regular;
+
+        @extend .cart-product-link;
+    }
 }
 
 // Icons
@@ -200,18 +221,44 @@ ion-icon {
 // Cards
 
 .card {
+
     &.product-card {
+        // can be used by both index.html and products.html
         min-height: 450px;
         width: auto;
 
         .card-body {
 
             a.btn {
-                position: absolute;
-                left: 20px;
-                bottom: 20px;
+                margin-top: 20px;
             }
         }
+    }
+
+    .card-header {
+        background-color: #fff;
+
+        a.card-header-action {
+
+            font-size: $font-size-reduced;
+            font-weight: $font-wt-regular;
+
+            &:link,
+            &:visited {
+                text-decoration: none;
+                color: $color-accent;
+            }
+
+            @include hover-color($color-accent-dark);
+            transition: color $transtion-time;
+        }
+    }
+
+    h5.card-header-title {
+        font-size: $font-size-increased;
+        font-weight: $font-wt-medium;
+        margin: 0;
+        padding: 4px 0;
     }
 }
 
@@ -233,4 +280,59 @@ ion-icon {
     &:hover {
         opacity: 0.8;
     }
+}
+
+// Paragraph / Text
+
+p {
+    &.card-text {
+        padding: 0;
+        margin: 0;
+
+        &.bold {
+            font-weight: $font-wt-medium;
+        }
+
+        &.price {
+            color: $color-accent;
+            font-size: 120%;
+            font-weight: $font-wt-medium;
+
+            &.total {
+                font-size: 130%;
+            }
+        }
+
+        &.price-small {
+            color: $color-accent;
+            font-size: $font-size-regular;
+            font-weight: $font-wt-medium;
+        }
+
+        &.price-secondary {
+            color: $color-primary-text;
+            font-size: $font-size-increased;
+            font-weight: $font-wt-medium;
+        }
+
+        &.price-secondary-small {
+            color: $color-primary-text;
+            font-size: $font-size-regular;
+            font-weight: $font-wt-medium;
+        }
+
+        &.cart-summary-entry {
+            color: $color-primary-text;
+
+            &.total {
+                font-weight: $font-wt-medium;
+            }
+        }
+    }
+}
+
+// Dividers
+
+.card-item-divider {
+    border-bottom: 1px solid #dfdfdf;
 }

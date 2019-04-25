@@ -1,7 +1,7 @@
 /*
- * PAGINATOR 2.1 by Viet Anh
+ * Paginator.js v2.1 by Viet Anh
  * Data paginator based on Bootstrap 4 pagination
- * Requires jQuery. Import this file after jQuery in your HTML document
+ * Requires jQuery. Import this file after jQuery import in your HTML document
  * See https://getbootstrap.com/docs/4.3/components/pagination/
  * for more information about this Bootstrap component
  */
@@ -21,10 +21,10 @@
     /* Constructor function
     The 'specs' object should look like this
     {
-        obj: (required) data to be displayed, must be an array of arrays of objects, with each array represents data of a page
+        obj: (required) data to be displayed, must be an array of objects (each element in it represents a page item)
         selectors: (required) {
-            container: the class selector of the container
-            pagination: the class selector of Bootstrap ul.pagination
+            container: CSS class selector of the HTML container
+            pagination: CSS class selector of the Bootstrap Pagination component (default: 'ul.pagination')
         },
         paginationStyle: 'basic'/'advanced'
     }

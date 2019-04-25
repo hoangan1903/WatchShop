@@ -12,20 +12,18 @@ body {
 section.section-shopping-cart {
     padding: $spacing-y-small 0;
 
-    a {
-        &.cart-product-link {
-            font-size: $font-size-large;
-            font-weight: $font-wt-medium;
+    a.cart-remove-all {
+        font-size: $font-size-regular;
+        font-weight: $font-wt-regular;
 
-            &:link,
-            &:visited {
-                text-decoration: none;
-                color: $color-primary-text;
-            }
-
-            @include hover-color($color-accent);
-            transition: color $transtion-time;
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-accent;
         }
+
+        @include hover-color($color-accent-dark);
+        transition: color $transtion-time;
     }
 
     div {
@@ -59,33 +57,6 @@ section.section-shopping-cart {
                     &.remove-icon {
                         @include hover-color($color-primary-text);
                     }
-                }
-            }
-        }
-    }
-
-    p {
-        &.card-text {
-            padding: 0;
-            margin: 0;
-
-            &.price {
-                color: $color-accent;
-                font-size: 120%;
-                font-weight: $font-wt-medium;
-            }
-
-            &.price-small {
-                color: $color-primary-text;
-                font-size: $font-size-regular;
-                font-weight: $font-wt-medium;
-            }
-
-            &.order-summary-entry {
-                color: $color-primary-text;
-                
-                &.total {
-                    font-weight: $font-wt-medium;
                 }
             }
         }

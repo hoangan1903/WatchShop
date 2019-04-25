@@ -1,0 +1,25 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+section {
+    padding: $spacing-y-medium 0;
+
+    .card {
+        &.checkout-card {
+
+            h6.card-title {
+                font-weight: $font-wt-medium;
+                margin-bottom: 6px;
+            }
+
+            .card-entry {
+                margin-bottom: 24px;
+            }
+        }
+
+        &.checkout-order-card {}
+    }
+}
