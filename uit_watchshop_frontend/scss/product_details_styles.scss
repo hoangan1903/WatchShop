@@ -1,0 +1,59 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+section.section-product-overview {
+
+    .carousel {
+        width: 95%;
+
+        .carousel-inner {
+            .carousel-item {
+                img {
+                    object-fit: cover;
+                    width: 100%;
+                    height: $img-height-product-details;
+                }
+            }
+        }
+    }
+
+    h3.product-name {
+        margin: 0;
+        font-weight: 400;
+    }
+}
+
+section.section-all-details {
+    background-color: $color-background-silver;
+
+    /* Table borders */
+    table,
+    th,
+    td {
+        border: 1px solid #bbb;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 10px 15px;
+    }
+
+    table#details td:nth-child(odd) {
+        font-weight: $font-wt-medium;
+        color: #fff;
+        background-color: #636363;
+    }
+
+    table#details td:nth-child(even) {
+        color: #404040;
+    }
+
+}
+
+section.section-similar-products {
+    background-color: $color-background-silver;
+}

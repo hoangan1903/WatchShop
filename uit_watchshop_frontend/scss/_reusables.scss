@@ -163,9 +163,12 @@ a {
 
     &.order-product-link {
         font-size: $font-size-regular;
-        font-weight: $font-wt-regular;
 
         @extend .cart-product-link;
+    }
+
+    &.brand-link {
+        @extend .order-product-link;
     }
 }
 
@@ -285,41 +288,38 @@ ion-icon {
 // Paragraph / Text
 
 p {
+
+    &.price {
+        color: $color-accent;
+        font-size: 120%;
+        font-weight: $font-wt-medium;
+
+        &.total {
+            font-size: 130%;
+        }
+    }
+
+    &.price-small {
+        color: $color-accent;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-medium;
+    }
+
+    &.price-subtotal {
+        color: $color-primary-text;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-medium;
+    }
+
+    &.price-secondary-small {
+        color: $color-primary-text;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-regular;
+    }
+
     &.card-text {
         padding: 0;
         margin: 0;
-
-        &.bold {
-            font-weight: $font-wt-medium;
-        }
-
-        &.price {
-            color: $color-accent;
-            font-size: 120%;
-            font-weight: $font-wt-medium;
-
-            &.total {
-                font-size: 130%;
-            }
-        }
-
-        &.price-small {
-            color: $color-accent;
-            font-size: $font-size-regular;
-            font-weight: $font-wt-medium;
-        }
-
-        &.price-secondary {
-            color: $color-primary-text;
-            font-size: $font-size-increased;
-            font-weight: $font-wt-medium;
-        }
-
-        &.price-secondary-small {
-            color: $color-primary-text;
-            font-size: $font-size-regular;
-            font-weight: $font-wt-medium;
-        }
 
         &.cart-summary-entry {
             color: $color-primary-text;
@@ -329,10 +329,20 @@ p {
             }
         }
     }
+
+    &.bold {
+        font-weight: $font-wt-medium;
+    }
 }
 
 // Dividers
 
 .card-item-divider {
     border-bottom: 1px solid #dfdfdf;
+}
+
+.product-quantity {
+    color: $color-primary-text;
+    border-top: 1px solid $color-quantity-button;
+    border-bottom: 1px solid $color-quantity-button;
 }

@@ -69,18 +69,14 @@ $(document).ready(function () {
         ]
     ];
 
-    function init() {
-        var paginator = new Paginator({
-            obj: obj,            
-            selectors: {
-                container: '.section-product-list .row',
-                pagination: '.section-pagination-links .pagination'
-            },
-            paginationStyle: 'advanced'
-        });
+    var paginator = new Paginator({
+        obj: obj,
+        selectors: {
+            container: '.section-product-list .row',
+            pagination: '.section-pagination-links .pagination'
+        },
+        paginationStyle: 'advanced'
+    });
 
-        paginator.init();
-    }
-
-    init();
+    paginator.init();
 });
