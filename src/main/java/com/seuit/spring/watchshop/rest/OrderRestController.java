@@ -1,4 +1,5 @@
 package com.seuit.spring.watchshop.rest;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,14 @@ public class OrderRestController {
 		}
 	}
 
-	@GetMapping(value="/order")
-	private List<Order> listAllOrder(
-			@RequestParam(required = false, defaultValue = "0") Integer orderStatus,
+	@GetMapping(value = "/order")
+	private List<Order> listAllOrder(@RequestParam(required = false, defaultValue = "0") Integer orderStatus,
 			@RequestParam(required = false, defaultValue = "0") Integer orderCreateStatus,
 			@RequestParam(required = false, defaultValue = "0") Integer orderPriceStatus,
-			@RequestParam(required = false, defaultValue = "0") Integer orderPaymentStatus) {
-		System.out.println(orderStatus);
-		return orderService.listOrder(orderStatus, orderCreateStatus, orderPriceStatus, orderPaymentStatus);
+			@RequestParam(required = false, defaultValue = "0") Integer orderPaymentStatus,
+			@RequestParam(required = false,defaultValue = "0") Integer pageId, 
+			@RequestParam(required = false,defaultValue = "0") Integer size) {
+		return orderService.listOrder(pageId,size,orderStatus, orderCreateStatus, orderPriceStatus, orderPaymentStatus);
 	}
 
 	@GetMapping("/order/detail/{id}")
@@ -48,5 +49,9 @@ public class OrderRestController {
 	private String updateStatusOrder(@PathVariable(name = "id") Integer idOrder,
 			@PathVariable(name = "isSuccess") boolean isSuccess) throws NotFoundException {
 		return orderService.updateStatusOrder(idOrder, isSuccess);
+	}
+	@GetMapping("/order/count")
+	private Integer getAllCountOrder() {
+		return orderService.getCountAllOrder();
 	}
 }

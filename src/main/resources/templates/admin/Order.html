@@ -85,7 +85,21 @@
 
 								<table class="table table-bordered" id="mytable" width="100%"
 									cellspacing="0">
+									
 									<thead>
+									<div class="d-flex justify-content-left">
+									Show  
+										<select id="chooseSize">
+											<option selected="selected" value="5">5</option>
+											<option value="10">10</option>
+											<option value="15">15</option>
+											<option value="20">20</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+										</select>
+									entry 
+									</div>
+									
 										<tr>
 											<th>Order Id</th>
 											<th>Total Price</th>
@@ -99,16 +113,12 @@
 
 									</tbody>
 								</table>
-							</div>
+							</div> 
 						</div>
 					</div>
-					<div class="d-flex justify-content-end">
+					<div class="d-flex justify-content-end" id="pagination">
 						<ul class="pagination">
-							<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						
 						</ul>
 					</div>
 				</div>

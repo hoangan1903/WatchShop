@@ -1,9 +1,50 @@
+
 window.onload = function () {
     loadOrderWithAPI();
 }
 
-function loadOrderWithAPI(idStatus) {
-    var url = chooseURLForListOrder(idStatus);
+function pagination(){
+    var url = "/rest/order/count";
+    var xhttp = new XMLHttpRequest();
+    $('#pagination ul').empty();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var obj = JSON.parse(this.responseText);
+            var elementSize = document.getElementById('chooseSize');
+            var size = elementSize.options[elementSize.selectedIndex].value;
+            var countNumberPage = obj/size; 
+            countNumberPage = Math.round(countNumberPage);
+            var soDu = obj%size;
+            if(soDu<5){
+                countNumberPage++;
+            }
+            console.log(countNumberPage);
+            for(var i=0;i<countNumberPage;i++){
+                $('#pagination ul').append('<li class="page-item"><a class="page-link" href="#" onclick="return chooseURLForListOrderPagination('+i+')">'+(i+1)+'</a></li>');
+            }
+        }
+    }
+    xhttp.open("GET", url, true);
+    xhttp.send();
+}
+
+function loadOrderWithAPI(idStatus,isPagination) {
+    var url = "/rest/order";
+    if(idStatus!=null && isPagination==false){
+        if(url.indexOf('?')==-1){
+            url+="?orderStatus="+idStatus;
+        }else{
+            url+="&orderStatus="+idStatus;
+        }   
+    }
+    if(idStatus!=null && isPagination==true){
+        if(url.indexOf('?')==-1){
+            url+="?pageId="+idStatus;
+        }else{
+            url+="&pageId="+idStatus;
+        }  
+    }
+    url = chooseURLForListOrder(url);
     console.log(url);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -157,51 +198,120 @@ function chooseeNameButtonUpdateStatus(status) {
             return status;
     }
 }
-function chooseURLForListOrder(idStatus) {
-    var url = "/rest/order";
+function chooseURLForListOrder(url) {
     var elementCreate = document.getElementById('selectCreate');
     var elementPrice = document.getElementById('selectPrice');
     var elementPayment = document.getElementById('selectPayment');
+    var elementSize = document.getElementById('chooseSize');
     var selectCreate = elementCreate.options[elementCreate.selectedIndex].value;
     var selectPrice = elementPrice.options[elementPrice.selectedIndex].value;
     var selectPayment = elementPayment.options[elementPayment.selectedIndex].value;
+    var selectSize = elementSize.options[elementSize.selectedIndex].value;
     if (selectCreate != 0) {
-        if (url = "/rest/order") {
-            url += "?orderCreateStatus=" + selectCreate;
-        } else {
-            url += "&orderCreateStatus=" + selectCreate;
+        if(url.indexOf('?')==-1){
+            url+= "?orderCreateStatus="+selectCreate;
+        }else{
+            url+= "&orderCreateStatus="+selectCreate;
         }
     }
     if (selectPrice != 0) {
-        if (url = "/rest/order") {
-            url += "?orderPriceStatus=" + selectPrice;
-        } else {
-            url += "&orderPriceStatus=" + selectPrice;
+        if(url.indexOf('?')==-1){
+            url+= "?orderPriceStatus="+selectPrice;  
+        }else{
+            url+= "&orderPriceStatus="+selectPrice;  
         }
     }
     if (selectPayment != 0) {
-        if (url = "/rest/order") {
-            url += "?orderPaymentStatus=" + selectPayment;
-        } else {
-            url += "&orderPaymentStatus=" + selectPayment;
+        if(url.indexOf('?')==-1){
+            url+= "?orderPaymentStatus="+selectPayment;
+        }else{
+            url+= "&orderPaymentStatus="+selectPayment;
         }
     }
-    if (idStatus != null) {
-        if (url = "/rest/order") {
-            url += "?orderStatus=" + idStatus;
-        } else {
-            url += "&orderStatus=" + idStatus;
+    if(selectSize!=0){
+        pagination();
+        if(url.indexOf('?')==-1){
+            url+= "?size="+selectSize;
+        }else{
+            url+= "&size="+selectSize;
         }
     }
     return url;
 }
 
+// function chooseURLForListOrderPagination(pageId){
+//     isURLHasParamSpecify("pageId",pageId);
+// }
+
+// function isURLHasParam(url){
+//     if(url.indexOf('?')==-1){
+//         //url chua co tham so 
+//         return false;
+//     }else{
+//         return true;
+//     }
+// }
+// function isURLHasParamSpecify(param,idParam){
+//     var key = null;
+//     if(window.location.href.indexOf('?orderStatus=')==-1){
+//         key = "?";
+//         if(window.location.href.indexOf(param)==-1){
+//             //url chua co param nay
+//             window.location.href=key+param+"="+idParam;
+//         }else{
+//             var valueOfParam = getUrlParameter(param);
+//             console.log(valueOfParam);
+//             console.log(String(idParam));
+//             window.location.href = window.location.href.replace(param+"="+valueOfParam,param+"="+String(idParam));
+//         }
+//     }else{
+//         key ="&";
+//         if(window.location.href.indexOf(param)==-1){
+//             //url chua co param nay
+//             window.location.href+=key+param+"="+idParam;
+//         }else{
+//             var valueOfParam = getUrlParameter(param);
+//             console.log(valueOfParam);
+//             console.log(String(idParam));
+//             window.location.href = window.location.href.replace(param+"="+valueOfParam,param+"="+String(idParam));
+//         }
+//     }
+// }
+
+function isRestURLHasParamSpecify(url,param,idParam){
+    var key = null;
+    if(url.indexOf('?')==-1){
+        //url chua co tham so 
+        key="?"; 
+    }else{
+        key="&";
+    }
+    if(url.indexOf(param)==-1){
+        //url chua co param nay
+        url+=key+param+"="+idParam;
+    }else{
+        var valueOfParam = getUrlParameter(param);
+        console.log(valueOfParam);
+        console.log(String(idParam));
+        url = url.replace(param+"="+valueOfParam,param+"="+String(idParam));
+    }
+    return url;
+}
+
+function chooseURLForListOrderPagination(idStatus){
+    $('#mytable tbody').empty();
+    setTimeout(function () {
+        loadOrderWithAPI(idStatus,true);
+    }, 100);
+    //Sleep 0.1s Vì nhanh quá khung hình sẽ giựt do bất đồng bộ 
+}
+
 function fliterOrderStatus(idStatus){
     $('#mytable tbody').empty();
         setTimeout(function () {
-            loadOrderWithAPI(idStatus);
-        }, 200);
-        //Sleep 0.2s Vì nhanh quá khung hình sẽ giựt do bất đồng bộ 
+            loadOrderWithAPI(idStatus,false);
+        }, 100);
+        //Sleep 0.1s Vì nhanh quá khung hình sẽ giựt do bất đồng bộ 
 }
 
 $(document).ready(function () {
@@ -209,7 +319,23 @@ $(document).ready(function () {
         $('#mytable tbody').empty();
         setTimeout(function () {
             loadOrderWithAPI();
-        }, 200);
-        //Sleep 0.2s Vì nhanh quá khung hình sẽ giựt do bất đồng bộ 
+        }, 100);
+        //Sleep 0.1s Vì nhanh quá khung hình sẽ giựt do bất đồng bộ 
     });
 });
+//stackoverflow
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+

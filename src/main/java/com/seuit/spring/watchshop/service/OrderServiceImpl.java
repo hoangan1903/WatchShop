@@ -1,18 +1,17 @@
 package com.seuit.spring.watchshop.service;
 
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,9 @@ import com.seuit.spring.watchshop.entity.Order;
 import com.seuit.spring.watchshop.entity.OrderDetail;
 import com.seuit.spring.watchshop.entity.OrderStatus;
 import com.seuit.spring.watchshop.entity.Payment;
-import com.seuit.spring.watchshop.entity.Product;
-import com.seuit.spring.watchshop.repository.CustomerRepository;
 import com.seuit.spring.watchshop.repository.OrderRepository;
 import com.seuit.spring.watchshop.repository.OrderStatusRepository;
 import com.seuit.spring.watchshop.repository.PaymentRepository;
-
 import javassist.NotFoundException;
 
 @Service
@@ -106,35 +102,39 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public List<Order> listOrder(Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus) {
+	public List<Order> listOrder(Integer pageId,Integer size,Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus) {
+		List<Order> listOrder = orderRepository.findAll();
 		if(orderStatus!=0) {
-			return orderRepository.findAll().stream().filter((o)->o.getOrderStatusO().getId()==orderStatus).collect(Collectors.toList());
+			listOrder = listOrder.stream().filter((o)->o.getOrderStatusO().getId()==orderStatus).collect(Collectors.toList());
 		}
 		if(orderCreatedStatus!=0) {
 			if(orderCreatedStatus==1) {
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getCreateAt).reversed()).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getCreateAt)).collect(Collectors.toList());
 			}else {
 				//create status = 2
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getCreateAt)).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getCreateAt).reversed()).collect(Collectors.toList());
 			}
 		}
 		if(orderPriceStatus!=0) {
 			if(orderPriceStatus==1) {
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getPrice).reversed()).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getPrice).reversed()).collect(Collectors.toList());
 			}else {
 				//price status = 2
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getPrice)).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getPrice)).collect(Collectors.toList());
 			}
 		}
 		if(orderPaymentStatus!=0) {
 			if(orderPaymentStatus==1) {
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getOrderPaymentId).reversed()).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getOrderPaymentId).reversed()).collect(Collectors.toList());
 			}else {
 				//payment status = 2
-				return orderRepository.findAll().stream().sorted(Comparator.comparing(Order::getOrderPaymentId)).collect(Collectors.toList());
+				listOrder = listOrder.stream().sorted(Comparator.comparing(Order::getOrderPaymentId)).collect(Collectors.toList());
 			}
 		}
-		return orderRepository.findAll();
+		if(size!=0) {
+			listOrder =  this.findPagination(pageId, size,listOrder);
+		}
+		return listOrder;
 	}
 
 
@@ -181,6 +181,21 @@ public class OrderServiceImpl implements OrderService {
 				return orderStatusRepository.findById(order.getOrderStatusO().getId()).get();
 			}
 		}
+	}
+
+	@Override
+	@Transactional
+	public List<Order> findPagination(Integer pageId, Integer size,List<Order> listOrder) {
+		Integer start = pageId*size;
+		return listOrder.stream().filter((c)->listOrder.indexOf(c)>=start).limit(size).collect(Collectors.toList());
+	}
+
+
+	@Override
+	@Transactional
+	public Integer getCountAllOrder() {
+		// TODO Auto-generated method stub
+		return orderRepository.findAll().size();
 	}
 	
 	

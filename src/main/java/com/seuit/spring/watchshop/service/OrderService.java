@@ -9,7 +9,9 @@ import javassist.NotFoundException;
 
 public interface OrderService {
 	public boolean createOrder(Integer idPayment);
-	public List<Order> listOrder(Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus);
+	public List<Order> listOrder(Integer pageId,Integer size,Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus);
 	public Map<String, Object> listOrderDetailByIdOrder(Integer idOrder);
 	public String updateStatusOrder(Integer idOrder,boolean isSuccess) throws NotFoundException;
+	public List<Order> findPagination(Integer pageId,Integer size,List<Order> listOrder);
+	public Integer getCountAllOrder();
 }
