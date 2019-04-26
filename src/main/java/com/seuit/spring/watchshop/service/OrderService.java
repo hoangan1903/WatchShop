@@ -14,4 +14,5 @@ public interface OrderService {
 	public String updateStatusOrder(Integer idOrder,boolean isSuccess) throws NotFoundException;
 	public List<Order> findPagination(Integer pageId,Integer size,List<Order> listOrder);
 	public Integer getCountAllOrder();
+	public List<Order> listOrderByCustomerId(Integer idCustomer);
 }

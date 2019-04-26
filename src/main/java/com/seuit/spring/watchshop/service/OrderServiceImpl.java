@@ -197,7 +197,12 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return orderRepository.findAll().size();
 	}
-	
-	
-	
+
+
+	@Override
+	@Transactional
+	public List<Order> listOrderByCustomerId(Integer idCustomer) {
+		Customer customer = customerService.getCustomerById(idCustomer).get();
+		return customer.getOrders();	
+	}
 }

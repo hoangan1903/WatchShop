@@ -1,6 +1,7 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
@@ -13,4 +14,12 @@ public interface CustomerService {
 	public Customer getInforMe();
 
 	List<Customer> getAllCustomers();
+	
+	List<Customer> findPaginated(Integer page, Integer size);
+	
+	Long countCustomer();
+	
+	List<Customer> getListCustomerByKeyword(String keyword);
+	
+	Optional<Customer> getCustomerById(Integer id);
 }

@@ -3,8 +3,11 @@ package com.seuit.spring.watchshop.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +31,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	@Autowired
+	private EntityManager entityManager;
+
+	private Session getSession() {
+		return entityManager.unwrap(Session.class);
+	}
+	
 	@Override
 	@Transactional
 	public Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
@@ -121,5 +131,42 @@ public class CustomerServiceImpl implements CustomerService {
 		List<Customer> customers = customerRepository.findAll();
 		System.out.println(customers.get(0).getPhone());
 		return customers;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Customer> findPaginated(Integer page, Integer size) {
+		Session session = getSession();
+		String sql = "FROM Customer";
+		Query query = session.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
+		return query.getResultList();
+	}
+
+	@Override
+	public Long countCustomer() {
+		Session session = getSession();
+		String sql = "SELECT count(c.id) FROM Customer c";
+		Query query = session.createQuery(sql);
+		Long count = (Long)query.getSingleResult();		
+		return count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<Customer> getListCustomerByKeyword(String keyword) {
+		Session session = getSession();
+		String sql = "SELECT c FROM Customer c WHERE c.name like:name";
+		javax.persistence.Query query = session.createQuery(sql).setMaxResults(10);
+		query.setParameter("name","%" + keyword + "%");
+		return query.getResultList();
+	}
+
+	@Transactional
+	@Override
+	public Optional<Customer> getCustomerById(Integer id) {
+		return customerRepository.findById(id);
+
 	}
 }

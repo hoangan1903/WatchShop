@@ -29,23 +29,33 @@
 	                    '<td class="username">' + user.username + '</td>' +
 	                    '<td>' + user.email + '</td>' +
 	                    '<td>' + user.roles[0].name + '</td>' +
-	                    '<td><a href="#"' +
-	                    'th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
-	                    '<button class="btn btn-primary" data-title="Edit"' +
-	                    'data-toggle="modal" data-target="">' +
-	                    '<span class="icon text-white-50"> <i' +
-	                    'class="material-icons">edit</i>' +
-	                    '</span>' +
-	                    '</button>' +
-	                    '</a></td>' +
-	                    '<td><a href="#"' +
-	                    'th:href="@{/admin/CRUD_User/deleteUser/{userId}(userId=${' + user.username + '})}">' +
-	                    '<button class="btn btn-danger" data-title="Delete"' +
-	                    'data-toggle="modal" data-target="" onClick="clicked()">' +
-	                    '<span class="icon text-white-50"><i' +
-	                    'class="material-icons">delete</i> </span>' +
-	                    '</button>' +
-	                    '</a></td>' +
+	                    '<td>' +
+// 	                    '<a href="/admin/CRUD_User/deleteUser/{userId}(userId=${' + user.id + '})"' +
+// 	                    'th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
+// 	                    '<button class="btn btn-primary" data-title="Edit"' +
+// 	                    'data-toggle="modal" data-target="">' +
+// 	                    '<span class="icon text-white-50"> <i' +
+// 	                    'class="material-icons">edit</i>' +
+// 	                    '</span>' +
+// 	                    '</button>' +
+
+	                    '<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">'+
+	                    '<button class="btn btn-primary" data-title="Edit"'
+						+ 'data-toggle="modal" >'
+						+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+						+ '</span>'
+						+ '</button>'+
+						'</a>'+
+
+						'<td>' +
+	                    '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' + user.id + '})}">'+
+	                    '<button class="btn btn-danger" data-title="Delete"'
+						+ 'data-toggle="modal" >'
+						+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+						+ '</span>'
+						+ '</button>'+
+						'</a>'+					
+	                    '</td>' +	     
 	                    '</tr>');
 
 	            })
@@ -91,24 +101,25 @@
 	                            '<td class="username">' + user.username + '</td>' +
 	                            '<td>' + user.email + '</td>' +
 	                            '<td>' + user.roles[0].name + '</td>' +
-	                            '<td><a href="#"' +
-	                            'th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
-	                            '<button class="btn btn-primary" data-title="Edit"' +
-	                            'data-toggle="modal" data-target="">' +
-	                            '<span class="icon text-white-50"> <i' +
-	                            'class="material-icons">edit</i>' +
-	                            '</span>' +
-	                            '</button>' +
-	                            '</a></td>' +
-	                            '<td><a href="#"' +
-	                            'th:href="@{/admin/CRUD_User/deleteUser/{userId}(userId=${' + user.username + '})}">' +
-	                            '<button class="btn btn-danger" data-title="Delete"' +
-	                            'data-toggle="modal" data-target="" onClick="clicked()">' +
-	                            '<span class="icon text-white-50"><i' +
-	                            'class="material-icons">delete</i> </span>' +
-	                            '</button>' +
-	                            '</a></td>' +
-	                            '</tr>');
+	                            '<td>' +
+	    	                    '<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">'+
+	    	                    '<button class="btn btn-primary" data-title="Edit"'
+	    						+ 'data-toggle="modal" >'
+	    						+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+	    						+ '</span>'
+	    						+ '</button>'+
+	    						'</a>'+
+
+	    						+ '<td>'
+	    	                    + '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' + user.id + '})}">'
+	    	                    + '<button class="btn btn-danger" data-title="Delete"'
+	    						+ 'data-toggle="modal" >'
+	    						+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+	    						+ '</span>'
+	    						+ '</button>'+
+	    						'</a>'+					
+	    	                    '</td>' +	     
+	    	                    '</tr>');
 	                    });
 	                }
 	            };
