@@ -552,64 +552,66 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<!-- content -->
+					<div class="group-control">
+						<div class="row">
 
-				<!-- content -->
-				<div class="group-control">
-					<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-sm-8">
+										<h4>Products</h4>
+									</div>
 
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-8">
-									<h4>Products</h4>
+									<div class="col-sm-2">
+										<button class="btn btn-info add-new" data-title="import"
+											data-toggle="modal" data-target="#import">Import
+											Products</button>
+									</div>
+									<div class="col-sm-2">
+										<button class="btn btn-info add-new" data-title="add"
+											data-toggle="modal" data-target="#add">Add Product</button>
+									</div>
+								</div>
+								<br> <br>
+								<p>Type name of Product in the Search</p>
+								<input class="form-control" id="myInput" type="text"
+									placeholder="Search.."> <br> <br>
+								<div class="table-responsive">
+
+									<table id="mytable" class="table table-bordred table-striped">
+
+										<thead>
+
+
+											<th>ID</th>
+											<th>Code</th>
+											<th>Image</th>
+											<th>Price</th>
+											<th>Available</th>
+											<th>Edit</th>
+											<th>Delete</th>
+										</thead>
+
+										<tbody>
+
+										</tbody>
+
+									</table>
+
+									<div class="clearfix">
+										<nav aria-label="Page navigation example">
+											<ul class="pagination" id="ulPagination">
+
+											</ul>
+										</nav>
+									</div>
 								</div>
 
-								<div class="col-sm-2">
-									<button class="btn btn-info add-new" data-title="import"
-										data-toggle="modal" data-target="#import">Import
-										Products</button>
-								</div>
-								<div class="col-sm-2">
-									<button class="btn btn-info add-new" data-title="add"
-										data-toggle="modal" data-target="#add">Add Product</button>
-								</div>
 							</div>
-							<br> <br>
-							<p>Type name of Product in the Search</p>
-							<input class="form-control" id="myInput" type="text"
-								placeholder="Search.."> <br> <br>
-							<div class="table-responsive">
-
-								<table id="mytable" class="table table-bordred table-striped">
-
-									<thead>
-
-
-										<th>ID</th>
-										<th>Code</th>
-										<th>Image</th>
-										<th>Price</th>
-										<th>Available</th>
-										<th>Edit</th>
-										<th>Delete</th>
-									</thead>
-
-									<tbody>
-
-									</tbody>
-
-								</table>
-
-								<div class="clearfix">
-									<nav aria-label="Page navigation example">
-										<ul class="pagination" id="ulPagination">
-
-										</ul>
-									</nav>
-								</div>
-							</div>
-
 						</div>
 					</div>
+					<!-- end content -->
 				</div>
 
 
@@ -869,9 +871,9 @@
 								th:action="@{/admin/CRUD_Products/importFromExcel}"
 								method="POST">
 								<div class="modal-body">
-								<input type="file" name="file" id="fileInput">
+									<input type="file" name="file" id="fileInput">
 								</div>
-								
+
 								<div class="modal-footer ">
 									<button type="submit" class="btn btn-success">
 										<span class="glyphicon glyphicon-ok-sign"></span> Import

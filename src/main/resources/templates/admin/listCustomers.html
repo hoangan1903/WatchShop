@@ -8,8 +8,6 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
-	
-	
 	var pageId = Number(selectPage());
 	var size = Number(5);
 	var countCustomer = null;
@@ -17,85 +15,130 @@
 	//load
 	window.onload = function() {
 		getCountAllCustomer(size);
-	    var url = selectUrlGetCustomer(pageId, size, $("#myInput").val());
-	    $('#mytable tbody').empty();
-	    var xhttp = new XMLHttpRequest();
-	    xhttp.onreadystatechange = function () {
-	        if (this.readyState == 4 && this.status == 200) {
-	            obj = JSON.parse(this.responseText);
-	            $.each(obj, function (key, customer) {
-	                $('#mytable tbody').append(
-	                    '<tr>' +
-	                    '<td class="username">' + customer.id + '</td>' +
-	                    '<td>' + customer.name + '</td>' +
-	                    '<td>' + customer.phone + '</td>' +
-	                    '<td>' + customer.address + '</td>' +
-	                    '<td>' +	             
-// 	                    '<a href="#">View</a>'+
-	                    '<button class="btn btn-success" type="submit"'+
-						'data-toggle="modal" data-target="#view" onclick= "showDetail('+customer.id+')">View</button>'+
-	                    '</td>' +	     
-	                    '</tr>');
+		var url = selectUrlGetCustomer(pageId, size, $("#myInput").val());
+		$('#mytable tbody').empty();
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				obj = JSON.parse(this.responseText);
+				$
+						.each(
+								obj,
+								function(key, customer) {
+									$('#mytable tbody')
+											.append(
+													'<tr>'
+															+ '<td class="username">'
+															+ customer.id
+															+ '</td>'
+															+ '<td>'
+															+ customer.name
+															+ '</td>'
+															+ '<td>'
+															+ customer.phone
+															+ '</td>'
+															+ '<td>'
+															+ customer.address
+															+ '</td>'
+															+ '<td>'
+															+
+															// 	                    '<a href="#">View</a>'+
+															'<button class="btn btn-success" type="submit"'
+															+ 'data-toggle="modal" data-target="#view" onclick= "showDetail('
+															+ customer.id
+															+ ')">View</button>'
+															+ '</td>' + '</tr>');
 
-	            })
-	        }
-	    };
-	    xhttp.open("GET", url, true);
-	    xhttp.send();
-	    
-	    
-	    $(document).ready(function () {
-	        //search Input field
-	        $("#myInput").on("keyup", function () {
-	            $('#mytable tbody').empty();
-	            $('#ulPagination').empty();
+								})
+			}
+		};
+		xhttp.open("GET", url, true);
+		xhttp.send();
 
-	            if (isSelectSearchInputEmpty() == true) {
-	                getCountAllCustomer(size);
-	            }
-	            
-	            var url = selectUrlGetCustomer(pageId, size, $("#myInput").val());
-	            var xhttp = new XMLHttpRequest();
-	            xhttp.onreadystatechange = function () {
-	                if (this.readyState == 4 && this.status == 200) {
-	                    obj = JSON.parse(this.responseText);
-	                    if (isSelectSearchInputEmpty() == false) {
-	                        countCustomer = Object.keys(obj).length;
-	                        numberPage = countCustomer / size;
-	                        for (var i = 0; i < numberPage; i++) {
-	                            $('#ulPagination').append(
-	                                '<li class="page-item"><a class="page-link" href="/admin/list_Customers?page=' +
-	                                i +
-	                                '&size=3">' +
-	                                (i + 1) +
-	                                '</a></li>')
-	                        }
-	                    }
+		$(document)
+				.ready(
+						function() {
+							//search Input field
+							$("#myInput")
+									.on(
+											"keyup",
+											function() {
+												$('#mytable tbody').empty();
+												$('#ulPagination').empty();
 
-	                    $.each(obj, function (key, customer) {
-	                        $('#mytable tbody').append(
-	                        		'<tr>' +
-	         	                    '<td class="username">' + customer.id + '</td>' +
-	         	                    '<td>' + customer.name + '</td>' +
-	         	                    '<td>' + customer.phone + '</td>' +
-	         	                    '<td>' + customer.address + '</td>' +
-	         	                    '<td>' +
-//	         	                   	'<a href="#">View</a>'+
-	         	                    '<button class="btn btn-success" type="submit"'+
-									'data-toggle="modal" data-target="#view" onclick= "showDetail('+customer.id+')">View</button>'+
-	         	                    '</a>'+		
-	         	                    '</td>' +	     
-	         	                    '</tr>');
-	                    });
-	                }
-	            };
-	            xhttp.open("GET", url, true);
-	            xhttp.send();
-	        });
+												if (isSelectSearchInputEmpty() == true) {
+													getCountAllCustomer(size);
+												}
 
-	    });
+												var url = selectUrlGetCustomer(
+														pageId, size, $(
+																"#myInput")
+																.val());
+												var xhttp = new XMLHttpRequest();
+												xhttp.onreadystatechange = function() {
+													if (this.readyState == 4
+															&& this.status == 200) {
+														obj = JSON
+																.parse(this.responseText);
+														if (isSelectSearchInputEmpty() == false) {
+															countCustomer = Object
+																	.keys(obj).length;
+															numberPage = countCustomer
+																	/ size;
+															for (var i = 0; i < numberPage; i++) {
+																$(
+																		'#ulPagination')
+																		.append(
+																				'<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
+																						+ i
+																						+ '&size=3">'
+																						+ (i + 1)
+																						+ '</a></li>')
+															}
+														}
+
+														$
+																.each(
+																		obj,
+																		function(
+																				key,
+																				customer) {
+																			$(
+																					'#mytable tbody')
+																					.append(
+																							'<tr>'
+																									+ '<td class="username">'
+																									+ customer.id
+																									+ '</td>'
+																									+ '<td>'
+																									+ customer.name
+																									+ '</td>'
+																									+ '<td>'
+																									+ customer.phone
+																									+ '</td>'
+																									+ '<td>'
+																									+ customer.address
+																									+ '</td>'
+																									+ '<td>'
+																									+
+																									//	         	                   	'<a href="#">View</a>'+
+																									'<button class="btn btn-success" type="submit"'
+																									+ 'data-toggle="modal" data-target="#view" onclick= "showDetail('
+																									+ customer.id
+																									+ ')">View</button>'
+																									+ '</a>'
+																									+ '</td>'
+																									+ '</tr>');
+																		});
+													}
+												};
+												xhttp.open("GET", url, true);
+												xhttp.send();
+											});
+
+						});
 	}
-	
+
 	function getCountAllCustomer(size) {
 		var url = "/rest/customers/count";
 		var xhttp = new XMLHttpRequest();
@@ -103,11 +146,11 @@
 			if (this.readyState == 4 && this.status == 200) {
 				countCustomer = Number(this.responseText);
 				numberPage = countCustomer / size;
-	
+
 				for (var i = 0; i < numberPage; i++) {
 					$('#ulPagination').append(
 							'<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
-								+ i + '&size=3">' + (i + 1) + '</a></li>')
+									+ i + '&size=3">' + (i + 1) + '</a></li>')
 				}
 
 			}
@@ -115,7 +158,7 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 	}
-	
+
 	function selectPage() {
 		$.urlParam = function(name) {
 			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
@@ -131,7 +174,7 @@
 			return $.urlParam('page');
 		}
 	}
-	
+
 	function selectUrlGetCustomer(pageId, size, keyword) {
 		var url = "";
 		if (isSelectSearchInputEmpty() == true) {
@@ -140,10 +183,10 @@
 		} else {
 			url = "/rest/customers/find/" + keyword;
 		}
-//		console.log(url);
+		//		console.log(url);
 		return url;
 	}
-	
+
 	function isSelectSearchInputEmpty() {
 		if ($('#myInput').val().toLowerCase() == "") {
 			return true;
@@ -151,40 +194,39 @@
 			return false;
 		}
 	}
-	
-	function showDetail(id){
+
+	function showDetail(id) {
 		var url = "/rest/customers/detail/" + id;
 		$('#mytableDetail tbody').empty();
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
+		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				obj = JSON.parse(this.responseText);
-				  $.each(obj, function (key, order) {
-					  console.log(order)
-                      $('#mytableDetail tbody').append(
-                      		'<tr>' +
-       	                    '<td class="username">' + order.id + '</td>' +
-       	                    '<td>' + order.price + '</td>' +
-       	                    '<td>' + order.orderStatusO.orderStatus + '</td>' +
-       	                    '<td>' + order.paymentO.name + '</td>' +
-       	                    '<td>' + formatDateTime(order.createAt) + '</td>' +	     
-       	                    '</tr>');
-                  });
-				
+				$.each(obj, function(key, order) {
+					console.log(order)
+					$('#mytableDetail tbody').append(
+							'<tr>' + '<td class="username">' + order.id
+									+ '</td>' + '<td>' + order.price + '</td>'
+									+ '<td>' + order.orderStatusO.orderStatus
+									+ '</td>' + '<td>' + order.paymentO.name
+									+ '</td>' + '<td>'
+									+ formatDateTime(order.createAt) + '</td>'
+									+ '</tr>');
+				});
+
 			}
 		}
 		xhttp.open("GET", url, true);
 		xhttp.send();
 	}
-	
-	function formatDateTime(datetime){
+
+	function formatDateTime(datetime) {
 		var regDate = /\d{4}-.*(?=T\d\d:\d\d:\d\d)/;
 		var regTime = /(?<=\d{4}-\d\d-\d\dT)\d\d:\d\d:\d\d/;
 		var date = regDate.exec(datetime)[0];
 		var time = regTime.exec(datetime)[0];
 		return date + ' ' + time;
 	}
-	
 </script>
 </head>
 <body id="page-top">
@@ -206,91 +248,94 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-
-				<!-- content -->
-				<div class="group-control">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-9">
-									<h4>Customers</h4>
-								</div>
-							</div>
-							<br>
-							<p>Type name of Customer in the Search</p>
-							<input class="form-control" id="myInput" type="text"
-								placeholder="Search.."> <br> <br>
-							<div class="table-responsive">
-								<div class="table-responsive">
-
-									<table id="mytable" class="table table-bordred table-striped">
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>Name</th>
-												<th>Phone</th>
-												<th>Address</th>
-												<th>Detail</th>
-											</tr>
-										</thead>
-
-										<tbody>
-
-										</tbody>
-									</table>
-
-
-									<div class="clearfix">
-										<nav aria-label="Page navigation example">
-											<ul class="pagination" id="ulPagination">
-
-											</ul>
-										</nav>
+				<div class="container-fluid">
+					<!-- content -->
+					<div class="group-control">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-sm-9">
+										<h4>Customers</h4>
 									</div>
 								</div>
-
-							</div>
-						</div>
-					</div>
-					
-					<div class="modal fade" id="view" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Transaction History</h4>
-							</div>
-									
-							<div class="table-responsive">
+								<br>
+								<p>Type name of Customer in the Search</p>
+								<input class="form-control" id="myInput" type="text"
+									placeholder="Search.."> <br> <br>
 								<div class="table-responsive">
-									<table id="mytableDetail" class="table table-bordred table-striped">
-										<thead>
-											<tr>
-												<th>ID_Order</th>
-												<th>Price</th>
-												<th>Status</th>
-												<th>Payment</th>
-												<th>Time</th>
-											</tr>
-										</thead>
+									<div class="table-responsive">
 
-										<tbody>
+										<table id="mytable" class="table table-bordred table-striped">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Name</th>
+													<th>Phone</th>
+													<th>Address</th>
+													<th>Detail</th>
+												</tr>
+											</thead>
 
-										</tbody>
-									</table>
+											<tbody>
+
+											</tbody>
+										</table>
+
+
+										<div class="clearfix">
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPagination">
+
+												</ul>
+											</nav>
+										</div>
+									</div>
+
 								</div>
-							</div>						
+							</div>
 						</div>
-						<!-- /.modal-content -->
+
+						<div class="modal fade" id="view" tabindex="-1" role="dialog"
+							aria-labelledby="edit" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</button>
+										<h4 class="modal-title custom_align" id="Heading">Transaction
+											History</h4>
+									</div>
+
+									<div class="table-responsive">
+										<div class="table-responsive">
+											<table id="mytableDetail"
+												class="table table-bordred table-striped">
+												<thead>
+													<tr>
+														<th>ID_Order</th>
+														<th>Price</th>
+														<th>Status</th>
+														<th>Payment</th>
+														<th>Time</th>
+													</tr>
+												</thead>
+
+												<tbody>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+						</div>
+						<!-- /.modal-dialog -->
 					</div>
+					<!-- End of Main Content -->
 				</div>
-					<!-- /.modal-dialog -->
-			</div>
-				<!-- End of Main Content -->
 
 				<!-- Footer -->
 				<footer th:replace="fragments/adminPageFragment.html :: footer">

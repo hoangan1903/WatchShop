@@ -8,128 +8,174 @@
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
-	
-	
 	var pageId = Number(selectPage());
 	var size = Number(5);
 	var countUser = null;
 	var numberPage = null;
 	window.onload = function() {
 		getCountAllUser(size);
-	    var url = selectUrlGetUser(pageId, size, $("#myInput").val());
-	    $('#mytable tbody').empty();
-	    var xhttp = new XMLHttpRequest();
-	    xhttp.onreadystatechange = function () {
-	        if (this.readyState == 4 && this.status == 200) {
-	            obj = JSON.parse(this.responseText);
-	            // var obj = /*[[${listUser}]]*/ ;
-	            $.each(obj, function (key, user) {
-	                $('#mytable tbody').append(
-	                    '<tr>' +
-	                    '<td class="username">' + user.username + '</td>' +
-	                    '<td>' + user.email + '</td>' +
-	                    '<td>' + user.roles[0].name + '</td>' +
-	                    '<td>' +
-// 	                    '<a href="/admin/CRUD_User/deleteUser/{userId}(userId=${' + user.id + '})"' +
-// 	                    'th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
-// 	                    '<button class="btn btn-primary" data-title="Edit"' +
+		var url = selectUrlGetUser(pageId, size, $("#myInput").val());
+		$('#mytable tbody').empty();
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				obj = JSON.parse(this.responseText);
+				// var obj = /*[[${listUser}]]*/ ;
+				$
+						.each(
+								obj,
+								function(key, user) {
+									$('#mytable tbody')
+											.append(
+													'<tr>'
+															+ '<td class="username">'
+															+ user.username
+															+ '</td>'
+															+ '<td>'
+															+ user.email
+															+ '</td>'
+															+ '<td>'
+															+ user.roles[0].name
+															+ '</td>'
+															+ '<td>'
+															+
+															// 	                    '<a href="/admin/CRUD_User/deleteUser/{userId}(userId=${' + user.id + '})"' +
+															// 	                    'th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
+															// 	                    '<button class="btn btn-primary" data-title="Edit"' +
 // 	                    'data-toggle="modal" data-target="">' +
-// 	                    '<span class="icon text-white-50"> <i' +
+															// 	                    '<span class="icon text-white-50"> <i' +
 // 	                    'class="material-icons">edit</i>' +
-// 	                    '</span>' +
-// 	                    '</button>' +
+															// 	                    '</span>' +
+															// 	                    '</button>' +
 
-	                    '<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">'+
-	                    '<button class="btn btn-primary" data-title="Edit"'
+															'<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${'
+															+ user.id
+															+ '})}">'
+															+ '<button class="btn btn-primary" data-title="Edit"'
 						+ 'data-toggle="modal" >'
-						+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-						+ '</span>'
-						+ '</button>'+
-						'</a>'+
+															+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</a>'
+															+
 
-						'<td>' +
-	                    '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' + user.id + '})}">'+
-	                    '<button class="btn btn-danger" data-title="Delete"'
+															'<td>'
+															+ '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${'
+															+ user.id
+															+ '})}">'
+															+ '<button class="btn btn-danger" data-title="Delete"'
 						+ 'data-toggle="modal" >'
-						+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
-						+ '</span>'
-						+ '</button>'+
-						'</a>'+					
-	                    '</td>' +	     
-	                    '</tr>');
+															+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</a>'
+															+ '</td>'
+															+ '</tr>');
 
-	            })
-	        }
-	    };
-	    xhttp.open("GET", url, true);
-	    xhttp.send();
-	    
-	    
-	    $(document).ready(function () {
-	        //search Input field
-	        $("#myInput").on("keyup", function () {
-	            $('#mytable tbody').empty();
-	            $('#ulPagination').empty();
+								})
+			}
+		};
+		xhttp.open("GET", url, true);
+		xhttp.send();
 
-	            if (isSelectSearchInputEmpty() == true) {
-	                getCountAllUser(size);
-	            }
-	            var url = selectUrlGetUser(pageId, size, $("#myInput").val());
-	            var xhttp = new XMLHttpRequest();
-	            xhttp.onreadystatechange = function () {
-	                if (this.readyState == 4 && this.status == 200) {
-	                    obj = JSON.parse(this.responseText);
-	                    console.log(obj);
-	                    if (isSelectSearchInputEmpty() == false) {
-	                        countUser = Object.keys(obj).length;
-	                        numberPage = countUser / size;
-	                        console.log(numberPage);
+		$(document)
+				.ready(
+						function() {
+							//search Input field
+							$("#myInput")
+									.on(
+											"keyup",
+											function() {
+												$('#mytable tbody').empty();
+												$('#ulPagination').empty();
 
-	                        for (var i = 0; i < numberPage; i++) {
-	                            $('#ulPagination').append(
-	                                '<li class="page-item"><a class="page-link" href="/admin/CRUD_User?page=' +
-	                                i +
-	                                '&size=3">' +
-	                                (i + 1) +
-	                                '</a></li>')
-	                        }
-	                    }
+												if (isSelectSearchInputEmpty() == true) {
+													getCountAllUser(size);
+												}
+												var url = selectUrlGetUser(
+														pageId, size, $(
+																"#myInput")
+																.val());
+												var xhttp = new XMLHttpRequest();
+												xhttp.onreadystatechange = function() {
+													if (this.readyState == 4
+															&& this.status == 200) {
+														obj = JSON
+																.parse(this.responseText);
+														console.log(obj);
+														if (isSelectSearchInputEmpty() == false) {
+															countUser = Object
+																	.keys(obj).length;
+															numberPage = countUser
+																	/ size;
+															console
+																	.log(numberPage);
 
-	                    $.each(obj, function (key, user) {
-	                        $('#mytable tbody').append(
-	                            '<tr>' +
-	                            '<td class="username">' + user.username + '</td>' +
-	                            '<td>' + user.email + '</td>' +
-	                            '<td>' + user.roles[0].name + '</td>' +
-	                            '<td>' +
-	    	                    '<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">'+
-	    	                    '<button class="btn btn-primary" data-title="Edit"'
+															for (var i = 0; i < numberPage; i++) {
+																$(
+																		'#ulPagination')
+																		.append(
+																				'<li class="page-item"><a class="page-link" href="/admin/CRUD_User?page='
+																						+ i
+																						+ '&size=3">'
+																						+ (i + 1)
+																						+ '</a></li>')
+															}
+														}
+
+														$
+																.each(
+																		obj,
+																		function(
+																				key,
+																				user) {
+																			$(
+																					'#mytable tbody')
+																					.append(
+																							'<tr>'
+																									+ '<td class="username">'
+																									+ user.username
+																									+ '</td>'
+																									+ '<td>'
+																									+ user.email
+																									+ '</td>'
+																									+ '<td>'
+																									+ user.roles[0].name
+																									+ '</td>'
+																									+ '<td>'
+																									+ '<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${'
+																									+ user.id
+																									+ '})}">'
+																									+ '<button class="btn btn-primary" data-title="Edit"'
 	    						+ 'data-toggle="modal" >'
-	    						+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-	    						+ '</span>'
-	    						+ '</button>'+
-	    						'</a>'+
+																									+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+																									+ '</span>'
+																									+ '</button>'
+																									+ '</a>'
+																									+
 
-	    						+ '<td>'
-	    	                    + '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' + user.id + '})}">'
-	    	                    + '<button class="btn btn-danger" data-title="Delete"'
+																									+'<td>'
+																									+ '<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${'
+																									+ user.id
+																									+ '})}">'
+																									+ '<button class="btn btn-danger" data-title="Delete"'
 	    						+ 'data-toggle="modal" >'
-	    						+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
-	    						+ '</span>'
-	    						+ '</button>'+
-	    						'</a>'+					
-	    	                    '</td>' +	     
-	    	                    '</tr>');
-	                    });
-	                }
-	            };
-	            xhttp.open("GET", url, true);
-	            xhttp.send();
-	        });
+																									+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+																									+ '</span>'
+																									+ '</button>'
+																									+ '</a>'
+																									+ '</td>'
+																									+ '</tr>');
+																		});
+													}
+												};
+												xhttp.open("GET", url, true);
+												xhttp.send();
+											});
 
-	    });
+						});
 	}
-	
+
 	function getCountAllUser(size) {
 		var url = "/rest/users/count";
 		var xhttp = new XMLHttpRequest();
@@ -137,11 +183,11 @@
 			if (this.readyState == 4 && this.status == 200) {
 				countUser = Number(this.responseText);
 				numberPage = countUser / size;
-	
+
 				for (var i = 0; i < numberPage; i++) {
 					$('#ulPagination').append(
 							'<li class="page-item"><a class="page-link" href="/admin/CRUD_User?page='
-								+ i + '&size=3">' + (i + 1) + '</a></li>')
+									+ i + '&size=3">' + (i + 1) + '</a></li>')
 				}
 
 			}
@@ -149,7 +195,7 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 	}
-	
+
 	function selectPage() {
 		$.urlParam = function(name) {
 			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
@@ -165,7 +211,7 @@
 			return $.urlParam('page');
 		}
 	}
-	
+
 	function selectUrlGetUser(pageId, size, keyword) {
 		var url = "";
 		if (isSelectSearchInputEmpty() == true) {
@@ -177,7 +223,7 @@
 		console.log(url);
 		return url;
 	}
-	
+
 	function isSelectSearchInputEmpty() {
 		if ($('#myInput').val().toLowerCase() == "") {
 			return true;
@@ -185,28 +231,26 @@
 			return false;
 		}
 	}
-	
-    function clicked() {
-       if (confirm('Do you want to delete this User?')) {
-           yourformelement.submit();
-       } else {
-           return false;
-       }
-    }
 
-    function validate(form) {
+	function clicked() {
+		if (confirm('Do you want to delete this User?')) {
+			yourformelement.submit();
+		} else {
+			return false;
+		}
+	}
 
-        // validation code here ...
+	function validate(form) {
 
+		// validation code here ...
 
-        if(!valid) {
-            alert('Please correct the errors in the form!');
-            return false;
-        }
-        else {
-            return confirm('Do you really want to submit the form?');
-        }
-    }
+		if (!valid) {
+			alert('Please correct the errors in the form!');
+			return false;
+		} else {
+			return confirm('Do you really want to submit the form?');
+		}
+	}
 </script>
 
 
@@ -231,60 +275,62 @@
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-
-				<!-- content -->
-				<div class="group-control">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-9">
-									<h4>Users</h4>
-								</div>
-								<div class="col-sm-2">
-									<a href="#" th:href="@{/admin/CRUD_User/addUser}">
-										<button class="btn btn-info add-new" data-title="add"
-											data-toggle="modal" data-target="#add">Add User</button>
-									</a>
-								</div>
-							</div>
-							<br> <br>
-							<p>Type name of User in the Search</p>
-							<input class="form-control" id="myInput" type="text"
-								placeholder="Search.."> <br> <br>
-							<div class="table-responsive">
-								<div class="table-responsive">
-
-									<table id="mytable" class="table table-bordred table-striped">
-										<thead>
-											<tr>
-												<th>Username</th>
-												<th>Email</th>
-												<th>Status</th>
-												<th>Edit</th>
-												<th>Delete</th>
-											</tr>
-										</thead>
-
-										<tbody>
-
-										</tbody>
-									</table>
-
-
-									<div class="clearfix">
-										<nav aria-label="Page navigation example">
-											<ul class="pagination" id="ulPagination">
-
-											</ul>
-										</nav>
+				<div class="container-fluid">
+					<!-- content -->
+					<div class="group-control">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-sm-9">
+										<h4>Users</h4>
+									</div>
+									<div class="col-sm-2">
+										<a href="#" th:href="@{/admin/CRUD_User/addUser}">
+											<button class="btn btn-info add-new" data-title="add"
+												data-toggle="modal" data-target="#add">Add User</button>
+										</a>
 									</div>
 								</div>
+								<br> <br>
+								<p>Type name of User in the Search</p>
+								<input class="form-control" id="myInput" type="text"
+									placeholder="Search.."> <br> <br>
+								<div class="table-responsive">
+									<div class="table-responsive">
 
+										<table id="mytable" class="table table-bordred table-striped">
+											<thead>
+												<tr>
+													<th>Username</th>
+													<th>Email</th>
+													<th>Status</th>
+													<th>Edit</th>
+													<th>Delete</th>
+												</tr>
+											</thead>
+
+											<tbody>
+
+											</tbody>
+										</table>
+
+
+										<div class="clearfix">
+											<nav aria-label="Page navigation example">
+												<ul class="pagination" id="ulPagination">
+
+												</ul>
+											</nav>
+										</div>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- End of Main Content -->
 				</div>
-				<!-- End of Main Content -->
+
 
 				<!-- Footer -->
 				<footer th:replace="fragments/adminPageFragment.html :: footer">
