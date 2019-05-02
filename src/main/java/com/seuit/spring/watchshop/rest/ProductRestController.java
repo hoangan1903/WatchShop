@@ -1,5 +1,8 @@
 package com.seuit.spring.watchshop.rest;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,76 +37,127 @@ import com.seuit.spring.watchshop.service.ProductService;
 import javassist.NotFoundException;
 
 @RestController
-@RequestMapping(value = {"/rest"})
+@RequestMapping(value = { "/rest" })
 public class ProductRestController {
+
+	public static final Integer maxSizeResultListForIndex = 10;
+
 	@Autowired
 	private ProductService productService;
+
 	@PostMapping("/products")
 	String newProduct(@Valid @RequestBody ProductApi productApi) {
 		productService.saveOrUpdate(productApi, null);
 		return "Add success";
 	}
-	
+
 	@DeleteMapping("/products/{id}")
 	String deleteProduct(@PathVariable(value = "id") @Min(1) Integer id) {
 		productService.deleteProductById(id);
 		return "Delete Success";
 	}
-	
+
 	@PutMapping("/products/{id}")
-	String updateProduct(@Valid @RequestBody ProductApi productApi,BindingResult result,@PathVariable(value = "id") @Min(1) Integer id) {
+	String updateProduct(@Valid @RequestBody ProductApi productApi, BindingResult result,
+			@PathVariable(value = "id") @Min(1) Integer id) {
 		productService.saveOrUpdate(productApi, id);
 		return "Update Success";
 	}
-	
-	@GetMapping(value="/products",params = {"page","size"})
-	List<Product> findAllProductByPaginated(@RequestParam("page") Integer page, 
-			  @RequestParam("size") Integer size) {
-		return productService.findPaginated(page,size);
+
+	@GetMapping(value = "/products", params = { "page", "size" })
+	List<Product> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+		return productService.findPaginated(page, size);
 	}
-	
+
 	@GetMapping("/products/count")
 	Long getCountTotalProduct() {
 		return productService.countProduct();
 	}
-	
-	@GetMapping(value="/products")
+
+	@GetMapping(value = "/products")
 	List<Product> findAllProduct() {
 		return productService.listProduct();
 	}
-	
+
 	@GetMapping("/products/{id}")
 	Product findProductByProductId(@PathVariable(value = "id") @Min(1) Integer id) throws NotFoundException {
 		return productService.getProductById(id);
 	}
-	
+
 	@GetMapping("/products/details")
 	List<ProductDetail> findAllProductDetail() {
 		return productService.listProductDetail();
 	}
-	
+
 	@GetMapping("/products/details/{id}")
-	ProductDetail findAllProductDetail(@PathVariable(value = "id") @Min(1) Integer id) throws NotFoundException {
+	ProductDetail findAllProductDetailByProductId(@PathVariable(value = "id") @Min(1) Integer id)
+			throws NotFoundException {
 		return productService.getProductDetailByProductId(id);
 	}
-	
+
 	@GetMapping("/products/firm/{id}")
-	Set<Product> findAllProductByIdFirm(@PathVariable(value = "id") Integer id) throws NotFoundException{
+	List<Product> findAllProductByIdFirm(@PathVariable(value = "id") Integer id) throws NotFoundException {
 		return productService.listProductByIdFirm(id);
 	}
-	
+
 	@GetMapping("/products/model/{id}")
-	List<Product> findAllProductByIdModel(@PathVariable(value = "id") Integer id){
+	List<Product> findAllProductByIdModel(@PathVariable(value = "id") Integer id) {
 		return productService.listProductByIdModel(id);
 	}
-	
+
 	@GetMapping("/products/origin/{id}")
 	List<Product> findAllProductByIdOrigin(@PathVariable(value = "id") Integer id) {
 		return productService.listProductByIdOrigin(id);
 	}
-	
+
 	@GetMapping("/products/find/{keyword}")
-	List<Product> findProductByKeyword(@PathVariable(value = "keyword") String keyword	) {
+	List<Product> findProductByKeyword(@PathVariable(value = "keyword") String keyword) {
 		return productService.getListProductBykeyword(keyword);
 	}
+
+	@GetMapping("/products/catalogue")
+	Map<String, Object> catalogueProductIndex() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Product> listTop = productService.listProductTopOrder();
+		List<Product> listCITIZEN = new ArrayList<Product>();
+		List<Product> listOGIVAL = new ArrayList<Product>();
+		List<Product> listORIENT = new ArrayList<Product>();
+		List<Product> listBULOVA = new ArrayList<Product>();
+		/*
+		 * '1','Citizen' 
+		 * '2','Ogival'
+		 * '3', 'Elixa' 
+		 * '4', 'Bulova' 
+		 * '5', 'OP' 
+		 * '6','Orient' 
+		 * '7', 'Seiko'
+		 */
+		try {
+			listCITIZEN = productService.listProductByIdFirm(1);
+			listOGIVAL = productService.listProductByIdFirm(2);
+			listORIENT = productService.listProductByIdFirm(6);
+			listBULOVA = productService.listProductByIdFirm(4);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("top", a(listTop));
+		map.put("citizens", a(listCITIZEN));
+		map.put("ogivals", a(listOGIVAL));
+		map.put("orients", a(listORIENT));
+		map.put("bulovas", a(listBULOVA));
+		return map;
+	}
+
+	private Map<String, Object> a(List<Product> list) {
+		Map<String, Object> mapList = new HashMap<String, Object>();
+		Integer size = list.size();
+		if (size > maxSizeResultListForIndex) {
+			list = list.subList(0, maxSizeResultListForIndex);
+		}
+		mapList.put("products", list);
+		mapList.put("total", list.size());
+		return mapList;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class Firm {
 	
 	@OneToMany(mappedBy="firm",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JsonIgnore
-	private Set<Product> products;
+	private List<Product> products;
 
 	public Integer getId() {
 		return id;
@@ -47,16 +48,17 @@ public class Firm {
 		this.name = name;
 	}
 
-	public Set<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-
-	public Firm(String name) {
+	
+	public Firm(Integer id, String name) {
 		super();
+		this.id = id;
 		this.name = name;
 	}
 
@@ -69,7 +71,8 @@ public class Firm {
 	public String toString() {
 		return "Firm [id=" + id + ", name=" + name + ", products=" + products + "]";
 	}
+
 	
-	
-	
+
+		
 }

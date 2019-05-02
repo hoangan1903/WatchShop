@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,14 +33,11 @@ public class ProductServiceImpl implements ProductService {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@Autowired
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
-    private Session getSession() {
-        return entityManager.unwrap(Session.class);
-    }
-	
-  
-	
+	private Session getSession() {
+		return entityManager.unwrap(Session.class);
+	}
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -83,12 +81,12 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			// Update Product With ID
 			productRepository.findById(id).map(x -> {
-				//Get ProductDetail & Images From x
+				// Get ProductDetail & Images From x
 				ProductDetail productDetail = x.getProductDetail();
 				Set<Image> images = x.getProductDetail().getImages();
-				
+
 				images = productApi.getImages();
-				images.stream().forEach((image)->{
+				images.stream().forEach((image) -> {
 					image.setProductDetail(productDetail);
 				});
 				productDetail.setImages(images);
@@ -133,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Product> listProduct( ) {
+	public List<Product> listProduct() {
 		// TODO Auto-generated method stub
 		return productRepository.findAll();
 	}
@@ -145,14 +143,13 @@ public class ProductServiceImpl implements ProductService {
 		return productDetailRepository.findAll();
 	}
 
-
 	@Override
 	@Transactional
 	public ProductDetail getProductDetailByProductId(Integer id) throws NotFoundException {
 		// TODO Auto-generated method stub
-		return productRepository.findById(id).map((x)->{
+		return productRepository.findById(id).map((x) -> {
 			return x.getProductDetail();
-		}).orElseThrow(()->new NotFoundException("Cant find product with id : "+id));
+		}).orElseThrow(() -> new NotFoundException("Cant find product with id : " + id));
 	}
 
 	@Override
@@ -166,7 +163,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public Set<Product> listProductByIdFirm(Integer id) throws NotFoundException {
+	public List<Product> listProductByIdFirm(Integer id) throws NotFoundException {
 		// TODO Auto-generated method stub
 		return firmRepository.findById(id).map((firm) -> {
 			return firm.getProducts();
@@ -182,7 +179,7 @@ public class ProductServiceImpl implements ProductService {
 		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Model m on pd.model=m.id WHERE m.id=:id";
 		Query query = session.createQuery(sql);
 		query.setParameter("id", id);
-		
+
 		return query.getResultList();
 	}
 
@@ -195,7 +192,7 @@ public class ProductServiceImpl implements ProductService {
 		String sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail=pd.id inner join Origin o on pd.origin=o.id WHERE o.id=:id";
 		Query query = session.createQuery(sql);
 		query.setParameter("id", id);
-		
+
 		return query.getResultList();
 	}
 
@@ -205,8 +202,8 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findPaginated(Integer page, Integer size) {
 		Session session = getSession();
 		String sql = "FROM Product";
-		Query query = session.createQuery(sql).setFirstResult(page*size).setMaxResults(size);
-		
+		Query query = session.createQuery(sql).setFirstResult(page * size).setMaxResults(size);
+
 		return query.getResultList();
 	}
 
@@ -217,11 +214,11 @@ public class ProductServiceImpl implements ProductService {
 		Session session = getSession();
 		String sqlCount = "SELECT count(p.id) FROM Product p";
 		Query queryCount = session.createQuery(sqlCount);
-		Long count =  (Long) queryCount.getSingleResult();
+		Long count = (Long) queryCount.getSingleResult();
 		logger.info(count.toString());
-		
+
 		return count;
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -235,12 +232,19 @@ public class ProductServiceImpl implements ProductService {
 		query.setParameter("code", "%" + keyword + "%");
 		return query.getResultList();
 	}
-	
-	
-	
 
-	
-	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Product> listProductTopOrder() {
+		// TODO Auto-generated method stub
+		Session session = this.getSession();
+		String sql = "SELECT p FROM Product p inner join OrderDetail o "
+				+ "on p.id=o.productO.id "
+				+ "group by p.id "
+				+ "order by count(p.id)desc";
+		Query query = session.createQuery(sql);
+		return query.getResultList();
+	}
 
 }

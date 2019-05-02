@@ -20,10 +20,11 @@ public interface ProductService {
 	List<ProductDetail> listProductDetail();
 	Product getProductById(Integer id) throws NotFoundException;
 	ProductDetail getProductDetailByProductId(Integer id) throws NotFoundException;
-	Set<Product> listProductByIdFirm(Integer id) throws NotFoundException;
+	List<Product> listProductByIdFirm(Integer id) throws NotFoundException;
 	List<Product> listProductByIdModel(Integer id);
 	List<Product> listProductByIdOrigin(Integer id);
 	List<Product> findPaginated(Integer page,Integer size);
 	Long countProduct();
 	List<Product> getListProductBykeyword(String keyword);
+	List<Product> listProductTopOrder();
 }
