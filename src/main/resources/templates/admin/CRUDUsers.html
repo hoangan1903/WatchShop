@@ -85,7 +85,7 @@
 							$("#myInput")
 									.on(
 											"keyup",
-											function() {
+											delay(function() {
 												$('#mytable tbody').empty();
 												$('#ulPagination').empty();
 
@@ -171,7 +171,7 @@
 												};
 												xhttp.open("GET", url, true);
 												xhttp.send();
-											});
+											},500));
 
 						});
 	}
@@ -250,6 +250,16 @@
 		} else {
 			return confirm('Do you really want to submit the form?');
 		}
+	}
+	function delay(callback, ms) {
+	    var timer = 0;
+	    return function () {
+	        var context = this, args = arguments;
+	        clearTimeout(timer);
+	        timer = setTimeout(function () {
+	            callback.apply(context, args);
+	        }, ms || 0);
+	    };
 	}
 </script>
 

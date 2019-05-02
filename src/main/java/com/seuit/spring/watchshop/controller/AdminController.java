@@ -129,4 +129,9 @@ public class AdminController {
 	public String test() {
 		return "admin/Order";
 	}
+	
+	@GetMapping("/CRUD_OtherFunction")
+	public String showCRUD_OtherFunction() {
+		return "admin/CRUD_OtherFunction";
+	}
 }

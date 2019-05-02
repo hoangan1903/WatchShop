@@ -56,24 +56,30 @@
 		<!-- Heading -->
 		<div class="sidebar-heading">Area of Manager</div>
 
-		<!-- Nav Item - Employee -->
-		<li class="nav-item"><a th:href="@{/admin/CRUD_Employees}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>List Employee</span>
-		</a></li>
 		
 		<!-- Nav Item - Pages Products Menu -->
 		<li class="nav-item"><a th:href="@{/admin/CRUD_Products}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>List Products</span>
+			<i class="fas fa-user"></i> <span>Products</span>
 		</a></li>
-
-		<li class="nav-item"><a th:href="@{/admin/list_Customers}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>List Customers</span>
+		
+		<!-- Nav Item - Employee -->
+		<li class="nav-item"><a th:href="@{/admin/CRUD_Employees}" class="nav-link" >
+			<i class="fas fa-user"></i> <span>Employees</span>
+		</a></li>
+		
+		<li class="nav-item"><a th:href="@{/admin/CRUD_OtherFunction}" class="nav-link" >
+			<i class="fas fa-user"></i> <span>Other Function</span>
         </a></li>
+
 		<!-- Divider -->
 		<hr class="sidebar-divider d-none d-md-block">
 		
 		<!-- Heading -->
 		<div class="sidebar-heading">Area of Employee</div>
+		
+		<li class="nav-item"><a th:href="@{/admin/list_Customers}" class="nav-link" >
+			<i class="fas fa-user"></i> <span>Customers</span>
+        </a></li>
 
 		<!-- Nav Item - Employee -->
 		<li class="nav-item"><a th:href="@{/admin/order}" class="nav-link" >

@@ -120,7 +120,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         // TODO Auto-generated method stub
         Session session = getSession();
         String sql = "SELECT e FROM Employee e WHERE e.name like :code";
-        javax.persistence.Query query = session.createQuery(sql).setMaxResults(10);
+        javax.persistence.Query query = session.createQuery(sql);
         query.setParameter("code", "%" + keyword + "%");
         return query.getResultList();
     }

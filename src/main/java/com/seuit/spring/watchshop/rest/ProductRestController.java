@@ -141,15 +141,15 @@ public class ProductRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		map.put("top", a(listTop));
-		map.put("citizens", a(listCITIZEN));
-		map.put("ogivals", a(listOGIVAL));
-		map.put("orients", a(listORIENT));
-		map.put("bulovas", a(listBULOVA));
+		map.put("top", createMapProduct(listTop));
+		map.put("citizens", createMapProduct(listCITIZEN));
+		map.put("ogivals", createMapProduct(listOGIVAL));
+		map.put("orients", createMapProduct(listORIENT));
+		map.put("bulovas", createMapProduct(listBULOVA));
 		return map;
 	}
 
-	private Map<String, Object> a(List<Product> list) {
+	private Map<String, Object> createMapProduct(List<Product> list) {
 		Map<String, Object> mapList = new HashMap<String, Object>();
 		Integer size = list.size();
 		if (size > maxSizeResultListForIndex) {

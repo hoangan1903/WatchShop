@@ -137,7 +137,7 @@
 						$("#myInput")
 								.on(
 										"keyup",
-										function() {
+										delay(function() {
 											$('#mytable tbody').empty();
 											$('#ulPagination').empty();
 
@@ -223,7 +223,7 @@
 											};
 											xhttp.open("GET", url, true);
 											xhttp.send();
-										});
+										},500));
 
 					});
 	function editOnClick(id) {
@@ -530,6 +530,16 @@
 		};
 		xhttp.open("GET", url, true);
 		xhttp.send();
+	}
+	function delay(callback, ms) {
+	    var timer = 0;
+	    return function () {
+	        var context = this, args = arguments;
+	        clearTimeout(timer);
+	        timer = setTimeout(function () {
+	            callback.apply(context, args);
+	        }, ms || 0);
+	    };
 	}
 </script>
 </head>

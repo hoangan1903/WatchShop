@@ -2,8 +2,10 @@ package com.seuit.spring.watchshop.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,14 @@ import com.seuit.spring.watchshop.repository.FirmRepository;
 @Service
 @Transactional
 public class FirmServiceImpl implements FirmService{
+	
+	 @Autowired
+	    private EntityManager entityManager;
+
+	    private Session getSession() {
+	        return entityManager.unwrap(Session.class);
+	    }
+	
 	@Autowired
 	private FirmRepository firmRepository;
 
@@ -44,6 +54,17 @@ public class FirmServiceImpl implements FirmService{
 	public Long getTotalFirm() {
 		// TODO Auto-generated method stub
 		return firmRepository.count();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Firm> getListBykeyword(String keyword) {
+		// TODO Auto-generated method stub
+		 Session session = getSession();
+	        String sql = "SELECT e FROM Firm e WHERE e.name like :code";
+	        javax.persistence.Query query = session.createQuery(sql);
+	        query.setParameter("code", "%" + keyword + "%");
+	        return query.getResultList();
 	}
 
 	

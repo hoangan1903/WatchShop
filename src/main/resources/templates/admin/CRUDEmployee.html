@@ -80,7 +80,7 @@
 						$("#myInput")
 								.on(
 										"keyup",
-										function() {
+										delay(function() {
 											$('#mytable tbody').empty();
 											$('#ulPagination').empty();
 
@@ -168,7 +168,7 @@
 											};
 											xhttp.open("GET", url, true);
 											xhttp.send();
-										});
+										},500));
 
 					});
 
@@ -390,6 +390,16 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 	}
+	function delay(callback, ms) {
+	    var timer = 0;
+	    return function () {
+	        var context = this, args = arguments;
+	        clearTimeout(timer);
+	        timer = setTimeout(function () {
+	            callback.apply(context, args);
+	        }, ms || 0);
+	    };
+	}
 </script>
 </head>
 <body id="page-top">
@@ -435,8 +445,6 @@
 								<table id="mytable" class="table table-bordred table-striped">
 
 									<thead>
-
-
 										<th>ID</th>
 										<th>Name</th>
 										<th>Gender</th>

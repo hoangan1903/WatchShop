@@ -1,6 +1,7 @@
 package com.seuit.spring.watchshop.rest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -46,6 +47,11 @@ public class FirmRestController {
 	@DeleteMapping(value="/firms")
 	private void deleteAllFirm() {
 		firmService.deleteAllFirm();
+	}
+	
+	@GetMapping("/firms/find/{keyword}")
+	private List<Firm> findByKeyword(@PathVariable(name="keyword") String keyword) {
+		return firmService.getListBykeyword(keyword);
 	}
 	
 }
