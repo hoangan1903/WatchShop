@@ -87,7 +87,7 @@
     }
 
     function designAdvancedPagination(totalPages, selectedPage) {
-        // 0 < selectedPage <= totalPages
+        // Proceed if (0 < selectedPage <= totalPages)
         if (selectedPage > 0 && selectedPage <= totalPages) {
             let left = [],
                 prev = selectedPage - 1;
@@ -142,6 +142,8 @@
         return null;
     }
 
+    // Generates a design following some conventions
+    // from which the actual pagination bar will be built
     function designPagination(totalPages, selectedPage) {
         if (!paginationStyle || paginationStyle === 'basic') {
 

@@ -428,7 +428,6 @@
 
             request.open('GET', url, true);
             request.send();
-
             request.onload = function () {
                 let jsonText, obj;
                 jsonText = this.responseText;
@@ -440,7 +439,6 @@
                         console.log(error);
                         obj = {};
                     }
-
                     onReceive(obj, jsonText);
                 }
             };
@@ -464,7 +462,6 @@
     */
     valib.ajaxPOST = function (specs) {
         let url, requestHeader, data, onStateChange, request;
-
         url = specs.url;
         requestHeader = specs.requestHeader;
         data = specs.data;
@@ -473,7 +470,6 @@
 
         request.open('POST', url, true);
         request.setRequestHeader(requestHeader.name, requestHeader.value);
-
         request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200) {
                 onStateChange(request.responseText);
@@ -481,7 +477,6 @@
                 throw new Error('Unsuccessful HTTP POST request');
             }
         };
-
         request.send(data);
     };
 

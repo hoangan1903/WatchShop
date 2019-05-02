@@ -100,6 +100,10 @@ p {
   text-align: end;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Reusable classes/components */
 div.product-img-container {
   height: 270px;
@@ -302,7 +306,20 @@ p.bold {
 /* Defines big reusable components like the header and the footer */
 header nav.navigation {
   background-color: #f9f9f9;
-  transition: background-color 0.75s, box-shadow 0.75s;
+  transition: all 0.5s ease;
+}
+header nav.navigation.mobile-navigation button.hamburger {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: none;
+  background-color: #f9f9f9;
+}
+header nav.navigation.mobile-navigation button.hamburger ion-icon.hamburger-icon {
+  color: #555;
+}
+header nav.navigation.mobile-navigation.stick button.hamburger {
+  background-color: white;
 }
 header nav.navigation.stick {
   position: fixed;
@@ -310,7 +327,7 @@ header nav.navigation.stick {
   left: 0;
   width: 100%;
   z-index: 999;
-  background-color: rgba(255, 255, 255, 0.99);
+  background-color: white;
   box-shadow: 0 2px 2px #efefef;
 }
 header nav.navigation a.navbar-brand {
@@ -324,6 +341,47 @@ header nav.navigation a.navbar-brand:link, header nav.navigation a.navbar-brand:
 }
 header nav.navigation a.navbar-brand:hover, header nav.navigation a.navbar-brand:active {
   color: #28a745;
+}
+header nav.navigation ul.search-suggestion {
+  display: none;
+  background-color: #fff;
+  border-top: 1px solid #e2e2e2;
+  border-left: 1px solid #e2e2e2;
+  border-right: 1px solid #e2e2e2;
+  position: absolute;
+  left: 15px;
+  top: 45px;
+  width: 360px;
+  z-index: 1000;
+}
+header nav.navigation ul.search-suggestion.show {
+  display: block;
+}
+header nav.navigation ul.search-suggestion h6.product-name {
+  color: #555;
+  font-weight: 500;
+}
+header nav.navigation ul.search-suggestion a.product-link:link, header nav.navigation ul.search-suggestion a.product-link:visited {
+  text-decoration: none;
+}
+header nav.navigation ul.search-suggestion .suggestion-item {
+  border-bottom: 1px solid #e2e2e2;
+}
+header nav.navigation ul.search-suggestion .suggestion-item:hover, header nav.navigation ul.search-suggestion .suggestion-item:active {
+  background-color: #f8f8f8;
+}
+
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1000;
+}
+.hamburger-menu.show {
+  display: block;
 }
 
 footer {
@@ -360,10 +418,14 @@ footer ul.social-links a ion-icon.pinterest-icon:hover, footer ul.social-links a
 }
 footer p.copyright-footer {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 16px;
   text-align: center;
   font-size: 80%;
   color: #888;
+}
+
+section.section-sort-filter {
+  padding: 30px 0;
 }
 
 section.section-pagination-links {
@@ -371,5 +433,5 @@ section.section-pagination-links {
 }
 
 section.section-product-list {
-  padding-bottom: 0;
+  padding: 0;
 }

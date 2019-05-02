@@ -4,7 +4,28 @@ header {
 
     nav.navigation {
         background-color: $color-navbar;
-        transition: background-color $transtion-time-extra-long, box-shadow $transtion-time-extra-long;
+        transition: all $transtion-time-long ease;
+
+        &.mobile-navigation {
+
+            button.hamburger {
+                display: flex;
+                align-items: center;
+                padding: 6px 12px;
+                border: none;
+                background-color: $color-navbar;
+
+                ion-icon.hamburger-icon {
+                    color: $color-primary-text;
+                }
+            }
+
+            &.stick {
+                button.hamburger {
+                    background-color: rgba(255, 255, 255, 1);
+                }
+            }
+        }
 
         &.stick {
             position: fixed;
@@ -12,7 +33,7 @@ header {
             left: 0;
             width: 100%;
             z-index: 999;
-            background-color: rgba(255, 255, 255, $opacity-sticky-nav);
+            background-color: rgba(255, 255, 255, 1);
             box-shadow: 0 2px 2px #efefef;
         }
 
@@ -29,6 +50,59 @@ header {
             @include hover-color($color-accent);
             transition: color $transtion-time;
         }
+
+        ul.search-suggestion {
+            display: none;
+            background-color: #fff;
+            border-top: 1px solid $border-color-search-suggestion;
+            border-left: 1px solid $border-color-search-suggestion;
+            border-right: 1px solid $border-color-search-suggestion;
+            position: absolute;
+            left: 15px;
+            top: 45px;
+            width: 360px;
+            z-index: 1000;
+
+            &.show {
+                display: block;
+            }
+
+            h6.product-name {
+                color: $color-primary-text;
+                font-weight: 500;
+            }
+
+            a.product-link {
+
+                &:link,
+                &:visited {
+                    text-decoration: none;
+                }
+            }
+
+            .suggestion-item {
+                border-bottom: 1px solid $border-color-search-suggestion;
+
+                &:hover,
+                &:active {
+                    background-color: #f8f8f8;
+                }
+            }
+        }
+    }
+}
+
+.hamburger-menu {
+    display: none;
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000;
+
+    &.show {
+        display: block;
     }
 }
 
@@ -93,7 +167,7 @@ footer {
 
     p.copyright-footer {
         width: 100%;
-        margin-top: 8px;
+        margin-top: 16px;
         text-align: center;
         font-size: $font-size-small;
         color: $color-secondary-text;

@@ -18,6 +18,7 @@
 
     <!-- My CSS files -->
     <link href="css/main_styles.css" rel="stylesheet">
+    <link href="css/main_responsive.css" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Trang chủ</title>
@@ -25,22 +26,71 @@
 
 <body>
     <header>
-        <nav class="navigation">
+        <nav class="navigation desktop-navigation">
             <div class="container">
                 <div class="row pt-3 pb-2">
                     <div class="col-md-3">
                         <div class="navbar-header">
-                            <a class="navbar-brand bold-text" href="#">UIT Watchshop</a>
+                            <a class="navbar-brand" href="#">UIT Watchshop</a>
                         </div>
                     </div>
 
                     <div class="col-md-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <input type="text" id="main-search" class="form-control"
+                                placeholder="Tìm kiếm sản phẩm, hãng..." aria-label="Search">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="button">Search</button>
+                                <button class="btn btn-outline-success" type="button">Tìm kiếm</button>
                             </div>
                         </div>
+
+                        <ul class="search-suggestion">
+
+                            <!-- Search suggestion will show up here whenever user enters a keyword -->
+                            <li>
+                                <a class="product-link" href="#">
+                                    <div class="suggestion-item d-flex flex-row p-3">
+                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
+                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
+                                                alt="Citizen BL8144-89H">
+                                        </div>
+                                        <div class="item-details flex-grow-1 d-flex flex-column">
+                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
+                                            <p class="card-text price-small">16,500,000đ</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="product-link" href="#">
+                                    <div class="suggestion-item d-flex flex-row p-3">
+                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
+                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
+                                                alt="Citizen BL8144-89H">
+                                        </div>
+                                        <div class="item-details flex-grow-1 d-flex flex-column">
+                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
+                                            <p class="card-text price-small">16,500,000đ</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="product-link" href="#">
+                                    <div class="suggestion-item d-flex flex-row p-3">
+                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
+                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
+                                                alt="Citizen BL8144-89H">
+                                        </div>
+                                        <div class="item-details flex-grow-1 d-flex flex-column">
+                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
+                                            <p class="card-text price-small">16,500,000đ</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
                     </div>
 
                     <div class="col-md-2">
@@ -55,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pt-lg-0 pt-md-1">
                     <div class="col-lg-3 col-md-4">
                         <div class="stretched-container d-flex justify-content-start align-items-end">
                             <div class="dropdown">
@@ -93,7 +143,31 @@
                 </div>
             </div>
         </nav>
+
+        <nav class="navigation mobile-navigation">
+            <div class="container">
+                <div class="row py-2">
+                    <div class="col-6">
+                        <div class="navbar-header stretched-container d-flex align-items-center">
+                            <a class="navbar-brand" href="#">UIT Watchshop</a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="hamburger btn btn-light">
+                                <ion-icon name="ios-menu" class="hamburger-icon large-icon">
+                                </ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
+
+    <div class="hamburger-menu">
+        
+    </div>
 
     <section class="section-banners">
         <div class="container">
@@ -721,9 +795,10 @@
     <script src="plugins/waypoints/jquery.waypoints.js"></script>
     <script src="plugins/owl-carousel/owl.carousel.js"></script>
     <script src="js/libs/valib.js"></script>
+    <script src="js/live_search.js"></script>
+    <script src="js/common_script.js"></script>
 
     <!-- My scripts -->
-    <script src="js/common_script.js"></script>
     <script src="js/main_script.js"></script>
 </body>
 
