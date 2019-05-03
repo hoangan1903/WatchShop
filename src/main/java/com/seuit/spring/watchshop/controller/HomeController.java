@@ -11,7 +11,7 @@ import com.seuit.spring.watchshop.entity.CustomUserDetail;
 public class HomeController {
 	@GetMapping(value = { "/" })
 	public String showIndex() {
-		return "index";
+		return "client/index";
 	}
 
 	@GetMapping("/login")

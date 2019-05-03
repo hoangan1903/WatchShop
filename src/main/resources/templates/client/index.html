@@ -1,20 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Fonts, icons & plugins -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
-    <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="plugins/owl-carousel/owl.theme.default.css" rel="stylesheet">
+    <th:block th:include="fragments/head.html :: head"></th:block>
 
     <!-- My CSS files -->
     <link href="css/main_styles.css" rel="stylesheet">
@@ -25,147 +14,7 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navigation desktop-navigation">
-            <div class="container">
-                <div class="row pt-3 pb-2">
-                    <div class="col-md-3">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="#">UIT Watchshop</a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-7">
-                        <div class="input-group">
-                            <input type="text" id="main-search" class="form-control"
-                                placeholder="Tìm kiếm sản phẩm, hãng..." aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="button">Tìm kiếm</button>
-                            </div>
-                        </div>
-
-                        <ul class="search-suggestion">
-
-                            <!-- Search suggestion will show up here whenever user enters a keyword -->
-                            <li>
-                                <a class="product-link" href="#">
-                                    <div class="suggestion-item d-flex flex-row p-3">
-                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
-                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                                alt="Citizen BL8144-89H">
-                                        </div>
-                                        <div class="item-details flex-grow-1 d-flex flex-column">
-                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                            <p class="card-text price-small">16,500,000đ</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="product-link" href="#">
-                                    <div class="suggestion-item d-flex flex-row p-3">
-                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
-                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                                alt="Citizen BL8144-89H">
-                                        </div>
-                                        <div class="item-details flex-grow-1 d-flex flex-column">
-                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                            <p class="card-text price-small">16,500,000đ</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="product-link" href="#">
-                                    <div class="suggestion-item d-flex flex-row p-3">
-                                        <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
-                                            <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                                alt="Citizen BL8144-89H">
-                                        </div>
-                                        <div class="item-details flex-grow-1 d-flex flex-column">
-                                            <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                            <p class="card-text price-small">16,500,000đ</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-md-2">
-                        <div class="navbar-icons stretched-container d-flex justify-content-end align-items-end">
-                            <a class="regular-link" href="#">
-                                <ion-icon name="ios-person" class="regular-icon"></ion-icon>
-                            </a>
-                            <a class="regular-link pl-lg-4 pl-3" href="#">
-                                <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row pt-lg-0 pt-md-1">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="stretched-container d-flex justify-content-start align-items-end">
-                            <div class="dropdown">
-                                <button class="btn btn-square-bottom btn-success dropdown-toggle" type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Danh mục sản phẩm
-                                </button>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Đồng hồ Citizen</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Đồng hồ Ogival</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Đồng hồ Orient</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Đồng hồ Seiko</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Đồng hồ Bulova</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-9 col-md-8">
-                        <div class="stretched-container d-flex justify-content-start align-items-end">
-                            <ul class="main-nav content-wrapper">
-                                <li class="nav-item"><a class="nav-link nav-link-active" href="#">Trang chủ</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Về chúng tôi</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <nav class="navigation mobile-navigation">
-            <div class="container">
-                <div class="row py-2">
-                    <div class="col-6">
-                        <div class="navbar-header stretched-container d-flex align-items-center">
-                            <a class="navbar-brand" href="#">UIT Watchshop</a>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="hamburger btn btn-light">
-                                <ion-icon name="ios-menu" class="hamburger-icon large-icon">
-                                </ion-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <div class="hamburger-menu"></div>
-    </header>
+    <header th:include="fragments/header.html :: header"></header>
 
     <section class="section-banners">
         <div class="container">
@@ -722,79 +571,9 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="stretched-container d-flex justify-content-lg-start justify-content-center">
-                        <ul class="footer-nav">
-                            <li><a class="regular-link" href="#">Về chúng tôi</a></li>
-                            <li><a class="regular-link" href="#">Blog</a></li>
-                            <li><a class="regular-link" href="#">Tin tức</a></li>
-                            <li><a class="regular-link" href="#">iOS App</a></li>
-                            <li><a class="regular-link" href="#">Android App</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="stretched-container d-flex justify-content-lg-end py-lg-0 justify-content-center py-3">
-                        <ul class="social-links">
-                            <li>
-                                <a href="#">
-                                    <ion-icon name="logo-facebook" class="social-icon facebook-icon small-icon">
-                                    </ion-icon>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <ion-icon name="logo-twitter" class="social-icon twitter-icon small-icon">
-                                    </ion-icon>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <ion-icon name="logo-googleplus" class="social-icon googleplus-icon small-icon">
-                                    </ion-icon>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <ion-icon name="logo-instagram" class="social-icon instagram-icon small-icon">
-                                    </ion-icon>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <ion-icon name="logo-pinterest" class="social-icon pinterest-icon small-icon">
-                                    </ion-icon>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <p class="copyright-footer">Copyright &copy; 2019 by UIT Watchshop. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <footer th:include="fragments/footer.html :: footer"></footer>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/libs/jquery-3.4.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
-    <!-- Additional plugins and libraries -->
-    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
-    <script src="plugins/waypoints/jquery.waypoints.js"></script>
-    <script src="plugins/owl-carousel/owl.carousel.js"></script>
-    <script src="js/libs/valib.js"></script>
-    <script src="js/live_search.js"></script>
-    <script src="js/common_script.js"></script>
+    <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- My scripts -->
     <script src="js/main_script.js"></script>

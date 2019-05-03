@@ -1,0 +1,408 @@
+<!-- The backbone of every HTML page in this project -->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Fonts, icons and plugins -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.theme.default.css" rel="stylesheet">
+
+    <!-- Your CSS files here -->
+    <link href="css/checkout_styles.css" rel="stylesheet">
+
+    <!-- Page title here -->
+    <title>UIT Watchshop - Thanh toán</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navigation">
+            <div class="container">
+                <div class="row pt-3 pb-2">
+                    <div class="col-md-3">
+                        <div class="navbar-header">
+                            <a class="navbar-brand bold-text" href="#">UIT Watchshop</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="navbar-icons stretched-container d-flex justify-content-end align-items-end">
+                            <a class="regular-link" href="#">
+                                <ion-icon name="ios-person" class="regular-icon"></ion-icon>
+                            </a>
+                            <a class="regular-link pl-lg-4 pl-3" href="#">
+                                <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <div class="dropdown">
+                                <button class="btn btn-square-bottom btn-success dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Danh mục sản phẩm
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Đồng hồ Citizen</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Ogival</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Orient</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Seiko</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Bulova</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <ul class="main-nav content-wrapper">
+                                <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Về chúng tôi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Insert page content right here -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="card checkout-card mb-4" style="width: auto;">
+                        <div class="card-header">
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="card-header-title flex-grow-1">Thông tin nhận hàng</h5>
+
+                                <a href="#" class="card-header-action">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <ion-icon name="ios-create" class="small-icon mr-1"></ion-icon>
+                                        Chỉnh sửa
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="delivery-info d-flex flex-column">
+                                <div class=" d-flex flex-row pb-4 card-item-divider">
+                                    <div class="flex-grow-1 d-flex flex-column">
+                                        <div class="card-entry">
+                                            <h6 class="card-title">Tên</h6>
+                                            <p class="card-text">Nguyễn Văn A</p>
+                                        </div>
+                                        <div class="card-entry">
+                                            <h6 class="card-title">Số điện thoại</h6>
+                                            <p class="card-text">0123456789</p>
+                                        </div>
+                                        <div class="card-entry mb-0">
+                                            <h6 class="card-title">Địa chỉ</h6>
+                                            <p class="card-text">Abc</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form class="pt-4">
+                                    <div class="form-group m-0">
+                                        <h6 class="card-title mb-2">Ghi chú</h6>
+                                        <textarea name="message" class="form-control form-message"
+                                            placeholder="Nhập ghi chú (nếu có)"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card checkout-card mb-4" style="width: auto;">
+                        <div class="card-header">
+                            <h5 class="card-header-title">Vận chuyển và thanh toán</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="payment-methods d-flex flex-column">
+                                <div class="card-entry">
+                                    <h6 class="card-title">Thời gian giao hàng</h6>
+                                    <p class="card-text"><em>- Khu vực TP.HCM:</em> Trong ngày hoặc ngày hôm sau</p>
+                                    <p class="card-text"><em>- Các tỉnh thành khác:</em> Trong vòng 3 ngày làm việc</p>
+                                </div>
+
+                                <div class="card-entry">
+                                    <h6 class="card-title">Vận chuyển</h6>
+                                    <form>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="deliveryMethod"
+                                                id="deliveryMethod1" value="by?" checked>
+                                            <label class="form-check-label" for="deliveryMethod1">
+                                                Giao hàng siêu tốc (nửa ngày - chỉ áp dụng cho khu vực
+                                                TP.HCM)
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="deliveryMethod"
+                                                id="deliveryMethod2" value="by?">
+                                            <label class="form-check-label" for="deliveryMethod2">
+                                                Giao hàng tiêu chuẩn (áp dụng cho tất cả)
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-entry mb-0">
+                                    <h6 class="card-title">Hình thức thanh toán</h6>
+                                    <form>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment"
+                                                id="radioCashOnDelivery" value="cod" checked>
+                                            <label class="form-check-label" for="radioCashOnDelivery">
+                                                Thanh toán khi nhận hàng (COD)
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment"
+                                                id="radioPayAtShop" value="shop">
+                                            <label class="form-check-label" for="radioPayAtShop">
+                                                Thanh toán tại cửa hàng (Giữ hàng)
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="card checkout-order-card" style="width: auto;">
+                        <!-- Products -->
+                        <div class="card-header">
+                            <!-- <h5 class="card-header-title"></h5> -->
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="card-header-title flex-grow-1">Đơn hàng của bạn</h5>
+                                <a href="#" class="card-header-action">Quay về Giỏ hàng</a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="order-item-container d-flex flex-column">
+
+                                <div class="order-item d-flex flex-row">
+                                    <div class="item-image d-flex align-items-start mr-3" style="width: 30%;">
+                                        <img src="images/citizen-watch-03.jpg" style="width: 100%;"
+                                            alt="Citizen BL8144-89H">
+                                    </div>
+
+                                    <div class="flex-grow-1 d-flex flex-column">
+                                        <div class="item-details flex-grow-1 d-flex flex-column">
+                                            <div class="mb-1">
+                                                <a href="#" class="order-product-link">Citizen BL8144-89H</a>
+                                            </div>
+                                            <p class="card-text price-small mb-1">16,500,000đ</p>
+                                            <div>
+                                                <p class="card-text" style="display: inline-block;">Số lượng: </p>
+                                                <p class="card-text bold" style="display: inline-block;">02</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="item-price d-flex justify-content-end mt-3">
+                                            <p class="card-text price-secondary-small">33,000,000đ</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item-divider d-flex flex-column">
+                                    <div class="pb-3 card-item-divider"></div>
+                                    <div class="pt-3"></div>
+                                </div>
+
+                                <div class="order-item d-flex flex-row">
+                                    <div class="item-image d-flex align-items-start mr-3" style="width: 30%;">
+                                        <img src="images/citizen-watch-03.jpg" style="width: 100%;"
+                                            alt="Citizen BL8144-89H">
+                                    </div>
+
+                                    <div class="flex-grow-1 d-flex flex-column">
+                                        <div class="item-details flex-grow-1 d-flex flex-column">
+                                            <div class="mb-1">
+                                                <a href="#" class="order-product-link">Citizen BL8144-89H</a>
+                                            </div>
+                                            <p class="card-text price-small mb-1">16,500,000đ</p>
+                                            <div>
+                                                <p class="card-text" style="display: inline-block;">Số lượng: </p>
+                                                <p class="card-text bold" style="display: inline-block;">01</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="item-price d-flex justify-content-end mt-3">
+                                            <p class="card-text price-secondary-small">33,000,000đ</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="order-summary">
+
+                            </div>
+
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid #dfdfdf;">
+                            <div class="cart-summary d-flex flex-column">
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <p class="card-text cart-summary-entry">Tạm tính:</p>
+                                        <p
+                                            class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                            33,000,000đ
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <p class="card-text cart-summary-entry">Giảm giá:</p>
+                                        <p
+                                            class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                            0đ
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="card-text cart-summary-entry">Phí vận chuyển:</p>
+                                        <p
+                                            class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                            50,000đ
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="item-divider d-flex flex-column">
+                                    <div class="pb-3 card-item-divider"></div>
+                                    <div class="pt-3"></div>
+                                </div>
+
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="card-text cart-summary-entry">Thành tiền:</p>
+                                        <p class="card-text price total flex-grow-1 d-flex justify-content-end">
+                                            33,000,000đ
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-end" style="font-size: 90%;">(Đã bao gồm VAT)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <a href="#" class="btn btn-success full-width mt-4">Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-start justify-content-center">
+                        <ul class="footer-nav">
+                            <li><a class="regular-link" href="#">Về chúng tôi</a></li>
+                            <li><a class="regular-link" href="#">Blog</a></li>
+                            <li><a class="regular-link" href="#">Tin tức</a></li>
+                            <li><a class="regular-link" href="#">iOS App</a></li>
+                            <li><a class="regular-link" href="#">Android App</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-end py-lg-0 justify-content-center py-3">
+                        <ul class="social-links">
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-facebook" class="social-icon facebook-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-twitter" class="social-icon twitter-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-googleplus" class="social-icon googleplus-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-instagram" class="social-icon instagram-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-pinterest" class="social-icon pinterest-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="copyright-footer">Copyright &copy; 2019 by UIT Watchshop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/libs/jquery-3.4.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Additional plugins and libraries -->
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <script src="plugins/waypoints/jquery.waypoints.js"></script>
+    <script src="plugins/owl-carousel/owl.carousel.js"></script>
+    <script src="js/libs/valib.js"></script>
+
+    <!-- Your scripts here -->
+    <script src="js/common_script.js"></script>
+
+</body>
+
+</html>

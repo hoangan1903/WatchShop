@@ -1,0 +1,352 @@
+/* Reusable styles */
+
+/* Utility classes */
+
+.full-width {
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.half-height {
+    height: 50%;
+}
+
+.stretched-container {
+    width: 100%;
+    height: 100%;
+
+    &.centered-content {
+        text-align: center;
+    }
+}
+
+.content-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+// Text
+
+.text-wt-ultra-thin {
+    font-weight: $font-wt-ultra-thin;
+}
+
+.text-wt-thin {
+    font-weight: $font-wt-thin;
+}
+
+.text-wt-regular {
+    font-weight: $font-wt-regular;
+}
+
+.text-wt-bold {
+    font-weight: $font-wt-bold;
+}
+
+.text-wt-extra-bold {
+    font-weight: $font-wt-extra-bold;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-black {
+    color: #000;
+}
+
+.text-align-start {
+    text-align: start;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Reusable classes/components */
+
+// Divs
+
+div {
+
+    // Images containers
+    &.product-img-container {
+        height: 270px;
+        width: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+// Headings
+
+h2.section-heading {
+    width: 100%;
+    color: $color-primary-text;
+    font-family: 'Montserrat', sans-serif;
+    font-size: $font-size-very-large;
+    font-weight: $font-wt-medium;
+    word-spacing: 2px;
+    text-align: center;
+    margin-bottom: $spacing-y-small;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    &::after {
+        /* orange line after h2 element */
+        display: block;
+        height: 2px;
+        background-color: $color-accent;
+        content: "";
+        width: 100px;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+}
+
+// Links
+
+a {
+    &.regular-link {
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-secondary-text;
+        }
+
+        @include hover-color($color-accent);
+        transition: color $transtion-time;
+    }
+
+    &.nav-link {
+        @extend .regular-link;
+        @include hover-indicator($color-accent);
+        transition: color $transtion-time, border-bottom $transtion-time;
+
+        &.nav-link-active {
+            color: $color-accent;
+            font-weight: $font-wt-bold;
+            @include bottom-indicator($color-accent);
+        }
+    }
+
+    &.show-more {
+        font-size: $font-size-reduced;
+    }
+
+    &.cart-product-link {
+        font-size: $font-size-large;
+        font-weight: $font-wt-medium;
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-primary-text;
+        }
+
+        @include hover-color($color-accent);
+        transition: color $transtion-time;
+    }
+
+    &.order-product-link {
+        font-size: $font-size-regular;
+
+        @extend .cart-product-link;
+    }
+
+    &.brand-link {
+        @extend .order-product-link;
+    }
+}
+
+// Icons
+
+ion-icon {
+    &.extra-small-icon {
+        font-size: 20px;
+    }
+
+    &.small-icon {
+        font-size: 24px;
+    }
+
+    &.regular-icon {
+        font-size: 28px;
+    }
+
+    &.large-icon {
+        font-size: 36px;
+    }
+
+    &.extra-large-icon {
+        font-size: 48px;
+    }
+}
+
+// Buttons
+
+.btn {
+    &.btn-square {
+        @extend .btn;
+        border-radius: 0;
+    }
+
+    &.btn-square-top {
+        @extend .btn;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: $border-radius-btn;
+        border-bottom-right-radius: $border-radius-btn;
+    }
+
+    &.btn-square-bottom {
+        @extend .btn;
+        border-top-left-radius: $border-radius-btn;
+        border-top-right-radius: $border-radius-btn;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+// Cards
+
+.card {
+
+    &.product-card {
+        // can be used by both index.html and products.html
+        min-height: 450px;
+        width: auto;
+
+        .card-body {
+
+            a.btn {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .card-header {
+        background-color: #fff;
+
+        a.card-header-action {
+
+            font-size: $font-size-reduced;
+            font-weight: $font-wt-regular;
+
+            &:link,
+            &:visited {
+                text-decoration: none;
+                color: $color-accent;
+            }
+
+            @include hover-color($color-accent-dark);
+            transition: color $transtion-time;
+        }
+    }
+
+    h5.card-header-title {
+        font-size: $font-size-increased;
+        font-weight: $font-wt-medium;
+        margin: 0;
+        padding: 4px 0;
+    }
+}
+
+// Sliders
+
+.custom_slider_nav {
+    background: $color-accent;
+    position: absolute;
+    top: 50%;
+    right: -9px;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: all $transtion-time ease;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+// Paragraph / Text
+
+p {
+
+    &.price {
+        color: $color-accent;
+        font-size: 120%;
+        font-weight: $font-wt-medium;
+
+        &.total {
+            font-size: 130%;
+        }
+    }
+
+    &.price-small {
+        color: $color-accent;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-medium;
+    }
+
+    &.price-subtotal {
+        color: $color-primary-text;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-medium;
+    }
+
+    &.price-secondary-small {
+        color: $color-primary-text;
+        font-size: $font-size-regular;
+        font-weight: $font-wt-regular;
+    }
+
+    &.card-text {
+        padding: 0;
+        margin: 0;
+
+        &.cart-summary-entry {
+            color: $color-primary-text;
+
+            &.total {
+                font-weight: $font-wt-medium;
+            }
+        }
+    }
+
+    &.bold {
+        font-weight: $font-wt-medium;
+    }
+}
+
+// Dividers
+
+.card-item-divider {
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.product-quantity {
+    color: $color-primary-text;
+    border-top: 1px solid $color-quantity-button;
+    border-bottom: 1px solid $color-quantity-button;
+}

@@ -1,0 +1,59 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+html,
+body {
+    background-color: $color-background;
+}
+
+section.section-shopping-cart {
+    padding: $spacing-y-small 0;
+
+    a.cart-remove-all {
+        font-size: $font-size-regular;
+        font-weight: $font-wt-regular;
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-accent;
+        }
+
+        @include hover-color($color-accent-dark);
+        transition: color $transtion-time;
+    }
+
+    div {
+
+        &.card-item-actions {
+
+            a.card-item-action {
+                margin-left: 16px;
+
+                &:link,
+                &:visited {
+                    text-decoration: none;
+                    color: $color-secondary-text;
+                }
+
+                ion-icon {
+
+                    &.cart-action-icon {
+                        transition: color $transtion-time;
+                    }
+
+                    &.wishlist-icon {
+                        @include hover-color($color-wishlist-icon);
+                    }
+
+                    &.remove-icon {
+                        @include hover-color($color-primary-text);
+                    }
+                }
+            }
+        }
+    }
+}

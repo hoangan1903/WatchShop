@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Fonts, icons and plugins -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.theme.default.css" rel="stylesheet">
+
+    <!-- Your CSS files here -->
+    <link href="css/cart_styles.css" rel="stylesheet">
+
+    <!-- Page title here -->
+    <title>UIT Watchshop - Giỏ hàng</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navigation">
+            <div class="container">
+                <div class="row pt-3 pb-2">
+                    <div class="col-md-3">
+                        <div class="navbar-header">
+                            <a class="navbar-brand bold-text" href="#">UIT Watchshop</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="navbar-icons stretched-container d-flex justify-content-end align-items-end">
+                            <a class="regular-link" href="#">
+                                <ion-icon name="ios-person" class="regular-icon"></ion-icon>
+                            </a>
+                            <a class="regular-link pl-lg-4 pl-3" href="#">
+                                <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <div class="dropdown">
+                                <button class="btn btn-square-bottom btn-success dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Danh mục sản phẩm
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Đồng hồ Citizen</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Ogival</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Orient</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Seiko</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Bulova</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <ul class="main-nav content-wrapper">
+                                <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Về chúng tôi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="section-shopping-cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="d-flex flex-row px-1 mb-2">
+                        <div class="flex-grow-1 d-flex flex-column align-items-start">
+                            <h5 class="card-title content-wrapper">Giỏ hàng</h5>
+                            <p class="content-wrapper">2 sản phẩm</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="#" class="cart-remove-all">Xóa tất cả</a>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3" style="width: auto;">
+                        <div class="card-body">
+                            <div class="cart-item-content d-flex flex-row">
+                                <div class="cart-item-summary flex-grow-1">
+                                    <div class="mb-2">
+                                        <a href="#" class="cart-product-link">Citizen BL8144-89H</a>
+                                    </div>
+                                    <p class="card-text">Giá</p>
+                                    <p class="card-text price">16,500,000đ</p>
+                                    <img class="p-4" src="images/citizen-watch-03.jpg" alt="Citizen BL8144-89H">
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's content.</p>
+                                </div>
+
+                                <div class="cart-item-control d-flex flex-column ml-4">
+                                    <div class="quantity-control d-flex justify-content-end">
+                                        <div class="text-align-center">
+                                            <p class="card-text mb-2">Số lượng</p>
+                                            <div class="btn-group" role="group" aria-label="Second group">
+                                                <button type="button" class="btn btn-secondary">&ndash;</button>
+                                                <div class="product-quantity d-flex align-items-center px-3">02</div>
+                                                <button type="button" class="btn btn-secondary">&plus;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="item-total-price flex-grow-1 d-flex justify-content-end align-items-end py-4">
+                                        <div class="text-align-center">
+                                            <p class="card-text mb-1">Thành tiền</p>
+                                            <p class="card-text price">33,000,000đ</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-item-actions d-flex justify-content-end">
+                                        <a href="#" class="card-item-action">
+                                            <ion-icon name="ios-heart"
+                                                class="cart-action-icon wishlist-icon small-icon">
+                                            </ion-icon>
+                                        </a>
+                                        <a href="#" class="card-item-action">
+                                            <ion-icon name="ios-trash" class="cart-action-icon remove-icon small-icon">
+                                            </ion-icon>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card" style="width: auto;">
+                        <div class="card-header">
+                            <h5 class="card-header-title">Tổng kết giỏ hàng</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="cart-summary d-flex flex-column">
+                                <div class="d-flex flex-row align-items-center mb-3">
+                                    <p class="card-text cart-summary-entry">Tạm tính:</p>
+                                    <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                        33,000,000đ
+                                    </p>
+                                </div>
+
+                                <div class="d-flex flex-row align-items-center mb-3">
+                                    <p class="card-text cart-summary-entry">Giảm giá:</p>
+                                    <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">0đ
+                                    </p>
+                                </div>
+
+                                <div class="d-flex flex-row align-items-center mb-3">
+                                    <p class="card-text cart-summary-entry"> Tổng tiền:</p>
+                                    <p class="card-text price flex-grow-1 d-flex justify-content-end">33,000,000đ</p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-success full-width mt-3">Chuyển đến Thanh toán</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-start justify-content-center">
+                        <ul class="footer-nav">
+                            <li><a class="regular-link" href="#">Về chúng tôi</a></li>
+                            <li><a class="regular-link" href="#">Blog</a></li>
+                            <li><a class="regular-link" href="#">Tin tức</a></li>
+                            <li><a class="regular-link" href="#">iOS App</a></li>
+                            <li><a class="regular-link" href="#">Android App</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-end py-lg-0 justify-content-center py-3">
+                        <ul class="social-links">
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-facebook" class="social-icon facebook-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-twitter" class="social-icon twitter-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-googleplus" class="social-icon googleplus-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-instagram" class="social-icon instagram-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-pinterest" class="social-icon pinterest-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="copyright-footer">Copyright &copy; 2019 by UIT Watchshop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/libs/jquery-3.4.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Additional plugins and libraries -->
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <script src="plugins/waypoints/jquery.waypoints.js"></script>
+    <script src="plugins/owl-carousel/owl.carousel.js"></script>
+    <script src="js/libs/valib.js"></script>
+
+    <!-- Your scripts here -->
+    <script src="js/common_script.js"></script>
+
+</body>
+
+</html>

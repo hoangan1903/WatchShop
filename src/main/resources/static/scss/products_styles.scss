@@ -1,0 +1,17 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+section.section-sort-filter {
+    padding: $spacing-y-small 0;
+}
+
+section.section-pagination-links {
+    padding-top: $spacing-y-small;
+}
+
+section.section-product-list {
+    padding: 0;
+}

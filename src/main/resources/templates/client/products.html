@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Fonts, icons & plugins -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="plugins/owl-carousel/owl.theme.default.css" rel="stylesheet">
+
+    <!-- My CSS files -->
+    <link href="css/products_styles.css" rel="stylesheet">
+
+    <!-- Page title -->
+    <title>UIT Watchshop - Danh sách sản phẩm</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navigation">
+            <div class="container">
+                <div class="row pt-3 pb-2">
+                    <div class="col-md-3">
+                        <div class="navbar-header">
+                            <a class="navbar-brand bold-text" href="#">UIT Watchshop</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="navbar-icons stretched-container d-flex justify-content-end align-items-end">
+                            <a class="regular-link" href="#">
+                                <ion-icon name="ios-person" class="regular-icon"></ion-icon>
+                            </a>
+                            <a class="regular-link pl-lg-4 pl-3" href="#">
+                                <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <div class="dropdown">
+                                <button class="btn btn-square-bottom btn-success dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Danh mục sản phẩm
+                                </button>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Đồng hồ Citizen</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Ogival</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Orient</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Seiko</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Đồng hồ Bulova</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8">
+                        <div class="stretched-container d-flex justify-content-start align-items-end">
+                            <ul class="main-nav content-wrapper">
+                                <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Về chúng tôi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="section-sort-filter">
+        <div class="container">
+            <div class="row">
+                <!-- Filter and sorter go here -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="inputState" style="font-weight: 500;">Lọc theo</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Chọn...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="inputState" style="font-weight: 500;">Sắp xếp</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Nổi bật nhất</option>
+                            <option>Giá tăng dần</option>
+                            <option>Giá giảm dần</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="stretched-container d-flex flex-row justify-content-end align-items-end pb-3">
+                        <a href="#" class="regular-link mr-2">
+                            <ion-icon name="grid" class="regular-icon">
+                            </ion-icon>
+                        </a>
+                        <a href="#" class="regular-link">
+                            <ion-icon name="list" class="regular-icon">
+                            </ion-icon>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-product-list">
+        <div class="container">
+            <div class="row">
+
+                <!-- Products go here -->
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pagination-links">
+        <div class="container">
+            <div class="row">
+                <nav class="full-width" aria-label="Products navigation">
+                    <ul class="pagination justify-content-center">
+
+                        <!-- Pagination links go here -->
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-start justify-content-center">
+                        <ul class="footer-nav">
+                            <li><a class="regular-link" href="#">Về chúng tôi</a></li>
+                            <li><a class="regular-link" href="#">Blog</a></li>
+                            <li><a class="regular-link" href="#">Tin tức</a></li>
+                            <li><a class="regular-link" href="#">iOS App</a></li>
+                            <li><a class="regular-link" href="#">Android App</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stretched-container d-flex justify-content-lg-end py-lg-0 justify-content-center py-3">
+                        <ul class="social-links">
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-facebook" class="social-icon facebook-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-twitter" class="social-icon twitter-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-googleplus" class="social-icon googleplus-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-instagram" class="social-icon instagram-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ion-icon name="logo-pinterest" class="social-icon pinterest-icon small-icon">
+                                    </ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p class="copyright-footer">Copyright &copy; 2019 by UIT Watchshop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/libs/jquery-3.4.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Additional plugins and utility libraries -->
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <script src="plugins/waypoints/jquery.waypoints.js"></script>
+    <script src="plugins/owl-carousel/owl.carousel.js"></script>
+    <script src="js/libs/valib.js"></script>
+    <script src="js/paginator.js"></script>
+
+    <!-- My scripts -->
+    <script src="js/common_script.js"></script>
+    <script src="js/products_script.js"></script>
+</body>
+
+</html>

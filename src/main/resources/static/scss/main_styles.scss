@@ -1,0 +1,151 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+/* Variables */
+
+$spacing-brand-logo: 50px;
+$height-brand-logo: 100px;
+
+// Header and footer are in the _components file
+
+/* Section: Banners */
+
+section.section-banners {
+    padding: $spacing-y-small 0;
+
+    .brand-logos {
+        width: 100%;
+
+        ul {
+            display: inline-block;
+
+            li {
+                margin-right: $spacing-brand-logo;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                img.brand-logo {
+                    height: $height-brand-logo;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
+/* Section: Products */
+
+section.section-products {
+    background-color: $color-background-silver;
+}
+
+/* Section: Citizen */
+section.section-citizen {
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
+
+/* Section: Ogival */
+
+section.section-ogival {
+    background-color: $color-background-silver;
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
+
+/* Section: Orient */
+
+section.section-orient {
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
+
+/* Section: Bulova */
+
+section.section-bulova {
+    background-color: $color-background-silver;
+
+    h2.section-heading {
+        margin-bottom: $margin-bottom-reduced;
+    }
+}
+
+/* Section: Testimonials */
+
+section.section-testimonials {
+    padding: $spacing-y-extra 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../images/back-customers.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; // background image will be fixed as user scrolls the page
+
+    h2.section-heading {
+        margin-bottom: $spacing-y-medium;
+    }
+
+    blockquote {
+
+        &:before {
+            display: block;
+            content: '\201C';
+            font-size: $font-size-huge;
+            position: absolute;
+            top: -8px;
+            left: -4px;
+        }
+
+        padding: 2%;
+        font-size: $font-size-increased;
+        font-weight: $font-wt-thin;
+        font-style: italic;
+        line-height: $line-height-text;
+        letter-spacing: 0.5px;
+        word-spacing: 2.5px;
+        position: relative;
+        margin-top: 14px;
+
+        cite {
+            display: block;
+            font-size: $font-size-reduced;
+            letter-spacing: 0.25px;
+            word-spacing: 1px;
+            margin-top: 25px;
+
+            img.customer-avatar {
+                height: 50px;
+                border-radius: 50%;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+/* Section: Form */
+
+section.section-form {
+    form {
+        textarea {
+            height: 120px;
+        }
+
+        .btn-form-submit-container {
+            text-align: center;
+
+            button.btn-form-submit {
+                width: 25%;
+            }
+        }
+    }
+}
