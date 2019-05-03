@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `banner`
+--
+
+DROP TABLE IF EXISTS `banner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `banner` (
+  `id_banner` int(11) NOT NULL AUTO_INCREMENT,
+  `create_at` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_banner`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `banner`
+--
+
+LOCK TABLES `banner` WRITE;
+/*!40000 ALTER TABLE `banner` DISABLE KEYS */;
+INSERT INTO `banner` VALUES (1,'2019-05-02 16:24:42',NULL,'https://donghocasio.vn/wp-content/uploads/2016/04/astron-banner.jpg'),(2,'2019-05-02 16:25:32',NULL,'https://media.licdn.com/dms/image/C5112AQEge5XaAe0-9w/article-inline_image-shrink_400_744/0?e=1561593600&v=beta&t=gYawwUeXL3EPpZroPcK_QOoGUqkP6S5_jBCNNvvHw3Q'),(3,'2019-05-02 16:25:55',NULL,'https://shopdonghothuysy.com/template/uploads/2015/08/Banner_donghoonline_7_1.jpg');
+/*!40000 ALTER TABLE `banner` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `cart`
 --
 
@@ -188,7 +214,7 @@ CREATE TABLE `firm` (
   `id_firm` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_firm`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +300,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-INSERT INTO `order_detail` VALUES (2,23,3),(2,22,3);
+INSERT INTO `order_detail` VALUES (2,23,3),(2,22,3),(2,22,4),(2,23,5),(2,23,6),(2,23,7),(1,25,3),(2,22,7),(1,24,7),(1,25,7),(1,26,7),(1,29,7);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +346,7 @@ CREATE TABLE `orders` (
   KEY `FKm3ritehtix5ub7jte0bxu41ik` (`id_customer`),
   KEY `FKbp6k71rsko970ooke8me82k9` (`id_order_status`),
   KEY `FK5phng0rr9yex7v321tef65svq` (`id_payment`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,7 +355,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (3,'2019-04-21 21:36:12',0,6,1,2);
+INSERT INTO `orders` VALUES (3,'2019-04-14 21:36:12',150000,6,3,2),(4,'2019-04-10 21:36:12',300000,6,1,1),(5,'2019-04-17 21:36:12',4000000,6,2,1),(6,'2019-04-21 21:36:12',5600000,6,3,1),(7,'2019-04-05 21:36:12',145000,6,4,1),(8,'2019-04-05 21:36:12',2323,6,4,1),(9,'2019-04-05 21:36:12',3434333,6,4,1),(10,'2019-04-05 21:36:12',43434,6,4,1),(11,'2019-04-05 21:36:12',11111,6,4,1),(12,'2019-04-05 21:36:12',2121,6,4,1),(13,'2019-04-05 21:36:12',323232,6,4,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,4 +564,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-21 22:20:50
+-- Dump completed on 2019-05-03 10:55:35
