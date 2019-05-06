@@ -8,17 +8,59 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Custom fonts for this template-->
-	<link href="../../../vendor/fontawesome-free/css/all.min.css"
-		  rel="stylesheet" type="text/css">
+<link href="../../../vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-	<link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
+<link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-	<link th:href="@{/css/label.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/label.css}" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<style type="text/css">
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify {
+	background: red;
+	position: relative;
+	top: -20px;
+	left: -10px;
+}
+</style>
+<script type="text/javascript">
+
+	//Wait 1s before running again
+	var timeDelay = 1000; 
+	
+	//will be started when loaded
+	$(document).ready(function(){
+		getCountNewOrder();
+	})
+
+	//setInterVal is function always run 
+	setInterval(function() {
+		getCountNewOrder();
+	},timeDelay); 
+	
+	function getCountNewOrder(){
+		var url = "/rest/order/new/count";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				var obj = JSON.parse(this.responseText);
+				if(obj==0){
+					$('#spanOrderStatusNew').hide();
+				}else{
+					$('#spanOrderStatusNew').show().text(obj);
+				}
+			}
+		}
+		xhttp.open("GET", url, true);
+	    xhttp.send();
+	}
+</script>
 </head>
 <body>
 	<ul th:fragment="sideBar"
@@ -27,8 +69,8 @@
 
 		<!-- Sidebar - Brand -->
 		<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				th:href="@{/admin}">
+			class="sidebar-brand d-flex align-items-center justify-content-center"
+			th:href="@{/admin}">
 			<div class="sidebar-brand-icon rotate-n-15">
 				<i class="fas fa-laugh-wink"></i>
 			</div>
@@ -39,51 +81,57 @@
 		<hr class="sidebar-divider my-0">
 
 		<!-- Nav Item - Dashboard -->
-		<li class="nav-item active"><a class="nav-link" th:href="@{/admin}">
-				<i class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span>
+		<li class="nav-item active"><a class="nav-link"
+			th:href="@{/admin}"> <i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span>
 		</a></li>
 
 
 		<div class="sidebar-heading">Area of Admin</div>
 		<!-- Nav Item - Employee -->
-		<li class="nav-item"><a th:href="@{/admin/CRUD_User}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>List User</span>
+		<li class="nav-item"><a th:href="@{/admin/CRUD_User}"
+			class="nav-link"> <i class="fas fa-user"></i> <span>List
+					User</span>
 		</a></li>
-		
+
 		<!-- Divider -->
 		<hr class="sidebar-divider d-none d-md-block">
 
 		<!-- Heading -->
 		<div class="sidebar-heading">Area of Manager</div>
 
-		
+
 		<!-- Nav Item - Pages Products Menu -->
-		<li class="nav-item"><a th:href="@{/admin/CRUD_Products}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>Products</span>
+		<li class="nav-item"><a th:href="@{/admin/CRUD_Products}"
+			class="nav-link"> <i class="fas fa-gem"></i> <span>Products</span>
 		</a></li>
-		
+
 		<!-- Nav Item - Employee -->
-		<li class="nav-item"><a th:href="@{/admin/CRUD_Employees}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>Employees</span>
+		<li class="nav-item"><a th:href="@{/admin/CRUD_Employees}"
+			class="nav-link"> <i class="fas fa-user-friends"></i> <span>Employees</span>
 		</a></li>
-		
-		<li class="nav-item"><a th:href="@{/admin/CRUD_OtherFunction}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>Other Function</span>
-        </a></li>
+
+		<li class="nav-item"><a th:href="@{/admin/CRUD_OtherFunction}"
+			class="nav-link"> <i class="fas fa-cogs"></i> <span>Other
+					Function</span>
+		</a></li>
 
 		<!-- Divider -->
 		<hr class="sidebar-divider d-none d-md-block">
-		
+
 		<!-- Heading -->
 		<div class="sidebar-heading">Area of Employee</div>
-		
-		<li class="nav-item"><a th:href="@{/admin/list_Customers}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>Customers</span>
-        </a></li>
+
+		<li class="nav-item"><a th:href="@{/admin/list_Customers}"
+			class="nav-link"> <i class="fas fa-user-tag"></i> <span>Customers</span>
+		</a></li>
 
 		<!-- Nav Item - Employee -->
-		<li class="nav-item"><a th:href="@{/admin/order}" class="nav-link" >
-			<i class="fas fa-user"></i> <span>Orders</span>
+		<li class="nav-item"><a th:href="@{/admin/order}"
+			class="nav-link"> <i class="fas fa-store-alt" ></i>
+			<span id="spanOrderStatusNew" class="badge badge-notify"></span> 
+			<span>Orders</span>
+
 		</a></li>
 
 		<!-- Sidebar Toggler (Sidebar) -->
@@ -93,7 +141,7 @@
 	</ul>
 
 	<!-- Topbar -->
-	
+
 	<nav th:fragment="topBar"
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -103,7 +151,7 @@
 			<i class="fa fa-bars"></i>
 		</button>
 
-		
+
 
 		<!-- Topbar Navbar -->
 		<ul class="navbar-nav ml-auto">
@@ -191,8 +239,7 @@
 					<h6 class="dropdown-header">Message Center</h6>
 					<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle"
-								src="#" alt="">
+							<img class="rounded-circle" src="#" alt="">
 							<div class="status-indicator bg-success"></div>
 						</div>
 						<div class="font-weight-bold">
@@ -202,8 +249,7 @@
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle"
-								src="#" alt="">
+							<img class="rounded-circle" src="#" alt="">
 							<div class="status-indicator"></div>
 						</div>
 						<div>
@@ -213,8 +259,7 @@
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle"
-								src="#" alt="">
+							<img class="rounded-circle" src="#" alt="">
 							<div class="status-indicator bg-warning"></div>
 						</div>
 						<div>
@@ -224,8 +269,7 @@
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle"
-								src="#" alt="">
+							<img class="rounded-circle" src="#" alt="">
 							<div class="status-indicator bg-success"></div>
 						</div>
 						<div>
@@ -246,8 +290,7 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <span
 					class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie
-						Luna</span> <img class="img-profile rounded-circle"
-					src="#">
+						Luna</span> <img class="img-profile rounded-circle" src="#">
 			</a> <!-- Dropdown - User Information -->
 				<div
 					class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -272,7 +315,7 @@
 	</nav>
 	<!-- End of Topbar -->
 
-	
+
 
 	<!-- Footer -->
 	<footer th:fragment="footer" class="sticky-footer bg-white">

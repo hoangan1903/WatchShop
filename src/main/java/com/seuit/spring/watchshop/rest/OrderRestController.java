@@ -54,4 +54,9 @@ public class OrderRestController {
 	private Integer getAllCountOrder() {
 		return orderService.getCountAllOrder();
 	}
+	
+	@GetMapping("/order/new/count")
+	private Integer getCountNewOrder() {
+		return orderService.getCountNewOrder();
+	}
 }

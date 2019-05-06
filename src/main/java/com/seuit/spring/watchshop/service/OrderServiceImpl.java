@@ -12,7 +12,11 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+
+import org.apache.xmlbeans.impl.xb.xsdschema.RestrictionDocument.Restriction;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.seuit.spring.watchshop.entity.Cart;
@@ -205,4 +209,21 @@ public class OrderServiceImpl implements OrderService {
 		Customer customer = customerService.getCustomerById(idCustomer).get();
 		return customer.getOrders();	
 	}
+
+
+	@Override
+	@Transactional
+	public Integer getCountNewOrder() {
+		// TODO Auto-generated method stub
+		String orderStatusNew = "unconfirmed";
+		String sql = "SELECT o FROM Order o inner join OrderStatus os on o.orderStatusO.id=os.id "
+				+ "WHERE os.orderStatus=:orderStatusNew";
+		Session session = this.getSession();
+		Query query = session.createQuery(sql);
+		query.setParameter("orderStatusNew", orderStatusNew);
+		return query.getResultList().size();
+	}
+	
+	
+	
 }

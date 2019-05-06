@@ -15,4 +15,5 @@ public interface OrderService {
 	public List<Order> findPagination(Integer pageId,Integer size,List<Order> listOrder);
 	public Integer getCountAllOrder();
 	public List<Order> listOrderByCustomerId(Integer idCustomer);
+	public Integer getCountNewOrder();
 }
