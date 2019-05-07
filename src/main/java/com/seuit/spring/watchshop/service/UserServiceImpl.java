@@ -7,11 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import com.seuit.spring.watchshop.entity.CustomUserDetail;
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.repository.RoleRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -174,4 +177,14 @@ public class UserServiceImpl implements UserService {
 		return query.getResultList();
 	}
 
+	@Override
+	@Transactional
+	public User getMe() {
+		// TODO Auto-generated method stub
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetail user = (CustomUserDetail) auth.getPrincipal();
+		return user;
+	}
+
+	
 }

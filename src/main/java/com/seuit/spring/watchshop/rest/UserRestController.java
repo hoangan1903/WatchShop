@@ -33,4 +33,9 @@ public class UserRestController {
 	List<User> findProductByKeyword(@PathVariable(value="keyword") String keyword){
 		return userService.getListUserByKeyword(keyword);
 	}
+	
+	@GetMapping("/users/me")
+	User getMe() {
+		return userService.getMe();
+	}
 }

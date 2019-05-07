@@ -23,4 +23,6 @@ public interface UserService {
 	Long countUser();
 
 	List<User> getListUserByKeyword(String keyword);
+	
+	User getMe();
 }
