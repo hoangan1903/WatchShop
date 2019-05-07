@@ -19,7 +19,9 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link th:href="@{/css/label.css}" rel="stylesheet" type="text/css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+	type="text/javascript"></script>
 <style type="text/css">
 /* CSS used here will be applied after bootstrap.css */
 .badge-notify {
@@ -30,51 +32,105 @@
 }
 </style>
 <script type="text/javascript">
-
 	//Wait 1s before running again
-	var timeDelay = 1000; 
+	var timeDelay = 1000;
 	
+
 	//will be started when loaded
-	$(document).ready(function(){
+	$(document).ready(function() {
 		getCountNewOrder();
 		getMe();
+		getAlertsNew();
 	})
 
 	//setInterVal is function always run 
 	setInterval(function() {
 		getCountNewOrder();
-	},timeDelay); 
-	
-	function getCountNewOrder(){
+		getAlertsNew();
+	}, timeDelay);
+
+	function getCountNewOrder() {
 		var url = "/rest/order/new/count";
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
+		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var obj = JSON.parse(this.responseText);
-				if(obj==0){
+				if (obj == 0) {
 					$('#spanOrderStatusNew').hide();
-				}else{
+				} else {
 					$('#spanOrderStatusNew').show().text(obj);
 				}
 			}
 		}
 		xhttp.open("GET", url, true);
-	    xhttp.send();
-	}
-	function getMe(){
-		var url="/rest/users/me";
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function(){
-			if(this.readyState == 4 && this.status == 200){
-				obj = JSON.parse(this.responseText);
-				$('#nameMe').text(obj.username);
-				var role = obj.authorities[0].authority.slice(5, 15).toLocaleUpperCase();
-				$('#roleMe').text("ROLE: "+role);
-			}
-		}
-		xhttp.open("GET",url,true);
 		xhttp.send();
 	}
+
+	function getAlertsNew() {
+		var url = "/rest/alerts/new";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var obj = JSON.parse(this.responseText);
+				if (obj.totals == 0) {
+					$('#alertNewCount').hide();
+				} else {
+					$('#alertNewCount').show().text(obj.totals);
+					$('#areaAlertsCenter').empty();
+					$.each(obj.alerts,function(key,value){
+						$('#areaAlertsCenter')
+						.append(
+								'<a class="dropdown-item d-flex align-items-center" href="#">'
+										+ '<div class="mr-3">'
+										+ '<div class="icon-circle bg-primary">'
+										+ '<i class="fas fa-file-alt text-white"></i>'
+										+ '</div>'
+										+ '</div>'
+										+ '<div>'
+										+ '<div class="small text-gray-500">'+value.createAt+'</div>'
+										+ '<span class="font-weight-bold">'+value.content+'</span>'
+										+ '</div>' + '</a> ');
+					})
+					
+				}
+
+			}
+		}
+		xhttp.open("GET", url, true);
+		xhttp.send();
+	}
+
+	function getMe() {
+		var url = "/rest/users/me";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				obj = JSON.parse(this.responseText);
+				$('#nameMe').text(obj.username);
+				var role = obj.authorities[0].authority.slice(5, 15)
+						.toLocaleUpperCase();
+				$('#roleMe').text("ROLE: " + role);
+			}
+		}
+		xhttp.open("GET", url, true);
+		xhttp.send();
+	}
+	
+	function alertNotifyOnclick(){
+		var url = "/rest/alerts/read";
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-Type", "application/json");
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				obj = JSON.parse(this.responseText);
+				
+			}
+		}
+		
+		xhttp.send();
+	}
+	
 </script>
 </head>
 <body>
@@ -104,9 +160,13 @@
 
 		<div class="sidebar-heading">Area of Admin</div>
 		<!-- Nav Item - Employee -->
+
+		<li class="nav-item"><a th:href="@{/admin/CRUD_Alert}"
+			class="nav-link"> <i class="fas fa-user"></i> <span>Alerts</span>
+		</a></li>
+
 		<li class="nav-item"><a th:href="@{/admin/CRUD_User}"
-			class="nav-link"> <i class="fas fa-user"></i> <span>List
-					User</span>
+			class="nav-link"> <i class="fas fa-user"></i> <span>Users</span>
 		</a></li>
 
 		<!-- Divider -->
@@ -143,9 +203,8 @@
 
 		<!-- Nav Item - Employee -->
 		<li class="nav-item"><a th:href="@{/admin/order}"
-			class="nav-link"> <i class="fas fa-store-alt" ></i>
-			<span id="spanOrderStatusNew" class="badge badge-notify"></span> 
-			<span>Orders</span>
+			class="nav-link"> <i class="fas fa-store-alt"></i> <span
+				id="spanOrderStatusNew" class="badge badge-notify"></span> <span>Orders</span>
 
 		</a></li>
 
@@ -195,49 +254,19 @@
 				</div></li>
 
 			<!-- Nav Item - Alerts -->
-			<li class="nav-item dropdown no-arrow mx-1"><a
+			<li class="nav-item dropdown no-arrow mx-1"><a onclick="alertNotifyOnclick()" 
 				class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts -->
-					<span class="badge badge-danger badge-counter">3+</span>
+					<span class="badge badge-danger badge-counter" id="alertNewCount">3+</span>
 			</a> <!-- Dropdown - Alerts -->
 				<div
 					class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
 					aria-labelledby="alertsDropdown">
 					<h6 class="dropdown-header">Alerts Center</h6>
-					<a class="dropdown-item d-flex align-items-center" href="#">
-						<div class="mr-3">
-							<div class="icon-circle bg-primary">
-								<i class="fas fa-file-alt text-white"></i>
-							</div>
-						</div>
-						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
-						</div>
-					</a> <a class="dropdown-item d-flex align-items-center" href="#">
-						<div class="mr-3">
-							<div class="icon-circle bg-success">
-								<i class="fas fa-donate text-white"></i>
-							</div>
-						</div>
-						<div>
-							<div class="small text-gray-500">December 7, 2019</div>
-							$290.29 has been deposited into your account!
-						</div>
-					</a> <a class="dropdown-item d-flex align-items-center" href="#">
-						<div class="mr-3">
-							<div class="icon-circle bg-warning">
-								<i class="fas fa-exclamation-triangle text-white"></i>
-							</div>
-						</div>
-						<div>
-							<div class="small text-gray-500">December 2, 2019</div>
-							Spending Alert: We've noticed unusually high spending for your
-							account.
-						</div>
-					</a> <a class="dropdown-item text-center small text-gray-500" href="#">Show
+					<div id="areaAlertsCenter"></div>
+
+					<a class="dropdown-item text-center small text-gray-500" th:href="@{/admin/CRUD_Alert}">Show
 						All Alerts</a>
 				</div></li>
 
@@ -304,14 +333,14 @@
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <span
-					class="mr-2 d-none d-lg-inline text-gray-600 small" id="nameMe">Duy Anh</span>
-					<i class="fas fa-user-shield" ></i>
+					class="mr-2 d-none d-lg-inline text-gray-600 small" id="nameMe">Duy
+						Anh</span> <i class="fas fa-user-shield"></i>
 			</a> <!-- Dropdown - User Information -->
 				<div
 					class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 					aria-labelledby="userDropdown">
-					<span class="dropdown-item" id="roleMe">Role : D.A</span>
-					<a class="dropdown-item" href="#" data-toggle="modal"
+					<span class="dropdown-item" id="roleMe">Role : D.A</span> <a
+						class="dropdown-item" href="#" data-toggle="modal"
 						data-target="#logoutModal"> <i
 						class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 						Logout

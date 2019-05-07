@@ -50,6 +50,12 @@ public class AdminController {
 	@Autowired
 	private CustomerService customerService;
 	//ADMIN AREA
+	
+	@GetMapping("/CRUD_Alert")
+	public String showAlert() {
+		return "admin/CRUDAlert";
+	}
+	
 	@GetMapping("/CRUD_User")
 	public String showCRUDUserPage(Model model) {
 		List<User> listUser = userService.getAllUser();
@@ -134,4 +140,6 @@ public class AdminController {
 	public String showCRUD_OtherFunction() {
 		return "admin/CRUD_OtherFunction";
 	}
+	
+	
 }

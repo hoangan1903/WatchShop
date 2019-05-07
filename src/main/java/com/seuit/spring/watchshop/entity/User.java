@@ -1,7 +1,9 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -78,7 +81,9 @@ public class User {
    	@JsonIgnore
     private Customer customer;
     
-    
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Alert> alerts = new ArrayList<Alert>();
 
     public Customer getCustomer() {
 		return customer;
@@ -145,6 +150,16 @@ public class User {
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
+	
+	
+
+	public List<Alert> getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(List<Alert> alerts) {
+		this.alerts = alerts;
+	}
 
 	public User(User user) {
 		this.id = user.id;
@@ -161,9 +176,12 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", roles="
-				+ roles + ", employee=" + employee + ", customer=" + customer + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", roles=" + roles + ", employee="
+				+ employee + ", customer=" + customer + ", alerts=" + alerts + "]";
 	}
+
+	
 	
 
 }

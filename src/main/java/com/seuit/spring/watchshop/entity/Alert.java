@@ -22,33 +22,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @Entity
-@Table(name="comment")
+@Table(name="alert")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = "createAt",allowGetters = true)
-public class Comment {
+@JsonIgnoreProperties(value= {"createAt"},allowGetters = true)
+public class Alert {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_comment")
+	@Column(name="id_alert")
 	private Integer id;
 	
 	@Column(name="content",nullable = false)
 	private String content;
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_product_detail")
-	@JsonIgnore
-	private ProductDetail productDetail;
-	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="id_customer")
-	@JsonIgnore
-	private Customer customer;
-	
-	@JoinColumn(name="create_at",nullable = false,updatable = false)
+	@Column(name="create_at",nullable = false,updatable = false)
+	@Temporal(TemporalType.DATE)
 	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	
+	@Column(name="status",nullable = false,columnDefinition = "int default 0")
+	private Integer status;
+	
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JsonIgnore
+	@JoinColumn(name="id_user")
+	private User user;
 
 	public Integer getId() {
 		return id;
@@ -66,51 +65,45 @@ public class Comment {
 		this.content = content;
 	}
 
-	
-
-	public ProductDetail getProductDetail() {
-		return productDetail;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setProductDetail(ProductDetail productDetail) {
-		this.productDetail = productDetail;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getCreateAt() {
 		return createAt;
 	}
 
-	
-	
-	
-	public Comment(Integer id, String content, ProductDetail productDetail, Customer customer, Date createAt) {
+	public Alert(Integer id, String content, Date createAt, Integer status, User user) {
 		super();
 		this.id = id;
 		this.content = content;
-		this.productDetail = productDetail;
-		this.customer = customer;
 		this.createAt = createAt;
+		this.status = status;
+		this.user = user;
 	}
 
-	public Comment() {
+	public Alert() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", content=" + content + ", productDetail=" + productDetail + ", customer="
-				+ customer + ", createAt=" + createAt + "]";
+		return "Alert [id=" + id + ", content=" + content + ", createAt=" + createAt + ", status=" + status + ", user="
+				+ user + "]";
 	}
-
 	
 	
 	
