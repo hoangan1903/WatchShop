@@ -51,6 +51,9 @@ public class Customer {
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customerO")
 	@JsonIgnore
 	private List<Order> orders = new ArrayList<Order>();
+	
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	public Integer getId() {
 		return id;
@@ -123,6 +126,17 @@ public class Customer {
 		this.orders = orders;
 	}
 
+	
+
+	public List<Comment> getComment() {
+		return comments;
+	}
+
+
+	public void setComment(List<Comment> comment) {
+		this.comments = comment;
+	}
+
 
 	public Customer(String name, String phone, String address) {
 		super();
@@ -141,8 +155,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address + ", user=" + user
-				+ ", cart=" + cart + ", orders=" + orders + "]";
+				+ ", cart=" + cart + ", orders=" + orders + ", comment=" + comments + "]";
 	}
+
+
+	
 
 
 	

@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -71,6 +73,8 @@ public class ProductDetail {
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "productDetail")
 	private Set<Image> images;
 	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "productDetail",cascade = CascadeType.ALL)
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	public Integer getId() {
 		return id;
@@ -169,6 +173,16 @@ public class ProductDetail {
 	public void setImages(Set<Image> images) {
 		this.images = images;
 	}
+	
+	
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 	public ProductDetail(Integer size, String caseMaterial, String chainMaterial, String glassMaterial,
 			Integer waterResistance, String otherFunction, Integer insurance) {
@@ -192,8 +206,10 @@ public class ProductDetail {
 		return "ProductDetail [id=" + id + ", size=" + size + ", caseMaterial=" + caseMaterial + ", chainMaterial="
 				+ chainMaterial + ", glassMaterial=" + glassMaterial + ", waterResistance=" + waterResistance
 				+ ", otherFunction=" + otherFunction + ", insurance=" + insurance + ", product=" + product + ", origin="
-				+ origin + ", model=" + model + ", images=" + images + "]";
+				+ origin + ", model=" + model + ", images=" + images + ", comments=" + comments + "]";
 	}
+
+	
 
 	
 	
