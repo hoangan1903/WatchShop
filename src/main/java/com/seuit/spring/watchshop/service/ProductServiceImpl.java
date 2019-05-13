@@ -199,11 +199,18 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Product> findPaginated(Integer page, Integer size) {
+	public List<Product> findPaginated(Integer page, Integer size,Integer idFirm) {
 		Session session = getSession();
-		String sql = "FROM Product";
-		Query query = session.createQuery(sql).setFirstResult(page * size).setMaxResults(size);
-
+		String sql = null;
+		Query query;
+		if(idFirm!=null) {
+			sql = "FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm";
+			query = session.createQuery(sql).setFirstResult(page * size).setMaxResults(size);
+			query.setParameter("idFirm", idFirm);
+		}else {
+			sql = "FROM Product";
+			query = session.createQuery(sql).setFirstResult(page * size).setMaxResults(size);
+		}
 		return query.getResultList();
 	}
 

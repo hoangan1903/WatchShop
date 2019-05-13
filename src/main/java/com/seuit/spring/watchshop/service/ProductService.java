@@ -23,7 +23,7 @@ public interface ProductService {
 	List<Product> listProductByIdFirm(Integer id) throws NotFoundException;
 	List<Product> listProductByIdModel(Integer id);
 	List<Product> listProductByIdOrigin(Integer id);
-	List<Product> findPaginated(Integer page,Integer size);
+	List<Product> findPaginated(Integer page,Integer size,Integer idFirm);
 	Long countProduct();
 	List<Product> getListProductBykeyword(String keyword);
 	List<Product> listProductTopOrder();

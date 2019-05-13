@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,9 +65,9 @@ public class ProductRestController {
 		return "Update Success";
 	}
 
-	@GetMapping(value = "/products", params = { "page", "size" })
-	List<Product> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-		return productService.findPaginated(page, size);
+	@GetMapping(value = "/products",params = {"page","size"})
+	List<Product> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm) {
+		return productService.findPaginated(page, size,idFirm);
 	}
 
 	@GetMapping("/products/count")
