@@ -1,6 +1,7 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,8 +24,8 @@ public interface ProductService {
 	List<Product> listProductByIdFirm(Integer id) throws NotFoundException;
 	List<Product> listProductByIdModel(Integer id);
 	List<Product> listProductByIdOrigin(Integer id);
-	List<Product> findPaginated(Integer page,Integer size,Integer idFirm);
+	Map<String, Object> findPaginated(Integer page,Integer size,Integer idFirm);
 	Long countProduct();
-	List<Product> getListProductBykeyword(String keyword);
+	Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword);
 	List<Product> listProductTopOrder();
 }
