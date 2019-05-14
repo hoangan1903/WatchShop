@@ -209,7 +209,7 @@ public class ProductServiceImpl implements ProductService {
 		Integer pageCount;
 		List<Product>listProduct = null;
 		if(idFirm!=null) {
-			sql = "FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm";
+			sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm";
 			query = session.createQuery(sql);
 			query.setParameter("idFirm", idFirm);
 			listProduct = query.getResultList();
