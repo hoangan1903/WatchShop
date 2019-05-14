@@ -25,7 +25,7 @@
 				console.log(obj);
 				$
 						.each(
-								obj,
+								obj.products,
 								function(key, value) {
 									$('#mytable tbody')
 											.append(
@@ -156,13 +156,8 @@
 
 													console.log(obj);
 													if (isSelectSearchInputEmpty() == false) {
-														countProduct = Object
-																.keys(obj).length;
-														numberPage = countProduct
-																/ size;
-														console.log(numberPage);
-
-														for (var i = 0; i < numberPage; i++) {
+														
+														for (var i = 0; i < obj.pageCountTotal; i++) {
 															$('#ulPagination')
 																	.append(
 																			'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page='
@@ -175,7 +170,7 @@
 
 													$
 															.each(
-																	obj,
+																	obj.products,
 																	function(
 																			key,
 																			value) {
@@ -498,7 +493,7 @@
 			url = '/rest/products?page=' + String(pageId) + '&size='
 					+ String(size);
 		} else {
-			url = "/rest/products/find/" + keyword;
+			url = "/rest/products/find?keyword=" + keyword;
 		}
 		console.log(url);
 		return url;
