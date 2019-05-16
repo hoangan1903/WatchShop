@@ -262,6 +262,12 @@ public class ProductServiceImpl implements ProductService {
 		Query query = session.createQuery(sql);
 		query.setParameter("code", "%" + keyword + "%");
 		listProduct = query.getResultList();
+		
+		if(page==null && size==null) {
+			map.put("products", listProduct);
+			return map;
+		}
+		
 		if(listProduct.size()%size==0) {//chia het cho size
 			pageCount = listProduct.size()/size;
 		}else {
