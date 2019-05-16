@@ -9,7 +9,6 @@ function loadWithAPI() {
             var obj = JSON.parse(this.responseText);
             $('#mytable thead').append('<th>ID</th>' +
             '<th>Content</th>'+
-            '<th>Edit</th>'+
             '<th>Delete</th>');
             $.each(obj.alerts,function(key,value){
                 $('#mytable tbody').append('<tr>'
@@ -18,16 +17,6 @@ function loadWithAPI() {
                 + '</td>'
                 + '<td>'
                 + value.content
-                + '</td>'
-                + '<td>'
-                + '<button class="btn btn-primary" data-title="Edit"'
-                + 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-                + value.id
-                + ')">'
-                + '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-                + '</span>'
-                + '</button>'
-                + '</p>'
                 + '</td>'
                 + '<td>'
                 + '<button class="btn btn-danger" data-title="Delete"'

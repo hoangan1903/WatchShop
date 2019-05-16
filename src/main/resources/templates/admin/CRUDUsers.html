@@ -21,10 +21,7 @@
 			if (this.readyState == 4 && this.status == 200) {
 				obj = JSON.parse(this.responseText);
 				// var obj = /*[[${listUser}]]*/ ;
-				$
-						.each(
-								obj,
-								function(key, user) {
+				$.each(obj, function(key, user) {
 									$('#mytable tbody')
 											.append(
 													'<tr>'
@@ -78,14 +75,9 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							//search Input field
-							$("#myInput")
-									.on(
-											"keyup",
-											delay(function() {
+							$("#myInput").on("keyup", delay(function() {
 												$('#mytable tbody').empty();
 												$('#ulPagination').empty();
 
@@ -123,15 +115,8 @@
 															}
 														}
 
-														$
-																.each(
-																		obj,
-																		function(
-																				key,
-																				user) {
-																			$(
-																					'#mytable tbody')
-																					.append(
+														$.each(obj, function(key, user) {
+																			$('#mytable tbody').append(
 																							'<tr>'
 																									+ '<td class="username">'
 																									+ user.username

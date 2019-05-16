@@ -141,5 +141,9 @@ public class AdminController {
 		return "admin/CRUD_OtherFunction";
 	}
 	
+	@GetMapping("/report")
+	public String report() {
+		return "admin/report";
+	}
 	
 }
