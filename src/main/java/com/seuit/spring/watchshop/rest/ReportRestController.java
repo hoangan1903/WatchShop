@@ -24,7 +24,7 @@ public class ReportRestController {
 //	}
 	
 	@GetMapping(value = "/report")
-	List<Report> showReport(){
-		return reportService.showReport("", "");
+	List<Object> showReport(){
+		return reportService.showReport();
 	}
 }
