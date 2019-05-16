@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,9 +65,9 @@ public class ProductRestController {
 		return "Update Success";
 	}
 
-	@GetMapping(value = "/products", params = { "page", "size" })
-	List<Product> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-		return productService.findPaginated(page, size);
+	@GetMapping(value = "/products",params = {"page","size"})
+	Map<String, Object> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm) {
+		return productService.findPaginated(page, size, idFirm);
 	}
 
 	@GetMapping("/products/count")
@@ -110,9 +111,9 @@ public class ProductRestController {
 		return productService.listProductByIdOrigin(id);
 	}
 
-	@GetMapping("/products/find/{keyword}")
-	List<Product> findProductByKeyword(@PathVariable(value = "keyword") String keyword) {
-		return productService.getListProductBykeyword(keyword);
+	@GetMapping("/products/find")
+	Map<String,Object> findProductByKeyword(@RequestParam(name="keyword") String keyword,@RequestParam(name="page",defaultValue = "0",required = false) Integer page,@RequestParam(name="size",defaultValue = "12",required = false) Integer size) {
+		return productService.getListProductBykeyword(page,size,keyword);
 	}
 
 	@GetMapping("/products/catalogue")

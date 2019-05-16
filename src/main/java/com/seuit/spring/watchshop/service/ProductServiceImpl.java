@@ -1,7 +1,9 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -199,12 +201,38 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Product> findPaginated(Integer page, Integer size) {
+	public Map<String, Object> findPaginated(Integer page, Integer size,Integer idFirm) {
 		Session session = getSession();
-		String sql = "FROM Product";
-		Query query = session.createQuery(sql).setFirstResult(page * size).setMaxResults(size);
-
-		return query.getResultList();
+		String sql = null;
+		Query query;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer pageCount;
+		List<Product>listProduct = null;
+		if(idFirm!=null) {
+			sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm";
+			query = session.createQuery(sql);
+			query.setParameter("idFirm", idFirm);
+			listProduct = query.getResultList();
+			if(listProduct.size()%size==0) {//chia het cho size
+				pageCount = listProduct.size()/size;
+			}else {
+				pageCount = listProduct.size()/size + 1;
+			}
+			query.setFirstResult(page * size).setMaxResults(size);
+		}else {
+			sql = "FROM Product";
+			query = session.createQuery(sql);
+			listProduct = query.getResultList();
+			if(listProduct.size()%size==0) {//chia het cho size
+				pageCount = listProduct.size()/size;
+			}else {
+				pageCount = listProduct.size()/size + 1;
+			}
+			query.setFirstResult(page * size).setMaxResults(size);
+		}
+		map.put("pageCountTotal", pageCount);
+		map.put("products", query.getResultList());
+		return map;
 	}
 
 	@Override
@@ -224,13 +252,25 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<Product> getListProductBykeyword(String keyword) {
+	public Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword) {
 		// TODO Auto-generated method stub
 		Session session = getSession();
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer pageCount;
+		List<Product>listProduct = null;
 		String sql = "SELECT p FROM Product p WHERE p.codeName like :code";
-		javax.persistence.Query query = session.createQuery(sql).setMaxResults(10);
+		Query query = session.createQuery(sql);
 		query.setParameter("code", "%" + keyword + "%");
-		return query.getResultList();
+		listProduct = query.getResultList();
+		if(listProduct.size()%size==0) {//chia het cho size
+			pageCount = listProduct.size()/size;
+		}else {
+			pageCount = listProduct.size()/size + 1;
+		}
+		query.setFirstResult(page * size).setMaxResults(size);
+		map.put("pageCountTotal", pageCount);
+		map.put("products", query.getResultList());
+		return map;
 	}
 
 	@SuppressWarnings("unchecked")

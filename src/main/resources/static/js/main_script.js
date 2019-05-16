@@ -18,52 +18,106 @@ $(document).ready(function () {
     }
 
     function initSliders() {
-        let sliders, nextButtons, length;
+        let sliders = $('.custom_slider'),
+            nextButtons = $('.custom_slider_nav');
 
-        // get all sliders
-        sliders = $('.custom_slider');
-        // get "next" buttons
-        nextButtons = $('.custom_slider_nav');
-        // get number of sliders
-        length = sliders.length;
+        sliders.each(function (index) {
+            let slider = $(this),
+                next = nextButtons.eq(index);
 
-        // make every slider an Owl Carousel
-        sliders.owlCarousel({
-            loop: true,
-            autoplay: false,
-            center: false,
-            margin: 16,
-            nav: false,
-            dots: false,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                576: {
-                    items: 2
-                },
-                768: {
-                    items: 3
-                },
-                992: {
-                    items: 4
+            slider.owlCarousel(
+                {
+                    loop: true,
+                    autoplay: false,
+                    center: false,
+                    margin: 16,
+                    nav: false,
+                    dots: false,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        576: {
+                            items: 2
+                        },
+                        768: {
+                            items: 3
+                        },
+                        992: {
+                            items: 4
+                        }
+                    }
                 }
-            }
-        });
+            );
 
-        for (let i = 0; i < length; i++) {
-            // get each and every slider and button
-            let slider = sliders.eq(i),
-                next = nextButtons.eq(i);
-
-            // set click handler for each next button
-            // slide to the next item in the list (step = 1)
             next.click(function () {
                 slider.trigger('next.owl.carousel');
             });
-        }
+        });
     }
 
-    initStickyNavbar()
+    function getBanners() {
+        let carousel, indicators, inner;
+        carousel = $('.main-carousel .carousel-indicators, .main-carousel .carousel-inner');
+        indicators = carousel.eq(0);
+        inner = carousel.eq(1);
+
+        _va.ajaxGET('/rest/banners', function (obj) {
+            if (obj.total > 0) {
+                carousel.empty();
+
+                obj.banners.forEach((banner, index) => {
+                    indicators.append(`<li data-target="#mainCarouselIndicators" data-slide-to="${index}"></li>`);
+                    inner.append(`
+                    <div class="carousel-item">
+                        <img src="${banner.url}" class="d-block w-100" alt="">
+                    </div>
+                    `);
+
+                    if (index === 0) {
+                        carousel.children().addClass('active');
+                    }
+                });
+            }
+        });
+    }
+
+    function getCatalogue() {
+        let sliders = $('.custom_slider');
+
+        valib.ajaxGET('/rest/products/catalogue', function (obj) {
+            let keys = Object.keys(obj);
+
+            $.each(obj, (key, value) => {
+                let index, slider;
+
+                // get slider
+                index = keys.indexOf(key);
+                slider = sliders.eq(index);
+
+                // fill slider with data
+                value.products.forEach(item => {
+                    let html = `
+                    <div class="card product-card" style="width: auto;">
+                        <img src="${item.image}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-outline-success">Xem chi tiết</a>
+                        </div>
+                    </div>
+                    `;
+
+                    slider.trigger('add.owl.carousel', [html]);
+                });
+                slider.trigger('refresh.owl.carousel');
+            });
+        });
+    }
+
+    initStickyNavbar();
     initSliders();
+
+    getBanners();
+    getCatalogue();
 });

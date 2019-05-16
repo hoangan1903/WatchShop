@@ -6,20 +6,6 @@
 
 section.section-product-overview {
 
-    .carousel {
-        width: 95%;
-
-        .carousel-inner {
-            .carousel-item {
-                img {
-                    object-fit: cover;
-                    width: 100%;
-                    height: $img-height-product-details;
-                }
-            }
-        }
-    }
-
     h3.product-name {
         margin: 0;
         font-weight: 400;
