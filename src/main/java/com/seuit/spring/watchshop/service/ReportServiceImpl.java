@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ReportServiceImpl implements ReportService{
 		return entityManager.unwrap(Session.class);
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	@Transactional
 	@Override
 	public List<Object> showReport() {
@@ -45,7 +46,7 @@ public class ReportServiceImpl implements ReportService{
 //		String sql = "select new com.seuit.spring.watchshop.entity.Report(f.name, sum(od.amount) as Paid, sum(o.price) as Price)"+
 //				" from Order o inner join OrderDetail od on o.id = od.orderO.id inner join Product p on od.productO.id = p.id inner join Firm f on p.firm.id = f.id"+
 //				" where o.orderStatusO.id = 1 and o.createAt between :fromdate and :todate group by f.id";
-		String sql = "select new Report(fi.name, ifnull(A.Paid,0) + ifnull(B.Unpaid, 0) as 'Amount', ifnull(A.Price,0) + ifnull(B.Price, 0) as 'Price' ," + 
+		String sql = "select fi.name, ifnull(A.Paid,0) + ifnull(B.Unpaid, 0) as 'Amount', ifnull(A.Price,0) + ifnull(B.Price, 0) as 'Price' ," + 
 				" ifnull(A.Paid, 0) as 'Paid', ifnull(A.Price,0) as'PriceP',ifnull(B.Unpaid, 0) as 'Unpaid', ifnull(B.Price,0) as'PriceUP' " + 
 				"from firm fi left join " + 
 				"(select f.name as 'Name', sum(od.amount) as 'Paid' ,sum(o.price) as 'Price' " + 
@@ -76,14 +77,27 @@ public class ReportServiceImpl implements ReportService{
 			e.printStackTrace();
 		} 
 		
-		Query query = session.createSQLQuery(sql);
+		SQLQuery query = session.createSQLQuery(sql);
 //		query.setParameter("fromdate", dateformat);
 //		query.setParameter("todate", dateformat2);
 		
 //		query.setParameter("fromdate", fmFromdate);
 //		query.setParameter("todate", fmTodate);
 
-		return query.getResultList();
+		List<Object[]> rows = query.list();
+		List<Object> listRp = new ArrayList<Object>();
+		for(Object[] row : rows){
+			Report rp = new Report();
+			rp.setName(row[0].toString());
+			rp.setAmount(Long.parseLong(row[1].toString()));
+			rp.setPrice(Double.parseDouble(row[2].toString()));
+			rp.setPaid(Long.parseLong(row[3].toString()));
+			rp.setPaidPrice(Double.parseDouble(row[4].toString()));
+			rp.setUnpaid(Long.parseLong(row[5].toString()));
+			rp.setUnpaidPrice(Double.parseDouble(row[6].toString()));
+			listRp.add(rp);
+		}
+		return listRp;
 	}
 
 	
