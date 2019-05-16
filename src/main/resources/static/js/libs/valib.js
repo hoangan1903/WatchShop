@@ -418,16 +418,14 @@
 
     /* AJAX */
 
-    /* The 'ajaxGET' method, which takes 2 arguments, sends a HTTP GET request to a server when called.
+    /* The 'ajaxGET' method, which takes 2 arguments, sends a HTTP GET request to a server.
     url: URL of the API from which you want to get data
-    onReceive: how you want to do with the retrieved data
+    onreceive: how you want to do with the retrieved data
     */
-    valib.ajaxGET = function (url, onReceive) {
-        if (url) {
+    valib.ajaxGET = function (url, onreceive) {
+        if (url && onreceive) {
             let request = new XMLHttpRequest();
-
             request.open('GET', url, true);
-            request.send();
             request.onload = function () {
                 let jsonText, obj;
                 jsonText = this.responseText;
@@ -439,9 +437,10 @@
                         console.log(error);
                         obj = {};
                     }
-                    onReceive(obj, jsonText);
+                    onreceive(obj, jsonText);
                 }
             };
+            request.send();
         }
     };
 
@@ -492,16 +491,26 @@
     };
 
     // Gets value with specific key from parameters assigned to the current page address
-    valib.getValueFromCurrentUrl = function (key) {
+    valib.getValueByKeyFromURL = function (key) {
         let urlParams = valib.getCurrentUrlParams();
 
         if (urlParams) {
-            urlParams.get(key);
+            return urlParams.get(key);
         }
 
         return null;
     };
 
+    valib.getURLWithParams = function (url, params) {
+        if (params) {
+            let totalParams = Object.keys(params).length;
+            if (totalParams > 0) {
+                let queryString = '?' + $.map(params, (value, key) => key + "=" + encodeURI(value)).join('&');
+                return url + queryString;
+            }
+        }
+        return url;
+    };
 
     // Expose 'valib' as two aliases 'window.valib' and 'window._va' to global context
     global.valib = global._va = valib;

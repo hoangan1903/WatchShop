@@ -1,16 +1,16 @@
 /*
- * Paginator.js v2.1 by Viet Anh
+ * paginator.js v3.0 by Viet Anh
  * Data paginator based on Bootstrap 4 pagination
  * Requires jQuery. Import this file after jQuery import in your HTML document
  * See https://getbootstrap.com/docs/4.3/components/pagination/
  * for more information about this Bootstrap component
  */
 
-(function (global, $) {
+(function (global, $, _va) {
 
     /* Local variables */
 
-    var obj,
+    var info,
         totalPages,
         currentPage,
         container,
@@ -18,36 +18,40 @@
         paginationStyle;
 
 
-    /* Constructor function
-    The 'specs' object should look like this
-    {
-        obj: (required) data to be displayed, must be an array of objects (each element in it represents a page item)
-        selectors: (required) {
-            container: CSS class selector of the HTML container
-            pagination: CSS class selector of the Bootstrap Pagination component (default: 'ul.pagination')
-        },
-        paginationStyle: 'basic'/'advanced'
-    }
-    */
-    function Paginator(specs) {
-        this.obj = obj = specs.obj;
-        this.totalPages = totalPages = this.obj.length;
-        this.container = container = $(specs.selectors.container);
-        this.pagination = pagination = $(specs.selectors.pagination);
-        this.paginationStyle = paginationStyle = specs.paginationStyle;
-    };
+    function paginator(specs) {
+        info = specs.info;
+        container = $(specs.selectors.container);
+        pagination = $(specs.selectors.pagination);
+        paginationStyle = specs.paginationStyle;
 
-    Paginator.prototype.init = () => showPage(1);
+        showPage(1);
+    };
 
     /* Functions */
 
-    function indexOfPage(pageNumber) {
-        return pageNumber - 1;
+    function getApiUrl() {
+        let url,
+            pageId = currentPage - 1;
+
+        if (info.type === 'search') {
+            url = _va.getURLWithParams('/rest/products/find', {
+                page: pageId,
+                size: info.pageSize,
+                keyword: info.keyword
+            });
+        } else if (info.type === 'show-products') {
+            url = _va.getURLWithParams('/rest/products', {
+                page: pageId,
+                size: info.pageSize,
+                firm: info.brand
+            });
+        }
+
+        return url;
     }
 
-    function getHTMLOf(pageNumber) {
-        let pageData = obj[indexOfPage(pageNumber)], // get data of the page as an array of objects
-            pageHTML = '';
+    function getHTMLOf(pageData) {
+        let pageHTML = '';
 
         pageData.forEach(item => {
             const html = `
@@ -57,9 +61,9 @@
                         <img src="${item.image}" class="card-img-top" alt="...">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${item.name} (ID: ${item.id})</h5>
+                        <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
                         <p class="card-text">${item.price}</p>
-                        <a href="#" class="btn btn-outline-success">Xem chi tiết</a>
+                        <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -208,57 +212,61 @@
         return HTMLArr.join('');
     }
 
-    function setClickPagination(paginationItems) {
+    function setClickPagination() {
+        let paginationItems = pagination.find('a');
 
         paginationItems.click(function (event) {
             event.preventDefault();
-            let obj = $(this);
+            let clickedItem = $(this);
 
-            if (obj.hasClass('first-page')) {
+            if (clickedItem.hasClass('first-page')) {
 
                 showPage(1);
 
-            } else if (obj.hasClass('last-page')) {
+            } else if (clickedItem.hasClass('last-page')) {
 
                 showPage(totalPages);
 
-            } else if (obj.hasClass('prev-page')) {
+            } else if (clickedItem.hasClass('prev-page')) {
 
                 showPage(currentPage - 1);
 
-            } else if (obj.hasClass('next-page')) {
+            } else if (clickedItem.hasClass('next-page')) {
 
                 showPage(currentPage + 1);
 
             } else {
 
-                let clickedPage = parseInt(obj.text());
+                let clickedPage = parseInt(clickedItem.text());
                 showPage(clickedPage);
             }
         });
     }
 
     function buildPagination() {
-        let design, html;
+        let design = designPagination(totalPages, currentPage);
+        let html = getHTMLFromDesign(design);
 
-        design = designPagination(totalPages, currentPage);
-        html = getHTMLFromDesign(design);
-
-        pagination.empty();
         pagination.html(html);
-
-        setClickPagination(pagination.find('a'));
+        setClickPagination();
     }
 
     function showPage(pageNumber) {
         currentPage = pageNumber;
+        const url = getApiUrl();
 
-        container.html(getHTMLOf(currentPage));
-        buildPagination();
+        _va.ajaxGET(url, function (obj) {
+            totalPages = obj.pageCountTotal;
+
+            const html = getHTMLOf(obj.products);
+            container.html(html);
+
+            buildPagination();
+        });
     }
 
 
-    // Expose Paginator constructor function to global context for use
-    global.Paginator = Paginator;
+    // Expose paginator function to global context for use
+    global.paginator = paginator;
 
-})(window, jQuery);
+})(window, jQuery, valib);

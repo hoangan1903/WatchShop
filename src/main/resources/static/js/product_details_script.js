@@ -13,9 +13,21 @@ $(document).ready(function () {
         });
     }
 
-    initStickyNavbar();
+    function initProductCarousel() {
+        $('.product-carousel').carousel({
+            interval: 0
+        });
+    }
 
-    $('.carousel').carousel({
-        interval: 0
-    });
+    function getData() {
+        var id = _va.getValueByKeyFromURL('id');
+
+        _va.ajaxGET('/rest/products/details/' + id, function (obj) {
+            console.log(obj);
+        });
+    }
+
+    initStickyNavbar();
+    initProductCarousel();
+    getData();
 });

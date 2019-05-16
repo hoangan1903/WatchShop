@@ -28,16 +28,12 @@ $(document).ready(function () {
             var iconName = icon.attr('name');
 
             if (iconName.includes('menu')) {
-                
                 let navHeight = $('nav.mobile-navigation').css('height');
                 $('.hamburger-menu').css('top', navHeight).addClass('show');
-
                 icon.attr('name', 'ios-close');
 
             } else if (iconName.includes('close')) {
-                
                 $('.hamburger-menu').removeClass('show');
-                
                 icon.attr('name', 'ios-menu');
             }
         });

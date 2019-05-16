@@ -1,6 +1,7 @@
 /* Homepage functionality implementation */
 
 $(document).ready(function () {
+    var sliders = $('.custom-slider');
 
     // Define sticky navigation bar behavior
     // when to appear and when to disappear
@@ -18,8 +19,7 @@ $(document).ready(function () {
     }
 
     function initSliders() {
-        let sliders = $('.custom_slider'),
-            nextButtons = $('.custom_slider_nav');
+        let nextButtons = $('.custom-slider-nav');
 
         sliders.each(function (index) {
             let slider = $(this),
@@ -58,6 +58,7 @@ $(document).ready(function () {
 
     function getBanners() {
         let carousel, indicators, inner;
+
         carousel = $('.main-carousel .carousel-indicators, .main-carousel .carousel-inner');
         indicators = carousel.eq(0);
         inner = carousel.eq(1);
@@ -83,35 +84,37 @@ $(document).ready(function () {
     }
 
     function getCatalogue() {
-        let sliders = $('.custom_slider');
+        let topSlider = $('#top-slider'),
+            citizenSlider = $('#citizen-slider'),
+            ogivalSlider = $('#ogival-slider'),
+            orientSlider = $('#orient-slider'),
+            bulovaSlider = $('#bulova-slider');
+
+        function fillSlider(slider, data) {
+            data.forEach(item => {
+                let html = `
+                <div class="card product-card" style="width: auto;">
+                    <img src="${item.image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
+                    </div>
+                </div>
+                `;
+
+                slider.trigger('add.owl.carousel', [html]).trigger('refresh.owl.carousel');
+            });
+        }
 
         valib.ajaxGET('/rest/products/catalogue', function (obj) {
-            let keys = Object.keys(obj);
 
-            $.each(obj, (key, value) => {
-                let index, slider;
-
-                // get slider
-                index = keys.indexOf(key);
-                slider = sliders.eq(index);
-
-                // fill slider with data
-                value.products.forEach(item => {
-                    let html = `
-                    <div class="card product-card" style="width: auto;">
-                        <img src="${item.image}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-outline-success">Xem chi tiết</a>
-                        </div>
-                    </div>
-                    `;
-
-                    slider.trigger('add.owl.carousel', [html]);
-                });
-                slider.trigger('refresh.owl.carousel');
-            });
+            fillSlider(topSlider, obj.top.products);
+            fillSlider(citizenSlider, obj.citizens.products);
+            fillSlider(ogivalSlider, obj.ogivals.products);
+            fillSlider(orientSlider, obj.orients.products);
+            fillSlider(bulovaSlider, obj.bulovas.products);
+            
         });
     }
 
