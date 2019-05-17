@@ -28,4 +28,5 @@ public interface ProductService {
 	Long countProduct();
 	Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword);
 	List<Product> listProductTopOrder();
+	Map<String, Object> findPaginatedSort(Integer page, Integer size, Integer idFirm, Integer type);
 }

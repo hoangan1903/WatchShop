@@ -160,5 +160,10 @@ public class ProductRestController {
 		mapList.put("total", list.size());
 		return mapList;
 	}
+	
+	@GetMapping(value = "/products/sort",params = {"page","size"})
+	Map<String, Object> findAllProductByPaginatedSort(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm, @RequestParam(name = "type") Integer type) {
+		return productService.findPaginatedSort(page, size, idFirm, type);
+	}
 
 }

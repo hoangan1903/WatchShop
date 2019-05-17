@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -293,4 +295,48 @@ public class ProductServiceImpl implements ProductService {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Map<String, Object> findPaginatedSort(Integer page, Integer size,Integer idFirm, Integer type) {
+		Session session = getSession();
+		String sql = null;
+		Query query;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer pageCount;
+		List<Product>listProduct = null;
+		if(idFirm!=null) {
+			if(type == 0) {
+				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm order by p.price asc";
+			}
+			else if(type == 1) {
+				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm order by p.price desc";
+			}
+			query = session.createQuery(sql);
+			query.setParameter("idFirm", idFirm);
+			listProduct = query.getResultList();
+			if(listProduct.size()%size==0) {//chia het cho size
+				pageCount = listProduct.size()/size;
+			}else {
+				pageCount = listProduct.size()/size + 1;
+			}
+			query.setFirstResult(page * size).setMaxResults(size);
+		}else {
+			if(type == 0)
+				sql = "FROM Product p order by p.price asc";
+			else
+				sql = "FROM Product p order by p.price desc";
+			query = session.createQuery(sql);
+			listProduct = query.getResultList();
+			if(listProduct.size()%size==0) {//chia het cho size
+				pageCount = listProduct.size()/size;
+			}else {
+				pageCount = listProduct.size()/size + 1;
+			}
+			query.setFirstResult(page * size).setMaxResults(size);
+		}
+		map.put("pageCountTotal", pageCount);
+		map.put("products", query.getResultList());
+		return map;
+	}
 }

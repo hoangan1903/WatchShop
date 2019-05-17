@@ -21,12 +21,8 @@
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				obj = JSON.parse(this.responseText);
-				$
-						.each(
-								obj,
-								function(key, customer) {
-									$('#mytable tbody')
-											.append(
+				$.each(obj, function(key, customer) {
+									$('#mytable tbody').append(
 													'<tr>'
 															+ '<td class="username">'
 															+ customer.id
@@ -55,14 +51,9 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							//search Input field
-							$("#myInput")
-									.on(
-											"keyup",
-											delay(function() {
+							$("#myInput").on( "keyup", delay(function() {
 												$('#mytable tbody').empty();
 												$('#ulPagination').empty();
 
@@ -71,9 +62,7 @@
 												}
 
 												var url = selectUrlGetCustomer(
-														pageId, size, $(
-																"#myInput")
-																.val());
+														pageId, size, $("#myInput").val());
 												var xhttp = new XMLHttpRequest();
 												xhttp.onreadystatechange = function() {
 													if (this.readyState == 4
@@ -81,15 +70,10 @@
 														obj = JSON
 																.parse(this.responseText);
 														if (isSelectSearchInputEmpty() == false) {
-															countCustomer = Object
-																	.keys(obj).length;
-															numberPage = countCustomer
-																	/ size;
+															countCustomer = Objectkeys(obj).length;
+															numberPage = countCustomer/size;
 															for (var i = 0; i < numberPage; i++) {
-																$(
-																		'#ulPagination')
-																		.append(
-																				'<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
+																$('#ulPagination').append('<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
 																						+ i
 																						+ '&size=3">'
 																						+ (i + 1)
@@ -97,15 +81,8 @@
 															}
 														}
 
-														$
-																.each(
-																		obj,
-																		function(
-																				key,
-																				customer) {
-																			$(
-																					'#mytable tbody')
-																					.append(
+														$.each(obj, function(key, customer) {
+																			$('#mytable tbody').append(
 																							'<tr>'
 																									+ '<td class="username">'
 																									+ customer.id
