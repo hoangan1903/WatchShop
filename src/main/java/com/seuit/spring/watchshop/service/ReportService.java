@@ -5,6 +5,6 @@ import java.util.List;
 import com.seuit.spring.watchshop.entity.Report;
 
 public interface ReportService {
-	List<Object> showReport();
+	List<Object> showReport(String from, String till);
 	
 }

@@ -23,8 +23,8 @@ public class ReportRestController {
 //		return reportService.showReport(fromdate, todate);
 //	}
 	
-	@GetMapping(value = "/report")
-	List<Object> showReport(){
-		return reportService.showReport();
+	@GetMapping(value = "/report", params = {"from","till"})
+	List<Object> showReport(@RequestParam("from") String from, @RequestParam("till") String till){
+		return reportService.showReport(from, till);
 	}
 }

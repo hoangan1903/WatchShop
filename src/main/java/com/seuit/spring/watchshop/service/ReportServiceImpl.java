@@ -30,8 +30,28 @@ public class ReportServiceImpl implements ReportService{
 	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	@Transactional
 	@Override
-	public List<Object> showReport() {
+	public List<Object> showReport(String from, String till) {
 		Session session = this.getSession();
+		
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+
+		
+		Date dateformat = null;
+		Date dateformat2 = null;
+		String fmFromdate = null;
+		String fmTodate = null;
+
+		try {
+			dateformat = format2.parse(from);
+			dateformat2 = format2.parse(till);
+
+			fmFromdate = format1.format(dateformat);
+			fmTodate = format1.format(dateformat2);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
 //		String sql = "select new com.seuit.spring.watchshop.entity.Report(fi.name, ifnull(A.Paid, 0) + ifnull(B.Unpaid, 0), ifnull(A.Price, 0) + ifnull(B.Price, 0),"
 //				+ " ifnull(A.Paid, 0), ifnull(A.Price, 0), ifnull(B.Unpaid, 0 ), ifnull(B.Price) )"  
 //				+ " from Firm fi left join "
@@ -53,36 +73,20 @@ public class ReportServiceImpl implements ReportService{
 				"from orders o inner join order_detail od on o.id_order = od.id_order " + 
 				"inner join product p on od.id_product = p.id_product " + 
 				"inner join firm f on p.id_firm = f.id_firm " + 
-				"where o.id_order_status = 1 and (o.create_at between '2019-04-05' AND '2019-04-30') " + 
+				"where o.id_order_status = 1 and (o.create_at between :fromdate AND :tilldate) " + 
 				"group by f.id_firm) as A on fi.name = A.name left join " + 
 				"(select f.name as 'Name', sum(od.amount) as 'Unpaid',sum(o.price) as 'Price' " + 
 				"from orders o inner join order_detail od on o.id_order = od.id_order " + 
 				"inner join product p on od.id_product = p.id_product " + 
 				"inner join firm f on p.id_firm = f.id_firm " + 
-				"where o.id_order_status = 2 and (o.create_at between '2019-04-05' AND '2019-04-30') " + 
+				"where o.id_order_status = 2 and (o.create_at between :fromdate AND :tilldate) " +
 				"group by f.id_firm) as B on A.Name = B.Name; ";
-		String date = "2019 04 05";
-		String date2 = "2019 04 30";
-		SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");
-		Date dateformat = null;
-		Date dateformat2 = null;
-		Date fmFromdate = null;
-		Date fmTodate = null;
-		try {
-			dateformat = format.parse(date);
-			dateformat2 = format.parse(date2);
-//			fmFromdate = format.parse(fromdate);
-//			fmTodate = format.parse(todate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} 
+		
 		
 		SQLQuery query = session.createSQLQuery(sql);
-//		query.setParameter("fromdate", dateformat);
-//		query.setParameter("todate", dateformat2);
 		
-//		query.setParameter("fromdate", fmFromdate);
-//		query.setParameter("todate", fmTodate);
+		query.setParameter("fromdate", fmFromdate);
+		query.setParameter("tilldate", fmTodate);
 
 		List<Object[]> rows = query.list();
 		List<Object> listRp = new ArrayList<Object>();
