@@ -63,7 +63,7 @@ $(document).ready(function () {
         indicators = carousel.eq(0);
         inner = carousel.eq(1);
 
-        _va.ajaxGET('/rest/banners', function (obj) {
+        valib.ajaxGET('/rest/banners', function (obj) {
             if (obj.total > 0) {
                 carousel.empty();
 

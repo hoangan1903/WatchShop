@@ -6,7 +6,7 @@
  * for more information about this Bootstrap component
  */
 
-(function (global, $, _va) {
+(function (global, $, valib) {
 
     /* Local variables */
 
@@ -34,13 +34,13 @@
             pageId = currentPage - 1;
 
         if (info.type === 'search') {
-            url = _va.getURLWithParams('/rest/products/find', {
+            url = valib.getURLWithParams('/rest/products/find', {
                 page: pageId,
                 size: info.pageSize,
                 keyword: info.keyword
             });
         } else if (info.type === 'show-products') {
-            url = _va.getURLWithParams('/rest/products', {
+            url = valib.getURLWithParams('/rest/products', {
                 page: pageId,
                 size: info.pageSize,
                 firm: info.brand
@@ -255,7 +255,7 @@
         currentPage = pageNumber;
         const url = getApiUrl();
 
-        _va.ajaxGET(url, function (obj) {
+        valib.ajaxGET(url, function (obj) {
             totalPages = obj.pageCountTotal;
 
             const html = getHTMLOf(obj.products);

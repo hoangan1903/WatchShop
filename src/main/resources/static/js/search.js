@@ -11,7 +11,7 @@ $(document).ready(function () {
         keyword = search.val();
 
         if (keyword.length > 0) {
-            destURL = _va.getURLWithParams('search', { q: keyword });
+            destURL = valib.getURLWithParams('search', { q: keyword });
             window.location.href = destURL;
         }
     }
@@ -21,7 +21,7 @@ $(document).ready(function () {
         if (input && input.length >= 2) {
 
             // 1. Get data from server
-            _va.ajaxGET('/rest/products/find?keyword=' + encodeURI(input), function (obj) {
+            valib.ajaxGET('/rest/products/find?keyword=' + encodeURI(input), function (obj) {
                 var products = obj.products;
                 var totalSuggestions = products.length <= maxSuggestions ? products.length : maxSuggestions;
                 var html = '';

@@ -29,7 +29,7 @@ $(document).ready(function () {
     }
 
     function getSearchResults() {
-        var keyword = _va.getValueByKeyFromURL('q');
+        var keyword = valib.getValueFromURL('q');
         paginator(
             {
                 info: {
