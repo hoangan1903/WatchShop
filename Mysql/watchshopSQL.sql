@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `alert`
+--
+
+DROP TABLE IF EXISTS `alert`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `alert` (
+  `id_alert` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) NOT NULL,
+  `create_at` date NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `id_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_alert`),
+  KEY `FK16kljslgihg3kjciuq3834w27` (`id_user`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alert`
+--
+
+LOCK TABLES `alert` WRITE;
+/*!40000 ALTER TABLE `alert` DISABLE KEYS */;
+INSERT INTO `alert` VALUES (1,'abcds','2019-04-11',1,74),(2,'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss','2019-04-10',1,74),(3,'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss','2019-04-13',1,74),(4,'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss','2019-04-10',1,74);
+/*!40000 ALTER TABLE `alert` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `banner`
 --
 
@@ -90,7 +118,6 @@ CREATE TABLE `cart_detail` (
 
 LOCK TABLES `cart_detail` WRITE;
 /*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
-INSERT INTO `cart_detail` VALUES (2,22,1),(2,23,1);
 /*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,11 +130,14 @@ DROP TABLE IF EXISTS `comment`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `comment` (
   `id_comment` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `content` text NOT NULL,
-  `id_product_detail` int(11) NOT NULL,
-  PRIMARY KEY (`id_comment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `content` varchar(255) NOT NULL,
+  `create_at` date DEFAULT NULL,
+  `id_customer` int(11) DEFAULT NULL,
+  `id_product_detail` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_comment`),
+  KEY `FKkqe57pm12q47yk5b3mnbfi0ek` (`id_customer`),
+  KEY `FKfp3xnuvspq4gucjf494urfqi3` (`id_product_detail`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +271,7 @@ CREATE TABLE `image` (
   PRIMARY KEY (`id_image`),
   KEY `FKs4kpgowlj28nnxbw7r2gk3m9r` (`id_product_detail`),
   CONSTRAINT `FKs4kpgowlj28nnxbw7r2gk3m9r` FOREIGN KEY (`id_product_detail`) REFERENCES `product_detail` (`id_product_detail`)
-) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=452 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +280,7 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (38,'sds',25),(39,'sdsd',25),(40,'sdsd',25),(41,'sds',26),(42,'sdsd',26),(43,'sdsd',26),(44,'sds',27),(45,'sdsd',27),(46,'sdsd',27),(50,'sdsd',29),(51,'sds',29),(52,'sdsd',29),(53,'sdsd',30),(54,'sdsd',30),(55,'sds',30),(56,'sdsd',31),(57,'sds',31),(58,'sdsd',31),(59,'sds',32),(60,'sdsd',32),(61,'sdsd',32),(62,'sdsd',33),(63,'sds',33),(64,'sdsd',33),(65,'sdsd',34),(66,'sdsd',34),(67,'sds',34),(68,'sdsd',35),(69,'sdsd',35),(70,'sds',35),(71,'sds',36),(72,'sdsd',36),(73,'sdsd',36),(74,'sdsd',37),(75,'sds',37),(76,'sdsd',37),(77,'sdsd',38),(78,'sds',38),(79,'sdsd',38),(80,'sdsd',39),(81,'sdsd',39),(82,'sds',39),(83,'sdsd',40),(84,'sds',40),(85,'sdsd',40),(86,'sdsd',41),(87,'sds',41),(88,'sdsd',41),(89,'sdsd',42),(90,'sdsd',42),(91,'sds',42),(92,'sdsd',43),(93,'sds',43),(94,'sdsd',43),(95,'sds',44),(96,'sdsd',44),(97,'sdsd',44),(98,'sdsd',45),(99,'sds',45),(100,'sdsd',45),(101,'sdsd',46),(102,'sds',46),(103,'sdsd',46),(104,'sdsd',47),(105,'sds',47),(106,'sdsd',47),(107,'sdsd',48),(108,'sdsd',48),(109,'sds',48),(110,'sdsd',49),(111,'sdsd',49),(112,'sds',49),(113,'sds',50),(114,'sdsd',50),(115,'sdsd',50),(116,'sdsd',51),(117,'sds',51),(118,'sdsd',51),(119,'sds',52),(120,'sdsd',52),(121,'sdsd',52),(122,'sdsd',53),(123,'sds',53),(124,'sdsd',53),(125,'sds',54),(126,'sdsd',54),(127,'sdsd',54),(128,'sdsd',55),(129,'sds',55),(130,'sdsd',55),(131,'sdsd',56),(132,'sds',56),(133,'sdsd',56),(134,'sds',57),(135,'sdsd',57),(136,'sdsd',57),(137,'sdsd',58),(138,'sdsd',58),(139,'sds',58),(140,'sdsd',59),(141,'sds',59),(142,'sdsd',59),(143,'sdsd',60),(144,'sds',60),(145,'sdsd',60),(146,'sdsd',61),(147,'sdsd',61),(148,'sds',61),(149,'sds',62),(150,'sdsd',62),(151,'sdsd',62),(152,'sds',63),(153,'sdsd',63),(154,'sdsd',63),(155,'sds',64),(156,'sdsd',64),(157,'sdsd',64),(158,'sdsd',65),(159,'sds',65),(160,'sdsd',65),(161,'sdsd',66),(162,'sds',66),(163,'sdsd',66),(164,'sdsd',67),(165,'sdsd',67),(166,'sds',67),(167,'sds',68),(168,'sdsd',68),(169,'sdsd',68),(170,'sdsd',69),(171,'sdsd',69),(172,'sds',69),(173,'sdsd',70),(174,'sds',70),(175,'sdsd',70),(176,'sds',71),(177,'sdsd',71),(178,'sdsd',71),(179,'sdsd',72),(180,'sds',72),(181,'sdsd',72),(182,'sdsd',73),(183,'sdsd',73),(184,'sds',73),(185,'sdsd',74),(186,'sds',74),(187,'sdsd',74),(188,'sdsd',75),(189,'sdsd',75),(190,'sds',75),(191,'sds',76),(192,'sdsd',76),(193,'sdsd',76),(194,'sdsd',77),(195,'sdsd',77),(196,'sds',77),(197,'sdsd',78),(198,'sdsd',78),(199,'sds',78),(200,'sdsd',79),(201,'sdsd',79),(202,'sds',79),(203,'sdsd',80),(204,'sdsd',80),(205,'sds',80),(206,'sdsd',81),(207,'sdsd',81),(208,'sds',81),(209,'sdsd',82),(210,'sdsd',82),(211,'sds',82),(212,'sds',83),(213,'sdsd',83),(214,'sdsd',83),(215,'sdsd',84),(216,'sdsd',84),(217,'sds',84),(218,'sdsd',85),(219,'sdsd',85),(220,'sds',85),(221,'sds',86),(222,'sdsd',86),(223,'sdsd',86),(224,'sds',87),(225,'sdsd',87),(226,'sdsd',87),(227,'sds',88),(228,'sdsd',88),(229,'sdsd',88),(230,'sdsd',89),(231,'sdsd',89),(232,'sds',89),(233,'sdsd',90),(234,'sdsd',90),(235,'sds',90),(236,'sdsd',91),(237,'sdsd',91),(238,'sds',91),(239,'sds',92),(240,'sdsd',92),(241,'sdsd',92),(242,'sdsd',93),(243,'sds',93),(244,'sdsd',93),(245,'sdsd',94),(246,'sds',94),(247,'sdsd',94),(248,'sds',95),(249,'sdsd',95),(250,'sdsd',95),(251,'sdsd',96),(252,'sdsd',96),(253,'sds',96),(254,'sds',97),(255,'sdsd',97),(256,'sdsd',97),(257,'sdsd',98),(258,'sds',98),(259,'sdsd',98),(260,'sdsd',99),(261,'sds',99),(262,'sdsd',99),(263,'sds',100),(264,'sdsd',100),(265,'sdsd',100),(266,'sdsd',101),(267,'sds',101),(268,'sdsd',101),(269,'sdsd',102),(270,'sds',102),(271,'sdsd',102),(272,'sds',103),(273,'sdsd',103),(274,'sdsd',103),(275,'sdsd',104),(276,'sdsd',104),(277,'sds',104),(278,'sdsd',105),(279,'sds',105),(280,'sdsd',105),(281,'sds',106),(282,'sdsd',106),(283,'sdsd',106);
+INSERT INTO `image` VALUES (394,'https://donghoduyanh.com/upload/images/dong-ho-citizen-np1010-01l_6.jpg',149),(395,'https://donghoduyanh.com/upload/images/dong-ho-citizen-np1010-01l_7.jpg',149),(396,'https://donghoduyanh.com/upload/images/dong-ho-citizen-np1010-01l_9.jpg',149),(397,'https://donghoduyanh.com/upload/images/dong-ho-citizen-np1010-01l_6.jpg',149),(398,'https://donghoduyanh.com/upload/images/dong-ho-citizen-bi5000-87a_8.jpg',155),(399,'https://donghoduyanh.com/upload/images/dong-ho-citizen-bi5000-87a_9.jpg',155),(400,'https://donghoduyanh.com/upload/images/dong-ho-citizen-bi5000-87a_7.jpg',155),(401,'https://donghoduyanh.com/upload/images/dong-ho-citizen-bi5000-87a_6.jpg',155),(402,'https://cdn3.dhht.vn/wp-content/uploads/2017/10/Ogival-388-67JAGSR-T-5-399x399.jpg',158),(403,'https://cdn3.dhht.vn/wp-content/uploads/2017/10/7_388-67JAGSR-T-399x399.jpg',158),(404,'https://cdn3.dhht.vn/wp-content/uploads/2017/10/Ogival-388-67JAGSR-T-4-399x399.jpg',158),(405,'https://cdn3.dhht.vn/wp-content/uploads/2017/10/Ogival-388-67JAGSR-T-2-399x399.jpg',158),(406,'https://cdn3.dhht.vn/wp-content/uploads/2017/10/Ogival-388-67JAGSR-T-3-399x399.jpg',158),(407,'https://cdn3.dhht.vn/wp-content/uploads/2016/02/box-ogival-399x399.jpg',159),(408,'https://cdn3.dhht.vn/wp-content/uploads/2018/09/637_358-31AGR-GL-T-1-399x399.jpg',159),(409,'https://cdn3.dhht.vn/wp-content/uploads/2017/12/6_1930AGSR-T-1-399x399.jpg',160),(410,'https://cdn3.dhht.vn/wp-content/uploads/2016/02/box-ogival-399x399.jpg',160),(411,'https://cdn3.dhht.vn/wp-content/uploads/2016/02/box-ogival-399x399.jpg',161),(412,'https://cdn3.dhht.vn/wp-content/uploads/2018/09/676_1550-13AGR-GL-N-1-399x399.jpg',161),(413,'https://cdn3.dhht.vn/wp-content/uploads/2017/12/241_FAG03001W0-399x399.jpg',162),(414,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Box-Orient1-399x399.jpg',162),(415,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Orient-SDE00002W0-2-399x399.jpg',163),(416,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Orient-SDE00002W0-3-399x399.jpg',163),(417,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Orient-SDE00002W0-4-399x399.jpg',163),(418,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Orient-SDE00002W0-1-399x399.jpg',163),(419,'https://cdn3.dhht.vn/wp-content/uploads/2017/12/ORIENT-FAC0000BW0-0-399x399.jpg',164),(420,'https://cdn3.dhht.vn/wp-content/uploads/2017/12/ORIENT-FAC0000BW0-1-399x399.jpg',164),(421,'https://cdn3.dhht.vn/wp-content/uploads/2018/03/ORIENT-FUNG2005D0-2-399x399.jpg',165),(422,'https://cdn3.dhht.vn/wp-content/uploads/2018/03/ORIENT-FUNG2005D0-4-399x399.jpg',165),(423,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Box-Orient1-399x399.jpg',165),(424,'https://cdn3.dhht.vn/wp-content/uploads/2018/03/ORIENT-FUNG2005D0-3-399x399.jpg',165),(425,'https://cdn3.dhht.vn/wp-content/uploads/2019/04/40_RA-AG0004B10B-399x399.jpg',166),(426,'https://cdn3.dhht.vn/wp-content/uploads/2014/11/Box-Orient1-399x399.jpg',166),(427,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/bulova-box-399x399.jpg',167),(428,'https://cdn3.dhht.vn/wp-content/uploads/2018/09/628_96C105-399x399.jpg',167),(429,'https://cdn3.dhht.vn/wp-content/uploads/2017/11/Bulova-98A166-5-399x399.jpg',168),(430,'https://cdn3.dhht.vn/wp-content/uploads/2017/11/Bulova-98A166-2-399x399.jpg',168),(431,'https://cdn3.dhht.vn/wp-content/uploads/2017/11/Bulova-98A166-1-399x399.jpg',168),(432,'https://cdn3.dhht.vn/wp-content/uploads/2017/09/2_98A166-399x399.jpg',168),(433,'https://cdn3.dhht.vn/wp-content/uploads/2017/11/Bulova-98A166-3-399x399.jpg',168),(434,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/bulova-box-399x399.jpg',169),(435,'https://cdn3.dhht.vn/wp-content/uploads/2017/06/10_97A123-399x399.jpg',169),(436,'https://cdn3.dhht.vn/wp-content/uploads/2016/06/39_97A123-399x399.jpg',169),(437,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/bulova-box-399x399.jpg',170),(438,'https://cdn3.dhht.vn/wp-content/uploads/2018/12/28_97D115-399x399.jpg',170),(439,'https://cdn3.dhht.vn/wp-content/uploads/2017/06/16_98A165-1-399x399.jpg',171),(440,'https://cdn3.dhht.vn/wp-content/uploads/2017/08/Bulova-98A165-2-399x399.jpg',171),(441,'https://cdn3.dhht.vn/wp-content/uploads/2017/08/16_98A165-399x399.jpg',171),(442,'https://cdn3.dhht.vn/wp-content/uploads/2017/08/Bulova-98A165-1-399x399.jpg',171),(443,'https://cdn3.dhht.vn/wp-content/uploads/2017/08/Bulova-98A165-6-399x399.jpg',171),(444,'https://cdn3.dhht.vn/wp-content/uploads/2017/07/Bulova-98R227-1-399x399.jpg',172),(445,'https://cdn3.dhht.vn/wp-content/uploads/2017/07/19_98R227-399x399.jpg',172),(446,'https://cdn3.dhht.vn/wp-content/uploads/2017/07/Bulova-98R227-4-399x399.jpg',172),(447,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/13_96B215-399x399.jpg',173),(448,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/BULOVA-96B215-0-399x399.jpg',173),(449,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/Bulova-96B215-3-399x399.jpg',173),(450,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/BULOVA-96B215-2-399x399.jpg',173),(451,'https://cdn3.dhht.vn/wp-content/uploads/2015/09/BULOVA-96B215-1-399x399.jpg',173);
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +295,7 @@ CREATE TABLE `model` (
   `id_model` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_model`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +304,7 @@ CREATE TABLE `model` (
 
 LOCK TABLES `model` WRITE;
 /*!40000 ALTER TABLE `model` DISABLE KEYS */;
-INSERT INTO `model` VALUES (1,'Quartz'),(2,'Eco-Drive'),(3,'Cơ');
+INSERT INTO `model` VALUES (1,'Quartz'),(2,'Eco-Drive'),(3,'Cơ'),(4,'Automatic');
 /*!40000 ALTER TABLE `model` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +330,6 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-INSERT INTO `order_detail` VALUES (2,23,3),(2,22,3),(2,22,4),(2,23,5),(2,23,6),(2,23,7),(1,25,3),(2,22,7),(1,24,7),(1,25,7),(1,26,7),(1,29,7);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,7 +375,7 @@ CREATE TABLE `orders` (
   KEY `FKm3ritehtix5ub7jte0bxu41ik` (`id_customer`),
   KEY `FKbp6k71rsko970ooke8me82k9` (`id_order_status`),
   KEY `FK5phng0rr9yex7v321tef65svq` (`id_payment`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,7 +384,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (3,'2019-04-14 21:36:12',150000,6,3,2),(4,'2019-04-10 21:36:12',300000,6,1,1),(5,'2019-04-17 21:36:12',4000000,6,2,1),(6,'2019-04-21 21:36:12',5600000,6,3,1),(7,'2019-04-05 21:36:12',145000,6,4,1),(8,'2019-04-05 21:36:12',2323,6,4,1),(9,'2019-04-05 21:36:12',3434333,6,4,1),(10,'2019-04-05 21:36:12',43434,6,4,1),(11,'2019-04-05 21:36:12',11111,6,4,1),(12,'2019-04-05 21:36:12',2121,6,4,1),(13,'2019-04-05 21:36:12',323232,6,4,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,7 +398,7 @@ CREATE TABLE `origin` (
   `id_origin` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id_origin`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +407,7 @@ CREATE TABLE `origin` (
 
 LOCK TABLES `origin` WRITE;
 /*!40000 ALTER TABLE `origin` DISABLE KEYS */;
-INSERT INTO `origin` VALUES (1,'Japan'),(2,'South Korea'),(3,'China'),(4,'Viet Nam'),(5,'Thailand'),(6,'Singapore'),(7,'America');
+INSERT INTO `origin` VALUES (1,'Japan'),(2,'South Korea'),(3,'China'),(4,'Viet Nam'),(5,'Thailand'),(6,'Singapore'),(7,'America'),(8,'Swiss');
 /*!40000 ALTER TABLE `origin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +455,7 @@ CREATE TABLE `product` (
   KEY `FK6llohb4k4u6kjoipyofhsat89` (`id_product_detail`),
   CONSTRAINT `FK5f4ibcghig5y7cruslir1yum1` FOREIGN KEY (`id_firm`) REFERENCES `firm` (`id_firm`),
   CONSTRAINT `FK6llohb4k4u6kjoipyofhsat89` FOREIGN KEY (`id_product_detail`) REFERENCES `product_detail` (`id_product_detail`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,7 +464,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (22,'s','s',1,1,2,24),(23,'sds','sdsd',1,1,1,25),(24,'sds','sdsd',1,1,1,26),(25,'sds','sdsd',1,1,1,27),(27,'sds','sdsd',1,1,1,29),(28,'sds','sdsd',1,1,1,30),(29,'sds','sdsd',1,1,1,31),(30,'sds','sdsd',1,1,1,32),(31,'sds','sdsd',1,1,1,33),(32,'sds','sdsd',1,1,1,34),(33,'sds','sdsd',1,1,1,35),(34,'sds','sdsd',1,1,1,36),(35,'sds','sdsd',1,1,1,37),(36,'sds','sdsd',1,1,1,38),(37,'sds','sdsd',1,1,1,39),(38,'sds','sdsd',1,1,1,40),(39,'sds','sdsd',1,1,1,41),(40,'sds','sdsd',1,1,1,42),(41,'sds','sdsd',1,1,1,43),(42,'sds','sdsd',1,1,1,44),(43,'sds','sdsd',1,1,1,45),(44,'sds','sdsd',1,1,1,46),(45,'sds','sdsd',1,1,1,47),(46,'sds','sdsd',1,1,1,48),(47,'sds','sdsd',1,1,1,49),(48,'sds','sdsd',1,1,1,50),(49,'sds','sdsd',1,1,1,51),(50,'sds','sdsd',1,1,1,52),(51,'sds','sdsd',1,1,1,53),(52,'sds','sdsd',1,1,1,54),(53,'sds','sdsd',1,1,1,55),(54,'sds','sdsd',1,1,1,56),(55,'sds','sdsd',1,1,1,57),(56,'sds','sdsd',1,1,1,58),(57,'sds','sdsd',1,1,1,59),(58,'sds','sdsd',1,1,1,60),(59,'sds','sdsd',1,1,1,61),(60,'sds','sdsd',1,1,1,62),(61,'sds','sdsd',1,1,1,63),(62,'sds','sdsd',1,1,1,64),(63,'sds','sdsd',1,1,1,65),(64,'sds','sdsd',1,1,1,66),(65,'sds','sdsd',1,1,1,67),(66,'sds','sdsd',1,1,1,68),(67,'sds','sdsd',1,1,1,69),(68,'sds','sdsd',1,1,1,70),(69,'sds','sdsd',1,1,1,71),(70,'sds','sdsd',1,1,1,72),(71,'sds','sdsd',1,1,1,73),(72,'sds','sdsd',1,1,1,74),(73,'sds','sdsd',1,1,1,75),(74,'sds','sdsd',1,1,1,76),(75,'sds','sdsd',1,1,1,77),(76,'sds','sdsd',1,1,1,78),(77,'sds','sdsd',1,1,1,79),(78,'sds','sdsd',1,1,1,80),(79,'sds','sdsd',1,1,1,81),(80,'sds','sdsd',1,1,1,82),(81,'sds','sdsd',1,1,1,83),(82,'sds','sdsd',1,1,1,84),(83,'sds','sdsd',1,1,1,85),(84,'sds','sdsd',1,1,1,86),(85,'sds','sdsd',1,1,1,87),(86,'sds','sdsd',1,1,1,88),(87,'sds','sdsd',1,1,1,89),(88,'sds','sdsd',1,1,1,90),(89,'sds','sdsd',1,1,1,91),(90,'sds','sdsd',1,1,1,92),(91,'sds','sdsd',1,1,1,93),(92,'sds','sdsd',1,1,1,94),(93,'sds','sdsd',1,1,1,95),(94,'sds','sdsd',1,1,1,96),(95,'sds','sdsd',1,1,1,97),(96,'sds','sdsd',1,1,1,98),(97,'sds','sdsd',1,1,1,99),(98,'sds','sdsd',1,1,1,100),(99,'sds','sdsd',1,1,1,101),(100,'sds','sdsd',1,1,1,102),(101,'sds','sdsd',1,1,1,103),(102,'sds','sdsd',1,1,1,104),(103,'sds','sdsd',1,1,1,105),(104,'sds','sdsd',1,1,1,106);
+INSERT INTO `product` VALUES (147,'NP1010-01L','https://s3-ap-southeast-1.amazonaws.com/pnj-watch-images/3807/1551586923677dong-ho-citizen-nam-np1010.01l-day-da-40mm_1024x1024.png',12200000,1,1,149),(148,'CA4420-81L','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%93ng%20H%E1%BB%93%20Citizen%20CA4420-81L.jpg',6615000,1,1,150),(149,'CA4420-81E','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%93ng%20H%E1%BB%93%20Citizen%20CA4420-81E.jpg',6615000,1,1,151),(150,'CA4420-13L','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%93ng%20H%E1%BB%93%20Citizen%20CA4420-13L.jpg',6480000,1,1,152),(151,'AT2393-17H','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%93ng%20H%E1%BB%93%20Citizen%20AT2393-17H.jpg',6930000,1,1,153),(152,'CA7008-11E','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%92NG%20H%E1%BB%92%20CITIZEN%20CA7008-11E.4.26.1.jpg',7326000,1,1,154),(153,'BI5000-87A','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%92NG%20H%E1%BB%92%20CITIZEN%20BI5000-87A.4.26.1.jpg',2178000,1,1,155),(154,'BF2003-25A','https://donghoduyanh.com/upload/images/%C4%90%E1%BB%93ng%20H%E1%BB%93%20Citizen%20BF2003-25A.jpg',3195000,1,1,156),(155,'358-612AGR-GL-T','https://cdn3.dhht.vn/wp-content/uploads/2018/09/638_358-612AGR-GL-T-399x399.jpg',18600000,1,2,157),(156,'388-67JAGSR-T','https://cdn3.dhht.vn/wp-content/uploads/2017/10/7_388-67JAGSR-T-1-399x399.jpg',23990000,1,2,158),(157,'358-31AGR-GL-T','https://cdn3.dhht.vn/wp-content/uploads/2018/09/637_358-31AGR-GL-T-399x399.jpg',24000000,1,2,159),(158,'1930AGSR-T','https://cdn3.dhht.vn/wp-content/uploads/2017/12/6_1930AGSR-T-399x399.jpg',19000000,1,2,160),(159,'1550-13AGR-GL-N','https://cdn3.dhht.vn/wp-content/uploads/2018/09/676_1550-13AGR-GL-N-399x399.jpg',31450000,1,2,161),(160,'FAG03001W0','https://cdn3.dhht.vn/wp-content/uploads/2017/12/241_FAG03001W0-399x399.jpg',7500000,1,6,162),(161,'SDE00002W0','https://cdn3.dhht.vn/wp-content/uploads/2014/11/6488-SDE00002W0-399x399.jpg',17500000,1,6,163),(162,'FAC0000BW0','https://cdn3.dhht.vn/wp-content/uploads/2017/12/238_FAC0000BW0-399x399.jpg',5500000,1,6,164),(163,'FUNG2005D0','https://cdn3.dhht.vn/wp-content/uploads/2018/03/FUNG2005D0-399x399.jpg',3195000,1,6,165),(164,'RA-AG0004B10B','https://cdn3.dhht.vn/wp-content/uploads/2019/04/40_RA-AG0004B10B-399x399.jpg',2500000,1,6,166),(165,'96C105','https://cdn3.dhht.vn/wp-content/uploads/2018/09/628_96C105-699x699.jpg',8500000,1,4,167),(166,'98A166','https://cdn3.dhht.vn/wp-content/uploads/2017/09/2_98A166-399x399.jpg',13300000,1,4,168),(167,'97A123','https://cdn3.dhht.vn/wp-content/uploads/2016/06/39_97A123-399x399.jpg',6100000,1,4,169),(168,'97D115','https://cdn3.dhht.vn/wp-content/uploads/2018/12/28_97D115-399x399.jpg',8500000,1,4,170),(169,'98A165','https://cdn3.dhht.vn/wp-content/uploads/2017/06/16_98A165-1-399x399.jpg',12000000,1,4,171),(170,'98R227','https://cdn3.dhht.vn/wp-content/uploads/2017/07/19_98R227-399x399.jpg',15000000,1,4,172),(171,'96B215','https://cdn3.dhht.vn/wp-content/uploads/2015/09/13_96B215-399x399.jpg',5600000,1,4,173);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +491,7 @@ CREATE TABLE `product_detail` (
   KEY `FK8hjsfqnk2o75yhv13rvxh2t2b` (`id_origin`),
   CONSTRAINT `FK8hjsfqnk2o75yhv13rvxh2t2b` FOREIGN KEY (`id_origin`) REFERENCES `origin` (`id_origin`),
   CONSTRAINT `FKcridlmc61cwcktec2poptvrup` FOREIGN KEY (`id_model`) REFERENCES `model` (`id_model`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,7 +500,7 @@ CREATE TABLE `product_detail` (
 
 LOCK TABLES `product_detail` WRITE;
 /*!40000 ALTER TABLE `product_detail` DISABLE KEYS */;
-INSERT INTO `product_detail` VALUES (24,1,'1','1','1',1,'1',1,4,1),(25,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(26,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(27,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(29,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(30,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(31,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(32,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(33,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(34,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(35,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(36,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(37,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(38,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(39,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(40,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(41,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(42,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(43,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(44,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(45,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(46,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(47,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(48,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(49,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(50,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(51,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(52,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(53,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(54,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(55,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(56,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(57,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(58,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(59,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(60,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(61,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(62,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(63,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(64,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(65,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(66,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(67,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(68,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(69,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(70,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(71,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(72,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(73,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(74,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(75,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(76,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(77,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(78,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(79,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(80,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(81,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(82,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(83,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(84,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(85,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(86,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(87,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(88,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(89,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(90,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(91,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(92,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(93,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(94,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(95,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(96,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(97,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(98,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(99,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(100,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(101,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(102,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(103,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(104,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(105,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1),(106,1,'sd','sdsd','sdsd',1,'sdsd',1,1,1);
+INSERT INTO `product_detail` VALUES (149,40,'Thép không gỉ ','Dây da','Kính Sapphire',150,'Giờ,phút,giây',5,1,3),(150,43,'Thép không gỉ ','Thép không gỉ ','Mặt kính cứng',100,'Giờ,phút,giây',5,1,2),(151,43,'Thép không gỉ ','Thép không gỉ ','Mặt kính cứng',100,'Giờ,phút,giây',5,1,2),(152,43,'Thép không gỉ ','Dây da','Mặt kính cứng',100,'Giờ,phút,giây',5,1,2),(153,40,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',100,'Giờ,phút,giây',5,1,2),(154,42,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',100,'Giờ,phút,giây',5,1,2),(155,39,'Thép không gỉ ','Thép không gỉ ','Mặt kính cứng',50,'Lịch ngày, lịch thứ',5,1,1),(156,41,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',50,'Lịch ngày, lịch thứ',5,1,1),(157,40,'Thép không gỉ ','Dây da','Sapphire',100,'Giờ,phút,giây',4,8,4),(158,40,'Thép không gỉ ','Thép không gỉ ','Sapphire',120,'Giờ,phút,giây',4,8,4),(159,40,'Thép không gỉ ','Dây da','Sapphire',100,'Giờ,phút,giây',4,8,4),(160,40,'Thép không gỉ ','Thép không gỉ ','Sapphire',100,'Giờ,phút,giây',4,8,4),(161,40,'Thép không gỉ ','Dây da','Sapphire',100,'Giờ,phút,giây',4,8,4),(162,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Sapphire',100,'Giờ,phút,giây',5,8,4),(163,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Sapphire',100,'Giờ,phút,giây',5,8,4),(164,41,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',50,'Lịch ngày, lịch thứ',5,8,4),(165,41,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',50,'Lịch ngày, lịch thứ',5,8,4),(166,41,'Thép không gỉ mạ vàng','Dây da','Mặt kính cứng',50,'Lịch ngày, lịch thứ',5,8,4),(167,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(168,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(169,41,'Thép không gỉ mạ vàng','Dây da','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(170,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(171,41,'Thép không gỉ mạ vàng','Dây da','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(172,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Mineral Crystal',100,'Giờ,phút,giây',4,8,1),(173,41,'Thép không gỉ mạ vàng','Thép không gỉ mạ vàng','Mineral Crystal',100,'Giờ,phút,giây',4,8,1);
 /*!40000 ALTER TABLE `product_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,4 +592,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-03 10:55:35
+-- Dump completed on 2019-05-19 20:14:40
