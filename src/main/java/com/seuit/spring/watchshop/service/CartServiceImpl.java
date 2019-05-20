@@ -4,7 +4,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.seuit.spring.watchshop.entity.Cart;
@@ -28,6 +32,13 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private EntityManager entityManager;
+	
+	private Session getSession() {
+		return entityManager.unwrap(Session.class);
+	}
 
 	@Override
 	@Transactional
@@ -236,4 +247,14 @@ public class CartServiceImpl implements CartService {
 		}
 		return cart.getCartDetails().stream().collect(Collectors.toSet());
 	}
+
+	@Override
+	@Transactional
+	public Long getTotalAmount() {
+		// TODO Auto-generated method stub
+		String sql = "SELECT sum(c.amount) FROM CartDetail c";
+		Query query = this.getSession().createQuery(sql);
+		return  (Long) query.getSingleResult();
+	}
+	
 }

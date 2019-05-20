@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.rest;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -27,8 +29,11 @@ public class CartRestController {
 	private CartService cartService;
 	
 	@GetMapping("/cart")
-	private Set<CartDetail> listCartDetail(){
-		return cartService.listCartDetail();
+	private Map<String,Object> listCartDetail(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("totalAmount", cartService.getTotalAmount());
+		map.put("cart", cartService.listCartDetail());
+		return map;
 	}
 	
 	@PostMapping("/cart")

@@ -12,4 +12,5 @@ public interface CartService {
 	public Integer deleteCartDetailByid(Integer idProduct);
 	public Integer deleteAllCartDetail();
 	public Set<CartDetail> listCartDetail();
+	public Long getTotalAmount();
 }
