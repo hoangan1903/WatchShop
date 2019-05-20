@@ -52,13 +52,11 @@ $(document).ready(function () {
                         onStateChange: function (response) {
                             // Show user that the product has been put into their cart
                             valib.ajaxGET('/rest/cart', function (obj) {
-                                var count = 0;
-
                                 // Get cart count (total items) and all products
-                                obj.forEach(item => {
-                                    count += item.amount;
-                                });
-                                cartBadge.text(count.toString());
+                                var count = obj.totalAmount,
+                                    items = obj.cart;
+                                    
+                                cartBadge.text(count);
                             });
                         }
                     });
