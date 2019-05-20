@@ -94,10 +94,10 @@ $(document).ready(function () {
             data.forEach(item => {
                 let html = `
                 <div class="card product-card" style="width: auto;">
-                    <img src="${item.image}" class="card-img-top" alt="...">
+                    <img src="${item.image}" class="card-img-top card-product-img" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="price">${item.price.toLocaleString()}đ</p>
                         <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>
