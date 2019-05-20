@@ -32,12 +32,12 @@ public class CartRestController {
 	}
 	
 	@PostMapping("/cart")
-	private String addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
+	private Boolean addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
 		boolean boo = cartService.addProductToCart(cartAPI);
 		if(boo==true) {
-			return "add product to cart success";
+			return true;
 		}
-		return "add product to cart fail";
+		return false;
 	}
 	@PutMapping("/cart/up")
 	private String upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {

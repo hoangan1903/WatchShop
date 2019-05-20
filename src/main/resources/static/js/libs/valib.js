@@ -2493,17 +2493,32 @@
         ajaxPOST: function (specs) {
             let url = specs.url,
                 requestHeader = specs.requestHeader,
-                data = specs.data,
+                data = JSON.stringify(specs.data),
                 onStateChange = specs.onStateChange,
                 request = new XMLHttpRequest();
 
             request.open('POST', url, true);
             request.setRequestHeader(requestHeader.name, requestHeader.value);
             request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200) {
                     onStateChange(request.responseText);
                 } else {
-                    throw new Error('Unsuccessful HTTP POST request');
+                var readyState = this.readyState,
+                    status = this.status,
+                    response = this.responseText;
+
+                if (readyState == 4) {
+                    switch (status) {
+                        case 200:
+                            onStateChange(response);
+                            break;
+                        case 401:
+                            break;
+                        case 403:
+                            alert('Tài khoản không có quyền thực hiện tác vụ này.');
+                            break;
+                        case 500:
+                            break;
+                    }
                 }
             };
             request.send(data);

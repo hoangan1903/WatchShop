@@ -96,12 +96,12 @@
                                     </div>
 
                                     <div class="btn-group" role="group" aria-label="Second group" style="width: 33%">
-                                        <button type="button" class="btn btn-secondary">&ndash;</button>
+                                        <button type="button" class="btn btn-secondary quantity-down">&ndash;</button>
                                         <div class="product-quantity d-flex align-items-center px-3">02</div>
-                                        <button type="button" class="btn btn-secondary">&plus;</button>
+                                        <button type="button" class="btn btn-secondary quantity-up">&plus;</button>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-success" style="width: 60%">Thêm vào Giỏ hàng</a>
+                                <a href="#" class="add-to-cart btn btn-success" style="width: 60%">Thêm vào Giỏ hàng</a>
                             </div>
                         </div>
                     </div>
@@ -171,24 +171,62 @@
             </div>
 
             <!-- Ratings and comments on the product -->
-            <div class="row">
 
+            <div class="row">
+                <div class="full-width d-flex justify-content-start">
+                    <!-- Comments Form -->
+                    <div class="card my-4" style="width: 70%;">
+                        <div class="card-header" style="background-color: rgba(0,0,0,0.03);">
+                            <h5 class="card-header-title">Để lại bình luận</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="inputName">Tên của bạn</label>
+                                    <input type="text" class="form-control" id="inputName"
+                                        aria-describedby="commenter-name" placeholder="Tên của bạn" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Nội dụng bình luận</label>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+
+                                <div class="d-flex justify-content-start">
+                                    <button type="submit" class="post-comment btn btn-success">Bình luận</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="comment-container">
+                    <!-- Sample Comment -->
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter's Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                            sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                            condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="section-similar-products">
+    <!-- <section class="section-similar-products">
         <div class="container">
             <div class="row">
                 <h2 class="section-heading">Sản phẩm tương tự</h2>
             </div>
 
-            <!-- Ratings and comments on the product -->
-            <div class="row">
-
-            </div>
+            <div class="row"></div>
         </div>
-    </section>
+    </section> -->
 
     <footer th:include="fragments/footer.html :: footer"></footer>
 
