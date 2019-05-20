@@ -32,45 +32,26 @@ public class CartRestController {
 	}
 	
 	@PostMapping("/cart")
-	private Boolean addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.addProductToCart(cartAPI);
-		if(boo==true) {
-			return true;
-		}
-		return false;
+	private Integer addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.addProductToCart(cartAPI);
 	}
 	@PutMapping("/cart/up")
-	private String upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.upAmountProduct(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "up amount product to success";
-		}
-		return "up amount product to fail";
+	private Integer upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.upAmountProduct(cartAPI.getIdProduct());
 	}
 	@PutMapping("/cart/down")
-	private String downAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.downAmountProduct(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "down amount product to success";
-		}
-		return "down amount product to fail";
+	private Integer downAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.downAmountProduct(cartAPI.getIdProduct());
+		
 	}
 	//Have bug
 	@DeleteMapping("/cart/product")
-	private String deleteC(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.deleteCartDetailByid(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "delete product to success";
-		}
-		return "delete product to fail";
+	private Integer deleteC(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.deleteCartDetailByid(cartAPI.getIdProduct());
 	}
 
 	@DeleteMapping("/cart/all")
-	private String deleteAllProductInCart() {
-		boolean boo = cartService.deleteAllCartDetail();
-		if(boo==true) {
-			return "delete all product to success";
-		}
-		return "delete all amount product to fail";
+	private Integer deleteAllProductInCart() {
+		return cartService.deleteAllCartDetail();
 	}
 }

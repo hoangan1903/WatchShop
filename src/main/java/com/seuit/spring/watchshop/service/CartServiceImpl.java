@@ -31,12 +31,12 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public boolean addProductToCart(CartAPI cartAPI) {
+	public Integer addProductToCart(CartAPI cartAPI) {
 		// TODO Auto-generated method stub
-		boolean result = true;
+		Integer result = 1;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		} else {
 			System.out.println(idCustomer);
 			Integer idProduct = cartAPI.getIdProduct();
@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService {
 				product = productRepository.findById(idProduct);
 				customer = customerRepository.findById(idCustomer);
 				if (product.isPresent() == false || customer.isPresent() == false) {
-					result = false;
+					result = 0;
 					product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 				} else {
@@ -75,11 +75,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public boolean upAmountProduct(Integer idProduct) {
-		boolean result = true;
+	public Integer upAmountProduct(Integer idProduct) {
+		Integer result = 1;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		} else {
 			Optional<Product> product = null;
 			Optional<Customer> customer = null;
@@ -88,7 +88,7 @@ public class CartServiceImpl implements CartService {
 				product = productRepository.findById(idProduct);
 				customer = customerRepository.findById(idCustomer);
 				if (product.isPresent() == false || customer.isPresent() == false) {
-					result = false;
+					result = 0;
 					product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 				} else {
@@ -96,7 +96,7 @@ public class CartServiceImpl implements CartService {
 				}
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
-				result = false;
+				result = 0;
 				e.printStackTrace();
 			}
 			CartDetail cartDetail = new CartDetail(cart, product.get(), null);
@@ -113,11 +113,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public boolean downAmountProduct(Integer idProduct) {
-		boolean result = true;
+	public Integer downAmountProduct(Integer idProduct) {
+		Integer result = 1;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		} else {
 			Optional<Product> product = null;
 			Optional<Customer> customer = null;
@@ -126,7 +126,7 @@ public class CartServiceImpl implements CartService {
 				product = productRepository.findById(idProduct);
 				customer = customerRepository.findById(idCustomer);
 				if (product.isPresent() == false || customer.isPresent() == false) {
-					result = false;
+					result = 0;
 					product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 				} else {
@@ -134,7 +134,7 @@ public class CartServiceImpl implements CartService {
 				}
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
-				result = false;
+				result = 0;
 				e.printStackTrace();
 			}
 			CartDetail cartDetail = new CartDetail(cart, product.get(), null);
@@ -151,11 +151,11 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public boolean deleteCartDetailByid(Integer idProduct) {
-		boolean result = true;
+	public Integer deleteCartDetailByid(Integer idProduct) {
+		Integer result = 1;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		} else {
 			Optional<Product> product = null;
 			Optional<Customer> customer = null;
@@ -164,7 +164,7 @@ public class CartServiceImpl implements CartService {
 				product = productRepository.findById(idProduct);
 				customer = customerRepository.findById(idCustomer);
 				if (product.isPresent() == false || customer.isPresent() == false) {
-					result = false;
+					result = 0;
 					product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 				} else {
@@ -172,7 +172,7 @@ public class CartServiceImpl implements CartService {
 				}
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
-				result = false;
+				result = 0;
 				e.printStackTrace();
 			}
 			CartDetail cartDetail = new CartDetail(cart, product.get(), null);
@@ -189,23 +189,23 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public boolean deleteAllCartDetail() {
-		boolean result = true;
+	public Integer deleteAllCartDetail() {
+		Integer result = 1;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		} else {
 			Optional<Customer> customer = null;
 			Cart cart = null;
 			try {
 				customer = customerRepository.findById(idCustomer);
 				if (customer.isPresent() == false) {
-					result = false;
+					result = 0;
 					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 				}
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
-				result = false;
+				result = 0;
 				e.printStackTrace();
 			}
 			cart = customer.get().getCart();
