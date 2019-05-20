@@ -386,6 +386,14 @@ p {
     }
 }
 
+// Images
+
+img.card-product-img {
+    object-fit: cover;
+    width: 100%;
+    height: $img-height-product-card;
+}
+
 // Loaders
 
 /* Dual ring loader */

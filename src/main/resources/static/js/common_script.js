@@ -39,6 +39,19 @@ $(document).ready(function () {
         });
     }
 
+    function updateCartIcon() {
+        valib.ajaxGET('/rest/cart', function (obj) {
+            var count = 0;
+
+            // Get cart count (total items) and all products
+            obj.forEach(item => {
+                count += item.amount;
+            });
+            $('#cart-count-badge').text(count);
+        });
+    }
+
     initHoverDropdown();
     setOnClickHamburger();
+    updateCartIcon();
 });
