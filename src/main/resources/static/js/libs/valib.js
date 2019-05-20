@@ -2500,8 +2500,6 @@
             request.open('POST', url, true);
             request.setRequestHeader(requestHeader.name, requestHeader.value);
             request.onreadystatechange = function () {
-                    onStateChange(request.responseText);
-                } else {
                 var readyState = this.readyState,
                     status = this.status,
                     response = this.responseText;
