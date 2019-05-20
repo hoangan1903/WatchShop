@@ -40,14 +40,23 @@ $(document).ready(function () {
     }
 
     function updateCartIcon() {
-        valib.ajaxGET('/rest/cart', function (obj) {
-            var count = 0;
+        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+            var isLoggedIn = Boolean(obj),
+                cartBadge = $('#cart-count-badge');
 
-            // Get cart count (total items) and all products
-            obj.forEach(item => {
-                count += item.amount;
-            });
-            $('#cart-count-badge').text(count);
+            if (isLoggedIn) {
+                valib.ajaxGET('/rest/cart', function (obj) {
+                    var count = 0;
+
+                    // Get cart count (total items) and all products
+                    obj.forEach(item => {
+                        count += item.amount;
+                    });
+                    cartBadge.text(count.toString());
+                });
+            } else {
+                cartBadge.text('0');
+            }
         });
     }
 

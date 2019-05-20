@@ -58,11 +58,13 @@ $(document).ready(function () {
                                 obj.forEach(item => {
                                     count += item.amount;
                                 });
-
-                                cartBadge.text(count);
+                                cartBadge.text(count.toString());
                             });
                         }
                     });
+                } else {
+                    // Notify the user that he or she is not logged in
+
                 }
             });
         });
