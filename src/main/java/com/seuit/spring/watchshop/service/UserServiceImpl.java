@@ -186,5 +186,17 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	@Transactional
+	public Integer isLoggedIn() {
+		// TODO Auto-generated method stub
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.getPrincipal()=="anonymousUser") {
+			return 0;
+		}
+		return 1;
+	}
+	
+	
 	
 }
