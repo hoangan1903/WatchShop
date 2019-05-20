@@ -8,7 +8,7 @@ $(document).ready(function () {
         quantity = $('.product-quantity'),
         quantityUp = $('button.quantity-up'),
         quantityDown = $('button.quantity-down'),
-        addToCartBtn = $('a.add-to-cart'),
+        addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
         commentContainer = $('.comment-container'),
         postCommentBtn = $('button.post-comment');
