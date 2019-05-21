@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -245,7 +246,7 @@ public class CartServiceImpl implements CartService {
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
-		return cart.getCartDetails().stream().collect(Collectors.toSet());
+		return cart.getCartDetails();
 	}
 
 	@Override
@@ -256,5 +257,19 @@ public class CartServiceImpl implements CartService {
 		Query query = this.getSession().createQuery(sql);
 		return  (Long) query.getSingleResult();
 	}
+
+	@Override
+	public Double getTotalPrice(Set<CartDetail> list) {
+		// TODO Auto-generated method stub
+		Double total = 0.0;
+		for (CartDetail cartDetail : list) {
+			total+=cartDetail.getSubtotal();
+		}
+		return total;
+	}
+
+	
+	
+	
 	
 }
