@@ -46,6 +46,10 @@ public class HomeController {
 		return "client/product_details";
 	}
 
+	@GetMapping(value = { "/cart" })
+	public String showCart() {
+		return "client/cart";
+	}
 
 	@GetMapping("/login")
 	public String showLoginPage() {

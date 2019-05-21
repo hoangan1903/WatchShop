@@ -48,7 +48,6 @@ $(document).ready(function () {
                 valib.ajaxGET('/rest/cart', function (obj) {
                     // Get cart count (total items) and all products
                     var count = obj.totalAmount;
-
                     cartBadge.text(count);
                 });
             } else {

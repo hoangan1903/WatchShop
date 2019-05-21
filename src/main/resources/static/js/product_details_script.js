@@ -49,7 +49,7 @@ $(document).ready(function () {
                     valib.ajaxPOST({
                         url: '/rest/cart',
                         data: data,
-                        onStateChange: function (response) {
+                        onSuccess: function (response) {
                             // Show user that the product has been put into their cart
                             valib.ajaxGET('/rest/cart', function (obj) {
                                 // Get cart count (total items) and all products
@@ -70,13 +70,8 @@ $(document).ready(function () {
 
     function initQuantity() {
 
-        function toString(num) {
-            var result = num < 10 ? '0' + num.toString() : num.toString();
-            return result;
-        }
-
         // Initialize quantity section
-        quantity.text(toString(1));
+        quantity.text(valib.toString(1));
         quantityDown.attr('disabled', 'disabled');
 
         // Set click handlers for buttons
@@ -86,7 +81,7 @@ $(document).ready(function () {
             currentQty = parseInt(quantity.text());
             newQty = currentQty + 1;
 
-            quantity.text(toString(newQty));
+            quantity.text(valib.toString(newQty));
             quantityDown.removeAttr('disabled');
         });
 
@@ -97,7 +92,7 @@ $(document).ready(function () {
             newQty = currentQty - 1;
 
             if (newQty > 0) {
-                quantity.text(toString(newQty));
+                quantity.text(valib.toString(newQty));
                 if (newQty === 1) {
                     $(this).attr('disabled', 'disabled');
                 }
@@ -192,7 +187,7 @@ $(document).ready(function () {
                     valib.ajaxPOST({
                         url: '/url where you want to submit your data',
                         data: 'data you want to submit to server',
-                        onStateChange: function (response) {
+                        onSuccess: function (response) {
                             // 3. Do something when the request is successful
                             // e.g Refresh the comments to see the new comment
                             getComments();

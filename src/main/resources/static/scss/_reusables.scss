@@ -388,10 +388,18 @@ p {
 
 // Images
 
-img.card-product-img {
-    object-fit: cover;
-    width: 100%;
-    height: $img-height-product-card;
+img {
+    &.card-product-img {
+        object-fit: cover;
+        width: 100%;
+        height: $img-height-product-card;
+    }
+
+    &.cart-item-img {
+        object-fit: cover;
+        width: $img-width-cart-item;
+        height: 75%;
+    }
 }
 
 // Loaders

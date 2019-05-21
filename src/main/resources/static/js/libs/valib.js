@@ -2502,15 +2502,14 @@
                     let jsonText, obj;
                     jsonText = this.responseText;
 
-                    if (jsonText) {
-                        try {
-                            obj = JSON.parse(jsonText);
-                        } catch (error) {
-                            console.log(error);
-                            obj = {};
-                        }
-                        onReceive(obj, jsonText);
+                    try {
+                        obj = JSON.parse(jsonText);
+                    } catch (error) {
+                        console.log(error);
+                        obj = {};
                     }
+
+                    onReceive(obj, jsonText);
                 };
                 request.send();
             }
@@ -2521,7 +2520,7 @@
             {
                 url: '/url where you want to submit your data',
                 data: 'data you want to submit to server (stringifiable into JSON)',
-                onStateChange: function (responseText) {
+                onSuccess: function (responseText) {
                     // what to do when the request is successful
                 }
             }
@@ -2529,21 +2528,21 @@
         ajaxPOST: function (specs) {
             let url = specs.url,
                 data = JSON.stringify(specs.data),
-                onStateChange = specs.onStateChange;
+                onSuccess = specs.onSuccess;
 
-            if (url && data && onStateChange) {
+            if (url && data && onSuccess) {
                 let request = new XMLHttpRequest();
                 request.open('POST', url, true);
                 request.setRequestHeader('Content-Type', 'application/json');
                 request.onreadystatechange = function () {
-                    let readyState = this.readyState,
+                    const readyState = this.readyState,
                         status = this.status,
                         response = this.responseText;
 
                     if (readyState == 4) {
                         switch (status) {
                             case 200:
-                                onStateChange(response);
+                                onSuccess(response);
                                 break;
                             case 401:
                                 throw new Error('Unsuccessful HTTP POST Request: Error 401');
@@ -2557,6 +2556,59 @@
                 request.send(data);
             }
         },
+
+        ajaxPUT: function (specs) {
+            let url = specs.url,
+                data = JSON.stringify(specs.data),
+                onSuccess = specs.onSuccess;
+
+            if (url && data && onSuccess) {
+                let request = new XMLHttpRequest();
+                request.open('PUT', url, true);
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.onreadystatechange = function () {
+                    const readyState = this.readyState,
+                        status = this.status,
+                        response = this.responseText;
+
+                    if (readyState == 4 && status == 200) {
+                        onSuccess(response);
+                    }
+                };
+                request.send(data);
+            }
+        },
+
+        ajaxDELETE: function (url, onSuccess) {
+            if (url && onSuccess) {
+                let request = new XMLHttpRequest();
+                request.open('DELETE', url, true);
+                request.onreadystatechange = function () {
+                    const readyState = this.readyState,
+                        status = this.status,
+                        response = this.responseText;
+
+                    if (readyState == 4 && status == 200) {
+                        let parsed;
+
+                        try {
+                            parsed = JSON.parse(response);
+                        } catch (error) {
+                            console.log(error);
+                            parsed = {};
+                        }
+
+                        onSuccess(parsed);
+                    }
+                };
+                request.send();
+            }
+        },
+
+        toString: function (num) {
+            var result = num < 10 ? '0' + num.toString() : num.toString();
+            return result;
+        }
     });
 
 

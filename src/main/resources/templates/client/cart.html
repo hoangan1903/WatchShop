@@ -6,6 +6,7 @@
 
     <!-- CSS files -->
     <link href="css/cart_styles.css" rel="stylesheet">
+    <link href="css/cart_responsive.css" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Giỏ hàng</title>
@@ -22,61 +23,17 @@
                     <div class="d-flex flex-row px-1 mb-2">
                         <div class="flex-grow-1 d-flex flex-column align-items-start">
                             <h5 class="card-title content-wrapper">Giỏ hàng</h5>
-                            <p class="content-wrapper">2 sản phẩm</p>
+                            <p class="content-wrapper"><span id="cart-count">2</span> sản phẩm</p>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="#" class="cart-remove-all">Xóa tất cả</a>
                         </div>
                     </div>
 
-                    <div class="card mb-3" style="width: auto;">
-                        <div class="card-body">
-                            <div class="cart-item-content d-flex flex-row">
-                                <div class="cart-item-summary flex-grow-1">
-                                    <div class="mb-2">
-                                        <a href="#" class="cart-product-link">Citizen BL8144-89H</a>
-                                    </div>
-                                    <p class="card-text">Giá</p>
-                                    <p class="card-text price">16,500,000đ</p>
-                                    <img class="p-4" src="images/citizen-watch-03.jpg" alt="Citizen BL8144-89H">
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                </div>
+                    <div class="cart-item-container">
 
-                                <div class="cart-item-control d-flex flex-column ml-4">
-                                    <div class="quantity-control d-flex justify-content-end">
-                                        <div class="text-align-center">
-                                            <p class="card-text mb-2">Số lượng</p>
-                                            <div class="btn-group" role="group" aria-label="Second group">
-                                                <button type="button" class="btn btn-secondary">&ndash;</button>
-                                                <div class="product-quantity d-flex align-items-center px-3">02</div>
-                                                <button type="button" class="btn btn-secondary">&plus;</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <!-- All cart items are here -->
 
-                                    <div
-                                        class="item-total-price flex-grow-1 d-flex justify-content-end align-items-end py-4">
-                                        <div class="text-align-center">
-                                            <p class="card-text mb-1">Thành tiền</p>
-                                            <p class="card-text price">33,000,000đ</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-item-actions d-flex justify-content-end">
-                                        <a href="#" class="card-item-action">
-                                            <ion-icon name="ios-heart"
-                                                class="cart-action-icon wishlist-icon small-icon">
-                                            </ion-icon>
-                                        </a>
-                                        <a href="#" class="card-item-action">
-                                            <ion-icon name="ios-trash" class="cart-action-icon remove-icon small-icon">
-                                            </ion-icon>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -89,7 +46,8 @@
                             <div class="cart-summary d-flex flex-column">
                                 <div class="d-flex flex-row align-items-center mb-3">
                                     <p class="card-text cart-summary-entry">Tạm tính:</p>
-                                    <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                    <p id="cart-subtotal"
+                                        class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
                                         33,000,000đ
                                     </p>
                                 </div>
@@ -102,7 +60,8 @@
 
                                 <div class="d-flex flex-row align-items-center mb-3">
                                     <p class="card-text cart-summary-entry"> Tổng tiền:</p>
-                                    <p class="card-text price flex-grow-1 d-flex justify-content-end">33,000,000đ</p>
+                                    <p id="cart-total" class="card-text price flex-grow-1 d-flex justify-content-end">
+                                        33,000,000đ</p>
                                 </div>
                             </div>
                             <a href="#" class="btn btn-success full-width mt-3">Chuyển đến Thanh toán</a>
@@ -118,7 +77,8 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
-    
+    <script src="js/cart_script.js"></script>
+
 </body>
 
 </html>
