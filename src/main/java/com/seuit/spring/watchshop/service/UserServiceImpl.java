@@ -191,10 +191,10 @@ public class UserServiceImpl implements UserService {
 	public Integer isLoggedIn() {
 		// TODO Auto-generated method stub
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(auth.getPrincipal()=="anonymousUser") {
-			return 0;
+		if(auth.getPrincipal()=="customer") {
+			return 1;
 		}
-		return 1;
+		return 0;
 	}
 
 }
