@@ -66,13 +66,12 @@ $(document).ready(function () {
         valib.ajaxGET('/rest/banners', function (obj) {
             if (obj.total > 0) {
                 carousel.empty();
-
                 obj.banners.forEach((banner, index) => {
                     indicators.append(`<li data-target="#mainCarouselIndicators" data-slide-to="${index}"></li>`);
                     inner.append(`
-                    <div class="carousel-item">
-                        <img src="${banner.url}" class="d-block w-100" alt="">
-                    </div>
+                        <div class="carousel-item">
+                            <img src="${banner.url}" class="d-block w-100" alt="">
+                        </div>
                     `);
 
                     if (index === 0) {
@@ -114,7 +113,7 @@ $(document).ready(function () {
             fillSlider(ogivalSlider, obj.ogivals.products);
             fillSlider(orientSlider, obj.orients.products);
             fillSlider(bulovaSlider, obj.bulovas.products);
-            
+
         });
     }
 

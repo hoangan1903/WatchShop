@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
     var productCarousel = $('.product-carousel'),
-        brandObj = $('a.brand-link'),
-        nameObj = $('h3.product-name'),
-        priceObj = $('p.price'),
-        available = $('span.available'),
+        brand$ = $('a.brand-link'),
+        name$ = $('h3.product-name'),
+        price$ = $('p.price'),
+        available$ = $('span.available'),
         quantity = $('.product-quantity'),
         quantityUp = $('button.quantity-up'),
         quantityDown = $('button.quantity-down'),
@@ -53,16 +53,16 @@ $(document).ready(function () {
                             // Show user that the product has been put into their cart
                             valib.ajaxGET('/rest/cart', function (obj) {
                                 // Get cart count (total items) and all products
-                                var count = obj.totalAmount,
-                                    items = obj.cart;
-                                    
+                                var count = obj.totalAmount;
+                                // var items = obj.cart;
+
                                 cartBadge.text(count);
                             });
                         }
                     });
                 } else {
-                    // Notify the user that he or she is not logged in
-
+                    // Redirect to Login page
+                    window.location.href = 'login';
                 }
             });
         });
@@ -103,19 +103,35 @@ $(document).ready(function () {
     function getData() {
 
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
-            console.log(obj);
-            var brand = obj.product.firm.name;
+            var brand = obj.product.firm.name,
+                carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
+                indicators, inner;
 
-            obj.images.forEach(image => {
-                // productCarousel;
+            indicators = carousel.eq(0);
+            inner = carousel.eq(1);
+
+            // Get images for product carousel
+            carousel.empty();
+            obj.images.forEach((image, index) => {
+                indicators.append(`<li data-target="#productCarouselIndicators" data-slide-to="${index}"></li>`);
+                inner.append(`
+                    <div class="carousel-item">
+                        <img src="${image.url}" class="d-block w-100" alt="">
+                    </div>
+                `);
+
+                if (index === 0) {
+                    carousel.children().addClass('active');
+                }
             });
 
-            brandObj.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
-            nameObj.text(obj.product.codeName);
-            priceObj.text(obj.product.price.toLocaleString() + 'đ');
-            available.text(obj.product.available);
+            // Get product info
+            brand$.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
+            name$.text(obj.product.codeName);
+            price$.text(obj.product.price.toLocaleString() + 'đ');
+            available$.text(obj.product.available);
 
-
+            // Get data for table of product details
             table.html(`
             <tr>
                 <td class="spec-title">Bảo hành/Bảo hiểm</td>
@@ -161,6 +177,12 @@ $(document).ready(function () {
         });
     }
 
+    initStickyNavbar();
+    initComponents();
+    initQuantity();
+    getData();
+
+    /*
     function initComments() {
 
         function getComments() {
@@ -200,10 +222,5 @@ $(document).ready(function () {
         getComments();
         postCommentBtn.click(postComment);
     }
-
-    initStickyNavbar();
-    initComponents();
-    initQuantity();
-    getData();
-    // initComments();
+    */
 });
