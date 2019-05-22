@@ -22,5 +22,4 @@ public interface CustomerService {
 	List<Customer> getListCustomerByKeyword(String keyword);
 	
 	Optional<Customer> getCustomerById(Integer id);
-	
 }

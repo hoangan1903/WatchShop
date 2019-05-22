@@ -6,10 +6,12 @@ import com.seuit.spring.watchshop.entity.CartAPI;
 import com.seuit.spring.watchshop.entity.CartDetail;
 
 public interface CartService {
-	public boolean addProductToCart(CartAPI cartAPI);
-	public boolean upAmountProduct(Integer idProduct);
-	public boolean downAmountProduct(Integer idProduct);
-	public boolean deleteCartDetailByid(Integer idProduct);
-	public boolean deleteAllCartDetail();
+	public Integer addProductToCart(CartAPI cartAPI);
+	public Integer upAmountProduct(Integer idProduct);
+	public Integer downAmountProduct(Integer idProduct);
+	public Integer deleteCartDetailByid(Integer idProduct);
+	public Integer deleteAllCartDetail();
 	public Set<CartDetail> listCartDetail();
+	public Long getTotalAmount();
+	public Double getTotalPrice(Set<CartDetail> list);
 }

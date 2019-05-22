@@ -38,4 +38,8 @@ public class UserRestController {
 	User getMe() {
 		return userService.getMe();
 	}
+	@GetMapping("/users/isLoggedIn")
+	Integer isLoggedIn() {
+		return userService.isLoggedIn();
+	}
 }

@@ -3,8 +3,8 @@
  * Including jQuery and Sizzle CSS Selector Engine
  * Some ES6 syntax and features are used in this library
  * 
- * Created 04/09/2019 - Updated 05/17/2019
- * Current version: 1.5.3
+ * Created 04/09/2019 - Updated 05/20/2019
+ * Current version: 1.5.4
 */
 (function (global, jQuery, factory) {
 
@@ -22,10 +22,11 @@
     // Import window.document
     var document = global.document;
 
-    // Get all necessary jQuery functions
+    // Get all necessary functions
     var extend = jQuery.extend,
         typeOf = jQuery.type,
-        mapObj = jQuery.map;
+        mapObj = jQuery.map,
+        slice = Array.prototype.slice;
 
     // Sizzle CSS selector engine
     var Sizzle =
@@ -2324,34 +2325,75 @@
         return -1;
     };
 
+    // DOM element selection function in ES6
     var valib = function (selector, ...positions) {
-        let result,
-            posLength;
+        let result;
 
         // Handle: selector is not a string
         if (typeof selector !== 'string') {
             throw new Error('Invalid CSS selector');
         }
 
+        // Handle: document selector
         if (selector === 'document') {
             return document;
         }
 
         result = Sizzle(selector);
-        posLength = positions.length;
 
-        if (result.length > 0 && posLength > 0) {
+        if (result.length > 0 && positions.length > 0) {
             let reduced = valib.map(positions, position => {
                 const index = getIndexByPosition(result, position);
                 return result[index];
             });
-            result = reduced;
+
+            if (reduced.length > 1) {
+                result = reduced;
+            } else {
+                result = reduced[0];
+            }
         }
 
         return result;
     };
 
-    valib.dom = valib;
+    // Pure ES5 DOM element selection function
+    valib.dom = function (selector) {
+        var positions = [],
+            reduced, result;
+
+        // Get the array of positions
+        if (arguments.length > 1) {
+            positions = slice.call(arguments, 1);
+        }
+
+        // Handle: selector is not a string
+        if (typeof selector !== 'string') {
+            throw new Error('Invalid CSS selector');
+        }
+
+        // Handle: document selector
+        if (selector === 'document') {
+            return document;
+        }
+
+        result = Sizzle(selector);
+
+        if (result.length > 0 && positions.length > 0) {
+            reduced = valib.map(positions, position => {
+                var index = getIndexByPosition(result, position);
+                return result[index];
+            });
+
+            if (reduced.length > 1) {
+                result = reduced;
+            } else {
+                result = reduced[0];
+            }
+        }
+
+        return result;
+    };
 
     valib.extend = extend;
 
@@ -2363,7 +2405,7 @@
 
     valib.extend(valib, {
 
-        version: '1.5.3',
+        version: '1.5.4',
 
         isObject: function (obj) {
             var type = typeof obj;
@@ -2460,67 +2502,113 @@
                     let jsonText, obj;
                     jsonText = this.responseText;
 
-                    if (jsonText) {
-                        try {
-                            obj = JSON.parse(jsonText);
-                        } catch (error) {
-                            console.log(error);
-                            obj = {};
-                        }
-                        onReceive(obj, jsonText);
+                    try {
+                        obj = JSON.parse(jsonText);
+                    } catch (error) {
+                        console.log(error);
+                        obj = {};
                     }
+
+                    onReceive(obj, jsonText);
                 };
                 request.send();
             }
         },
 
         /* The 'ajaxPOST' method requires a set of specifications to send a HTTP POST request to a server.
-            Put all specifications into one object (called 'specs') and pass it as the only parameter to the method.
-            The 'specs' object should look like this:
- 
+           The 'specs' object should look like this:
             {
                 url: '/url where you want to submit your data',
-                requestHeader: {
-                    name: 'request name',
-                    value: 'request value'
-                },
-                data: 'data you want to submit to server',
-                onStateChange: function (responseText) {
+                data: 'data you want to submit to server (stringifiable into JSON)',
+                onSuccess: function (responseText) {
                     // what to do when the request is successful
                 }
             }
         */
         ajaxPOST: function (specs) {
             let url = specs.url,
-                requestHeader = specs.requestHeader,
                 data = JSON.stringify(specs.data),
-                onStateChange = specs.onStateChange,
-                request = new XMLHttpRequest();
+                onSuccess = specs.onSuccess;
 
-            request.open('POST', url, true);
-            request.setRequestHeader(requestHeader.name, requestHeader.value);
-            request.onreadystatechange = function () {
-                var readyState = this.readyState,
-                    status = this.status,
-                    response = this.responseText;
+            if (url && data && onSuccess) {
+                let request = new XMLHttpRequest();
+                request.open('POST', url, true);
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.onreadystatechange = function () {
+                    const readyState = this.readyState,
+                        status = this.status,
+                        response = this.responseText;
 
-                if (readyState == 4) {
-                    switch (status) {
-                        case 200:
-                            onStateChange(response);
-                            break;
-                        case 401:
-                            break;
-                        case 403:
-                            alert('Tài khoản không có quyền thực hiện tác vụ này.');
-                            break;
-                        case 500:
-                            break;
+                    if (readyState == 4) {
+                        switch (status) {
+                            case 200:
+                                onSuccess(response);
+                                break;
+                            case 401:
+                                throw new Error('Unsuccessful HTTP POST Request: Error 401');
+                            case 403:
+                                throw new Error('Unsuccessful HTTP POST Request: Error 403');
+                            case 500:
+                                throw new Error('Unsuccessful HTTP POST Request: Error 500');
+                        }
                     }
-                }
-            };
-            request.send(data);
+                };
+                request.send(data);
+            }
         },
+
+        ajaxPUT: function (specs) {
+            let url = specs.url,
+                data = JSON.stringify(specs.data),
+                onSuccess = specs.onSuccess;
+
+            if (url && data && onSuccess) {
+                let request = new XMLHttpRequest();
+                request.open('PUT', url, true);
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.onreadystatechange = function () {
+                    const readyState = this.readyState,
+                        status = this.status,
+                        response = this.responseText;
+
+                    if (readyState == 4 && status == 200) {
+                        onSuccess(response);
+                    }
+                };
+                request.send(data);
+            }
+        },
+
+        ajaxDELETE: function (url, onSuccess) {
+            if (url && onSuccess) {
+                let request = new XMLHttpRequest();
+                request.open('DELETE', url, true);
+                request.onreadystatechange = function () {
+                    const readyState = this.readyState,
+                        status = this.status,
+                        response = this.responseText;
+
+                    if (readyState == 4 && status == 200) {
+                        let parsed;
+
+                        try {
+                            parsed = JSON.parse(response);
+                        } catch (error) {
+                            console.log(error);
+                            parsed = {};
+                        }
+
+                        onSuccess(parsed);
+                    }
+                };
+                request.send();
+            }
+        },
+
+        toString: function (num) {
+            var result = num < 10 ? '0' + num.toString() : num.toString();
+            return result;
+        }
     });
 
 

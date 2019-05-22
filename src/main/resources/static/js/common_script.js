@@ -39,6 +39,24 @@ $(document).ready(function () {
         });
     }
 
+    function updateCartIcon() {
+        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+            var isLoggedIn = Boolean(obj),
+                cartBadge = $('#cart-count-badge');
+
+            if (isLoggedIn) {
+                valib.ajaxGET('/rest/cart', function (obj) {
+                    // Get cart count (total items) and all products
+                    var count = obj.totalAmount;
+                    cartBadge.text(count);
+                });
+            } else {
+                cartBadge.text('0');
+            }
+        });
+    }
+
     initHoverDropdown();
     setOnClickHamburger();
+    updateCartIcon();
 });

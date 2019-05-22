@@ -185,6 +185,16 @@ public class UserServiceImpl implements UserService {
 		CustomUserDetail user = (CustomUserDetail) auth.getPrincipal();
 		return user;
 	}
-
 	
+	@Override
+	@Transactional
+	public Integer isLoggedIn() {
+		// TODO Auto-generated method stub
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.getPrincipal()=="customer") {
+			return 1;
+		}
+		return 0;
+	}
+
 }

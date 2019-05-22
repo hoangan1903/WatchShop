@@ -1,5 +1,7 @@
 package com.seuit.spring.watchshop.rest;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -7,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,50 +30,35 @@ public class CartRestController {
 	private CartService cartService;
 	
 	@GetMapping("/cart")
-	private Set<CartDetail> listCartDetail(){
-		return cartService.listCartDetail();
+	private Map<String,Object> listCartDetail(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("totalAmount", cartService.getTotalAmount());
+		map.put("total", cartService.getTotalPrice(cartService.listCartDetail()));
+		map.put("cart", cartService.listCartDetail());
+		return map;
 	}
 	
 	@PostMapping("/cart")
-	private Boolean addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.addProductToCart(cartAPI);
-		if(boo==true) {
-			return true;
-		}
-		return false;
+	private Integer addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.addProductToCart(cartAPI);
 	}
 	@PutMapping("/cart/up")
-	private String upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.upAmountProduct(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "up amount product to success";
-		}
-		return "up amount product to fail";
+	private Integer upAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.upAmountProduct(cartAPI.getIdProduct());
 	}
 	@PutMapping("/cart/down")
-	private String downAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.downAmountProduct(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "down amount product to success";
-		}
-		return "down amount product to fail";
+	private Integer downAmountProduct(@Valid @RequestBody CartAPI cartAPI) {
+		return cartService.downAmountProduct(cartAPI.getIdProduct());
+		
 	}
-	//Have bug
-	@DeleteMapping("/cart/product")
-	private String deleteC(@Valid @RequestBody CartAPI cartAPI) {
-		boolean boo = cartService.deleteCartDetailByid(cartAPI.getIdProduct());
-		if(boo==true) {
-			return "delete product to success";
-		}
-		return "delete product to fail";
+
+	@DeleteMapping("/cart/product/{id}")
+	private Integer deleteProductById(@PathVariable(name="id") Integer id) {
+		return cartService.deleteCartDetailByid(id);
 	}
 
 	@DeleteMapping("/cart/all")
-	private String deleteAllProductInCart() {
-		boolean boo = cartService.deleteAllCartDetail();
-		if(boo==true) {
-			return "delete all product to success";
-		}
-		return "delete all amount product to fail";
+	private Integer deleteAllProductInCart() {
+		return cartService.deleteAllCartDetail();
 	}
 }

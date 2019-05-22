@@ -55,6 +55,10 @@ public class CartDetail implements Serializable{
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	public Double getSubtotal() {
+		return this.amount*this.productC.getPrice();
+	}
 
 	public CartDetail(Cart cart, Product product, Integer amount) {
 		super();

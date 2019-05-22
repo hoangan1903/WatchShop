@@ -10,4 +10,6 @@ public interface AlertService {
 	 Map<String, Object> getListAlert(); 
 	 Map<String, Object> getListAlertNew(); 
 	 void readNewAlert();
+	 void deleteById(Integer id);
+	 void deleteAll();
 }

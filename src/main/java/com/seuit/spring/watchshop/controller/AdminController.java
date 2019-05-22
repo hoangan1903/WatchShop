@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -75,6 +77,7 @@ public class AdminController {
         userService.addUser(user, "manager");
 		return "redirect:/admin/CRUD_User";
 	}
+	
 
 	@GetMapping("/CRUD_User/deleteUser/{userId}")
 	public String deleteUser(@PathVariable(value = "userId") Integer userId, RedirectAttributes redirect) {
@@ -146,4 +149,8 @@ public class AdminController {
 		return "admin/report";
 	}
 	
+	@GetMapping("/feedback")
+	public String feedback() {
+		return "admin/Feedback";
+	}
 }

@@ -57,12 +57,10 @@
             const html = `
             <div class="col-lg-3 col-md-4 col-sm-6 p-2">
                 <div class="card product-card" style="width: auto;">
-                    <div class="product-img-container">
-                        <img src="${item.image}" class="card-img-top" alt="...">
-                    </div>
+                    <img src="${item.image}" class="card-img-top card-product-img" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
-                        <p class="card-text">${item.price}</p>
+                        <p class="price">${item.price.toLocaleString()}đ</p>
                         <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>

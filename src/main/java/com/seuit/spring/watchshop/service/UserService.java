@@ -25,4 +25,6 @@ public interface UserService {
 	List<User> getListUserByKeyword(String keyword);
 	
 	User getMe();
+	
+	Integer isLoggedIn();
 }

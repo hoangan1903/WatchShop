@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<title>Feedback</title>
+	<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bootstrap 4 DatePicker</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+
+	<script type="text/javascript" th:inline="javascript">
+		window.onload = function () {
+			showFeedback();
+		}
+
+		function check(id){
+			var url = '/rest/feedback/check?id='+id;
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader('Content-type',
+					'application/json; charset=utf-8');
+			
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+						showFeedback();
+					}
+				}
+		
+			console.log(url);
+			xhttp.send();
+		}
+		
+		function showAlert(){
+			console.log("Alert");
+			alert("Fromdate or Tilldate is null! Please input those!")
+		}
+		
+		function showFeedback() {
+			console.log("feedback");
+			var url = '/rest/feedback';
+
+			$('#mytable tbody').empty();
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", url, true);
+			xhttp.send();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					obj = JSON.parse(this.responseText);
+					$.each(obj, function (key, feedback) {
+						$('#mytable tbody').append(
+							'<tr>' +
+							'<td class="username">' +
+							feedback.name +
+							'</td>' +
+							'<td>' +
+							feedback.email +
+							'</td>' +
+							'<td>' +
+							feedback.title +
+							'</td>' +
+							'<td>' +
+							feedback.content +
+							'</td>' +
+							'<td>' +
+							feedback.status +
+							'</td>' +
+							'<td class="status">' +
+							
+							'</td>' +
+							'</tr>');
+					
+					$('td.status').last().html(setStatus(feedback.status, feedback.id));
+					});
+					
+				}
+			};
+		}
+		function setStatus(status, id){
+			if(status == 0){
+				console.log(status);
+				return '<button class="btn btn-success" type="submit" onclick= "check('+id+')">' +
+				'Check </button>'; 
+			}
+			else if(status == 1){
+				console.log(status);
+				return '<button class="btn btn-success" type="submit" onclick= "check('+id+')" disabled>' +
+				'Check </button>'; 
+			}
+		}
+	</script>
+
+
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
+		<!-- End of Side 
+		bar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Top bar -->
+				<nav th:replace="fragments/adminPageFragment.html :: topBar">
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+					<!-- content -->
+					<div class="group-control">
+						<div class="row">
+							<div class="col-12">
+							<p> Feedback </p>
+							</div>
+						</div>
+
+						<div class="table-responsive">
+							<div class="table-responsive">
+
+								<table id="mytable" class="table table-bordred table-striped">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Email</th>
+											<th>Title</th>
+											<th>Content</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+
+
+								<div class="clearfix">
+									<nav aria-label="Page navigation example">
+										<ul class="pagination" id="ulPagination">
+
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End of Main Content -->
+				</div>
+
+				<!-- Footer -->
+				<footer th:replace="fragments/adminPageFragment.html :: footer">
+				</footer>
+				<!-- End of Footer -->
+
+			</div>
+			<!-- End of Content Wrapper -->
+
+		</div>
+		<!-- End of Page Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a th:replace="fragments/adminPageFragment.html :: scrollTopButton"></a>
+
+		<!-- Logout Modal-->
+		<div th:replace="fragments/adminPageFragment.html :: logoutModal"></div>
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="../../vendor/jquery/jquery.min.js"></script>
+		<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="../../js/sb-admin-2.min.js"></script>
+
+		<!-- Page level plugins -->
+
+	</div>
+
+	<!-- Page level custom scripts -->
+
+
+</body>
+
+</html>

@@ -18,11 +18,6 @@ public class ReportRestController {
 	@Autowired
 	ReportService reportService;
 	
-//	@GetMapping(value = "/report",  params = { "fromdate", "todate" })
-//	private List<Report> showReport(@RequestParam("fromdate") String fromdate, @RequestParam("todate") String todate) {
-//		return reportService.showReport(fromdate, todate);
-//	}
-	
 	@GetMapping(value = "/report", params = {"from","till"})
 	List<Object> showReport(@RequestParam("from") String from, @RequestParam("till") String till){
 		return reportService.showReport(from, till);

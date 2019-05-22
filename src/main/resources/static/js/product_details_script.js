@@ -11,7 +11,8 @@ $(document).ready(function () {
         addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
         commentContainer = $('.comment-container'),
-        postCommentBtn = $('button.post-comment');
+        postCommentBtn = $('button.post-comment'),
+        cartBadge = $('#cart-count-badge');
 
     var id = parseInt(valib.getValueFromURL('id'));
 
@@ -36,20 +37,32 @@ $(document).ready(function () {
 
         // Initialize Add to cart button
         addToCartBtn.click(function () {
-            var data = {
-                idProduct: id,
-                amount: parseInt(quantity.text())
-            };
+            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+                var isLoggedIn = Boolean(obj);
 
-            valib.ajaxPOST({
-                url: '/rest/cart',
-                requestHeader: {
-                    name: 'Content-Type',
-                    value: 'application/json'
-                },
-                data: data,
-                onStateChange: function (response) {
-                    console.log(response);
+                if (isLoggedIn) {
+                    var data = {
+                        idProduct: id,
+                        amount: parseInt(quantity.text())
+                    };
+
+                    valib.ajaxPOST({
+                        url: '/rest/cart',
+                        data: data,
+                        onSuccess: function (response) {
+                            // Show user that the product has been put into their cart
+                            valib.ajaxGET('/rest/cart', function (obj) {
+                                // Get cart count (total items) and all products
+                                var count = obj.totalAmount,
+                                    items = obj.cart;
+                                    
+                                cartBadge.text(count);
+                            });
+                        }
+                    });
+                } else {
+                    // Notify the user that he or she is not logged in
+
                 }
             });
         });
@@ -57,13 +70,8 @@ $(document).ready(function () {
 
     function initQuantity() {
 
-        function toString(num) {
-            var result = num < 10 ? '0' + num.toString() : num.toString();
-            return result;
-        }
-
         // Initialize quantity section
-        quantity.text(toString(1));
+        quantity.text(valib.toString(1));
         quantityDown.attr('disabled', 'disabled');
 
         // Set click handlers for buttons
@@ -73,7 +81,7 @@ $(document).ready(function () {
             currentQty = parseInt(quantity.text());
             newQty = currentQty + 1;
 
-            quantity.text(toString(newQty));
+            quantity.text(valib.toString(newQty));
             quantityDown.removeAttr('disabled');
         });
 
@@ -84,7 +92,7 @@ $(document).ready(function () {
             newQty = currentQty - 1;
 
             if (newQty > 0) {
-                quantity.text(toString(newQty));
+                quantity.text(valib.toString(newQty));
                 if (newQty === 1) {
                     $(this).attr('disabled', 'disabled');
                 }
@@ -95,11 +103,16 @@ $(document).ready(function () {
     function getData() {
 
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
+            console.log(obj);
             var brand = obj.product.firm.name;
+
+            obj.images.forEach(image => {
+                // productCarousel;
+            });
 
             brandObj.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
             nameObj.text(obj.product.codeName);
-            priceObj.text(obj.product.price);
+            priceObj.text(obj.product.price.toLocaleString() + 'đ');
             available.text(obj.product.available);
 
 
@@ -151,30 +164,35 @@ $(document).ready(function () {
     function initComments() {
 
         function getComments() {
-            valib.ajaxGET('', function (obj) {
-                var html = '';
+            valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
+                if (obj.length > 0) {
+                    var html = '';
 
-                // Process retrieved data into HTML
+                    // Process retrieved data into HTML
 
-                commentContainer.html(html);
+                    commentContainer.html(html);
+                } else {
+
+                }
             });
         }
 
         function postComment() {
-            // 1. Make comment object from Comment Form
+            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+                var isLoggedIn = Boolean(obj);
+                if (isLoggedIn) {
+                    // 1. Make comment object from Comment Form
 
-            // 2. Post this object to server
-            valib.ajaxPOST({
-                url: '/url where you want to submit your data',
-                requestHeader: {
-                    name: 'request name',
-                    value: 'request value'
-                },
-                data: 'data you want to submit to server',
-                onStateChange: function (responseText) {
-                    // 3. Do something when the request is successful
-                    // e.g Refresh the comments to see the new comment
-                    getComments();
+                    // 2. Post this object to server
+                    valib.ajaxPOST({
+                        url: '/url where you want to submit your data',
+                        data: 'data you want to submit to server',
+                        onSuccess: function (response) {
+                            // 3. Do something when the request is successful
+                            // e.g Refresh the comments to see the new comment
+                            getComments();
+                        }
+                    });
                 }
             });
         }
