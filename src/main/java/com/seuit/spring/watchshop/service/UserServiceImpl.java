@@ -193,13 +193,16 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(auth.getPrincipal());
-	    User user = (CustomUserDetail) auth.getPrincipal();
-	    Set<String> list = user.getRoles().stream().map((r)->r.getName()).collect(Collectors.toSet());
-	    for (String string : list) {
-	    	System.out.println(string);
-			if(string.equals("customer")) {
-				return 1;
+		if(auth.getPrincipal()!="anonymousUser") {
+			User user = (CustomUserDetail) auth.getPrincipal();
+		    Set<String> list = user.getRoles().stream().map((r)->r.getName()).collect(Collectors.toSet());
+		    for (String string : list) {
+		    	System.out.println(string);
+				if(string.equals("customer")) {
+					return 1;
+				}
 			}
+		    return 0;
 		}
 	    return 0;
 	}
