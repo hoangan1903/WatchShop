@@ -2515,13 +2515,13 @@
             }
         },
 
-        /* The 'ajaxPOST' method requires a set of specifications to send a HTTP POST request to a server.
+        /* This method requires a set of specifications to send a HTTP POST request transferring JSON data to a server.
            The 'specs' object should look like this:
             {
                 url: '/url where you want to submit your data',
-                data: 'data you want to submit to server (stringifiable into JSON)',
+                data: 'data you want to submit to server (can be stringified into JSON)',
                 onSuccess: function (responseText) {
-                    // what to do when the request is successful
+                    // do something when the request is successful
                 }
             }
         */
@@ -2579,7 +2579,10 @@
             }
         },
 
-        ajaxDELETE: function (url, onSuccess) {
+        ajaxDELETE: function (specs) {
+            let url = specs.url,
+                onSuccess = specs.onSuccess;
+
             if (url && onSuccess) {
                 let request = new XMLHttpRequest();
                 request.open('DELETE', url, true);

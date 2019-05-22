@@ -1,33 +1,45 @@
 $(document).ready(function () {
 
-    function init() {
+    const DELAY_AFTER_TASK = 350;
 
-        $('a.cart-remove-all').click(function (e) {
-            e.preventDefault();
+    let goToCheckout = $('a#go-to-checkout'),
+        removeAll = $('a.cart-remove-all'),
+        itemContainer = $('.cart-item-container'),
+        loadingScreen = $('.screen-cover');
 
-            valib.ajaxDELETE('/rest/cart/all', function (obj) {
-                location.reload();
-            });
-        });
+    function showLoadingScreen() {
+        loadingScreen.removeClass('hidden');
+    }
 
+    function hideLoadingScreen() {
+        loadingScreen.addClass('hidden');
+    }
+
+    // Get user's cart from server
+    function fetchCart() {
         valib.ajaxGET('/rest/cart', function (obj) {
-            console.log(obj);
-
-            let items = obj.cart || [],
-                count = obj.totalAmount,
+            let items = obj.cart,
+                count = obj.totalAmount || 0,
                 total = obj.total;
 
+            const cartIsEmpty = (items.length == 0);
+
             // Show total products in cart
+            $('#cart-count-badge').text(count);
             $('#cart-count').text(count);
 
-            // Show cart items
-            if (items.length > 0) {
+            // Show total prices
+            $('p#cart-subtotal').text(total.toLocaleString() + 'đ');
+            $('p#cart-total').text(total.toLocaleString() + 'đ');
+
+            if (!cartIsEmpty) {
+                // Show cart items
                 let html = '';
                 items.forEach(item => {
                     const product = item.product;
 
                     html += `
-                    <div class="card mb-3" style="width: auto;">
+                    <div id="${product.id}-cart-item" class="cart-item card mb-3" style="width: auto;">
                         <div class="card-body">
                             <div class="cart-item-content d-flex flex-row">
                                 <div class="cart-item-summary flex-grow-1">
@@ -46,9 +58,9 @@ $(document).ready(function () {
                                         <div class="text-align-center">
                                             <p class="card-text mb-2">Số lượng</p>
                                             <div class="btn-group" role="group" aria-label="Second group">
-                                                <button type="button" class="btn btn-secondary">&ndash;</button>
+                                                <button type="button" class="decrease-qty btn btn-secondary">&ndash;</button>
                                                 <div class="product-quantity d-flex align-items-center px-3">${valib.toString(item.amount)}</div>
-                                                <button type="button" class="btn btn-secondary">&plus;</button>
+                                                <button type="button" class="increase-qty btn btn-secondary">&plus;</button>
                                             </div>
                                         </div>
                                     </div>
@@ -61,12 +73,12 @@ $(document).ready(function () {
                                     </div>
 
                                     <div class="card-item-actions d-flex justify-content-end">
-                                        <a href="#" class="card-item-action">
+                                        <a href="#" class="card-item-action" onclick="return false;">
                                             <ion-icon name="ios-heart"
                                                 class="cart-action-icon wishlist-icon small-icon">
                                             </ion-icon>
                                         </a>
-                                        <a href="#" class="card-item-action">
+                                        <a href="#" class="card-item-action remove-cart-item" onclick="return false;">
                                             <ion-icon name="ios-trash"
                                                 class="cart-action-icon remove-icon small-icon">
                                             </ion-icon>
@@ -79,14 +91,103 @@ $(document).ready(function () {
                     `;
                 });
 
-                $('.cart-item-container').html(html);
-            }
+                itemContainer.html(html);
 
-            // Show total prices
-            $('p#cart-subtotal').eq(0).text(total.toLocaleString() + 'đ');
-            $('p#cart-total').eq(0).text(total.toLocaleString() + 'đ');
+                // Enable Checkout button
+                goToCheckout.removeClass('disabled');
+
+            } else {
+
+                itemContainer.empty();
+
+                // Disable Checkout button
+                goToCheckout.addClass('disabled');
+            }
         });
     }
 
-    init();
+    // Execution starts here
+
+    fetchCart();
+
+    // Set click listener for "Remove all" button
+    removeAll.click(function () {
+        valib.ajaxGET('/rest/cart', function (obj) {
+            const cartIsEmpty = (obj.cart.length == 0);
+
+            if (!cartIsEmpty) {
+                showLoadingScreen();
+                
+                valib.ajaxDELETE({
+                    url: '/rest/cart/all',
+                    onSuccess: function (obj) {
+                        fetchCart();
+
+                        setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                    }
+                });
+            }
+        });
+        return false;
+    });
+
+    // Handle: clicking on buttons inside a cart item
+    itemContainer.click(function (e) {
+        let clicked, domId, productId, currentQty;
+
+        clicked = $(e.target);
+        domId = clicked.closest('.cart-item').attr('id');
+        productId = parseInt(domId.split('-')[0]);
+        currentQty = parseInt($(e.target.parentNode).find('.product-quantity').text());
+
+        if (clicked.hasClass('increase-qty')) {
+            showLoadingScreen();
+
+            valib.ajaxPUT({
+                url: '/rest/cart/up',
+                data: {
+                    idProduct: productId,
+                    amount: 1
+                },
+                onSuccess: function (obj) {
+                    // Refresh cart to see changes
+                    fetchCart();
+
+                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                }
+            });
+
+        } else if (clicked.hasClass('decrease-qty') && currentQty > 1) {
+            showLoadingScreen();
+
+            valib.ajaxPUT({
+                url: '/rest/cart/down',
+                data: {
+                    idProduct: productId,
+                    amount: 1
+                },
+                onSuccess: function (obj) {
+                    // Refresh cart to see changes
+                    fetchCart();
+
+                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                }
+            });
+
+        } else if (clicked.parent().hasClass('remove-cart-item')) {
+            /*
+            showLoadingScreen();
+
+            valib.ajaxDELETE({
+                url: '/rest/cart/product/' + productId,
+                onSuccess: function (obj) {
+                    // Refresh cart to see changes
+                    fetchCart();
+
+                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                }
+            });
+            */
+        }
+    });
 });
