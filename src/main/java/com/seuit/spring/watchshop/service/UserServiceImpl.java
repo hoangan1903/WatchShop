@@ -2,6 +2,7 @@ package com.seuit.spring.watchshop.service;
 
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -191,10 +192,16 @@ public class UserServiceImpl implements UserService {
 	public Integer isLoggedIn() {
 		// TODO Auto-generated method stub
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(auth.getPrincipal()=="customer") {
-			return 1;
+		System.out.println(auth.getPrincipal());
+	    User user = (CustomUserDetail) auth.getPrincipal();
+	    Set<String> list = user.getRoles().stream().map((r)->r.getName()).collect(Collectors.toSet());
+	    for (String string : list) {
+	    	System.out.println(string);
+			if(string.equals("customer")) {
+				return 1;
+			}
 		}
-		return 0;
+	    return 0;
 	}
 
 }
