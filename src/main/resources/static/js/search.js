@@ -39,7 +39,7 @@ $(document).ready(function () {
                                 </div>
                                 <div class="item-details flex-grow-1 d-flex flex-column">
                                     <h6 class="product-name mb-1">${item.firm.name} ${item.codeName}</h6>
-                                    <p class="card-text price-small">${item.price}</p>
+                                    <p class="card-text price-small">${item.price.toLocaleString()}đ</p>
                                 </div>
                             </div>
                         </a>

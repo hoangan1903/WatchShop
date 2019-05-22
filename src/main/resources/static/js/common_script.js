@@ -64,8 +64,10 @@ $(document).ready(function () {
 
                 if (isLoggedIn) {
                     // Do something if the user is logged in
+                    // e.g show account's info
                 } else {
                     // Do something else if the user is logged in
+                    window.location.href = 'login';
                 }
             });
             return false;

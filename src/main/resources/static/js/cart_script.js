@@ -117,7 +117,7 @@ $(document).ready(function () {
 
             if (!cartIsEmpty) {
                 showLoadingScreen();
-                
+
                 valib.ajaxDELETE({
                     url: '/rest/cart/all',
                     onSuccess: function (obj) {
@@ -175,7 +175,6 @@ $(document).ready(function () {
             });
 
         } else if (clicked.parent().hasClass('remove-cart-item')) {
-            /*
             showLoadingScreen();
 
             valib.ajaxDELETE({
@@ -187,7 +186,6 @@ $(document).ready(function () {
                     setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
                 }
             });
-            */
         }
     });
 });
