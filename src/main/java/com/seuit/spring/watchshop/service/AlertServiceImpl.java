@@ -35,13 +35,22 @@ public class AlertServiceImpl implements AlertService {
 	}
 
 	@Override
+	@Transactional
 	public void create(Alert alert) {
 		// TODO Auto-generated method stub
+		List<String> listRoleName = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetail user = (CustomUserDetail) auth.getPrincipal();
-		if (user.getRoles().stream().filter((r) -> r.getName() == "admin").findFirst().isPresent() == true) {
-			alert.setUser(user);
-			alertRepository.save(alert);
+		System.out.println(user);
+		user.getRoles().forEach((c)->System.out.println(c.getName()));
+		listRoleName = user.getRoles().stream().map((r)->r.getName()).collect(Collectors.toList());
+		for(String str: listRoleName) {
+		    if(str.trim().contentEquals("admin"))
+		    {
+		    	user.getAlerts().add(alert);
+				alert.setStatus(0);
+				alertRepository.save(alert);
+		    }
 		}
 	}
 
@@ -73,5 +82,21 @@ public class AlertServiceImpl implements AlertService {
 		// TODO Auto-generated method stub
 		alertRepository.findAll().stream().forEach(a->a.setStatus(1));
 	}
+
+	@Override
+	@Transactional
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		alertRepository.deleteById(id);
+	}
+
+	@Override
+	@Transactional
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		alertRepository.deleteAll();
+	}
+	
+	
 
 }

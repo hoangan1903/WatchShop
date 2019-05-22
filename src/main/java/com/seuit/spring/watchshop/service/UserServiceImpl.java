@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
 		CustomUserDetail user = (CustomUserDetail) auth.getPrincipal();
 		return user;
 	}
-
+	
 	@Override
 	@Transactional
 	public Integer isLoggedIn() {
@@ -196,7 +196,5 @@ public class UserServiceImpl implements UserService {
 		}
 		return 1;
 	}
-	
-	
-	
+
 }

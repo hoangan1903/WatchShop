@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +42,15 @@ public class AlertRestController {
 	@PostMapping("/read")
 	private void read() {
 		alertService.readNewAlert();
+	}
+	
+	@DeleteMapping("/{id}")
+	private void deleteById(@PathVariable(name = "id") Integer id) {
+		alertService.deleteById(id);
+	}
+	
+	@DeleteMapping("")
+	private void deleteAll() {
+		alertService.deleteAll();
 	}
 }
