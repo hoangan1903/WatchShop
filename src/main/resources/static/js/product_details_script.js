@@ -10,11 +10,11 @@ $(document).ready(function () {
         quantityDown = $('button.quantity-down'),
         addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
-        commentContainer = $('.comment-container'),
-        postCommentBtn = $('button.post-comment'),
-        cartBadge = $('#cart-count-badge');
+        cartBadge = $('#cart-count-badge'),
+        popover = $('a#cart');
 
-    var id = parseInt(valib.getValueFromURL('id'));
+    const id = parseInt(valib.getValueFromURL('id'));
+    const POPOVER_TIMEOUT = 4500;
 
     function initStickyNavbar() {
         $('.section-product-overview').waypoint({
@@ -35,31 +35,51 @@ $(document).ready(function () {
             interval: 0
         });
 
+        popover.popover({
+            trigger: 'focus'
+        });
+
         // Initialize Add to cart button
         addToCartBtn.click(function () {
             valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
                 var isLoggedIn = Boolean(obj);
 
                 if (isLoggedIn) {
+                    // Prepare data for submission to server
                     var data = {
                         idProduct: id,
                         amount: parseInt(quantity.text())
                     };
 
+                    // Submit data to server
                     valib.ajaxPOST({
                         url: '/rest/cart',
                         data: data,
                         onSuccess: function (response) {
-                            // Show user that the product has been put into their cart
-                            valib.ajaxGET('/rest/cart', function (obj) {
-                                // Get cart count (total items) and all products
-                                var count = obj.totalAmount;
-                                // var items = obj.cart;
+                            var successful = Boolean(response);
+                            if (successful) {
+                                // Show user that the products have been put in their cart
+                                valib.ajaxGET('/rest/products/details/' + id, function (obj) {
+                                    var brand = obj.product.firm.name,
+                                        codeName = obj.product.codeName;
 
-                                cartBadge.text(count);
-                            });
+                                    popover
+                                        .attr('data-content', `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`)
+                                        .popover('show');
+
+                                    setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
+                                });
+
+                                // Update cart badge
+                                valib.ajaxGET('/rest/cart', function (obj) {
+                                    // Get cart count (total items)
+                                    var count = obj.totalAmount;
+                                    cartBadge.text(count);
+                                });
+                            }
                         }
                     });
+
                 } else {
                     // Redirect to Login page
                     window.location.href = 'login';
@@ -101,7 +121,6 @@ $(document).ready(function () {
     }
 
     function getData() {
-
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
             var brand = obj.product.firm.name,
                 carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
@@ -177,50 +196,53 @@ $(document).ready(function () {
         });
     }
 
+    /*
+    function getComments() {
+        valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
+            if (obj.length > 0) {
+                var html = '';
+
+                // Process retrieved data into HTML
+
+                $('.comment-container').html(html);
+            } else {
+
+            }
+        });
+    }
+
+    function postComment() {
+        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+            var isLoggedIn = Boolean(obj);
+            if (isLoggedIn) {
+                // 1. Make comment object from Comment Form
+
+                // 2. Post this object to server
+                valib.ajaxPOST({
+                    url: '/url where you want to submit your data',
+                    data: 'data you want to submit to server',
+                    onSuccess: function (response) {
+                        var successful = Boolean(response);
+                        if (successful) {
+                            // 3. Do something when the request is successful
+                            // e.g Refresh the comments to see the new comment
+                            getComments();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function initComments() {
+        getComments();
+        $('button.post-comment').click(postComment);
+    }
+    */
+
     initStickyNavbar();
     initComponents();
     initQuantity();
     getData();
 
-    /*
-    function initComments() {
-
-        function getComments() {
-            valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
-                if (obj.length > 0) {
-                    var html = '';
-
-                    // Process retrieved data into HTML
-
-                    commentContainer.html(html);
-                } else {
-
-                }
-            });
-        }
-
-        function postComment() {
-            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
-                if (isLoggedIn) {
-                    // 1. Make comment object from Comment Form
-
-                    // 2. Post this object to server
-                    valib.ajaxPOST({
-                        url: '/url where you want to submit your data',
-                        data: 'data you want to submit to server',
-                        onSuccess: function (response) {
-                            // 3. Do something when the request is successful
-                            // e.g Refresh the comments to see the new comment
-                            getComments();
-                        }
-                    });
-                }
-            });
-        }
-
-        getComments();
-        postCommentBtn.click(postComment);
-    }
-    */
 });

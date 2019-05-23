@@ -12,6 +12,7 @@ $(document).ready(function () {
         $('.card-entry.customer-address p').text(address);
     });
 
+    // Get customer's order
     valib.ajaxGET('/rest/cart', function (obj) {
         let items = obj.cart || [],
             count = obj.totalAmount || 0,
@@ -62,5 +63,21 @@ $(document).ready(function () {
         $('.order-item-container').html(html);
     });
 
+    $('a#place-order').click(function () {
+        // Check order validity, e.g Customers who have a pending order cannot place another one
 
+        // Make data
+
+        // Send order to server
+        valib.ajaxPOST({
+            url: '/',
+            data: {},
+            onSuccess: function (response) {
+                var successful = Boolean(response);
+                if (successful) {
+                    
+                }
+            }
+        });
+    });
 });

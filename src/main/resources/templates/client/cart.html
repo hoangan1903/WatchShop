@@ -17,7 +17,9 @@
 
     <!-- Loading screen -->
     <div class="screen-cover d-flex justify-content-center align-items-center hidden">
-        <div class="lds-dual-ring"></div>
+        <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
 
     <!-- Page content here -->
@@ -53,20 +55,21 @@
                                     <p class="card-text cart-summary-entry">Tạm tính:</p>
                                     <p id="cart-subtotal"
                                         class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
-                                        33,000,000đ
+                                        0đ
                                     </p>
                                 </div>
 
                                 <div class="d-flex flex-row align-items-center mb-3">
                                     <p class="card-text cart-summary-entry">Giảm giá:</p>
-                                    <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">0đ
+                                    <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                        0đ
                                     </p>
                                 </div>
 
                                 <div class="d-flex flex-row align-items-center mb-3">
                                     <p class="card-text cart-summary-entry"> Tổng tiền:</p>
                                     <p id="cart-total" class="card-text price flex-grow-1 d-flex justify-content-end">
-                                        33,000,000đ</p>
+                                        0đ</p>
                                 </div>
                             </div>
                             <a href="checkout" id="go-to-checkout" class="btn btn-success full-width mt-3">

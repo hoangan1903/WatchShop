@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    const DELAY_AFTER_TASK = 350;
+    const DELAY_AFTER_TASK = 400;
 
     let goToCheckout = $('a#go-to-checkout'),
         removeAll = $('a.cart-remove-all'),
@@ -11,8 +11,9 @@ $(document).ready(function () {
         loadingScreen.removeClass('hidden');
     }
 
-    function hideLoadingScreen() {
-        loadingScreen.addClass('hidden');
+    function hideLoadingScreen(delay) {
+        delay = delay || DELAY_AFTER_TASK;
+        setTimeout(() => loadingScreen.addClass('hidden'), delay);
     }
 
     // Get user's cart from server
@@ -120,10 +121,15 @@ $(document).ready(function () {
 
                 valib.ajaxDELETE({
                     url: '/rest/cart/all',
-                    onSuccess: function (obj) {
-                        fetchCart();
+                    onSuccess: function (response) {
+                        var successful = Boolean(response);
+                        if (!successful) {
+                            console.log('Remove all products unsuccessfully');
+                        }
 
-                        setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                        // Refresh cart to see changes
+                        fetchCart();
+                        hideLoadingScreen(500);
                     }
                 });
             }
@@ -142,48 +148,57 @@ $(document).ready(function () {
 
         if (clicked.hasClass('increase-qty')) {
             showLoadingScreen();
-
             valib.ajaxPUT({
                 url: '/rest/cart/up',
                 data: {
                     idProduct: productId,
                     amount: 1
                 },
-                onSuccess: function (obj) {
+                onSuccess: function (response) {
+                    var successful = Boolean(response);
+                    if (!successful) {
+                        console.log('Increase quantity unsuccessfully');
+                    }
+
                     // Refresh cart to see changes
                     fetchCart();
-
-                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                    hideLoadingScreen(null);
                 }
             });
 
         } else if (clicked.hasClass('decrease-qty') && currentQty > 1) {
             showLoadingScreen();
-
             valib.ajaxPUT({
                 url: '/rest/cart/down',
                 data: {
                     idProduct: productId,
                     amount: 1
                 },
-                onSuccess: function (obj) {
+                onSuccess: function (response) {
+                    var successful = Boolean(response);
+                    if (!successful) {
+                        console.log('Decrease quantity unsuccessfully');
+                    }
+
                     // Refresh cart to see changes
                     fetchCart();
-
-                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                    hideLoadingScreen(null);
                 }
             });
 
         } else if (clicked.parent().hasClass('remove-cart-item')) {
             showLoadingScreen();
-
             valib.ajaxDELETE({
                 url: '/rest/cart/product/' + productId,
-                onSuccess: function (obj) {
+                onSuccess: function (response) {
+                    var successful = Boolean(response);
+                    if (!successful) {
+                        console.log('Remove product unsuccessfully');
+                    }
+
                     // Refresh cart to see changes
                     fetchCart();
-
-                    setTimeout(hideLoadingScreen, DELAY_AFTER_TASK);
+                    hideLoadingScreen(null);
                 }
             });
         }
