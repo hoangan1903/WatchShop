@@ -6,6 +6,7 @@
 
     <!-- CSS files -->
     <link href="css/checkout_styles.css" rel="stylesheet">
+    <link href="css/checkout_responsive.css" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Thanh toán</title>
@@ -197,7 +198,7 @@
                                 <div class="d-flex flex-column">
                                     <div class="d-flex flex-row align-items-center mb-2">
                                         <p class="card-text cart-summary-entry">Tạm tính:</p>
-                                        <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                        <p id="order-subtotal" class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
                                             33,000,000đ
                                         </p>
                                     </div>
@@ -212,7 +213,7 @@
                                     <div class="d-flex flex-row align-items-center">
                                         <p class="card-text cart-summary-entry">Phí vận chuyển:</p>
                                         <p class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
-                                            50,000đ
+                                            0đ
                                         </p>
                                     </div>
                                 </div>
@@ -225,7 +226,7 @@
                                 <div class="d-flex flex-column">
                                     <div class="d-flex flex-row align-items-center">
                                         <p class="card-text cart-summary-entry">Thành tiền:</p>
-                                        <p class="card-text price total flex-grow-1 d-flex justify-content-end">
+                                        <p id="order-total" class="card-text price total flex-grow-1 d-flex justify-content-end">
                                             33,000,000đ
                                         </p>
                                     </div>
@@ -248,7 +249,7 @@
 
     <!-- Scripts -->
     <script src="js/checkout_script.js"></script>
-    
+
 </body>
 
 </html>

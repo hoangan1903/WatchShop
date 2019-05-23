@@ -1,10 +1,8 @@
 $(document).ready(function () {
+    
     var search = $('#main-search'),
         suggestion = $('.search-suggestion'),
-        searchBtn = $('#btn-main-search'),
-        timeout;
-
-    const maxSuggestions = 5;
+        searchBtn = $('#btn-main-search');
 
     function goToSearchResults() {
         var keyword, destURL;
@@ -22,12 +20,11 @@ $(document).ready(function () {
 
             // 1. Get data from server
             valib.ajaxGET('/rest/products/find?keyword=' + encodeURI(input), function (obj) {
-                var products = obj.products;
-                var totalSuggestions = products.length <= maxSuggestions ? products.length : maxSuggestions;
-                var html = '';
+                var products = obj.products,
+                    html = '';
 
                 // 2. Process data retrieved from server
-                for (let index = 0; index < totalSuggestions; index++) {
+                for (let index = 0; index < products.length; index++) {
                     const item = products[index];
                     html += `
                     <li>

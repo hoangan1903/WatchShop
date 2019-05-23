@@ -18,11 +18,11 @@ $(document).ready(function () {
     // Get user's cart from server
     function fetchCart() {
         valib.ajaxGET('/rest/cart', function (obj) {
-            let items = obj.cart,
+            let items = obj.cart || [],
                 count = obj.totalAmount || 0,
-                total = obj.total;
+                total = obj.total || 0;
 
-            const cartIsEmpty = (items.length == 0);
+            const cartIsEmpty = (count == 0);
 
             // Show total products in cart
             $('#cart-count-badge').text(count);
