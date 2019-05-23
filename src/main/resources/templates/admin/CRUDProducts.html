@@ -61,6 +61,15 @@
 															+ '</span>'
 															+ '</button>'
 															+ '</p>' + '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-success" data-title="Delete"'
+															+ 'data-toggle="modal" data-target="#updown" onclick="1deleteOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"><i class="material-icons">+/-</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>' + '</td>'
 															+ '</tr>');
 
 								});
@@ -177,43 +186,49 @@
 																		$(
 																				'#mytable tbody')
 																				.append(
-																						'<tr>'
-																								+ '<td>'
-																								+ value.id
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.codeName
-																								+ '</td>'
-																								+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
-																								+ '<td>'
-																								+ value.price
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.available
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-primary" data-title="Edit"'
-																								+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-danger" data-title="Delete"'
-																								+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '</tr>');
+													'<tr>' + '<td>'
+															+ value.id
+															+ '</td>'
+															+ '<td>'
+															+ value.codeName
+															+ '</td>'
+															+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
+															+ '<td>'
+															+ value.price
+															+ '</td>'
+															+ '<td>'
+															+ value.available
+															+ '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-primary" data-title="Edit"'
+															+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>'
+															+ '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-danger" data-title="Delete"'
+															+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>' + '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-success" data-title="Delete"'
+															+ 'data-toggle="modal" data-target="#updown" onclick="1deleteOnClick('
+															+ value.id
+															+ ')">'
+															+ '<span class="icon text-white-50"><i class="material-icons">+/-</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</p>' + '</td>'
+															+ '</tr>');
 
-																	});
 												}
 											};
 											xhttp.open("GET", url, true);
@@ -536,6 +551,7 @@
 	        }, ms || 0);
 	    };
 	}
+
 </script>
 </head>
 <body id="page-top">
@@ -889,6 +905,38 @@
 									</button>
 								</div>
 							</form>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<div class="modal fade" id="updown" tabindex="-1" role="dialog"
+					aria-labelledby="updown" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+								<div class="d-flex justify-content-center align-items-center mt-2">	
+										<h3>Enter quantity</h3>
+								</div>
+							<div class="d-flex justify-content-center align-items-center mt-2">	
+								<div class="btn-group" role="group" aria-label="Second group" style="width: 33%">
+									<button type="button" class="btn btn-secondary quantity-down">&ndash;</button>
+									<input style="width:50px;" class="product-quantity d-flex align-items-center"></input>
+									<button type="button" class="btn btn-secondary quantity-up">&plus;</button>
+								</div>
+							
+							</div>
+							<div class="d-flex justify-content-end align-items-center mt-2 mb-2 mr-2">
+								<button type="submit" class="btn btn-success">
+									<span class="glyphicon glyphicon-ok-sign"></span>Yes
+								</button>
+								<button type="button" class="btn btn-default ml-2"
+									data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> No
+								</button>
+							</div>
+							
+
+								
 						</div>
 						<!-- /.modal-content -->
 					</div>
