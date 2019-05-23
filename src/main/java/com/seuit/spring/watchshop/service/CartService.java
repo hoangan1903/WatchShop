@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.List;
 import java.util.Set;
 
 import com.seuit.spring.watchshop.entity.CartAPI;
@@ -11,7 +12,7 @@ public interface CartService {
 	public Integer downAmountProduct(Integer idProduct);
 	public Integer deleteCartDetailByid(Integer idProduct);
 	public Integer deleteAllCartDetail();
-	public Set<CartDetail> listCartDetail();
+	public List<CartDetail> listCartDetail();
 	public Long getTotalAmount();
-	public Double getTotalPrice(Set<CartDetail> list);
+	public Double getTotalPrice(List<CartDetail> list);
 }

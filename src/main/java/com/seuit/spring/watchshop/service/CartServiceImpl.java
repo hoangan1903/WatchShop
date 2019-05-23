@@ -1,6 +1,9 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -228,7 +231,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	@Transactional
-	public Set<CartDetail> listCartDetail() {
+	public List<CartDetail> listCartDetail() {
 		// TODO Auto-generated method stub
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		Optional<Customer> customer = null;
@@ -246,7 +249,9 @@ public class CartServiceImpl implements CartService {
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
-		return cart.getCartDetails();
+		List<CartDetail> ls = cart.getCartDetails().stream().collect(Collectors.toList());
+		Collections.sort(ls,(o1,o2)->o1.getCreatedAt().compareTo(o2.getCreatedAt()));
+		return ls;
 	}
 
 	@Override
@@ -259,7 +264,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Double getTotalPrice(Set<CartDetail> list) {
+	public Double getTotalPrice(List<CartDetail> list) {
 		// TODO Auto-generated method stub
 		Double total = 0.0;
 		for (CartDetail cartDetail : list) {
