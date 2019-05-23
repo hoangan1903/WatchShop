@@ -1,7 +1,12 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.mail.SimpleMailMessage;
 
 import com.seuit.spring.watchshop.entity.User;
 
@@ -27,4 +32,12 @@ public interface UserService {
 	User getMe();
 	
 	Integer isLoggedIn();
+	
+	User findUserByUsername(String username);
+	void createPasswordResetTokenForUser(User user, String token);
+	SimpleMailMessage constructEmail(String subject, String body, User user);
+	String validatePasswordResetToken(long id, String token);
+	void changeUserPassword(User user, String password);
+	void resetPassword(HttpServletRequest request,String username) throws NotFoundException;
+	void savePasswordAfterChanged(HttpServletRequest request,String newPassword);
 }
