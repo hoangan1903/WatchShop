@@ -36,15 +36,15 @@
                             <div class="delivery-info d-flex flex-column">
                                 <div class=" d-flex flex-row pb-4 card-item-divider">
                                     <div class="flex-grow-1 d-flex flex-column">
-                                        <div class="card-entry">
+                                        <div class="card-entry customer-name">
                                             <h6 class="card-title">Tên</h6>
                                             <p class="card-text">Nguyễn Văn A</p>
                                         </div>
-                                        <div class="card-entry">
+                                        <div class="card-entry customer-phone">
                                             <h6 class="card-title">Số điện thoại</h6>
                                             <p class="card-text">0123456789</p>
                                         </div>
-                                        <div class="card-entry mb-0">
+                                        <div class="card-entry customer-address mb-0">
                                             <h6 class="card-title">Địa chỉ</h6>
                                             <p class="card-text">Abc</p>
                                         </div>
@@ -126,7 +126,7 @@
                             <!-- <h5 class="card-header-title"></h5> -->
                             <div class="d-flex flex-row align-items-center">
                                 <h5 class="card-header-title flex-grow-1">Đơn hàng của bạn</h5>
-                                <a href="#" class="card-header-action">Quay về Giỏ hàng</a>
+                                <a href="cart" class="card-header-action">Quay về Giỏ hàng</a>
                             </div>
                         </div>
 
@@ -247,6 +247,7 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
+    <script src="js/checkout_script.js"></script>
     
 </body>
 
