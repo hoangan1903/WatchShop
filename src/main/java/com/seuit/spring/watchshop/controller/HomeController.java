@@ -16,16 +16,16 @@ import com.seuit.spring.watchshop.service.UserService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@PostMapping("/duyanh/create")
 	@ResponseBody
 	public void createAdmin(@RequestBody User user) {
-         userService.addUser(user, "admin");
+		userService.addUser(user, "admin");
 	}
-	
+
 	@GetMapping(value = { "/" })
 	public String showIndex() {
 		return "client/index";
@@ -46,18 +46,16 @@ public class HomeController {
 		return "client/products";
 	}
 
-
 	@GetMapping(value = { "/orient-watches" })
 	public String showOrient() {
 		return "client/products";
 	}
 
-
 	@GetMapping(value = { "/bulova-watches" })
 	public String showBulova() {
 		return "client/products";
 	}
-	
+
 	@GetMapping(value = { "/product-details" })
 	public String showProductDetails() {
 		return "client/product_details";
@@ -66,6 +64,11 @@ public class HomeController {
 	@GetMapping(value = { "/cart" })
 	public String showCart() {
 		return "client/cart";
+	}
+
+	@GetMapping(value = { "/checkout" })
+	public String showCheckout() {
+		return "client/checkout";
 	}
 
 	@GetMapping("/login")
