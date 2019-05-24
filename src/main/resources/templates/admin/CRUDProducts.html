@@ -87,8 +87,8 @@
 				dropdownFirm.append('<option selected="true" disabled>Choose Firm</option>');
 				dropdownFirm.prop('selectedIndex', 0);
 				// Populate dropdown with list of provinces
-				$.getJSON('/rest/firm', function (data) {
-					$.each(data, function (key, entry) {
+				$.getJSON('/rest/firms', function (data) {
+					$.each(data.firms, function (key, entry) {
 						dropdownFirm.append($('<option></option>').attr('value',
 							entry.id).text(entry.name));
 					})
@@ -100,8 +100,8 @@
 				dropdownModel.append('<option selected="true" disabled>Choose Model</option>');
 				dropdownModel.prop('selectedIndex', 0);
 				// Populate dropdown with list of provinces
-				$.getJSON('/rest/model', function (data) {
-					$.each(data, function (key, entry) {
+				$.getJSON('/rest/models', function (data) {
+					$.each(data.models, function (key, entry) {
 						dropdownModel.append($('<option></option>').attr('value',
 							entry.id).text(entry.name));
 					})
@@ -113,8 +113,8 @@
 				dropdownOrigin.append('<option selected="true" disabled>Choose Origin</option>');
 				dropdownOrigin.prop('selectedIndex', 0);
 				// Populate dropdown with list of provinces
-				$.getJSON('/rest/origin', function (data) {
-					$.each(data, function (key, entry) {
+				$.getJSON('/rest/origins', function (data) {
+					$.each(data.origins, function (key, entry) {
 						dropdownOrigin.append($('<option></option>').attr('value',
 							entry.id).text(entry.name));
 					})
