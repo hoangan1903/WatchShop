@@ -120,6 +120,10 @@ public class CartServiceImpl implements CartService {
 							&& c.getCart().getId() == cartDetail.getCart().getId())
 					.findFirst();
 			if (isDuplicateCartDetail.isPresent() == true) {
+				if(isDuplicateCartDetail.get().getAmount()>=isDuplicateCartDetail.get().getProduct().getAvailable())
+				{
+					return 0;
+				}
 				isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() + 1);
 			}
 		}
@@ -158,6 +162,10 @@ public class CartServiceImpl implements CartService {
 							&& c.getCart().getId() == cartDetail.getCart().getId())
 					.findFirst();
 			if (isDuplicateCartDetail.isPresent() == true) {
+				if(isDuplicateCartDetail.get().getAmount()<=0)
+				{
+					return 0;
+				}
 				isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() - 1);
 			}
 		}
