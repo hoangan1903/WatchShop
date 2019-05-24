@@ -16,6 +16,16 @@ $(document).ready(function () {
         setTimeout(() => loadingScreen.addClass('hidden'), delay);
     }
 
+    function checkLogin() {
+        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+            var isLoggedIn = Boolean(parseInt(obj));
+            if (!isLoggedIn) {
+                // Redirect to Login page
+                window.location.href = 'login';
+            }
+        });
+    }
+
     // Get user's cart from server
     function fetchCart() {
         valib.ajaxGET('/rest/cart', function (obj) {
@@ -109,6 +119,7 @@ $(document).ready(function () {
 
     // Execution starts here
 
+    checkLogin();
     fetchCart();
 
     // Set click listener for "Remove all" button
