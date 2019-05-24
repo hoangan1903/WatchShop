@@ -117,9 +117,10 @@ $(document).ready(function () {
         });
     }
 
+    $('a#home-page-link').addClass('nav-link-active');
     initStickyNavbar();
-    initSliders();
 
+    initSliders();
     getBanners();
     getCatalogue();
 });

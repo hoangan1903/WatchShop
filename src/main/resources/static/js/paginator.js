@@ -29,6 +29,15 @@
 
     /* Functions */
 
+    function showLoadingScreen() {
+        $('.screen-cover').removeClass('hidden');
+    }
+
+    function hideLoadingScreen(delay) {
+        delay = delay || 300;
+        setTimeout(() => $('.screen-cover').addClass('hidden'), delay);
+    }
+
     function getApiUrl() {
         let url,
             pageId = currentPage - 1;
@@ -250,6 +259,8 @@
     }
 
     function showPage(pageNumber) {
+        showLoadingScreen();
+
         currentPage = pageNumber;
         const url = getApiUrl();
 
@@ -260,6 +271,8 @@
             container.html(html);
 
             buildPagination();
+
+            hideLoadingScreen(450);
         });
     }
 

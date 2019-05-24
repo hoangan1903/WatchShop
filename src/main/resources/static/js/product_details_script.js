@@ -14,6 +14,7 @@ $(document).ready(function () {
         popover = $('a#cart');
 
     const id = parseInt(valib.getValueFromURL('id'));
+
     const POPOVER_TIMEOUT = 5000;
 
     var minQty = 1,
