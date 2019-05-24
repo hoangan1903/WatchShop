@@ -37,11 +37,6 @@ $(document).ready(function () {
         productCarousel.carousel({
             interval: 0
         });
-
-        // Initialize popover
-        popover.popover({
-            trigger: 'focus'
-        });
     }
 
     function setClickListeners() {
