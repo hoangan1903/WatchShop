@@ -73,7 +73,7 @@ $(document).ready(function () {
             url: '/',
             data: {},
             onSuccess: function (response) {
-                var successful = Boolean(response);
+                var successful = Boolean(parseInt(response));
                 if (successful) {
                     
                 }

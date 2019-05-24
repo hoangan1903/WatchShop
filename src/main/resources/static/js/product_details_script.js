@@ -14,7 +14,10 @@ $(document).ready(function () {
         popover = $('a#cart');
 
     const id = parseInt(valib.getValueFromURL('id'));
-    const POPOVER_TIMEOUT = 4500;
+    const POPOVER_TIMEOUT = 5000;
+
+    var minQty = 1,
+        maxQty;
 
     function initStickyNavbar() {
         $('.section-product-overview').waypoint({
@@ -35,14 +38,44 @@ $(document).ready(function () {
             interval: 0
         });
 
+        // Initialize popover
         popover.popover({
             trigger: 'focus'
         });
+    }
 
-        // Initialize Add to cart button
+    function setClickListeners() {
+
+        // Initialize quantity section
+        // and set click handlers for buttons
+        quantity.text(valib.toString(1));
+
+        quantityUp.click(function () {
+            var currentQty, newQty;
+
+            currentQty = parseInt(quantity.text());
+            newQty = currentQty + 1;
+
+            if (newQty <= maxQty) {
+                quantity.text(valib.toString(newQty));
+            }
+        });
+
+        quantityDown.click(function () {
+            var currentQty, newQty;
+
+            currentQty = parseInt(quantity.text());
+            newQty = currentQty - 1;
+
+            if (newQty >= minQty) {
+                quantity.text(valib.toString(newQty));
+            }
+        });
+
+        // Set click listener for "Add to cart" button
         addToCartBtn.click(function () {
             valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
+                var isLoggedIn = Boolean(parseInt(obj));
 
                 if (isLoggedIn) {
                     // Prepare data for submission to server
@@ -56,7 +89,7 @@ $(document).ready(function () {
                         url: '/rest/cart',
                         data: data,
                         onSuccess: function (response) {
-                            var successful = Boolean(response);
+                            var successful = Boolean(parseInt(response));
                             if (successful) {
                                 // Show user that the products have been put in their cart
                                 valib.ajaxGET('/rest/products/details/' + id, function (obj) {
@@ -88,36 +121,16 @@ $(document).ready(function () {
         });
     }
 
-    function initQuantity() {
+    function checkAvailability() {
+        if (maxQty === 0) {
+            // Disable these buttons when product is unavailable
+            quantityUp.attr('disabled', 'disabled');
+            quantityDown.attr('disabled', 'disabled');
+            addToCartBtn.attr('disabled', 'disabled');
 
-        // Initialize quantity section
-        quantity.text(valib.toString(1));
-        quantityDown.attr('disabled', 'disabled');
-
-        // Set click handlers for buttons
-        quantityUp.click(function () {
-            var currentQty, newQty;
-
-            currentQty = parseInt(quantity.text());
-            newQty = currentQty + 1;
-
-            quantity.text(valib.toString(newQty));
-            quantityDown.removeAttr('disabled');
-        });
-
-        quantityDown.click(function () {
-            var currentQty, newQty;
-
-            currentQty = parseInt(quantity.text());
-            newQty = currentQty - 1;
-
-            if (newQty > 0) {
-                quantity.text(valib.toString(newQty));
-                if (newQty === 1) {
-                    $(this).attr('disabled', 'disabled');
-                }
-            }
-        });
+            // And let customer know about this
+            $('p.availability-info').text('Sản phẩm chưa có sẵn hoặc đã hết hàng');
+        }
     }
 
     function getData() {
@@ -148,7 +161,10 @@ $(document).ready(function () {
             brand$.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
             name$.text(obj.product.codeName);
             price$.text(obj.product.price.toLocaleString() + 'đ');
-            available$.text(obj.product.available);
+
+            maxQty = obj.product.available;
+            available$.text(maxQty);
+            checkAvailability();
 
             // Get data for table of product details
             table.html(`
@@ -213,7 +229,7 @@ $(document).ready(function () {
 
     function postComment() {
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-            var isLoggedIn = Boolean(obj);
+            var isLoggedIn = Boolean(parseInt(obj));
             if (isLoggedIn) {
                 // 1. Make comment object from Comment Form
 
@@ -222,7 +238,7 @@ $(document).ready(function () {
                     url: '/url where you want to submit your data',
                     data: 'data you want to submit to server',
                     onSuccess: function (response) {
-                        var successful = Boolean(response);
+                        var successful = Boolean(parseInt(response));
                         if (successful) {
                             // 3. Do something when the request is successful
                             // e.g Refresh the comments to see the new comment
@@ -241,8 +257,8 @@ $(document).ready(function () {
     */
 
     initStickyNavbar();
-    initComponents();
-    initQuantity();
-    getData();
 
+    initComponents();
+    setClickListeners();
+    getData();
 });

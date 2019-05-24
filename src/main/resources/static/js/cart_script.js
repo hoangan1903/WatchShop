@@ -122,7 +122,7 @@ $(document).ready(function () {
                 valib.ajaxDELETE({
                     url: '/rest/cart/all',
                     onSuccess: function (response) {
-                        var successful = Boolean(response);
+                        var successful = Boolean(parseInt(response));
                         if (!successful) {
                             console.log('Remove all products unsuccessfully');
                         }
@@ -155,7 +155,7 @@ $(document).ready(function () {
                     amount: 1
                 },
                 onSuccess: function (response) {
-                    var successful = Boolean(response);
+                    var successful = Boolean(parseInt(response));
                     if (!successful) {
                         console.log('Increase quantity unsuccessfully');
                     }
@@ -175,7 +175,7 @@ $(document).ready(function () {
                     amount: 1
                 },
                 onSuccess: function (response) {
-                    var successful = Boolean(response);
+                    var successful = Boolean(parseInt(response));
                     if (!successful) {
                         console.log('Decrease quantity unsuccessfully');
                     }
@@ -191,7 +191,7 @@ $(document).ready(function () {
             valib.ajaxDELETE({
                 url: '/rest/cart/product/' + productId,
                 onSuccess: function (response) {
-                    var successful = Boolean(response);
+                    var successful = Boolean(parseInt(response));
                     if (!successful) {
                         console.log('Remove product unsuccessfully');
                     }
