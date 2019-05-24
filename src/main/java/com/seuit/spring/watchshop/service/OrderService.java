@@ -8,7 +8,7 @@ import com.seuit.spring.watchshop.entity.Product;
 import javassist.NotFoundException;
 
 public interface OrderService {
-	public boolean createOrder(Integer idPayment);
+	public Integer createOrder(Integer idPayment);
 	public List<Order> listOrder(Integer pageId,Integer size,Integer orderStatus,Integer orderCreatedStatus,Integer orderPriceStatus,Integer orderPaymentStatus);
 	public Map<String, Object> listOrderDetailByIdOrder(Integer idOrder);
 	public String updateStatusOrder(Integer idOrder,boolean isSuccess) throws NotFoundException;
