@@ -348,12 +348,29 @@ public class ProductServiceImpl implements ProductService {
 		Integer sum=0;
 	    Product product = session.get(Product.class, id);
 	    if(product.getId()==null) return 0;
-	    if(quantity + product.getAvailable() <=0) sum=0;
+	    if(quantity + this.getAvailableProduct(id) <=0) sum=0;
 	    else
-	    	sum=quantity+product.getAvailable();
+	    	sum=quantity+this.getAvailableProduct(id);
 	    product.setAvailable(sum);
 	    session.merge(product);
 	    return 1;
 	}
+
+	@Override
+	public synchronized Integer getAvailableProduct(Integer id) {
+		// TODO Auto-generated method stub
+	    	Optional<Product> product = productRepository.findById(id);
+	    	try {
+				product.orElseThrow(()->new NotFoundException("cant find"));
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	return product.get().getAvailable();
+	}
+
+	
+	
+	
 	
 }

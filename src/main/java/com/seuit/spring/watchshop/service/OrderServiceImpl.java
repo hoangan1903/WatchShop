@@ -35,6 +35,9 @@ import javassist.NotFoundException;
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
+	private ProductService productService;
+	
+	@Autowired
 	private OrderRepository orderRepository;
 	
 	@Autowired
@@ -94,6 +97,11 @@ public class OrderServiceImpl implements OrderService {
 				System.out.println(order.getPaymentO().getName());
 				
 				orderRepository.save(order);
+				
+				order.getOrderDetails().forEach((orderDetail)->{
+					Integer productQuantityIsReduced = -orderDetail.getAmount();
+					productService.updownQuantityProduct(orderDetail.getProductO().getId(),productQuantityIsReduced);
+				});
 				
 			}catch (Exception e) {
 				// TODO: handle exception

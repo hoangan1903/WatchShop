@@ -29,5 +29,6 @@ public interface ProductService {
 	Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword);
 	List<Product> listProductTopOrder();
 	Map<String, Object> findPaginatedSort(Integer page, Integer size, Integer idFirm, Integer type);
-	Integer updownQuantityProduct(Integer id,Integer quantity);
+	Integer updownQuantityProduct(Integer id,Integer quantity); 
+	Integer getAvailableProduct(Integer id);
 }
