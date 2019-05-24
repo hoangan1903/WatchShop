@@ -96,13 +96,18 @@ public class OrderServiceImpl implements OrderService {
 				System.out.println(order.getCustomerO().getName());
 				System.out.println(order.getPaymentO().getName());
 				
+				//Kiểm tra xem trong kho hàng còn đủ sản phẩm đáp ứng hay không !
+				for (OrderDetail orderDetail : order.getOrderDetails()) {
+					Integer idOrderDetail = orderDetail.getProductO().getId();
+					if(orderDetail.getAmount()>productService.getAvailableProduct(idOrderDetail)) {
+						return false;
+					}else {
+						Integer productQuantityIsReduced = -orderDetail.getAmount();
+						productService.updownQuantityProduct(idOrderDetail,productQuantityIsReduced);
+					}	
+				}
+				
 				orderRepository.save(order);
-				
-				order.getOrderDetails().forEach((orderDetail)->{
-					Integer productQuantityIsReduced = -orderDetail.getAmount();
-					productService.updownQuantityProduct(orderDetail.getProductO().getId(),productQuantityIsReduced);
-				});
-				
 			}catch (Exception e) {
 				// TODO: handle exception
 				result = false;
