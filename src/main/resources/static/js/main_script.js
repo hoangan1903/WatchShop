@@ -1,7 +1,6 @@
 /* Homepage functionality implementation */
 
 $(document).ready(function () {
-    var sliders = $('.custom-slider');
 
     // Define sticky navigation bar behavior
     // when to appear and when to disappear
@@ -21,7 +20,7 @@ $(document).ready(function () {
     function initSliders() {
         let nextButtons = $('.custom-slider-nav');
 
-        sliders.each(function (index) {
+        $('.custom-slider').each(function (index) {
             let slider = $(this),
                 next = nextButtons.eq(index);
 
