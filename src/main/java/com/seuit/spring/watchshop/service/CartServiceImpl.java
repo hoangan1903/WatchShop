@@ -50,22 +50,34 @@ public class CartServiceImpl implements CartService {
 	@Override
 	@Transactional
 	public Integer addProductToCart(CartAPI cartAPI) throws NotFoundException {
+		
 		Integer amount = cartAPI.getAmount();
 		Integer idProduct = cartAPI.getIdProduct();
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		Optional<Product> product = productRepository.findById(idProduct);
 		Optional<Customer> customer = customerRepository.findById(idCustomer);
-
 		// Kiểm tra xem số lượng sản phẩm trên giỏ hàng có lớn hơn số lượng sản phẩm còn
 		// trong kho không ?
 		// Kiểm tra xem khách hàng có tồn tại không ?
 		//Kiểm tra xem 
-		if (amount > productService.getAvailableProduct(idProduct) || idCustomer == null || product.isPresent() == false) {
+		if (idCustomer == null || product.isPresent() == false) {
 			product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 			customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 			return 0;
 		}
 		Cart cart = customer.get().getCart();
+		if(cart.getCartDetails().isEmpty()==false) {
+			for (CartDetail cartDetailInCart : cart.getCartDetails()) {
+				Integer idProductInBeforeAddCart = cartDetailInCart.getProduct().getId();
+				if(idProductInBeforeAddCart==idProduct) {
+					Integer productQuantityInBeforeAddCart = cartDetailInCart.getAmount() + amount;
+					if(productQuantityInBeforeAddCart>productService.getAvailableProduct(idProductInBeforeAddCart)) {
+						return 0;
+					}
+					break;
+				}
+			}
+		}
 		CartDetail cartDetail = new CartDetail(cart, product.get(), amount);
 		Optional<CartDetail> isDuplicateCartDetail = cart.getCartDetails().stream()
 				.filter((c) -> c.getProduct().getId() == cartDetail.getProduct().getId()
