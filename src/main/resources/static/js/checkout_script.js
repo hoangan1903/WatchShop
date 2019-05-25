@@ -12,19 +12,19 @@ $(document).ready(function () {
 
     function setClickListeners() {
         $('a#place-order').click(function () {
-            // Check order validity, e.g Customers who have a pending order cannot place another one
-
             // Make data
+            paymentMethodId = $('#paymentMethods input:checked').val();
 
             // Send order to server
-            valib.ajaxPOST({
-                url: '/',
-                data: {},
-                onSuccess: function (response) {
-                    var successful = Boolean(parseInt(response));
-                    if (successful) {
+            valib.ajaxGET('/rest/order/' + paymentMethodId, function (response) {
+                var successful = Boolean(parseInt(response));
+                if (successful) {
+                    // Back to homepage if order is successful
+                    window.location.href = '/';
 
-                    }
+                } else {
+                    // Notify user that their order was not successfully placed
+                    console.log('Order not successful');
                 }
             });
         });
@@ -46,7 +46,6 @@ $(document).ready(function () {
         // Get customer's order
         valib.ajaxGET('/rest/cart', function (obj) {
             let items = obj.cart || [],
-                count = obj.totalAmount || 0,
                 total = obj.total || 0;
 
             // Show total prices
@@ -85,7 +84,7 @@ $(document).ready(function () {
             `;
 
                 // Add a divider after each order item except for the last one
-                if (index < count - 1) {
+                if (index < items.length - 1) {
                     html +=
                         '<div class="item-divider d-flex flex-column"><div class="pb-3 card-item-divider"></div><div class="pt-3"></div></div>';
                 }

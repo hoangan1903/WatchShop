@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     const id = parseInt(valib.getValueFromURL('id'));
 
-    const POPOVER_TIMEOUT = 5000;
+    const POPOVER_TIMEOUT = 6000;
 
     var minQty = 1,
         maxQty;
@@ -93,6 +93,7 @@ $(document).ready(function () {
                                         codeName = obj.product.codeName;
 
                                     popover
+                                        .attr('title', 'Thêm vào giỏ hàng thành công')
                                         .attr('data-content', `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`)
                                         .popover('show');
 
@@ -105,6 +106,14 @@ $(document).ready(function () {
                                     var count = obj.totalAmount;
                                     cartBadge.text(count);
                                 });
+
+                            } else {
+                                popover
+                                    .attr('title', 'Không thể thêm vào giỏ hàng')
+                                    .attr('data-content', 'Số lượng của sản phẩm này trong giỏ hàng đã bằng số lượng có sẵn.')
+                                    .popover('show');
+
+                                setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
                             }
                         }
                     });
