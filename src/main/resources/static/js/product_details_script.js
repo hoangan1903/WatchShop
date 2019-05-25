@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     const id = parseInt(valib.getValueFromURL('id'));
 
-    const POPOVER_TIMEOUT = 6000;
+    const POPOVER_TIMEOUT = 6500;
 
     var minQty = 1,
         maxQty;
@@ -92,7 +92,6 @@ $(document).ready(function () {
                                         codeName = obj.product.codeName;
 
                                     popover
-                                        .attr('title', 'Thêm vào giỏ hàng thành công')
                                         .attr('data-content', `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`)
                                         .popover('show');
 
@@ -108,8 +107,7 @@ $(document).ready(function () {
 
                             } else {
                                 popover
-                                    .attr('title', 'Không thể thêm vào giỏ hàng')
-                                    .attr('data-content', 'Số lượng của sản phẩm này trong giỏ hàng đã bằng số lượng có sẵn.')
+                                    .attr('data-content', 'Không thể thêm vào giỏ hàng vì sẽ vượt quá số lượng có sẵn của sản phẩm.')
                                     .popover('show');
 
                                 setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
