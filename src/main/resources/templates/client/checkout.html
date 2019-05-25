@@ -24,7 +24,6 @@
                         <div class="card-header">
                             <div class="d-flex flex-row align-items-center">
                                 <h5 class="card-header-title flex-grow-1">Thông tin nhận hàng</h5>
-
                                 <a href="#" class="card-header-action">
                                     <div class="d-flex flex-row align-items-center">
                                         <ion-icon name="ios-create" class="small-icon mr-1"></ion-icon>
@@ -77,18 +76,10 @@
 
                                 <div class="card-entry">
                                     <h6 class="card-title">Vận chuyển</h6>
-                                    <form>
+                                    <form id="deliveryMethods">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="deliveryMethod"
-                                                id="deliveryMethod1" value="by?" checked>
-                                            <label class="form-check-label" for="deliveryMethod1">
-                                                Giao hàng siêu tốc (nửa ngày - chỉ áp dụng cho khu vực
-                                                TP.HCM)
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="deliveryMethod"
-                                                id="deliveryMethod2" value="by?">
+                                                id="deliveryMethod2" value="2" checked>
                                             <label class="form-check-label" for="deliveryMethod2">
                                                 Giao hàng tiêu chuẩn (áp dụng cho tất cả)
                                             </label>
@@ -98,17 +89,17 @@
 
                                 <div class="card-entry mb-0">
                                     <h6 class="card-title">Hình thức thanh toán</h6>
-                                    <form>
+                                    <form id="paymentMethods">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment"
-                                                id="radioCashOnDelivery" value="cod" checked>
+                                            <input class="form-check-input" type="radio" name="payment" id="paymentCOD"
+                                                value="1" checked>
                                             <label class="form-check-label" for="radioCashOnDelivery">
                                                 Thanh toán khi nhận hàng (COD)
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="payment"
-                                                id="radioPayAtShop" value="shop">
+                                                id="paymentPayAtShop" value="2">
                                             <label class="form-check-label" for="radioPayAtShop">
                                                 Thanh toán tại cửa hàng (Giữ hàng)
                                             </label>
@@ -198,7 +189,8 @@
                                 <div class="d-flex flex-column">
                                     <div class="d-flex flex-row align-items-center mb-2">
                                         <p class="card-text cart-summary-entry">Tạm tính:</p>
-                                        <p id="order-subtotal" class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
+                                        <p id="order-subtotal"
+                                            class="card-text price-subtotal flex-grow-1 d-flex justify-content-end">
                                             33,000,000đ
                                         </p>
                                     </div>
@@ -226,7 +218,8 @@
                                 <div class="d-flex flex-column">
                                     <div class="d-flex flex-row align-items-center">
                                         <p class="card-text cart-summary-entry">Thành tiền:</p>
-                                        <p id="order-total" class="card-text price total flex-grow-1 d-flex justify-content-end">
+                                        <p id="order-total"
+                                            class="card-text price total flex-grow-1 d-flex justify-content-end">
                                             33,000,000đ
                                         </p>
                                     </div>
