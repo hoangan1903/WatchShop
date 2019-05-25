@@ -41,7 +41,6 @@ $(document).ready(function () {
     }
 
     function setClickListeners() {
-
         // Initialize quantity section
         // and set click handlers for buttons
         quantity.text(valib.toString(1));

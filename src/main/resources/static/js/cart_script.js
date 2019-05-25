@@ -1,20 +1,8 @@
 $(document).ready(function () {
 
-    const DELAY_AFTER_TASK = 400;
-
     let goToCheckout = $('a#go-to-checkout'),
         removeAll = $('a.cart-remove-all'),
-        itemContainer = $('.cart-item-container'),
-        loadingScreen = $('.screen-cover');
-
-    function showLoadingScreen() {
-        loadingScreen.removeClass('hidden');
-    }
-
-    function hideLoadingScreen(delay) {
-        delay = delay || DELAY_AFTER_TASK;
-        setTimeout(() => loadingScreen.addClass('hidden'), delay);
-    }
+        itemContainer = $('.cart-item-container');
 
     function checkLogin() {
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
