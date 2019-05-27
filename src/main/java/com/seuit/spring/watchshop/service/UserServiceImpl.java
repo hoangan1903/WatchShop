@@ -149,6 +149,8 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
+	
 	@Override
 	public List<User> getAllUser() {
 		return userRepository.findAll();
@@ -315,6 +317,15 @@ public class UserServiceImpl implements UserService {
 		                                  .getAuthentication().getPrincipal();
 		    this.changeUserPassword(user, newPassword);
 		    mailSender.send(this.constructEmail(subject,body,user));
+	}
+
+	@Override
+	@Transactional
+	public void editManager(User user, Integer id) {
+		Session session = this.getSession();
+		User manager = session.get(User.class, id);
+		manager.setEmail(user.getEmail());
+		session.merge(manager);
 	}
 	
 	

@@ -66,36 +66,6 @@ public class AdminController {
 		return "admin/CRUDUsers";
 	}
 	
-	@GetMapping("/CRUD_User/addUser")
-	public String add(Model model) {
-		model.addAttribute("user", new User());
-		return "admin/userForm";
-	}
-	
-	@PostMapping("/CRUD_User/saveUser")
-	public String saveUser(@ModelAttribute("user") User user, RedirectAttributes redirect) {
-        userService.addUser(user, "manager");
-		return "redirect:/admin/CRUD_User";
-	}
-	
-
-	@GetMapping("/CRUD_User/deleteUser/{userId}")
-	public String deleteUser(@PathVariable(value = "userId") Integer userId, RedirectAttributes redirect) {
-		userService.deleteUserById(userId);
-		return "redirect:/admin/CRUD_User";
-	}
-
-	@GetMapping("/CRUD_User/edit/{userId}")
-	public String editUsser(@PathVariable(value = "userId") Integer userId, RedirectAttributes redirect, Model model){
-		try {
-			model.addAttribute("user", userService.getUserById(userId));
-		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "admin/userForm";
-	}
-	
 	//MANAGEMENT AREA
 
 	@GetMapping(value = "/CRUD_Products")

@@ -35,27 +35,17 @@
 							user.roles[0].name +
 							'</td>' +
 							'<td>' +
-
-							'<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' +
-							user.id +
-							'})}">' +
 							'<button class="btn btn-primary" data-title="Edit" data-target="#edit"' +
-							'onclick=" btnEditOnClick('+ user.id+ ')" data-toggle="modal">' +
+							'onclick=" editOnClick('+ user.id+ ')" data-toggle="modal">' +
 							'<span class="icon text-white-50"> <i class="material-icons">edit</i>' +
 							'</span>' +
-							'</button>' +
-							'</a>' +
-							
+							'</button>' +	
 							'<td>' +
-							'<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' +
-							user.id +
-							'})}">' +
 							'<button class="btn btn-danger" data-title="Delete" data-target="#delete"'+
 							'onclick="onClick('+ user.id+ ')" data-toggle="modal">' +
 							'<span class="icon text-white-50"> <i class="material-icons">delete</i>' +
 							'</span>' +
 							'</button>' +
-							'</a>' +
 							'</td>' +
 							'</tr>');
 				})
@@ -101,20 +91,15 @@
 						$.each(obj, function (key, user) {
 							$('#mytable tbody').append('<tr>' + '<td class="username">' +
 								user.username + '</td>' + '<td>' + user.email + '</td>' + '<td>' + user.roles[0].name + '</td>' + '<td>' +
-								'<a href="#" th:href="@{/admin/CRUD_User/edit/{userId}(userId=${' + user.id + '})}">' +
 								'<button class="btn btn-primary" data-target="#edit" data-title="Edit"'  +
-								'onclick="btnEditOnClick('+ user.id+ ')" data-toggle="modal">' +
-								'<span class="icon text-white-50"> <i class="material-icons">edit</i>' + '</span>' + '</button>' + '</a>' +
+								'onclick="editOnClick('+ user.id+ ')" data-toggle="modal">' +
+								'<span class="icon text-white-50"> <i class="material-icons">edit</i>' + '</span>' + '</button>' +
 								'<td>' +
-								'<a href="#" th:href="@{/admin/CRUD_User/delete/{userId}(userId=${' +
-								user.id +
-								'})}">' +
 								'<button class="btn btn-danger" data-title="Delete" data-target="#delete"'+
 								'onclick="onClick('+ user.id+ ')" data-toggle="modal">' +
 								'<span class="icon text-white-50"> <i class="material-icons">delete</i>' +
 								'</span>' +
 								'</button>' +
-								'</a>' +
 								'</td>' +
 								'</tr>');
 						});
@@ -210,7 +195,7 @@
 		document.getElementById("id").value = id;
 	}
 	
-	function btnEditOnClick(id){
+	function editOnClick(id){
 		document.getElementById("id").value = id;
 		$(document).ready(function () {
 			var url = "/rest/users/" + id;
@@ -231,14 +216,32 @@
 	}
 	
 	function editManager(){
-		var data= {};
 		var user ={};
 		if (document.getElementById("id")) {
 			var id = document.getElementById("id").value;
 		}
 		var url = "/rest/users/" + id;
 		var xhttp = new XMLHttpRequest();
-
+		
+		user.id = Number(id);
+		user.email = $('#email').val();
+		var json = JSON.stringify(user);
+		console.log("json edit : " + json);
+		console.log(url);
+		xhttp.open("PUT", url, true);
+		xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+		xhttp.onload = function () {
+			if (xhttp.readyState == 4 && xhttp.status == "200") {
+				console.log("edit ok");
+				alert("Edit Manager Success");
+				location.reload();
+			} else {
+				console.log("edit error");
+				alert("Edit Manager Error");
+			}
+		}
+		xhttp.send(json);
+		
 	}
 	
 	function addManager(){
@@ -248,13 +251,12 @@
 			var url = "/rest/users";
 			var xhttp = new XMLHttpRequest();
 
-			console.log($('#name').val());
 			user.username = $('#addname').val();
 			user.email = $('#addemail').val();
 			user.password = $('#addpassword').val();
 			
 			data.user = user;
-			var json =JSON.stringify(data);
+			var json =JSON.stringify(user);
 			console.log("json add : " + json);
 			
 			xhttp.open("POST", url, true);
@@ -262,11 +264,11 @@
 			xhttp.onload = function() {
 				if (xhttp.readyState == 4 && xhttp.status == "200") {
 					console.log("Add ok");
-					alert("Add Product Success");
+					alert("Add Manager Success");
 					location.reload();
 				} else {
 					console.log("Add error");
-					alert("Add Product Error");
+					alert("Add Manager Error");
 				}
 			}
 			xhttp.send(json);
@@ -326,10 +328,8 @@
 										<h4>Users</h4>
 									</div>
 									<div class="col-sm-2">
-<!-- 										<a href="#" th:href="@{/admin/CRUD_User/addUser}"> -->
 											<button class="btn btn-info add-new" data-title="add" 
 												data-toggle="modal" data-target="#add">Add User</button>
-<!-- 										</a> -->
 									</div>
 								</div>
 								<br> <br>
@@ -429,9 +429,10 @@
 								</div>
 								<div class="form-group">
 									Name : <input class="form-control " type="text" id="addname">
+									
 								</div>
 								<div class="form-group">
-									Email : <input class="form-control " type="text" id="addemail">
+									Email : <input class="form-control " type="email" id="addemail">
 								</div>
 								<div class="form-group">
 									Password : <input class="form-control " type="password" id="addpassword">

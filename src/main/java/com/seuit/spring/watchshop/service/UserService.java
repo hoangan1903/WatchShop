@@ -47,4 +47,6 @@ public interface UserService {
 	void savePasswordAfterChanged(HttpServletRequest request, String newPassword);
 
 	String validatePasswordResetToken(long id, String token);
+
+	void editManager(User user, Integer id);
 }
