@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     const id = parseInt(valib.getValueFromURL('id'));
 
-    const POPOVER_TIMEOUT = 6500;
+    const POPOVER_TIMEOUT = 6000;
 
     var minQty = 1,
         maxQty;

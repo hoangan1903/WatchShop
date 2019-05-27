@@ -5,10 +5,10 @@
 @import "components.scss";
 
 section {
-    padding: $spacing-y-medium 0;
+    padding-bottom: 0;
 
     .card {
-        &.checkout-card {
+        &.account-card {
 
             h6.card-title {
                 font-weight: $font-wt-medium;

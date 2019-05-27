@@ -64,6 +64,7 @@ $(document).ready(function () {
 
                 if (isLoggedIn) {
                     // Do something if the user is logged in
+                    window.location.href = 'account';
                     // e.g show account's info
                 } else {
                     // Do something else if the user is logged in

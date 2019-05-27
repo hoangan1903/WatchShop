@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="fragments/head.html :: head"></th:block>
+
+    <!-- CSS files -->
+    <link href="css/account_styles.css" rel="stylesheet">
+    <link href="css/account_responsive.css" rel="stylesheet">
+
+    <!-- Page title -->
+    <title>UIT Watchshop - Tài khoản</title>
+</head>
+
+<body>
+    <header th:include="fragments/header.html :: header"></header>
+
+    <!-- Page content here -->
+    <section class="section-customer-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card account-card" style="width: auto;">
+                        <div class="card-header">
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="card-header-title flex-grow-1">Thông tin khách hàng</h5>
+                                <a href="#" class="card-header-action">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <ion-icon name="ios-create" class="small-icon mr-1"></ion-icon>
+                                        Chỉnh sửa
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="delivery-info d-flex flex-column">
+                                <div class=" d-flex flex-row">
+                                    <div class="flex-grow-1 d-flex flex-column">
+                                        <div class="card-entry customer-name">
+                                            <h6 class="card-title">Tên</h6>
+                                            <p class="card-text">Nguyễn Văn A</p>
+                                        </div>
+                                        <div class="card-entry customer-phone">
+                                            <h6 class="card-title">Số điện thoại</h6>
+                                            <p class="card-text">0123456789</p>
+                                        </div>
+                                        <div class="card-entry customer-address mb-0">
+                                            <h6 class="card-title">Địa chỉ</h6>
+                                            <p class="card-text">Abc</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-customer-orders">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card account-card" style="width: auto;">
+                        <div class="card-header">
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="card-header-title flex-grow-1">Lịch sử đơn hàng</h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-customer-actions">
+        
+    </section>
+
+    <footer th:include="fragments/footer.html :: footer"></footer>
+
+    <th:block th:include="fragments/scripts.html :: scripts"></th:block>
+
+    <!-- Scripts -->
+    <script src="js/account_script.js"></script>
+
+</body>
+
+</html>
