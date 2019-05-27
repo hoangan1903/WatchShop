@@ -71,4 +71,9 @@ public class CustomerRestController {
 	List<Order> showAllOrderByCustomerId(@PathVariable(value = "id") Integer id) {
 		return orderService.listOrderByCustomerId(id);
 	}
+	
+	@GetMapping("/customers/orders")
+	List<Order> getCustomerOrders() {
+		return customerService.getCustomerOrders();
+	}
 }

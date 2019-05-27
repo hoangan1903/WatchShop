@@ -17,8 +17,10 @@ import com.seuit.spring.watchshop.entity.Cart;
 import com.seuit.spring.watchshop.entity.CustomUserDetail;
 import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
+import com.seuit.spring.watchshop.entity.Order;
 import com.seuit.spring.watchshop.entity.User;
 import com.seuit.spring.watchshop.repository.CustomerRepository;
+import com.seuit.spring.watchshop.repository.OrderRepository;
 
 import javassist.NotFoundException;
 
@@ -30,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepository;
-
+	
 	@Autowired
 	private EntityManager entityManager;
 
@@ -167,6 +169,15 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Optional<Customer> getCustomerById(Integer id) {
 		return customerRepository.findById(id);
+	}
 
+	@Override
+	public List<Order> getCustomerOrders() {
+		Integer idCustomer = this.getIdCustomerByPrincipal();
+		if (idCustomer == null) {
+			return null;
+		}
+		Customer customer = this.getCustomerById(idCustomer).get();
+		return customer.getOrders();
 	}
 }

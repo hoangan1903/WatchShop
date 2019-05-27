@@ -206,5 +206,11 @@ public class UserServiceImpl implements UserService {
 		}
 	    return 0;
 	}
+	
+	@Override
+	@Transactional
+	public User getManagerById(Integer id) {
+		return userRepository.getOne(id);
+	}
 
 }

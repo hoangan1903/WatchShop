@@ -27,4 +27,6 @@ public interface UserService {
 	User getMe();
 	
 	Integer isLoggedIn();
+
+	User getManagerById(Integer id);
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.CustomerAPI;
+import com.seuit.spring.watchshop.entity.Order;
 
 public interface CustomerService {
 	Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id);
@@ -22,4 +23,6 @@ public interface CustomerService {
 	List<Customer> getListCustomerByKeyword(String keyword);
 	
 	Optional<Customer> getCustomerById(Integer id);
+	
+	List<Order> getCustomerOrders();
 }

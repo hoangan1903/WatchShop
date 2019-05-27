@@ -210,7 +210,6 @@ public class OrderServiceImpl implements OrderService {
 		return customer.getOrders();	
 	}
 
-
 	@Override
 	@Transactional
 	public Integer getCountNewOrder() {
