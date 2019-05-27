@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Boolean addUser(User user, String roleName) {
+	public Integer addUser(User user, String roleName) {
 		
 		String subject=env.getProperty("email.createAccount.headerName");
 		String body = env.getProperty("email.createAccount.messager");
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 		// Mở phiên @Transactional
 		Optional<User> userTemp = userRepository.findByUsername(user.getUsername());
 		if (userTemp.isPresent()) {
-			return false;
+			return 0;
 		} else {
 
 			logger.info(user.getEmail());
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 				session.merge(userOld);
 			}
 			mailSender.send(this.constructEmail(subject,body,user));
-			return true;
+			return 1;
 			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
 	}

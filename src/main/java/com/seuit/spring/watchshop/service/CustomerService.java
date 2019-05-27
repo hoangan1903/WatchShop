@@ -8,7 +8,7 @@ import com.seuit.spring.watchshop.entity.CustomerAPI;
 import com.seuit.spring.watchshop.entity.Order;
 
 public interface CustomerService {
-	Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id);
+	Integer saveOrUpdateCustomer(CustomerAPI customerApi, Integer id);
 
 	public Integer getIdCustomerByPrincipal();
 

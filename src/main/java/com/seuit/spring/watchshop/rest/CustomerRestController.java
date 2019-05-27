@@ -33,18 +33,12 @@ public class CustomerRestController {
 	private OrderService orderService;
 	
 	@PostMapping("/customers")
-    private String newCustomer(@Valid @RequestBody CustomerAPI customerApi) {
-		boolean boo =  customerService.saveOrUpdateCustomer(customerApi, null);
-        if(boo==true) {
-        	return "success";
-        }else {
-        	return "fail";
-        }
+    private Integer newCustomer(@Valid @RequestBody CustomerAPI customerApi) {
+		return customerService.saveOrUpdateCustomer(customerApi, null);
     }
 	@PutMapping("/customers/{id}")
-    private String updateCustomer(@Valid @RequestBody CustomerAPI customerAPI, BindingResult result, @PathVariable(value = "id") @Min(1) Integer id) {
-        customerService.saveOrUpdateCustomer(customerAPI,id);
-        return "Update Success";
+    private Integer updateCustomer(@Valid @RequestBody CustomerAPI customerAPI, BindingResult result, @PathVariable(value = "id") @Min(1) Integer id) {
+		return customerService.saveOrUpdateCustomer(customerAPI,id);
     }
 	
 	@GetMapping("/me")
@@ -76,4 +70,5 @@ public class CustomerRestController {
 	List<Order> getCustomerOrders() {
 		return customerService.getCustomerOrders();
 	}
+	
 }

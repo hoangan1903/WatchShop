@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	@Transactional
-	public Boolean saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
+	public Integer saveOrUpdateCustomer(CustomerAPI customerApi, Integer id) {
 		// TODO Auto-generated method stub
 		if (id == null) {
 			User user = new User();
@@ -73,15 +73,11 @@ public class CustomerServiceImpl implements CustomerService {
 				e.printStackTrace();
 			}
 		}
-		return true;
+		return 1;
 	}
 
-	private Boolean checkAddUser(User user) {
-		if (userService.addUser(user, "customer") == true) {
-			return true;
-		} else {
-			return false;
-		}
+	private Integer checkAddUser(User user) {
+		return userService.addUser(user, "customer");
 	}
 
 	private void setUserAndCustomer(CustomerAPI customerApi, User user, Customer customer) {
