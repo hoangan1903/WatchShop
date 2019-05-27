@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/rest/employees/**").hasRole("manager")
 				.antMatchers(HttpMethod.DELETE, "/rest/employees/**").hasRole("manager")
 				.antMatchers(HttpMethod.GET, "/rest/employees/**").hasRole("manager")
+				.antMatchers("/cart","/checkout","/account").hasRole("customer")
 				.antMatchers(HttpMethod.POST, "/rest/cart").hasRole("customer").antMatchers("/admin/**")
 				.hasAnyRole("admin", "manager", "employee").antMatchers("/**").permitAll().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login?error=true").permitAll().and()

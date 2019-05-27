@@ -1,0 +1,8 @@
+---
+applications:
+- name: watchshopuit2019
+  memory: 1GB
+  path: target/watchshop-0.0.1-SNAPSHOT.jar
+  services: 
+  - mysqldb
+   
