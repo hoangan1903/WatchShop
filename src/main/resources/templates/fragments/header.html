@@ -22,7 +22,6 @@
                     </div>
 
                     <ul class="search-suggestion">
-
                         <!-- Search suggestion will show up here whenever user enters a keyword -->
                         <li>
                             <a class="product-link" href="#">
@@ -66,16 +65,16 @@
                                 </div>
                             </a>
                         </li>
-
                     </ul>
                 </div>
 
                 <div class="col-md-2">
                     <div class="navbar-icons stretched-container d-flex justify-content-end align-items-end">
-                        <a id="account" class="regular-link" href="#">
+                        <a id="account" class="regular-link" href="#" title="Tài khoản">
                             <ion-icon name="ios-person" class="regular-icon"></ion-icon>
                         </a>
-                        <a id="cart" class="regular-link pl-lg-4 pl-3" href="cart">
+                        <a id="cart" class="regular-link pl-lg-4 pl-3" href="cart" data-toggle="popover"
+                            data-placement="bottom" data-content="">
                             <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
                             <span id="cart-count-badge" class="badge badge-pill badge-danger">0</span>
                         </a>
@@ -111,10 +110,12 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="stretched-container d-flex justify-content-start align-items-end">
                         <ul class="main-nav content-wrapper">
-                            <li class="nav-item"><a class="nav-link nav-link-active" href="#">Trang chủ</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Về chúng tôi</a></li>
+                            <li class="nav-item">
+                                <a id="home-page-link" class="nav-link" href="/">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="contact-page-link" class="nav-link" href="#">Liên hệ</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

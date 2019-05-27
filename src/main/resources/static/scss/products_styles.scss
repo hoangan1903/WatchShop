@@ -4,6 +4,14 @@
 @import "reusables.scss";
 @import "components.scss";
 
+section.section-page-title {
+    padding: $spacing-y-medium 0 0 0;
+
+    h2.section-heading {
+        margin-bottom: 0;
+    }
+}
+
 section.section-sort-filter {
     padding: $spacing-y-small 0;
 }

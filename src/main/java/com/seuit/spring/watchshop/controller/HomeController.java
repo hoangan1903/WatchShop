@@ -1,18 +1,22 @@
 package com.seuit.spring.watchshop.controller;
-
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.MailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.seuit.spring.watchshop.entity.CustomUserDetail;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.seuit.spring.watchshop.entity.User;
 import com.seuit.spring.watchshop.service.UserService;
+
+
+import javassist.NotFoundException;
 
 @Controller
 public class HomeController {
@@ -94,5 +98,34 @@ public class HomeController {
 	@GetMapping("/register")
 	public String showRegisterPage() {
 		return "register";
+	}
+	
+	@GetMapping("/forgotPassword")
+	public String showResetPage() {
+		return "forgotPassword";
+	}
+	
+	@GetMapping("/updatePassword")
+	public String showUpdatePassPage() {
+		return "updatePassword";
+	}
+	
+	@PostMapping("/user/resetPassword")
+	@ResponseBody
+	public void resetPassword(HttpServletRequest request,@RequestParam("username") String username) throws NotFoundException {
+		userService.resetPassword(request, username);
+	}
+	@GetMapping("/user/changePassword")
+	public String showChangePasswordPage(@RequestParam("id") long id, @RequestParam("token") String token,RedirectAttributes redirect) {
+	    String result = userService.validatePasswordResetToken(id, token);
+	    if (result != null) {
+	        return "redirect:/login";
+	    }
+	    return "redirect:/updatePassword";
+	}
+	@PostMapping("/user/savePassword")
+	@ResponseBody
+	public void savePassword(HttpServletRequest request,@RequestParam(name="newPassword") String newPassword) {
+	   userService.savePasswordAfterChanged(request, newPassword);
 	}
 }

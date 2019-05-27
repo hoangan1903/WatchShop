@@ -243,18 +243,24 @@ ion-icon.extra-large-icon {
 .custom-slider-nav {
   background: #28a745;
   position: absolute;
-  top: 50%;
-  right: -9px;
   width: 50px;
   height: 50px;
-  z-index: 10;
   border-radius: 50%;
+  z-index: 10;
   cursor: pointer;
-  transform: translateY(-50%);
   transition: all 0.25s ease;
+  top: 50%;
 }
 .custom-slider-nav:hover {
   opacity: 0.8;
+}
+.custom-slider-nav.next {
+  transform: translateY(-50%);
+  right: -9px;
+}
+.custom-slider-nav.prev {
+  transform: translateY(-50%);
+  left: -9px;
 }
 
 p.price {
@@ -278,7 +284,7 @@ p.price-subtotal {
 p.price-secondary-small {
   color: #555;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
 }
 p.card-text {
   padding: 0;

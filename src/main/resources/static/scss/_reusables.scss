@@ -274,18 +274,26 @@ ion-icon {
 .custom-slider-nav {
     background: $color-accent;
     position: absolute;
-    top: 50%;
-    right: -9px;
     width: 50px;
     height: 50px;
-    z-index: 10;
     border-radius: 50%;
+    z-index: 10;
     cursor: pointer;
-    transform: translateY(-50%);
     transition: all $transtion-time ease;
+    top: 50%;
 
     &:hover {
         opacity: 0.8;
+    }
+
+    &.next {
+        transform: translateY(-50%);
+        right: -9px;
+    }
+
+    &.prev {
+        transform: translateY(-50%);
+        left: -9px;
     }
 }
 
@@ -318,7 +326,7 @@ p {
     &.price-secondary-small {
         color: $color-primary-text;
         font-size: $font-size-regular;
-        font-weight: $font-wt-regular;
+        font-weight: $font-wt-medium;
     }
 
     &.card-text {

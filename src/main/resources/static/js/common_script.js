@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     function updateCartBadge() {
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-            var isLoggedIn = Boolean(obj),
+            var isLoggedIn = Boolean(parseInt(obj)),
                 cartBadge = $('#cart-count-badge');
 
             if (isLoggedIn) {
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         $('#account').click(function () {
             valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
+                var isLoggedIn = Boolean(parseInt(obj));
 
                 if (isLoggedIn) {
                     // Do something if the user is logged in
@@ -75,7 +75,7 @@ $(document).ready(function () {
 
         $('#cart').click(function () {
             valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
+                var isLoggedIn = Boolean(parseInt(obj));
 
                 if (isLoggedIn) {
                     window.location.href = 'cart';

@@ -22,6 +22,8 @@ import com.seuit.spring.watchshop.entity.CartDetail;
 import com.seuit.spring.watchshop.service.CartService;
 import com.seuit.spring.watchshop.service.CustomerService;
 
+import javassist.NotFoundException;
+
 @RestController
 @RequestMapping(value="/rest")
 public class CartRestController {
@@ -39,7 +41,7 @@ public class CartRestController {
 	}
 	
 	@PostMapping("/cart")
-	private Integer addProductToCart(@Valid @RequestBody CartAPI cartAPI) {
+	private Integer addProductToCart(@Valid @RequestBody CartAPI cartAPI) throws NotFoundException {
 		return cartService.addProductToCart(cartAPI);
 	}
 	@PutMapping("/cart/up")

@@ -29,6 +29,9 @@ import javassist.NotFoundException;
 public class CartServiceImpl implements CartService {
 
 	@Autowired
+	private ProductService productService;
+
+	@Autowired
 	private ProductRepository productRepository;
 
 	@Autowired
@@ -36,56 +39,58 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	private Session getSession() {
 		return entityManager.unwrap(Session.class);
 	}
 
 	@Override
 	@Transactional
-	public Integer addProductToCart(CartAPI cartAPI) {
-		// TODO Auto-generated method stub
-		Integer result = 1;
+	public Integer addProductToCart(CartAPI cartAPI) throws NotFoundException {
+		
+		Integer amount = cartAPI.getAmount();
+		Integer idProduct = cartAPI.getIdProduct();
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
-		if (idCustomer == null) {
-			result = 0;
-		} else {
-			System.out.println(idCustomer);
-			Integer idProduct = cartAPI.getIdProduct();
-			Integer amount = cartAPI.getAmount();
-			Optional<Product> product = null;
-			Optional<Customer> customer = null;
-			Cart cart = null;
-			try {
-				product = productRepository.findById(idProduct);
-				customer = customerRepository.findById(idCustomer);
-				if (product.isPresent() == false || customer.isPresent() == false) {
-					result = 0;
-					product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
-					customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
-				} else {
-					cart = customer.get().getCart();
+		Optional<Product> product = productRepository.findById(idProduct);
+		Optional<Customer> customer = customerRepository.findById(idCustomer);
+		// Kiểm tra xem số lượng sản phẩm trên giỏ hàng có lớn hơn số lượng sản phẩm còn
+		// trong kho không ?
+		// Kiểm tra xem khách hàng có tồn tại không ?
+		//Kiểm tra xem 
+		if (idCustomer == null || product.isPresent() == false) {
+			product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
+			customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
+			return 0;
+		}
+		Cart cart = customer.get().getCart();
+		if(cart.getCartDetails().isEmpty()==false) {
+			for (CartDetail cartDetailInCart : cart.getCartDetails()) {
+				Integer idProductInBeforeAddCart = cartDetailInCart.getProduct().getId();
+				if(idProductInBeforeAddCart==idProduct) {
+					Integer productQuantityInBeforeAddCart = cartDetailInCart.getAmount() + amount;
+					if(productQuantityInBeforeAddCart>productService.getAvailableProduct(idProductInBeforeAddCart)) {
+						return 0;
+					}
+					break;
 				}
-			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			CartDetail cartDetail = new CartDetail(cart, product.get(), amount);
-			Optional<CartDetail> isDuplicateCartDetail = cart.getCartDetails().stream()
-					.filter((c) -> c.getProduct().getId() == cartDetail.getProduct().getId()
-							&& c.getCart().getId() == cartDetail.getCart().getId())
-					.findFirst();
-			// isDuplicateCartDetail == false : add new ok
-			if (isDuplicateCartDetail.isPresent() == false) {
-				cart.getCartDetails().add(cartDetail);
-			} else {
-				isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() + amount);
 			}
 		}
-		return result;
+		CartDetail cartDetail = new CartDetail(cart, product.get(), amount);
+		Optional<CartDetail> isDuplicateCartDetail = cart.getCartDetails().stream()
+				.filter((c) -> c.getProduct().getId() == cartDetail.getProduct().getId()
+						&& c.getCart().getId() == cartDetail.getCart().getId())
+				.findFirst();
+		// isDuplicateCartDetail == false : add new ok
+		if (isDuplicateCartDetail.isPresent() == false) {
+			cart.getCartDetails().add(cartDetail);
+		} else {
+			isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() + amount);
+		}
+
+		return 1;
 	}
 
 	@Override
@@ -120,6 +125,10 @@ public class CartServiceImpl implements CartService {
 							&& c.getCart().getId() == cartDetail.getCart().getId())
 					.findFirst();
 			if (isDuplicateCartDetail.isPresent() == true) {
+				if (isDuplicateCartDetail.get().getAmount() >= isDuplicateCartDetail.get().getProduct()
+						.getAvailable()) {
+					return 0;
+				}
 				isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() + 1);
 			}
 		}
@@ -158,6 +167,9 @@ public class CartServiceImpl implements CartService {
 							&& c.getCart().getId() == cartDetail.getCart().getId())
 					.findFirst();
 			if (isDuplicateCartDetail.isPresent() == true) {
+				if (isDuplicateCartDetail.get().getAmount() <= 0) {
+					return 0;
+				}
 				isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() - 1);
 			}
 		}
@@ -243,14 +255,14 @@ public class CartServiceImpl implements CartService {
 			customer = customerRepository.findById(idCustomer);
 			if (customer.isPresent() == false) {
 				customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
-			}else {
+			} else {
 				cart = customer.get().getCart();
 			}
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
 		List<CartDetail> ls = cart.getCartDetails().stream().collect(Collectors.toList());
-		Collections.sort(ls,(o1,o2)->o1.getCreatedAt().compareTo(o2.getCreatedAt()));
+		Collections.sort(ls, (o1, o2) -> o1.getCreatedAt().compareTo(o2.getCreatedAt()));
 		return ls;
 	}
 
@@ -260,7 +272,7 @@ public class CartServiceImpl implements CartService {
 		// TODO Auto-generated method stub
 		String sql = "SELECT sum(c.amount) FROM CartDetail c";
 		Query query = this.getSession().createQuery(sql);
-		return  (Long) query.getSingleResult();
+		return (Long) query.getSingleResult();
 	}
 
 	@Override
@@ -268,13 +280,9 @@ public class CartServiceImpl implements CartService {
 		// TODO Auto-generated method stub
 		Double total = 0.0;
 		for (CartDetail cartDetail : list) {
-			total+=cartDetail.getSubtotal();
+			total += cartDetail.getSubtotal();
 		}
 		return total;
 	}
 
-	
-	
-	
-	
 }

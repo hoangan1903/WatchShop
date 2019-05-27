@@ -35,6 +35,9 @@ import javassist.NotFoundException;
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
+	private ProductService productService;
+	
+	@Autowired
 	private OrderRepository orderRepository;
 	
 	@Autowired
@@ -57,8 +60,8 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	@Transactional
-	public boolean createOrder(Integer idPayment) {
-		boolean result = true;
+	public Integer createOrder(Integer idPayment) {
+		Integer result = 1;
 		Customer customer = null;
 		Cart cart = null;
 		Optional<Payment> payment = null;
@@ -67,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 		Set<CartDetail> cartDetails = null;
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
 		if (idCustomer == null) {
-			result = false;
+			result = 0;
 		}else {
 			try {
 				customer = customerService.getInforMe();
@@ -76,6 +79,23 @@ public class OrderServiceImpl implements OrderService {
 				orderStatus = orderStatusRepository.findById(1);
 				cart = customer.getCart();
 				cartDetails = cart.getCartDetails();
+				
+				//Kiểm tra xem giỏ hàng có đang rỗng không?
+				if(cartDetails.isEmpty()==true) {
+					return 0;
+				}
+				
+				//Kiểm tra xem trong kho hàng còn đủ sản phẩm đáp ứng giỏ hàng hay không?
+				//Nếu đáp ứng được thì xử lý giảm available sản phẩm trong kho
+				for (CartDetail cartDetail : cartDetails) {
+					Integer idCartDetail = cartDetail.getProduct().getId();
+					if(cartDetail.getAmount()>productService.getAvailableProduct(idCartDetail)) {
+						return 0;
+					}else {
+						Integer productQuantityIsReduced = -cartDetail.getAmount();
+						productService.updownQuantityProduct(idCartDetail,productQuantityIsReduced);
+					}	
+				}
 				
 				order.setCustomerO(customer);
 				order.setOrderStatusO(orderStatus.get());
@@ -86,18 +106,13 @@ public class OrderServiceImpl implements OrderService {
 					OrderDetail orderDetail = new OrderDetail(order,c.getProduct(),c.getAmount());
 					order.getOrderDetails().add(orderDetail);
 				});
-				
-				System.out.println("begin");
-				System.out.println(order.getPrice());
-				System.out.println(order.getOrderStatusO().getOrderStatus());
-				System.out.println(order.getCustomerO().getName());
-				System.out.println(order.getPaymentO().getName());
+				//Xoá giỏ hàng cũ 
+				cart.getCartDetails().clear();
 				
 				orderRepository.save(order);
-				
 			}catch (Exception e) {
 				// TODO: handle exception
-				result = false;
+				result = 0;
 			}
 		}
 		return result;

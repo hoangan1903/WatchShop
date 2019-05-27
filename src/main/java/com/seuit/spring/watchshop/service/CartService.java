@@ -6,8 +6,10 @@ import java.util.Set;
 import com.seuit.spring.watchshop.entity.CartAPI;
 import com.seuit.spring.watchshop.entity.CartDetail;
 
+import javassist.NotFoundException;
+
 public interface CartService {
-	public Integer addProductToCart(CartAPI cartAPI);
+	public Integer addProductToCart(CartAPI cartAPI) throws NotFoundException;
 	public Integer upAmountProduct(Integer idProduct);
 	public Integer downAmountProduct(Integer idProduct);
 	public Integer deleteCartDetailByid(Integer idProduct);

@@ -250,6 +250,8 @@
     }
 
     function showPage(pageNumber) {
+        showLoadingScreen();
+
         currentPage = pageNumber;
         const url = getApiUrl();
 
@@ -260,6 +262,8 @@
             container.html(html);
 
             buildPagination();
+
+            hideLoadingScreen(450);
         });
     }
 

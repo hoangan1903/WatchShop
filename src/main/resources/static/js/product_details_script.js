@@ -10,11 +10,15 @@ $(document).ready(function () {
         quantityDown = $('button.quantity-down'),
         addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
-        commentContainer = $('.comment-container'),
-        postCommentBtn = $('button.post-comment'),
-        cartBadge = $('#cart-count-badge');
+        cartBadge = $('#cart-count-badge'),
+        popover = $('a#cart');
 
-    var id = parseInt(valib.getValueFromURL('id'));
+    const id = parseInt(valib.getValueFromURL('id'));
+
+    const POPOVER_TIMEOUT = 6500;
+
+    var minQty = 1,
+        maxQty;
 
     function initStickyNavbar() {
         $('.section-product-overview').waypoint({
@@ -34,55 +38,22 @@ $(document).ready(function () {
         productCarousel.carousel({
             interval: 0
         });
-
-        // Initialize Add to cart button
-        addToCartBtn.click(function () {
-            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
-
-                if (isLoggedIn) {
-                    var data = {
-                        idProduct: id,
-                        amount: parseInt(quantity.text())
-                    };
-
-                    valib.ajaxPOST({
-                        url: '/rest/cart',
-                        data: data,
-                        onSuccess: function (response) {
-                            // Show user that the product has been put into their cart
-                            valib.ajaxGET('/rest/cart', function (obj) {
-                                // Get cart count (total items) and all products
-                                var count = obj.totalAmount;
-                                // var items = obj.cart;
-
-                                cartBadge.text(count);
-                            });
-                        }
-                    });
-                } else {
-                    // Redirect to Login page
-                    window.location.href = 'login';
-                }
-            });
-        });
     }
 
-    function initQuantity() {
-
+    function setClickListeners() {
         // Initialize quantity section
+        // and set click handlers for buttons
         quantity.text(valib.toString(1));
-        quantityDown.attr('disabled', 'disabled');
 
-        // Set click handlers for buttons
         quantityUp.click(function () {
             var currentQty, newQty;
 
             currentQty = parseInt(quantity.text());
             newQty = currentQty + 1;
 
-            quantity.text(valib.toString(newQty));
-            quantityDown.removeAttr('disabled');
+            if (newQty <= maxQty) {
+                quantity.text(valib.toString(newQty));
+            }
         });
 
         quantityDown.click(function () {
@@ -91,17 +62,80 @@ $(document).ready(function () {
             currentQty = parseInt(quantity.text());
             newQty = currentQty - 1;
 
-            if (newQty > 0) {
+            if (newQty >= minQty) {
                 quantity.text(valib.toString(newQty));
-                if (newQty === 1) {
-                    $(this).attr('disabled', 'disabled');
-                }
             }
+        });
+
+        // Set click listener for "Add to cart" button
+        addToCartBtn.click(function () {
+            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+                var isLoggedIn = Boolean(parseInt(obj));
+
+                if (isLoggedIn) {
+                    // Prepare data for submission to server
+                    var data = {
+                        idProduct: id,
+                        amount: parseInt(quantity.text())
+                    };
+
+                    // Submit data to server
+                    valib.ajaxPOST({
+                        url: '/rest/cart',
+                        data: data,
+                        onSuccess: function (response) {
+                            var successful = Boolean(parseInt(response));
+                            if (successful) {
+                                // Show user that the products have been put in their cart
+                                valib.ajaxGET('/rest/products/details/' + id, function (obj) {
+                                    var brand = obj.product.firm.name,
+                                        codeName = obj.product.codeName;
+
+                                    popover
+                                        .attr('data-content', `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`)
+                                        .popover('show');
+
+                                    setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
+                                });
+
+                                // Update cart badge
+                                valib.ajaxGET('/rest/cart', function (obj) {
+                                    // Get cart count (total items)
+                                    var count = obj.totalAmount;
+                                    cartBadge.text(count);
+                                });
+
+                            } else {
+                                popover
+                                    .attr('data-content', 'Không thể thêm vào giỏ hàng vì sẽ vượt quá số lượng có sẵn của sản phẩm.')
+                                    .popover('show');
+
+                                setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
+                            }
+                        }
+                    });
+
+                } else {
+                    // Redirect to Login page
+                    window.location.href = 'login';
+                }
+            });
         });
     }
 
-    function getData() {
+    function checkAvailability() {
+        if (maxQty === 0) {
+            // Disable these buttons when product is unavailable
+            quantityUp.attr('disabled', 'disabled');
+            quantityDown.attr('disabled', 'disabled');
+            addToCartBtn.attr('disabled', 'disabled');
 
+            // And let customer know about this
+            $('p.availability-info').text('Sản phẩm chưa có sẵn hoặc đã hết hàng');
+        }
+    }
+
+    function getData() {
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
             var brand = obj.product.firm.name,
                 carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
@@ -129,7 +163,10 @@ $(document).ready(function () {
             brand$.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
             name$.text(obj.product.codeName);
             price$.text(obj.product.price.toLocaleString() + 'đ');
-            available$.text(obj.product.available);
+
+            maxQty = obj.product.available;
+            available$.text(maxQty);
+            checkAvailability();
 
             // Get data for table of product details
             table.html(`
@@ -177,50 +214,53 @@ $(document).ready(function () {
         });
     }
 
-    initStickyNavbar();
-    initComponents();
-    initQuantity();
-    getData();
-
     /*
-    function initComments() {
+    function getComments() {
+        valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
+            if (obj.length > 0) {
+                var html = '';
 
-        function getComments() {
-            valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
-                if (obj.length > 0) {
-                    var html = '';
+                // Process retrieved data into HTML
 
-                    // Process retrieved data into HTML
+                $('.comment-container').html(html);
+            } else {
 
-                    commentContainer.html(html);
-                } else {
+            }
+        });
+    }
 
-                }
-            });
-        }
+    function postComment() {
+        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+            var isLoggedIn = Boolean(parseInt(obj));
+            if (isLoggedIn) {
+                // 1. Make comment object from Comment Form
 
-        function postComment() {
-            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(obj);
-                if (isLoggedIn) {
-                    // 1. Make comment object from Comment Form
-
-                    // 2. Post this object to server
-                    valib.ajaxPOST({
-                        url: '/url where you want to submit your data',
-                        data: 'data you want to submit to server',
-                        onSuccess: function (response) {
+                // 2. Post this object to server
+                valib.ajaxPOST({
+                    url: '/url where you want to submit your data',
+                    data: 'data you want to submit to server',
+                    onSuccess: function (response) {
+                        var successful = Boolean(parseInt(response));
+                        if (successful) {
                             // 3. Do something when the request is successful
                             // e.g Refresh the comments to see the new comment
                             getComments();
                         }
-                    });
-                }
-            });
-        }
+                    }
+                });
+            }
+        });
+    }
 
+    function initComments() {
         getComments();
-        postCommentBtn.click(postComment);
+        $('button.post-comment').click(postComment);
     }
     */
+
+    initStickyNavbar();
+
+    initComponents();
+    setClickListeners();
+    getData();
 });

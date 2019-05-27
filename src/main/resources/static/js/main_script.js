@@ -1,7 +1,6 @@
 /* Homepage functionality implementation */
 
 $(document).ready(function () {
-    var sliders = $('.custom-slider');
 
     // Define sticky navigation bar behavior
     // when to appear and when to disappear
@@ -19,15 +18,17 @@ $(document).ready(function () {
     }
 
     function initSliders() {
-        let nextButtons = $('.custom-slider-nav');
+        let prevButtons = $('.custom-slider-nav.prev'),
+            nextButtons = $('.custom-slider-nav.next');
 
-        sliders.each(function (index) {
+        $('.custom-slider').each(function (index) {
             let slider = $(this),
+                prev = prevButtons.eq(index),
                 next = nextButtons.eq(index);
 
             slider.owlCarousel(
                 {
-                    loop: true,
+                    loop: false,
                     autoplay: false,
                     center: false,
                     margin: 16,
@@ -49,6 +50,10 @@ $(document).ready(function () {
                     }
                 }
             );
+
+            prev.click(function () {
+                slider.trigger('prev.owl.carousel');
+            });
 
             next.click(function () {
                 slider.trigger('next.owl.carousel');
@@ -117,9 +122,10 @@ $(document).ready(function () {
         });
     }
 
+    $('a#home-page-link').addClass('nav-link-active');
     initStickyNavbar();
-    initSliders();
 
+    initSliders();
     getBanners();
     getCatalogue();
 });

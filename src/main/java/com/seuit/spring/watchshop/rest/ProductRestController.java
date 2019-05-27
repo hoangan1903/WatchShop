@@ -165,5 +165,10 @@ public class ProductRestController {
 	Map<String, Object> findAllProductByPaginatedSort(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm, @RequestParam(name = "type") Integer type) {
 		return productService.findPaginatedSort(page, size, idFirm, type);
 	}
+	
+	@PostMapping(value="/products/updown",params = {"id","quantity"})
+	Integer updownQuantityProduct(@RequestParam(name = "id",required = true) Integer id,@RequestParam(name="quantity",required = true) Integer quantity) {
+		return productService.updownQuantityProduct(id, quantity);
+	}
 
 }

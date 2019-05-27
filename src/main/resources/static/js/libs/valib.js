@@ -1,14 +1,14 @@
 /*!
  * A JavaScript utility library built by Viet Anh -  For web development ONLY
- * Including jQuery and Sizzle CSS Selector Engine
+ * Requires jQuery and includes Sizzle CSS Selector Engine
  * Some ES6 syntax and features are used in this library
  * 
- * Created 04/09/2019 - Updated 05/20/2019
- * Current version: 1.5.4
+ * Created 04/09/2019 - Updated 05/23/2019
+ * Current version: 1.5.5
 */
 (function (global, jQuery, factory) {
 
-    // Handle 'jQuery not loaded' exception
+    // Handle: jQuery not loaded
     if (jQuery) {
         factory(global, jQuery);
     } else {
@@ -2405,7 +2405,7 @@
 
     valib.extend(valib, {
 
-        version: '1.5.4',
+        version: '1.5.5',
 
         isObject: function (obj) {
             var type = typeof obj;

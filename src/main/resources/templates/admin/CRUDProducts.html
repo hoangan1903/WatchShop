@@ -3,592 +3,535 @@
 
 <head>
 
-<title>admin Page - Dashboard</title>
-<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
-<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<title>admin Page - Dashboard</title>
+	<th:block th:include="fragments/adminPageFragment.html :: headerfiles"></th:block>
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
 
-<script type="text/javascript">
-	var pageId = Number(selectPage());
-	console.log("page id : " + pageId);
-	var size = Number(5);
-	var countProduct = null;
-	var numberPage = null;
-	window.onload = function() {
-		getCountAllProduct(size);
-		$('#mytable tbody').empty();
-		var url = selectUrlGetProduct(pageId, size, $("#myInput").val());
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				obj = JSON.parse(this.responseText);
-				console.log(obj);
-				$
-						.each(
-								obj.products,
-								function(key, value) {
-									$('#mytable tbody')
-											.append(
-													'<tr>' + '<td>'
-															+ value.id
-															+ '</td>'
-															+ '<td>'
-															+ value.codeName
-															+ '</td>'
-															+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
-															+ '<td>'
-															+ value.price
-															+ '</td>'
-															+ '<td>'
-															+ value.available
-															+ '</td>'
-															+ '<td>'
-															+ '<button class="btn btn-primary" data-title="Edit"'
-															+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-															+ value.id
-															+ ')">'
-															+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-															+ '</span>'
-															+ '</button>'
-															+ '</p>'
-															+ '</td>'
-															+ '<td>'
-															+ '<button class="btn btn-danger" data-title="Delete"'
-															+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
-															+ value.id
-															+ ')">'
-															+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
-															+ '</span>'
-															+ '</button>'
-															+ '</p>' + '</td>'
-															+ '</tr>');
-
-								});
-			}
-		};
-		xhttp.open("GET", url, true);
-		xhttp.send();
-
-		//GET API FOR FIRM , MODEL , ORIGIN
-		let dropdownFirm = $('#firmDropDownList');
-		let dropdownModel = $('#modelDropDownList');
-		let dropdownOrigin = $('#originDropDownList');
-		getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin);
-		function getApiFirmOriginModel(dropdownFirm, dropdownModel,
-				dropdownOrigin) {
-			//GET API LIST FIRM USING JQUERY
-			<!-- > BEGIN<-->
-
-			dropdownFirm.empty();
-			dropdownFirm
-					.append('<option selected="true" disabled>Choose Firm</option>');
-			dropdownFirm.prop('selectedIndex', 0);
-			// Populate dropdown with list of provinces
-			$.getJSON('/rest/firm', function(data) {
-				$.each(data, function(key, entry) {
-					dropdownFirm.append($('<option></option>').attr('value',
-							entry.id).text(entry.name));
-				})
-			});
-			<!-- > END<-->
-
-			//GET API LIST MODEL USING JQUERY
-			<!-- > BEGIN<-->
-			dropdownModel.empty();
-			dropdownModel
-					.append('<option selected="true" disabled>Choose Model</option>');
-			dropdownModel.prop('selectedIndex', 0);
-			// Populate dropdown with list of provinces
-			$.getJSON('/rest/model', function(data) {
-				$.each(data, function(key, entry) {
-					dropdownModel.append($('<option></option>').attr('value',
-							entry.id).text(entry.name));
-				})
-			});
-			<!-- > END<-->
-
-			//GET API LIST ORIGIN USING JQUERY
-			<!-- > BEGIN<-->
-			dropdownOrigin.empty();
-			dropdownOrigin
-					.append('<option selected="true" disabled>Choose Origin</option>');
-			dropdownOrigin.prop('selectedIndex', 0);
-			// Populate dropdown with list of provinces
-			$.getJSON('/rest/origin', function(data) {
-				$.each(data, function(key, entry) {
-					dropdownOrigin.append($('<option></option>').attr('value',
-							entry.id).text(entry.name));
-				})
-			});
-			<!-- > END<-->
-		}
-		let addDropdownFirm = $('#addFirmDropDownList');
-		let addDropdownModel = $('#addModelDropDownList');
-		let addDropdownOrigin = $('#addOriginDropDownList');
-		getApiFirmOriginModel(addDropdownFirm, addDropdownModel,
-				addDropdownOrigin);
-	}
-
-	$(document)
-			.ready(
-					function() {
-
-						//search Input field
-						$("#myInput")
-								.on(
-										"keyup",
-										delay(function() {
-											$('#mytable tbody').empty();
-											$('#ulPagination').empty();
-
-											if (isSelectSearchInputEmpty() == true) {
-												getCountAllProduct(size);
-											}
-											var url = selectUrlGetProduct(
-													pageId, size, $("#myInput")
-															.val());
-											var xhttp = new XMLHttpRequest();
-											xhttp.onreadystatechange = function() {
-												if (this.readyState == 4
-														&& this.status == 200) {
-													obj = JSON
-															.parse(this.responseText);
-
-													console.log(obj);
-													if (isSelectSearchInputEmpty() == false) {
-														
-														for (var i = 0; i < obj.pageCountTotal; i++) {
-															$('#ulPagination')
-																	.append(
-																			'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page='
-																					+ i
-																					+ '&size=3">'
-																					+ (i + 1)
-																					+ '</a></li>')
-														}
-													}
-
-													$
-															.each(
-																	obj.products,
-																	function(
-																			key,
-																			value) {
-																		$(
-																				'#mytable tbody')
-																				.append(
-																						'<tr>'
-																								+ '<td>'
-																								+ value.id
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.codeName
-																								+ '</td>'
-																								+ '<td><img src="'+value.image+'" alt="'+value.image+'"width="100" height="80"></td>'
-																								+ '<td>'
-																								+ value.price
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.available
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-primary" data-title="Edit"'
-																								+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-danger" data-title="Delete"'
-																								+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '</tr>');
-
-																	});
-												}
-											};
-											xhttp.open("GET", url, true);
-											xhttp.send();
-										},500));
-
+	<script type="text/javascript">
+		var pageId = Number(selectPage());
+		console.log("page id : " + pageId);
+		var size = Number(5);
+		var countProduct = null;
+		var numberPage = null;
+		window.onload = function () {
+			getCountAllProduct(size);
+			$('#mytable tbody').empty();
+			var url = selectUrlGetProduct(pageId, size, $("#myInput").val());
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					obj = JSON.parse(this.responseText);
+					console.log(obj);
+					$.each(obj.products, function (key, value) {
+						$('#mytable tbody').append(
+							'<tr>' + '<td>' +
+							value.id +
+							'</td>' +
+							'<td>' +
+							value.codeName +
+							'</td>' +
+							'<td><img src="' + value.image + '" alt="' + value.image +
+							'"width="100" height="80"></td>' +
+							'<td>' +
+							value.price +
+							'</td>' +
+							'<td>' +
+							value.available +
+							'</td>' +
+							'<td>' +
+							'<button class="btn btn-primary" data-title="Edit"' +
+							'data-toggle="modal" data-target="#edit" onclick="editOnClick(' +
+							value.id +
+							')">' +
+							'<span class="icon text-white-50"> <i class="material-icons">edit</i>' +
+							'</span>' +
+							'</button>' +
+							'</p>' +
+							'</td>' +
+							'<td>' +
+							'<button class="btn btn-danger" data-title="Delete"' +
+							'data-toggle="modal" data-target="#delete" onclick="deleteOnClick(' +
+							value.id +
+							')">' +
+							'<span class="icon text-white-50"><i class="material-icons">delete</i>' +
+							'</span>' +
+							'</button>' +
+							'</p>' + '</td>' +
+							'<td>' +
+							'<button class="btn btn-success" data-title="Delete"' +
+							'data-toggle="modal" data-target="#updown" onclick="deleteOnClick(' +
+							value.id +
+							')">' +
+							'<span class="icon text-white-50"><i class="material-icons">+/-</i>' +
+							'</span>' +
+							'</button>' +
+							'</p>' + '</td>' +
+							'</tr>');
 					});
-	function editOnClick(id) {
-		console.log("idProduct :" + id);
-		document.getElementById("id").value = id;
-		$(document)
-				.ready(
-						function() {
-							var url = "/rest/products/details/" + id;
-							var xhttp = new XMLHttpRequest();
-							xhttp.onreadystatechange = function() {
-								if (this.readyState == 4 && this.status == 200) {
-									//convert to JSON 
-									obj = JSON.parse(this.responseText);
-									document.getElementById("codeName").value = obj.product.codeName;
-									document.getElementById("image").value = obj.product.image;
-									document.getElementById("price").value = obj.product.price;
-									document.getElementById("available").value = obj.product.available;
-									document.getElementById("size").value = obj.size;
-									document.getElementById("caseMaterial").value = obj.caseMaterial;
-									document.getElementById("chainMaterial").value = obj.chainMaterial;
-									document.getElementById("glassMaterial").value = obj.glassMaterial;
-									document.getElementById("waterResistance").value = obj.waterResistance;
-									document.getElementById("otherFunction").value = obj.otherFunction;
-									document.getElementById("insurance").value = obj.insurance;
-
-									//DELETE OLD IMAGES
-									//CREATE TITLE FOR INPUT
-									//LOOP FOR IMAGES
-									$('#imagesDiv').empty();
-									$('#imagesDiv').append('Other image :');
-									$
-											.each(
-													obj.images,
-													function(key, value) {
-														$('#imagesDiv')
-																.append(
-																		'<input class="form-control" type="hidden" id="imageId'+key+'" value="'+value.id+'">');
-														$('#imagesDiv')
-																.append(
-																		'<input class="form-control" type="text" id="imageUrl'+key+'" value="'+value.url+'"></br>');
-													});
-
-									document.getElementById("idFirm").value = obj.product.firm.id;
-									document.getElementById("nameFirm").value = obj.product.firm.name;
-
-									document.getElementById("idOrigin").value = obj.origin.id;
-									document.getElementById("nameOrigin").value = obj.origin.name;
-
-									document.getElementById("idModel").value = obj.model.id;
-									document.getElementById("nameModel").value = obj.origin.name;
-
-								}
-							};
-							xhttp.open("GET", url, true);
-							xhttp.send();
-						});
-	}
-
-	function submitEdit() {
-		var data = {};
-		var product = {};
-		var productDetail = {};
-		var images = [];
-		if (document.getElementById("id")) {
-			var id = document.getElementById("id").value;
-		}
-
-		var url = "/rest/products/" + id;
-		var xhttp = new XMLHttpRequest();
-
-		product.codeName = $('#codeName').val();
-		product.image = $('#image').val();
-		product.price = Number($('#price').val());
-		product.available = Number($('#available').val());
-
-		productDetail.size = Number($('#size').val());
-		productDetail.caseMaterial = $('#caseMaterial').val();
-		productDetail.chainMaterial = $('#chainMaterial').val();
-		productDetail.glassMaterial = $('#glassMaterial').val();
-		productDetail.waterResistance = Number($('#waterResistance').val());
-		productDetail.otherFunction = $('#otherFunction').val();
-		productDetail.insurance = Number($('#insurance').val());
-
-		var countImage = $('#imagesDiv').children('input').length / 2;
-		var num = Number(countImage);
-		console.log(num + 1);
-
-		for (var i = 0; i < num; i++) {
-			var imageIdKey = "#imageId" + i;
-			var imageUrlKey = "#imageUrl" + i;
-			var idImage = $(imageIdKey).val();
-			var urlImage = $(imageUrlKey).val();
-			console.log("id image :" + idImage);
-			console.log("url image :" + urlImage);
-			var imageJson = {};
-			imageJson.id = Number(idImage);
-			imageJson.url = urlImage;
-			console.log(imageJson);
-			images.push(imageJson);
-
-		}
-		console.log(images);
-
-		data.product = product;
-		data.productDetail = productDetail;
-		data.images = images;
-		data.idFirm = Number($('#firmDropDownList').val());
-		data.idModel = Number($('#modelDropDownList').val());
-		data.idOrigin = Number($('#originDropDownList').val());
-
-		var json = JSON.stringify(data);
-		console.log("json edit : " + json);
-		xhttp.open("PUT", url, true);
-		xhttp.setRequestHeader('Content-type',
-				'application/json; charset=utf-8');
-		xhttp.onload = function() {
-
-			if (xhttp.readyState == 4 && xhttp.status == "200") {
-				console.log("edit ok");
-				alert("Edit Product Success");
-				location.reload();
-			} else {
-				console.log("edit error");
-				alert("Edit Product Error");
-			}
-		}
-		xhttp.send(json);
-	}
-	function deleteProduct() {
-		var xhttp = new XMLHttpRequest();
-		if (document.getElementById("id")) {
-			var id = document.getElementById("id").value;
-		}
-		var url = "/rest/products/" + id;
-		xhttp.open("DELETE", url, true);
-		xhttp.onload = function() {
-			if (xhttp.readyState == 4 && xhttp.status == "200") {
-				console.log("delete ok");
-				alert("Delete Product Success");
-				location.reload();
-			} else {
-				console.log("delete error");
-				alert("delete Product Error");
-			}
-		}
-		xhttp.send();
-	}
-	function deleteOnClick(id) {
-		document.getElementById("id").value = id;
-	}
-
-	function submitSave() {
-		$(document)
-				.ready(
-						function() {
-							var data = {};
-							var product = {};
-							var productDetail = {};
-							var images = [];
-							var url = "/rest/products";
-							var xhttp = new XMLHttpRequest();
-
-							product.codeName = $('#addCodeName').val();
-							product.image = $('#addImage').val();
-							product.price = Number($('#addPrice').val());
-							product.available = Number($('#addAvailable').val());
-
-							productDetail.size = Number($('#addSize').val());
-							productDetail.caseMaterial = $('#addCaseMaterial')
-									.val();
-							productDetail.chainMaterial = $('#addChainMaterial')
-									.val();
-							productDetail.glassMaterial = $('#addGlassMaterial')
-									.val();
-							productDetail.waterResistance = Number($(
-									'#addWaterResistance').val());
-							productDetail.otherFunction = $('#addOtherFunction')
-									.val();
-							productDetail.insurance = Number($('#addInsurance')
-									.val());
-
-							var countImage = $('#addDivImage')
-									.children('input').length;
-							var num = Number(countImage);
-							console.log(num + 1);
-
-							for (var i = 0; i < num; i++) {
-								var imageUrlKey = "#addImageUrl" + i;
-								var urlImage = $(imageUrlKey).val();
-								console.log("url image :" + urlImage);
-								var imageJson = {};
-								imageJson.url = urlImage;
-								console.log(imageJson);
-								images.push(imageJson);
-
-							}
-							console.log(images);
-
-							data.product = product;
-							data.productDetail = productDetail;
-							data.images = images;
-							data.idFirm = Number($('#addFirmDropDownList')
-									.val());
-							data.idModel = Number($('#addModelDropDownList')
-									.val());
-							data.idOrigin = Number($('#addOriginDropDownList')
-									.val());
-
-							var json = JSON.stringify(data);
-							console.log("json add : " + json);
-							xhttp.open("POST", url, true);
-							xhttp.setRequestHeader('Content-type',
-									'application/json; charset=utf-8');
-							xhttp.onload = function() {
-
-								if (xhttp.readyState == 4
-										&& xhttp.status == "200") {
-									console.log("Add ok");
-									alert("Add Product Success");
-									location.reload();
-								} else {
-									console.log("Add error");
-									alert("Add Product Error");
-								}
-							}
-							xhttp.send(json);
-						});
-	}
-	function addInputOtherImages(i) {
-		$('#buttonAddOtherImage1').attr("disabled", "disabled");
-		$('#buttonAddOtherImage2').attr("disabled", "disabled");
-		$('#buttonAddOtherImage3').attr("disabled", "disabled");
-		$('#buttonAddOtherImage4').attr("disabled", "disabled");
-		$('#buttonAddOtherImage5').attr("disabled", "disabled");
-		if (i == 'delete') {
-			$('#buttonAddOtherImage1').removeAttr("disabled");
-			$('#buttonAddOtherImage2').removeAttr("disabled");
-			$('#buttonAddOtherImage3').removeAttr("disabled");
-			$('#buttonAddOtherImage4').removeAttr("disabled");
-			$('#buttonAddOtherImage5').removeAttr("disabled");
-			$('#addDivImage').empty();
-		} else {
-			var buttonAddOtherImageId = "#buttonAddOtherImage" + j;
-			for (var j = 0; j < i; j++) {
-				$('#addDivImage')
-						.append(
-								'<br><input class="form-control " type="text" id="addImageUrl'+j+'" required="required" placeholder="E.g : 01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg">');
-			}
-		}
-
-	}
-	function selectPage() {
-		$.urlParam = function(name) {
-			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
-					.exec(window.location.href);
-			if (results == null) {
-				return null;
-			}
-			return decodeURI(results[1]) || 0;
-		}
-		if ($.urlParam('page') == null)
-			return 0;
-		else {
-			return $.urlParam('page');
-		}
-	}
-	//select url 
-	function selectUrlGetProduct(pageId, size, keyword) {
-		var url = "";
-		if (isSelectSearchInputEmpty() == true) {
-			url = '/rest/products?page=' + String(pageId) + '&size='
-					+ String(size);
-		} else {
-			url = "/rest/products/find?keyword=" + keyword;
-		}
-		console.log(url);
-		return url;
-	}
-	function isSelectSearchInputEmpty() {
-		if ($('#myInput').val().toLowerCase() == "") {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	function getCountAllProduct(size) {
-		var url = "/rest/products/count";
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				countProduct = Number(this.responseText);
-				console.log(countProduct);
-				numberPage = countProduct / size;
-				console.log(numberPage);
-
-				for (var i = 0; i < numberPage; i++) {
-					$('#ulPagination').append(
-							'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page='
-									+ i + '&size=3">' + (i + 1) + '</a></li>')
 				}
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
+			//GET API FOR FIRM , MODEL , ORIGIN
+			let dropdownFirm = $('#firmDropDownList');
+			let dropdownModel = $('#modelDropDownList');
+			let dropdownOrigin = $('#originDropDownList');
+			getApiFirmOriginModel(dropdownFirm, dropdownModel, dropdownOrigin);
 
+			function getApiFirmOriginModel(dropdownFirm, dropdownModel,
+				dropdownOrigin) {
+				//GET API LIST FIRM USING JQUERY
+				//<!-- > BEGIN<-->
+				dropdownFirm.empty();
+				dropdownFirm.append('<option selected="true" disabled>Choose Firm</option>');
+				dropdownFirm.prop('selectedIndex', 0);
+				// Populate dropdown with list of provinces
+				$.getJSON('/rest/firms', function (data) {
+					$.each(data.firms, function (key, entry) {
+						dropdownFirm.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+					})
+				});
+				//<!-- > END<-->
+				//GET API LIST MODEL USING JQUERY
+				//<!-- > BEGIN<-->
+				dropdownModel.empty();
+				dropdownModel.append('<option selected="true" disabled>Choose Model</option>');
+				dropdownModel.prop('selectedIndex', 0);
+				// Populate dropdown with list of provinces
+				$.getJSON('/rest/models', function (data) {
+					$.each(data.models, function (key, entry) {
+						dropdownModel.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+					})
+				});
+				//<!-- > END<-->
+				//GET API LIST ORIGIN USING JQUERY
+				//<!-- > BEGIN<-->
+				dropdownOrigin.empty();
+				dropdownOrigin.append('<option selected="true" disabled>Choose Origin</option>');
+				dropdownOrigin.prop('selectedIndex', 0);
+				// Populate dropdown with list of provinces
+				$.getJSON('/rest/origins', function (data) {
+					$.each(data.origins, function (key, entry) {
+						dropdownOrigin.append($('<option></option>').attr('value',
+							entry.id).text(entry.name));
+					})
+				});
+				//<!-- > END<-->
 			}
-		};
-		xhttp.open("GET", url, true);
-		xhttp.send();
-	}
-	function delay(callback, ms) {
-	    var timer = 0;
-	    return function () {
-	        var context = this, args = arguments;
-	        clearTimeout(timer);
-	        timer = setTimeout(function () {
-	            callback.apply(context, args);
-	        }, ms || 0);
-	    };
-	}
-</script>
+			let addDropdownFirm = $('#addFirmDropDownList');
+			let addDropdownModel = $('#addModelDropDownList');
+			let addDropdownOrigin = $('#addOriginDropDownList');
+			getApiFirmOriginModel(addDropdownFirm, addDropdownModel, addDropdownOrigin);
+		}
+
+		$(document).ready(function () {
+			//search Input field
+			$("#myInput").on("keyup", delay(function () {
+				$('#mytable tbody').empty();
+				$('#ulPagination').empty();
+				if (isSelectSearchInputEmpty() == true) {
+					getCountAllProduct(size);
+				}
+				var url = selectUrlGetProduct(pageId, size, $("#myInput").val());
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						obj = JSON.parse(this.responseText);
+						console.log(obj);
+						if (isSelectSearchInputEmpty() == false) {
+							for (var i = 0; i < obj.pageCountTotal; i++) {
+								$('#ulPagination').append(
+									'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page=' +
+									i +
+									'&size=3">' +
+									(i + 1) +
+									'</a></li>');
+							}
+						}
+						$.each(obj.products, function (key, value) {
+							$('#mytable tbody').append(
+								'<tr>' + '<td>' +
+								value.id +
+								'</td>' +
+								'<td>' +
+								value.codeName +
+								'</td>' +
+								'<td><img src="' + value.image + '" alt="' + value.image +
+								'"width="100" height="80"></td>' +
+								'<td>' +
+								value.price +
+								'</td>' +
+								'<td>' +
+								value.available +
+								'</td>' +
+								'<td>' +
+								'<button class="btn btn-primary" data-title="Edit"' +
+								'data-toggle="modal" data-target="#edit" onclick="editOnClick(' +
+								value.id +
+								')">' +
+								'<span class="icon text-white-50"> <i class="material-icons">edit</i>' +
+								'</span>' +
+								'</button>' +
+								'</p>' +
+								'</td>' +
+								'<td>' +
+								'<button class="btn btn-danger" data-title="Delete"' +
+								'data-toggle="modal" data-target="#delete" onclick="deleteOnClick(' +
+								value.id +
+								')">' +
+								'<span class="icon text-white-50"><i class="material-icons">delete</i>' +
+								'</span>' +
+								'</button>' +
+								'</p>' + '</td>' +
+								'<td>' +
+								'<button class="btn btn-success" data-title="Delete"' +
+								'data-toggle="modal" data-target="#updown" onclick="deleteOnClick(' +
+								value.id +
+								')">' +
+								'<span class="icon text-white-50"><i class="material-icons">+/-</i>' +
+								'</span>' +
+								'</button>' +
+								'</p>' + '</td>' +
+								'</tr>');
+						});
+					}
+				};
+				xhttp.open("GET", url, true);
+				xhttp.send();
+			}, 500));
+		});
+
+		function editOnClick(id) {
+			console.log("idProduct :" + id);
+			document.getElementById("id").value = id;
+			$(document).ready(function () {
+				var url = "/rest/products/details/" + id;
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						//convert to JSON 
+						obj = JSON.parse(this.responseText);
+						document.getElementById("codeName").value = obj.product.codeName;
+						document.getElementById("image").value = obj.product.image;
+						document.getElementById("price").value = obj.product.price;
+						document.getElementById("available").value = obj.product.available;
+						document.getElementById("size").value = obj.size;
+						document.getElementById("caseMaterial").value = obj.caseMaterial;
+						document.getElementById("chainMaterial").value = obj.chainMaterial;
+						document.getElementById("glassMaterial").value = obj.glassMaterial;
+						document.getElementById("waterResistance").value = obj.waterResistance;
+						document.getElementById("otherFunction").value = obj.otherFunction;
+						document.getElementById("insurance").value = obj.insurance;
+						//DELETE OLD IMAGES
+						//CREATE TITLE FOR INPUT
+						//LOOP FOR IMAGES
+						$('#imagesDiv').empty();
+						$('#imagesDiv').append('Other image :');
+						$.each(obj.images, function (key, value) {
+
+							$('#imagesDiv').append(
+								'<input class="form-control" type="hidden" id="imageId' +
+								key + '" value="' + value.id + '">');
+
+							$('#imagesDiv').append(
+								'<input class="form-control" type="text" id="imageUrl' +
+								key + '" value="' + value.url + '"></br>');
+						});
+						document.getElementById("idFirm").value = obj.product.firm.id;
+						document.getElementById("nameFirm").value = obj.product.firm.name;
+						document.getElementById("idOrigin").value = obj.origin.id;
+						document.getElementById("nameOrigin").value = obj.origin.name;
+						document.getElementById("idModel").value = obj.model.id;
+						document.getElementById("nameModel").value = obj.origin.name;
+					}
+				};
+				xhttp.open("GET", url, true);
+				xhttp.send();
+			});
+		}
+
+		function submitEdit() {
+			var data = {};
+			var product = {};
+			var productDetail = {};
+			var images = [];
+			if (document.getElementById("id")) {
+				var id = document.getElementById("id").value;
+			}
+			var url = "/rest/products/" + id;
+			var xhttp = new XMLHttpRequest();
+			product.codeName = $('#codeName').val();
+			product.image = $('#image').val();
+			product.price = Number($('#price').val());
+			product.available = Number($('#available').val());
+			productDetail.size = Number($('#size').val());
+			productDetail.caseMaterial = $('#caseMaterial').val();
+			productDetail.chainMaterial = $('#chainMaterial').val();
+			productDetail.glassMaterial = $('#glassMaterial').val();
+			productDetail.waterResistance = Number($('#waterResistance').val());
+			productDetail.otherFunction = $('#otherFunction').val();
+			productDetail.insurance = Number($('#insurance').val());
+			var countImage = $('#imagesDiv').children('input').length / 2;
+			var num = Number(countImage);
+			console.log(num + 1);
+			for (var i = 0; i < num; i++) {
+				var imageIdKey = "#imageId" + i;
+				var imageUrlKey = "#imageUrl" + i;
+				var idImage = $(imageIdKey).val();
+				var urlImage = $(imageUrlKey).val();
+				console.log("id image :" + idImage);
+				console.log("url image :" + urlImage);
+				var imageJson = {};
+				imageJson.id = Number(idImage);
+				imageJson.url = urlImage;
+				console.log(imageJson);
+				images.push(imageJson);
+			}
+			console.log(images);
+			data.product = product;
+			data.productDetail = productDetail;
+			data.images = images;
+			data.idFirm = Number($('#firmDropDownList').val());
+			data.idModel = Number($('#modelDropDownList').val());
+			data.idOrigin = Number($('#originDropDownList').val());
+			var json = JSON.stringify(data);
+			console.log("json edit : " + json);
+			xhttp.open("PUT", url, true);
+			xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+			xhttp.onload = function () {
+				if (xhttp.readyState == 4 && xhttp.status == "200") {
+					console.log("edit ok");
+					alert("Edit Product Success");
+					location.reload();
+				} else {
+					console.log("edit error");
+					alert("Edit Product Error");
+				}
+			}
+			xhttp.send(json);
+		}
+
+		function deleteProduct() {
+			var xhttp = new XMLHttpRequest();
+			if (document.getElementById("id")) {
+				var id = document.getElementById("id").value;
+			}
+			var url = "/rest/products/" + id;
+			xhttp.open("DELETE", url, true);
+			xhttp.onload = function () {
+				if (xhttp.readyState == 4 && xhttp.status == "200") {
+					console.log("delete ok");
+					alert("Delete Product Success");
+					location.reload();
+				} else {
+					console.log("delete error");
+					alert("delete Product Error");
+				}
+			}
+			xhttp.send();
+		}
+
+		function deleteOnClick(id) {
+			document.getElementById("id").value = id;
+		}
+
+		function submitSave() {
+			$(document).ready(function () {
+				var data = {};
+				var product = {};
+				var productDetail = {};
+				var images = [];
+				var url = "/rest/products";
+				var xhttp = new XMLHttpRequest();
+
+				product.codeName = $('#addCodeName').val();
+				product.image = $('#addImage').val();
+				product.price = Number($('#addPrice').val());
+				product.available = Number($('#addAvailable').val());
+				productDetail.size = Number($('#addSize').val());
+				productDetail.caseMaterial = $('#addCaseMaterial').val();
+				productDetail.chainMaterial = $('#addChainMaterial').val();
+				productDetail.glassMaterial = $('#addGlassMaterial').val();
+				productDetail.waterResistance = Number($('#addWaterResistance').val());
+				productDetail.otherFunction = $('#addOtherFunction').val();
+				productDetail.insurance = Number($('#addInsurance').val());
+
+				var countImage = $('#addDivImage').children('input').length;
+				var num = Number(countImage);
+				console.log(num + 1);
+				for (var i = 0; i < num; i++) {
+					var imageUrlKey = "#addImageUrl" + i;
+					var urlImage = $(imageUrlKey).val();
+					console.log("url image :" + urlImage);
+					var imageJson = {};
+					imageJson.url = urlImage;
+					console.log(imageJson);
+					images.push(imageJson);
+				}
+				console.log(images);
+				data.product = product;
+				data.productDetail = productDetail;
+				data.images = images;
+				data.idFirm = Number($('#addFirmDropDownList').val());
+				data.idModel = Number($('#addModelDropDownList').val());
+				data.idOrigin = Number($('#addOriginDropDownList').val());
+				var json = JSON.stringify(data);
+				console.log("json add : " + json);
+				xhttp.open("POST", url, true);
+				xhttp.setRequestHeader('Content-type',
+					'application/json; charset=utf-8');
+				xhttp.onload = function () {
+					if (xhttp.readyState == 4 &&
+						xhttp.status == "200") {
+						console.log("Add ok");
+						alert("Add Product Success");
+						location.reload();
+					} else {
+						console.log("Add error");
+						alert("Add Product Error");
+					}
+				}
+				xhttp.send(json);
+			});
+		}
+
+		function addInputOtherImages(i) {
+			$('#buttonAddOtherImage1').attr("disabled", "disabled");
+			$('#buttonAddOtherImage2').attr("disabled", "disabled");
+			$('#buttonAddOtherImage3').attr("disabled", "disabled");
+			$('#buttonAddOtherImage4').attr("disabled", "disabled");
+			$('#buttonAddOtherImage5').attr("disabled", "disabled");
+			if (i == 'delete') {
+				$('#buttonAddOtherImage1').removeAttr("disabled");
+				$('#buttonAddOtherImage2').removeAttr("disabled");
+				$('#buttonAddOtherImage3').removeAttr("disabled");
+				$('#buttonAddOtherImage4').removeAttr("disabled");
+				$('#buttonAddOtherImage5').removeAttr("disabled");
+				$('#addDivImage').empty();
+			} else {
+				var buttonAddOtherImageId = "#buttonAddOtherImage" + j;
+				for (var j = 0; j < i; j++) {
+					$('#addDivImage').append(
+						'<br><input class="form-control " type="text" id="addImageUrl' + j +
+						'" required="required" placeholder="E.g : 01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg">'
+					);
+				}
+			}
+		}
+
+		function selectPage() {
+			$.urlParam = function (name) {
+				var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+					.exec(window.location.href);
+				if (results == null) {
+					return null;
+				}
+				return decodeURI(results[1]) || 0;
+			}
+			if ($.urlParam('page') == null)
+				return 0;
+			else {
+				return $.urlParam('page');
+			}
+		}
+		//select url 
+		function selectUrlGetProduct(pageId, size, keyword) {
+			var url = "";
+			if (isSelectSearchInputEmpty() == true) {
+				url = '/rest/products?page=' + String(pageId) + '&size=' +
+					String(size);
+			} else {
+				url = "/rest/products/find?keyword=" + keyword;
+			}
+			console.log(url);
+			return url;
+		}
+
+		function isSelectSearchInputEmpty() {
+			if ($('#myInput').val().toLowerCase() == "") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function getCountAllProduct(size) {
+			var url = "/rest/products/count";
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					countProduct = Number(this.responseText);
+					console.log(countProduct);
+					numberPage = countProduct / size;
+					console.log(numberPage);
+					for (var i = 0; i < numberPage; i++) {
+						$('#ulPagination').append(
+							'<li class="page-item"><a class="page-link" href="/admin/CRUD_Products?page=' +
+							i + '&size=3">' + (i + 1) + '</a></li>')
+					}
+				}
+			};
+			xhttp.open("GET", url, true);
+			xhttp.send();
+		}
+
+		function delay(callback, ms) {
+			var timer = 0;
+			return function () {
+				var context = this,
+					args = arguments;
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					callback.apply(context, args);
+				}, ms || 0);
+			};
+		}
+	</script>
 </head>
+
 <body id="page-top">
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<ul th:replace="fragments/adminPageFragment.html :: sideBar"></ul>
 		<!-- End of Sidebar -->
-
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
 			<!-- Main Content -->
 			<div id="content">
 				<!-- Topbar -->
 				<nav th:replace="fragments/adminPageFragment.html :: topBar">
 				</nav>
 				<!-- End of Topbar -->
-
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<!-- content -->
 					<div class="group-control">
 						<div class="row">
-
 							<div class="col-md-12">
 								<div class="row">
 									<div class="col-sm-8">
 										<h4>Products</h4>
 									</div>
-
 									<div class="col-sm-2">
-										<button class="btn btn-info add-new" data-title="import"
-											data-toggle="modal" data-target="#import">Import
+										<button class="btn btn-info add-new" data-title="import" data-toggle="modal"
+											data-target="#import">Import
 											Products</button>
 									</div>
 									<div class="col-sm-2">
-										<button class="btn btn-info add-new" data-title="add"
-											data-toggle="modal" data-target="#add">Add Product</button>
+										<button class="btn btn-info add-new" data-title="add" data-toggle="modal"
+											data-target="#add">Add Product</button>
 									</div>
 								</div>
 								<br> <br>
 								<p>Type name of Product in the Search</p>
-								<input class="form-control" id="myInput" type="text"
-									placeholder="Search.."> <br> <br>
+								<input class="form-control" id="myInput" type="text" placeholder="Search.."> <br> <br>
 								<div class="table-responsive">
-
 									<table id="mytable" class="table table-bordred table-striped">
-
 										<thead>
-
-
 											<th>ID</th>
 											<th>Code</th>
 											<th>Image</th>
@@ -597,43 +540,33 @@
 											<th>Edit</th>
 											<th>Delete</th>
 										</thead>
-
-										<tbody>
+										<tbody id="mgr-product-list">
 
 										</tbody>
-
 									</table>
-
 									<div class="clearfix">
 										<nav aria-label="Page navigation example">
 											<ul class="pagination" id="ulPagination">
-
 											</ul>
 										</nav>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					</div>
 					<!-- end content -->
 				</div>
-
-
-				<div class="modal fade" id="edit" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
+				<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 								<h4 class="modal-title custom_align" id="Heading">Edit
 									Product Detail</h4>
 							</div>
 							<div class="modal-body">
-
 								<div class="form-group">
 									<input class="form-control " type="hidden" id="id">
 								</div>
@@ -647,64 +580,51 @@
 									Price : <input class="form-control " type="number" id="price">
 								</div>
 								<div class="form-group">
-									Available : <input class="form-control " type="number"
-										id="available">
+									Available : <input class="form-control " type="number" id="available">
 								</div>
 								<div class="form-group">
 									Size : <input class="form-control " type="number" id="size">
 								</div>
 								<div class="form-group">
-									Case Material : <input class="form-control " type="text"
-										id="caseMaterial">
+									Case Material : <input class="form-control " type="text" id="caseMaterial">
 								</div>
 								<div class="form-group">
-									Chain Material : <input class="form-control " type="text"
-										id="chainMaterial">
+									Chain Material : <input class="form-control " type="text" id="chainMaterial">
 								</div>
 								<div class="form-group">
-									Glass Material : <input class="form-control " type="text"
-										id="glassMaterial">
+									Glass Material : <input class="form-control " type="text" id="glassMaterial">
 								</div>
 								<div class="form-group">
-									Water Resistance(m) : <input class="form-control "
-										type="number" id="waterResistance">
+									Water Resistance(m) : <input class="form-control " type="number"
+										id="waterResistance">
 								</div>
 								<div class="form-group">
-									Other Function : <input class="form-control " type="text"
-										id="otherFunction">
+									Other Function : <input class="form-control " type="text" id="otherFunction">
 								</div>
 								<div class="form-group">
-									Insurance Time (Year) : <input class="form-control "
-										type="number" id="insurance">
+									Insurance Time (Year) : <input class="form-control " type="number" id="insurance">
 								</div>
 								<div class="form-group" id="imagesDiv"></div>
 								<!-- Drop Down List Firm -->
 								<div class="form-group">
-									<select class="form-control" name="firmDropDownList"
-										id="firmDropDownList">
+									<select class="form-control" name="firmDropDownList" id="firmDropDownList">
 									</select>
 								</div>
-
 								<!-- Drop Down List Model -->
 								<div class="form-group">
-									<select class="form-control" name="modelDropDownList"
-										id="modelDropDownList">
+									<select class="form-control" name="modelDropDownList" id="modelDropDownList">
 									</select>
 								</div>
-
 								<!-- Drop Down List Origin -->
 								<div class="form-group">
-									<select class="form-control" name="originDropDownList"
-										id="originDropDownList">
+									<select class="form-control" name="originDropDownList" id="originDropDownList">
 									</select>
 								</div>
-
-
 							</div>
 							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;" onclick="submitEdit()">
-									<span class="glyphicon glyphicon-ok-sign"></span> Update
+								<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
+									onclick="submitEdit()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Update
 								</button>
 							</div>
 						</div>
@@ -712,14 +632,11 @@
 					</div>
 					<!-- /.modal-dialog -->
 				</div>
-
-				<div class="modal fade" id="add" tabindex="-1" role="dialog"
-					aria-labelledby="add" aria-hidden="true">
+				<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 								<h4 class="modal-title custom_align" id="Heading">Add
@@ -727,96 +644,82 @@
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
-									Code : <input class="form-control " type="text"
-										id="addCodeName" required="required"
+									Code : <input class="form-control " type="text" id="addCodeName" required="required"
 										placeholder="E.g : SDE00001W0">
 								</div>
 								<div class="form-group">
-									Image : <input class="form-control " type="text" id="addImage"
-										required="required"
+									Image : <input class="form-control " type="text" id="addImage" required="required"
 										placeholder="E.g : 01.slatic.net/original/f8dbea25d5598daeba0910d36343e693.jpg">
 								</div>
 								<div class="form-group">
-									Price : <input class="form-control " type="number"
-										id="addPrice" required="required" placeholder="E.g : 200">
+									Price : <input class="form-control " type="number" id="addPrice" required="required"
+										placeholder="E.g : 200">
 								</div>
 								<div class="form-group">
-									Available : <input class="form-control " type="number"
-										id="addAvailable" required="required" placeholder="E.g : 1">
+									Available : <input class="form-control " type="number" id="addAvailable"
+										required="required" placeholder="E.g : 1">
 								</div>
 								<div class="form-group">
-									Size : <input class="form-control " type="number" id="addSize"
-										required="required" placeholder="E.g : 39.5">
+									Size : <input class="form-control " type="number" id="addSize" required="required"
+										placeholder="E.g : 39.5">
 								</div>
 								<div class="form-group">
-									Case Material : <input class="form-control " type="text"
-										id="addCaseMaterial" required="required"
-										placeholder="E.g : Thép không gỉ 316L">
+									Case Material : <input class="form-control " type="text" id="addCaseMaterial"
+										required="required" placeholder="E.g : Thép không gỉ 316L">
 								</div>
 								<div class="form-group">
-									Chain Material : <input class="form-control " type="text"
-										id="addChainMaterial" required="required"
-										placeholder="E.g : Thép không gỉ 316L">
+									Chain Material : <input class="form-control " type="text" id="addChainMaterial"
+										required="required" placeholder="E.g : Thép không gỉ 316L">
 								</div>
 								<div class="form-group">
-									Glass Material : <input class="form-control " type="text"
-										id="addGlassMaterial" required="required"
-										placeholder="E.g : Kính Sapphire">
+									Glass Material : <input class="form-control " type="text" id="addGlassMaterial"
+										required="required" placeholder="E.g : Kính Sapphire">
 								</div>
 								<div class="form-group">
-									Water Resistance(m) : <input class="form-control "
-										type="number" id="addWaterResistance" required="required"
-										placeholder="E.g : 100">
+									Water Resistance(m) : <input class="form-control " type="number"
+										id="addWaterResistance" required="required" placeholder="E.g : 100">
 								</div>
 								<div class="form-group">
-									Other Function : <input class="form-control " type="text"
-										id="addOtherFunction" required="required"
-										placeholder="E.g : Chống va đập">
+									Other Function : <input class="form-control " type="text" id="addOtherFunction"
+										required="required" placeholder="E.g : Chống va đập">
 								</div>
 								<div class="form-group">
-									Insurance Time (Year) : <input class="form-control "
-										type="number" id="addInsurance" required="required"
-										placeholder="E.g : 5">
+									Insurance Time (Year) : <input class="form-control " type="number" id="addInsurance"
+										required="required" placeholder="E.g : 5">
 								</div>
 								Other images : <br>
-								<Button type="button" id="buttonAddOtherImage1"
-									onclick="addInputOtherImages(1)">+1 Image</Button>
-								<Button type="button" id="buttonAddOtherImage2"
-									onclick="addInputOtherImages(2)">+2 Image</Button>
-								<Button type="button" id="buttonAddOtherImage3"
-									onclick="addInputOtherImages(3)">+3 Image</Button>
-								<Button type="button" id="buttonAddOtherImage4"
-									onclick="addInputOtherImages(4)">+4 Image</Button>
+								<Button type="button" id="buttonAddOtherImage1" onclick="addInputOtherImages(1)">+1
+									Image</Button>
+								<Button type="button" id="buttonAddOtherImage2" onclick="addInputOtherImages(2)">+2
+									Image</Button>
+								<Button type="button" id="buttonAddOtherImage3" onclick="addInputOtherImages(3)">+3
+									Image</Button>
+								<Button type="button" id="buttonAddOtherImage4" onclick="addInputOtherImages(4)">+4
+									Image</Button>
 								<Button type="button" id="buttonAddOtherImageDelete"
 									onclick="addInputOtherImages('delete')">Delete Input</Button>
 								<div class="form-group" id="addDivImage"></div>
 								<!-- Drop Down List Firm -->
 								<div class="form-group">
-									<select class="form-control" name="addFirmDropDownList"
-										id="addFirmDropDownList">
+									<select class="form-control" name="addFirmDropDownList" id="addFirmDropDownList">
 									</select>
 								</div>
-
 								<!-- Drop Down List Model -->
 								<div class="form-group">
-									<select class="form-control" name="addModelDropDownList"
-										id="addModelDropDownList">
+									<select class="form-control" name="addModelDropDownList" id="addModelDropDownList">
 									</select>
 								</div>
-
 								<!-- Drop Down List Origin -->
 								<div class="form-group">
 									<select class="form-control" name="addOriginDropDownList"
 										id="addOriginDropDownList">
 									</select>
 								</div>
-
-
 							</div>
 							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;" onclick="submitSave()">
-									<span class="glyphicon glyphicon-ok-sign"></span> Save
+								<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
+									onclick="submitSave()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Save
 								</button>
 							</div>
 						</div>
@@ -824,35 +727,29 @@
 					</div>
 					<!-- /.modal-dialog -->
 				</div>
-
-				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
+				<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit"
+					aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 								<h4 class="modal-title custom_align" id="Heading">Delete
 									this entry</h4>
 							</div>
 							<div class="modal-body">
-
 								<div class="alert alert-danger">
 									<span class="glyphicon glyphicon-warning-sign"></span> Are you
 									sure you want to delete this Record?
 								</div>
-
 							</div>
 							<div class="modal-footer ">
-								<button type="button" class="btn btn-success"
-									onclick="deleteProduct()">
-									<span class="glyphicon glyphicon-ok-sign"></span> Yes
+								<button type="button" class="btn btn-success" onclick="deleteProduct()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Yes
 								</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> No
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> No
 								</button>
 							</div>
 						</div>
@@ -860,32 +757,28 @@
 					</div>
 					<!-- /.modal-dialog -->
 				</div>
-				<div class="modal fade" id="import" tabindex="-1" role="dialog"
-					aria-labelledby="import" aria-hidden="true">
+				<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="import"
+					aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
 								<h4 class="modal-title custom_align" id="Heading">Import
 									Products From Excel File</h4>
 							</div>
-							<form enctype="multipart/form-data"
-								th:action="@{/admin/CRUD_Products/importFromExcel}"
+							<form enctype="multipart/form-data" th:action="@{/admin/CRUD_Products/importFromExcel}"
 								method="POST">
 								<div class="modal-body">
 									<input type="file" name="file" id="fileInput">
 								</div>
-
 								<div class="modal-footer ">
 									<button type="submit" class="btn btn-success">
-										<span class="glyphicon glyphicon-ok-sign"></span> Import
+										<span class="glyphicon glyphicon-ok-sign"></span> Import
 									</button>
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">
-										<span class="glyphicon glyphicon-remove"></span> No
+									<button type="button" class="btn btn-default" data-dismiss="modal">
+										<span class="glyphicon glyphicon-remove"></span> No
 									</button>
 								</div>
 							</form>
@@ -894,47 +787,63 @@
 					</div>
 					<!-- /.modal-dialog -->
 				</div>
-
+				<div class="modal fade" id="updown" tabindex="-1" role="dialog" aria-labelledby="updown"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="d-flex justify-content-center align-items-center mt-3">
+								<h4>Enter quantity</h4>
+							</div>
+							<div class="d-flex justify-content-center align-items-center mt-2">
+								<div class="btn-group" role="group" aria-label="Second group" style="width: 33%">
+									<button type="button" class="quantity-down btn btn-secondary">&ndash;</button>
+									<input class="quantity-input d-flex align-items-center" value="0"
+										style="width: 62px; text-align: center;">
+									<button type="button" class="quantity-up btn btn-secondary">&plus;</button>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end align-items-center m-3">
+								<button id="submit-quantity" type="submit" class="btn btn-success">
+									<span class="glyphicon glyphicon-ok-sign"></span>Yes
+								</button>
+								<button type="button" class="btn btn-default ml-2" data-dismiss="modal">
+									<span class="glyphicon glyphicon-remove"></span> No
+								</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
 			</div>
 			<!-- End of Main Content -->
-
 			<!-- Footer -->
 			<footer th:replace="fragments/adminPageFragment.html :: footer">
 			</footer>
 			<!-- End of Footer -->
-
 		</div>
 		<!-- End of Content Wrapper -->
-
 	</div>
 	<!-- End of Page Wrapper -->
-
 	<!-- Scroll to Top Button-->
 	<a th:replace="fragments/adminPageFragment.html :: scrollTopButton">
-
 	</a>
-
 	<!-- Logout Modal-->
 	<div th:replace="fragments/adminPageFragment.html :: logoutModal">
-
 	</div>
-
 	<!-- Bootstrap core JavaScript-->
 	<script src="../../vendor/jquery/jquery.min.js"></script>
 	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 	<!-- Core plugin JavaScript-->
 	<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
-
 	<!-- Custom scripts for all pages-->
 	<script src="../../js/sb-admin-2.min.js"></script>
-
 	<!-- Page level plugins -->
 
-
+	<!-- Necessary library -->
+	<script src="../../js/libs/valib.js"></script>
 	<!-- Page level custom scripts -->
-
-
+	<script src="../../js/product-quantity.js"></script>
 </body>
 
 </html>

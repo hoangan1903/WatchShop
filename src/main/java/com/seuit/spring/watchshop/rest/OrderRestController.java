@@ -20,14 +20,9 @@ public class OrderRestController {
 	@Autowired
 	private OrderService orderService;
 
-	@PostMapping("/order/{id}")
-	private String createOrder(@PathVariable(name = "id") Integer idPayment) {
-		boolean boo = orderService.createOrder(idPayment);
-		if (boo == true) {
-			return "ok";
-		} else {
-			return "false";
-		}
+	@GetMapping("/order/{id}")
+	private Integer createOrder(@PathVariable(name = "id") Integer idPayment) {
+		return orderService.createOrder(idPayment);
 	}
 
 	@GetMapping(value = "/order")
