@@ -131,13 +131,16 @@ $(document).ready(function () {
             addToCartBtn.attr('disabled', 'disabled');
 
             // And let customer know about this
-            $('p.availability-info').text('Sản phẩm chưa có sẵn hoặc đã hết hàng');
+            $('p.availability-info')
+                .text('Sản phẩm đã hết hàng')
+                .css('color', '#ec1d31');
         }
     }
 
     function getData() {
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
             var brand = obj.product.firm.name,
+                codeName = obj.product.codeName,
                 carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
                 indicators, inner;
 
@@ -161,7 +164,10 @@ $(document).ready(function () {
 
             // Get product info
             brand$.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
-            name$.text(obj.product.codeName);
+            name$.text(codeName);
+            document.title = `UIT Watchshop - ${brand} ${codeName}`;
+
+            // ...and price
             price$.text(obj.product.price.toLocaleString() + 'đ');
 
             maxQty = obj.product.available;

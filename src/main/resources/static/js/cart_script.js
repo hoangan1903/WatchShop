@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    let goToCheckout = $('a#go-to-checkout'),
+    let goToCheckout = $('button#go-to-checkout'),
         removeAll = $('a.cart-remove-all'),
         itemContainer = $('.cart-item-container');
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
                 count = obj.totalAmount || 0,
                 total = obj.total || 0;
 
-            const cartIsEmpty = (count == 0);
+            const cartIsEmpty = (items.length == 0);
 
             // Show total products in cart
             $('#cart-count-badge').text(count);
@@ -93,14 +93,14 @@ $(document).ready(function () {
                 itemContainer.html(html);
 
                 // Enable Checkout button
-                goToCheckout.removeClass('disabled');
+                goToCheckout.removeAttr('disabled');
 
             } else {
 
                 itemContainer.empty();
 
                 // Disable Checkout button
-                goToCheckout.addClass('disabled');
+                goToCheckout.attr('disabled', 'disabled');
             }
         });
     }
@@ -201,5 +201,17 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    goToCheckout.click(function () {
+        valib.ajaxGET('/rest/cart', function (obj) {
+            const cartIsEmpty = (obj.cart.length == 0);
+
+            if (!cartIsEmpty) {
+                window.location.href = 'checkout';
+            } else {
+                console.log('Cannot go to Checkout. Cart is empty.');
+            }
+        });
     });
 });
