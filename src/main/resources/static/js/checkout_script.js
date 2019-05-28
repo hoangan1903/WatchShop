@@ -4,24 +4,28 @@ $(document).ready(function () {
 
     function setClickListeners() {
         placeOrderBtn.click(function () {
-            // Make data
-            paymentMethodId = $('#paymentMethods input:checked').val();
+            // Get payment method from input
+            const paymentMethodId = $('#paymentMethods input:checked').val();
 
             // Send order to server
-            valib.ajaxGET('/rest/order/' + paymentMethodId, function (response) {
-                var successful = Boolean(parseInt(response));
-                if (successful) {
-                    // Back to homepage if order is successful
-                    window.location.href = '/';
-                } else {
-                    // Notify user that their order was not successfully placed
-                    console.log('Order not successful');
+            valib.ajaxPOST({
+                url: '/rest/order/' + paymentMethodId,
+                data: {},
+                onSuccess: function (response) {
+                    var successful = Boolean(parseInt(response));
+                    if (successful) {
+                        // Back to homepage if order is successful
+                        window.location.href = '/';
+                    } else {
+                        // Notify user that their order was not successfully placed
+                        console.log('Order not successful');
+                    }
                 }
             });
         });
     }
 
-    function getPageData() {
+    function getData() {
         // Get customer's basic info
         valib.ajaxGET('/rest/me', function (obj) {
             var name = obj.name || 'Unknown',
@@ -99,7 +103,7 @@ $(document).ready(function () {
     }
 
     setClickListeners();
-    getPageData();
+    getData();
 
     setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
 });
