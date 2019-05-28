@@ -1,3 +1,5 @@
+SET NAMES utf8 ;
+
 DROP TABLE IF EXISTS `banner`;
 CREATE TABLE `banner` (
   `id_banner` int(11) NOT NULL AUTO_INCREMENT,

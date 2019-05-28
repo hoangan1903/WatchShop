@@ -20,7 +20,7 @@ public class OrderRestController {
 	@Autowired
 	private OrderService orderService;
 
-	@GetMapping("/order/{id}")
+	@PostMapping("/order/{id}")
 	private Integer createOrder(@PathVariable(name = "id") Integer idPayment) {
 		return orderService.createOrder(idPayment);
 	}

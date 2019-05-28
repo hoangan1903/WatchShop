@@ -50,46 +50,49 @@ public class CartServiceImpl implements CartService {
 	@Override
 	@Transactional
 	public Integer addProductToCart(CartAPI cartAPI) throws NotFoundException {
-		
 		Integer amount = cartAPI.getAmount();
 		Integer idProduct = cartAPI.getIdProduct();
 		Integer idCustomer = customerService.getIdCustomerByPrincipal();
+		Integer productQuantityInDB = productService.getAvailableProduct(idProduct);
+		Double totalPrice= 0D;
 		Optional<Product> product = productRepository.findById(idProduct);
 		Optional<Customer> customer = customerRepository.findById(idCustomer);
 		// Kiểm tra xem số lượng sản phẩm trên giỏ hàng có lớn hơn số lượng sản phẩm còn
 		// trong kho không ?
 		// Kiểm tra xem khách hàng có tồn tại không ?
-		//Kiểm tra xem 
+		// Kiểm tra xem
 		if (idCustomer == null || product.isPresent() == false) {
 			product.orElseThrow(() -> new NotFoundException("Cant find product with id :" + idProduct));
 			customer.orElseThrow(() -> new NotFoundException("Cant find customer with id :" + idCustomer));
 			return 0;
 		}
 		Cart cart = customer.get().getCart();
-		if(cart.getCartDetails().isEmpty()==false) {
-			for (CartDetail cartDetailInCart : cart.getCartDetails()) {
-				Integer idProductInBeforeAddCart = cartDetailInCart.getProduct().getId();
-				if(idProductInBeforeAddCart==idProduct) {
-					Integer productQuantityInBeforeAddCart = cartDetailInCart.getAmount() + amount;
-					if(productQuantityInBeforeAddCart>productService.getAvailableProduct(idProductInBeforeAddCart)) {
-						return 0;
-					}
+		CartDetail newCartDetail = new CartDetail(cart, product.get(), amount);
+		if (cart.getCartDetails().isEmpty() == true && amount > productQuantityInDB) {
+			// Nếu giỏ hàng rỗng
+			// Nếu số lượng thêm mới lớn hơn số lượng sản phẩm tồn tại trong kho
+			return 0;
+		} else {
+			// Nếu giỏ hàng không rỗng
+			for (CartDetail cartDetailInDB : cart.getCartDetails()) {
+				Integer idProductInCartDB = cartDetailInDB.getProduct().getId();
+				Integer productQuantityOfCartDetailInDB = cartDetailInDB.getAmount();
+				Integer productQuantityBeforeAdd = amount + productQuantityOfCartDetailInDB;
+				if (idProductInCartDB == idProduct && productQuantityBeforeAdd > productQuantityInDB) {
+					// Nếu số lượng thêm mới lớn hơn số lượng sản phẩm tồn tại trong kho
+					return 0;
+				}else {
+					//Nếu số lượng thêm mới nhỏ hơn hoặc bằng số lượng sản phẩm tồn tại trong kho
+					newCartDetail.setAmount(productQuantityBeforeAdd);
 					break;
 				}
 			}
 		}
-		CartDetail cartDetail = new CartDetail(cart, product.get(), amount);
-		Optional<CartDetail> isDuplicateCartDetail = cart.getCartDetails().stream()
-				.filter((c) -> c.getProduct().getId() == cartDetail.getProduct().getId()
-						&& c.getCart().getId() == cartDetail.getCart().getId())
-				.findFirst();
-		// isDuplicateCartDetail == false : add new ok
-		if (isDuplicateCartDetail.isPresent() == false) {
-			cart.getCartDetails().add(cartDetail);
-		} else {
-			isDuplicateCartDetail.get().setAmount(isDuplicateCartDetail.get().getAmount() + amount);
+		cart.getCartDetails().add(newCartDetail);
+		for (CartDetail cartDetailInDB : cart.getCartDetails()) {
+			totalPrice += cartDetailInDB.getSubtotal();
 		}
-
+		cart.setPrice(totalPrice);
 		return 1;
 	}
 

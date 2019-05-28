@@ -101,14 +101,13 @@ public class OrderServiceImpl implements OrderService {
 				order.setOrderStatusO(orderStatus.get());
 				order.setPaymentO(payment.get());
 				order.setPrice(cart.getPrice());
-				
 				cartDetails.forEach(c->{
 					OrderDetail orderDetail = new OrderDetail(order,c.getProduct(),c.getAmount());
 					order.getOrderDetails().add(orderDetail);
 				});
 				//Xoá giỏ hàng cũ 
 				cart.getCartDetails().clear();
-				
+				cart.setPrice(0D);				
 				orderRepository.save(order);
 			}catch (Exception e) {
 				// TODO: handle exception
