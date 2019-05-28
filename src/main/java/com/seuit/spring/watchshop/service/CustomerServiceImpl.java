@@ -178,6 +178,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional
 	public Integer updateCustomer(Customer customer) {
 		Session session = this.getSession();
 		Integer idCustomer = this.getIdCustomerByPrincipal();

@@ -5,7 +5,12 @@
 @import "components.scss";
 
 section {
+    padding-top: $spacing-y-medium;
     padding-bottom: 0;
+
+    &.section-customer-actions {
+        padding-bottom: $spacing-y-medium;
+    }
 
     .card {
         &.account-card {
@@ -19,5 +24,12 @@ section {
                 margin-bottom: 24px;
             }
         }
+    }
+
+    p.invalid-info-alert {
+        color: $color-error;
+        font-size: $font-size-small;
+        margin: 0;
+        padding: 0;
     }
 }

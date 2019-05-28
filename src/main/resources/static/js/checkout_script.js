@@ -2,16 +2,6 @@ $(document).ready(function () {
     var placeOrderBtn = $('button#place-order'),
         itemContainer = $('.order-item-container');
 
-    function checkLogin() {
-        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-            var isLoggedIn = Boolean(parseInt(obj));
-            if (!isLoggedIn) {
-                // Redirect to Login page
-                window.location.href = 'login';
-            }
-        });
-    }
-
     function setClickListeners() {
         placeOrderBtn.click(function () {
             // Make data
@@ -109,7 +99,8 @@ $(document).ready(function () {
         });
     }
 
-    checkLogin();
     setClickListeners();
     getPageData();
+
+    setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
 });

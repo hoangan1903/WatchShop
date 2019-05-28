@@ -23,13 +23,62 @@
                     <div class="card account-card" style="width: auto;">
                         <div class="card-header">
                             <div class="d-flex flex-row align-items-center">
-                                <h5 class="card-header-title flex-grow-1">Thông tin khách hàng</h5>
-                                <a href="#" class="card-header-action">
+                                <h5 class="card-header-title flex-grow-1">Thông tin của bạn</h5>
+                                <a id="openInfoEdit" href="#" class="card-header-action">
                                     <div class="d-flex flex-row align-items-center">
                                         <ion-icon name="ios-create" class="small-icon mr-1"></ion-icon>
                                         Chỉnh sửa
                                     </div>
                                 </a>
+
+                                <div class="modal fade" id="editCustomerInfoModal" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style="width: 120%;">
+                                            <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                                                <h5 class="modal-title">Chỉnh sửa thông tin</h5>
+                                            </div>
+                                            <div class="modal-body px-4 py-3">
+
+                                                <form>
+                                                    <div class="form-group mb-4">
+                                                        <label for="inputCustomerName">Tên</label>
+                                                        <input type="text" class="form-control" id="inputCustomerName"
+                                                            aria-describedby="customerName" placeholder="Tên của bạn"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-4">
+                                                        <label for="inputCustomerPhone">Số điện thoại</label>
+                                                        <input type="text" class="form-control" id="inputCustomerPhone"
+                                                            aria-describedby="customerPhone" placeholder="Số điện thoại"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mb-4">
+                                                        <label for="inputCustomerAddress">Địa chỉ</label>
+                                                        <input type="text" class="form-control"
+                                                            id="inputCustomerAddress" aria-describedby="customerAddress"
+                                                            placeholder="Địa chỉ" required>
+                                                    </div>
+                                                </form>
+                                                <p id="invalidInfoAlert" class="invalid-info-alert hidden">
+                                                    Thông tin không hợp lệ. Vui lòng không bỏ trống bất kỳ trường nào.
+                                                </p>
+
+                                            </div>
+                                            <div class="modal-footer" style="border-top: 1px solid transparent;">
+                                                <button type="button" id="saveCustomerInfo"
+                                                    class="btn btn-success px-4">
+                                                    Lưu
+                                                </button>
+
+                                                <button type="button" class="btn btn-outline-secondary px-4"
+                                                    data-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card-body">
@@ -38,15 +87,15 @@
                                     <div class="flex-grow-1 d-flex flex-column">
                                         <div class="card-entry customer-name">
                                             <h6 class="card-title">Tên</h6>
-                                            <p class="card-text">Nguyễn Văn A</p>
+                                            <p class="card-text"></p>
                                         </div>
                                         <div class="card-entry customer-phone">
                                             <h6 class="card-title">Số điện thoại</h6>
-                                            <p class="card-text">0123456789</p>
+                                            <p class="card-text"></p>
                                         </div>
                                         <div class="card-entry customer-address mb-0">
                                             <h6 class="card-title">Địa chỉ</h6>
-                                            <p class="card-text">Abc</p>
+                                            <p class="card-text"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -81,9 +130,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <button type="button" id="log-out" class="btn btn-danger">
-                        Đăng xuất
-                    </button>
+                    <div class="d-flex justify-content-end">
+                        <a href="logout" class="btn btn-danger">
+                            Đăng xuất
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

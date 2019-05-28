@@ -57,36 +57,6 @@ $(document).ready(function () {
                 icon.attr('name', 'ios-menu');
             }
         });
-
-        $('#account').click(function () {
-            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(parseInt(obj));
-
-                if (isLoggedIn) {
-                    // Do something if the user is logged in
-                    window.location.href = 'account';
-                    // e.g show account's info
-                } else {
-                    // Do something else if the user is logged in
-                    window.location.href = 'login';
-                }
-            });
-            return false;
-        });
-
-        $('#cart').click(function () {
-            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-                var isLoggedIn = Boolean(parseInt(obj));
-
-                if (isLoggedIn) {
-                    window.location.href = 'cart';
-                } else {
-                    // Redirect to Login page
-                    window.location.href = 'login';
-                }
-            });
-            return false;
-        });
     }
 
     initHoverDropdown();

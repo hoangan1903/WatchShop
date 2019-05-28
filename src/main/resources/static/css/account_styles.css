@@ -596,7 +596,11 @@ footer p.copyright-footer {
 }
 
 section {
+  padding-top: 45px;
   padding-bottom: 0;
+}
+section.section-customer-actions {
+  padding-bottom: 45px;
 }
 section .card.account-card h6.card-title {
   font-weight: 500;
@@ -604,4 +608,10 @@ section .card.account-card h6.card-title {
 }
 section .card.account-card .card-entry {
   margin-bottom: 24px;
+}
+section p.invalid-info-alert {
+  color: #ec1d31;
+  font-size: 80%;
+  margin: 0;
+  padding: 0;
 }

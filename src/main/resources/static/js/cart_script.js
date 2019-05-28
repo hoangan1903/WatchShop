@@ -4,16 +4,6 @@ $(document).ready(function () {
         removeAll = $('a.cart-remove-all'),
         itemContainer = $('.cart-item-container');
 
-    function checkLogin() {
-        valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-            var isLoggedIn = Boolean(parseInt(obj));
-            if (!isLoggedIn) {
-                // Redirect to Login page
-                window.location.href = 'login';
-            }
-        });
-    }
-
     // Get user's cart from server
     function fetchCart() {
         valib.ajaxGET('/rest/cart', function (obj) {
@@ -105,113 +95,118 @@ $(document).ready(function () {
         });
     }
 
-    // Execution starts here
+    function setClickListeners() {
 
-    checkLogin();
-    fetchCart();
+        // Set click listener for "Remove all" button
+        removeAll.click(function () {
+            valib.ajaxGET('/rest/cart', function (obj) {
+                const cartIsEmpty = (obj.cart.length == 0);
 
-    // Set click listener for "Remove all" button
-    removeAll.click(function () {
-        valib.ajaxGET('/rest/cart', function (obj) {
-            const cartIsEmpty = (obj.cart.length == 0);
+                if (!cartIsEmpty) {
+                    showLoadingScreen();
 
-            if (!cartIsEmpty) {
+                    valib.ajaxDELETE({
+                        url: '/rest/cart/all',
+                        onSuccess: function (response) {
+                            var successful = Boolean(parseInt(response));
+                            if (!successful) {
+                                console.log('Remove all products unsuccessfully');
+                            }
+
+                            // Refresh cart to see changes
+                            fetchCart();
+                            hideLoadingScreen(500);
+                        }
+                    });
+                }
+            });
+            return false;
+        });
+
+        // Handle: clicking on buttons inside a cart item
+        itemContainer.click(function (e) {
+            let clicked, domId, productId, currentQty;
+
+            clicked = $(e.target);
+            domId = clicked.closest('.cart-item').attr('id');
+            productId = parseInt(domId.split('-')[0]);
+            currentQty = parseInt($(e.target.parentNode).find('.product-quantity').text());
+
+            if (clicked.hasClass('increase-qty')) {
                 showLoadingScreen();
-
-                valib.ajaxDELETE({
-                    url: '/rest/cart/all',
+                valib.ajaxPUT({
+                    url: '/rest/cart/up',
+                    data: {
+                        idProduct: productId,
+                        amount: 1
+                    },
                     onSuccess: function (response) {
                         var successful = Boolean(parseInt(response));
                         if (!successful) {
-                            console.log('Remove all products unsuccessfully');
+                            console.log('Increase quantity unsuccessfully');
                         }
 
                         // Refresh cart to see changes
                         fetchCart();
-                        hideLoadingScreen(500);
+                        hideLoadingScreen(null);
+                    }
+                });
+
+            } else if (clicked.hasClass('decrease-qty') && currentQty > 1) {
+                showLoadingScreen();
+                valib.ajaxPUT({
+                    url: '/rest/cart/down',
+                    data: {
+                        idProduct: productId,
+                        amount: 1
+                    },
+                    onSuccess: function (response) {
+                        var successful = Boolean(parseInt(response));
+                        if (!successful) {
+                            console.log('Decrease quantity unsuccessfully');
+                        }
+
+                        // Refresh cart to see changes
+                        fetchCart();
+                        hideLoadingScreen(null);
+                    }
+                });
+
+            } else if (clicked.parent().hasClass('remove-cart-item')) {
+                showLoadingScreen();
+                valib.ajaxDELETE({
+                    url: '/rest/cart/product/' + productId,
+                    onSuccess: function (response) {
+                        var successful = Boolean(parseInt(response));
+                        if (!successful) {
+                            console.log('Remove product unsuccessfully');
+                        }
+
+                        // Refresh cart to see changes
+                        fetchCart();
+                        hideLoadingScreen(null);
                     }
                 });
             }
         });
-        return false;
-    });
 
-    // Handle: clicking on buttons inside a cart item
-    itemContainer.click(function (e) {
-        let clicked, domId, productId, currentQty;
+        goToCheckout.click(function () {
+            valib.ajaxGET('/rest/cart', function (obj) {
+                const cartIsEmpty = (obj.cart.length == 0);
 
-        clicked = $(e.target);
-        domId = clicked.closest('.cart-item').attr('id');
-        productId = parseInt(domId.split('-')[0]);
-        currentQty = parseInt($(e.target.parentNode).find('.product-quantity').text());
-
-        if (clicked.hasClass('increase-qty')) {
-            showLoadingScreen();
-            valib.ajaxPUT({
-                url: '/rest/cart/up',
-                data: {
-                    idProduct: productId,
-                    amount: 1
-                },
-                onSuccess: function (response) {
-                    var successful = Boolean(parseInt(response));
-                    if (!successful) {
-                        console.log('Increase quantity unsuccessfully');
-                    }
-
-                    // Refresh cart to see changes
-                    fetchCart();
-                    hideLoadingScreen(null);
+                if (!cartIsEmpty) {
+                    window.location.href = 'checkout';
+                } else {
+                    console.log('Cannot go to Checkout. Cart is empty.');
                 }
             });
-
-        } else if (clicked.hasClass('decrease-qty') && currentQty > 1) {
-            showLoadingScreen();
-            valib.ajaxPUT({
-                url: '/rest/cart/down',
-                data: {
-                    idProduct: productId,
-                    amount: 1
-                },
-                onSuccess: function (response) {
-                    var successful = Boolean(parseInt(response));
-                    if (!successful) {
-                        console.log('Decrease quantity unsuccessfully');
-                    }
-
-                    // Refresh cart to see changes
-                    fetchCart();
-                    hideLoadingScreen(null);
-                }
-            });
-
-        } else if (clicked.parent().hasClass('remove-cart-item')) {
-            showLoadingScreen();
-            valib.ajaxDELETE({
-                url: '/rest/cart/product/' + productId,
-                onSuccess: function (response) {
-                    var successful = Boolean(parseInt(response));
-                    if (!successful) {
-                        console.log('Remove product unsuccessfully');
-                    }
-
-                    // Refresh cart to see changes
-                    fetchCart();
-                    hideLoadingScreen(null);
-                }
-            });
-        }
-    });
-
-    goToCheckout.click(function () {
-        valib.ajaxGET('/rest/cart', function (obj) {
-            const cartIsEmpty = (obj.cart.length == 0);
-
-            if (!cartIsEmpty) {
-                window.location.href = 'checkout';
-            } else {
-                console.log('Cannot go to Checkout. Cart is empty.');
-            }
         });
-    });
+    }
+
+    // Execution starts here
+
+    fetchCart();
+    setClickListeners();
+    
+    setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
 });
