@@ -46,6 +46,10 @@
     font-weight: $font-wt-regular;
 }
 
+.text-wt-medium {
+    font-weight: $font-wt-medium;
+}
+
 .text-wt-bold {
     font-weight: $font-wt-bold;
 }
@@ -408,6 +412,18 @@ img {
         width: $img-width-cart-item;
         height: 75%;
     }
+
+    &.order-item-img {
+        object-fit: cover;
+        width: 100%;
+        height: $img-height-checkout-item;
+    }
+
+    &.search-item-img {
+        object-fit: cover;
+        width: 100%;
+        height: $img-height-search-item;
+    }
 }
 
 // Screen covers & Loaders
@@ -554,5 +570,53 @@ img {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+.account-dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 2000;
+
+    /* Show the dropdown menu on hover */
+    &:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    ul.dropdown-content {
+        display: none;
+        position: absolute;
+        right: -28px;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+
+        li {
+            display: block;
+
+            /* Links inside the dropdown */
+            a {
+                color: $color-primary-text;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+
+                /* Change color of dropdown links on hover */
+                &:hover {
+                    background-color: #f1f1f1;
+                }
+
+                &:active {
+                    color: #fff;
+                    background-color: #757575;
+                }
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@
     <header th:include="fragments/header.html :: header"></header>
 
     <!-- Page content here -->
-    <section class="section-customer-info">
+    <section id="personal-info" class="section-customer-info">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -107,18 +107,34 @@
         </div>
     </section>
 
-    <section class="section-customer-orders">
+    <section id="orders" class="section-customer-orders">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="card account-card" style="width: auto;">
                         <div class="card-header">
                             <div class="d-flex flex-row align-items-center">
-                                <h5 class="card-header-title flex-grow-1">Lịch sử đơn hàng</h5>
+                                <h5 class="card-header-title flex-grow-1">Đơn hàng đã đặt</h5>
                             </div>
                         </div>
                         <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="customerOrderTable" class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Giá</th>
+                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col">Hình thức thanh toán</th>
+                                            <th scope="col">Thời gian</th>
+                                        </tr>
+                                    </thead>
 
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

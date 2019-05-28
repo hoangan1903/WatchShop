@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    
+
+    const SUGGESTION_LENGTH = 7;
+
     var search = $('#main-search'),
         suggestion = $('.search-suggestion'),
         searchBtn = $('#btn-main-search');
@@ -23,16 +25,18 @@ $(document).ready(function () {
                 var products = obj.products,
                     html = '';
 
+                const length = products.length <= SUGGESTION_LENGTH ?
+                    products.length : SUGGESTION_LENGTH;
+
                 // 2. Process data retrieved from server
-                for (let index = 0; index < products.length; index++) {
+                for (let index = 0; index < length; index++) {
                     const item = products[index];
                     html += `
                     <li>
                         <a class="product-link" href="product-details?id=${item.id}">
                             <div class="suggestion-item d-flex flex-row p-3">
-                                <div class="item-image d-flex align-items-start mr-3" style="width: 20%;">
-                                    <img src="${item.image}" style="width: 100%;"
-                                        alt="Citizen BL8144-89H">
+                                <div class="d-flex align-items-start mr-3" style="width: 20%;">
+                                    <img src="${item.image}" class="search-item-img" alt="...">
                                 </div>
                                 <div class="item-details flex-grow-1 d-flex flex-column">
                                     <h6 class="product-name mb-1">${item.firm.name} ${item.codeName}</h6>

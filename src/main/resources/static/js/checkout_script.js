@@ -53,9 +53,8 @@ $(document).ready(function () {
 
                     html += `
                     <div id="${product.id}-order-item" class="order-item d-flex flex-row">
-                        <div class="item-image d-flex align-items-start mr-3" style="width: 30%;">
-                            <img src="${product.image}" style="width: 100%;"
-                                alt="...">
+                        <div class="d-flex align-items-start mr-3" style="width: 30%;">
+                            <img src="${product.image}" class="order-item-img" alt="...">
                         </div>
 
                         <div class="flex-grow-1 d-flex flex-column">

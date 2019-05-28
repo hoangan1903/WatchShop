@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
 
-
     function initHoverDropdown() {
 
         function toggleDropdown(e) {
@@ -24,10 +23,12 @@ $(document).ready(function () {
             .on('click', '.dropdown-menu a', toggleDropdown);
     }
 
-    function updateCartBadge() {
+    function loadCustomerProps() {
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
-            var isLoggedIn = Boolean(parseInt(obj)),
-                cartBadge = $('#cart-count-badge');
+            const isLoggedIn = Boolean(parseInt(obj));
+
+            var cartBadge = $('#cart-count-badge'),
+                accountDropdown = $('.account-dropdown ul.dropdown-content');
 
             if (isLoggedIn) {
                 valib.ajaxGET('/rest/cart', function (obj) {
@@ -35,8 +36,28 @@ $(document).ready(function () {
                     var count = obj.totalAmount || 0;
                     cartBadge.text(count);
                 });
+
+                valib.ajaxGET('/rest/me', function (obj) {
+                    // Get customer's name
+                    var name = obj.name;
+                    accountDropdown.html(`
+                        <li>
+                            <p class="m-0 p-3">
+                                <em>Xin chào, <span class="text-wt-bold">${name}</span>!</em>
+                            </p>
+                        </li>
+                        <li><a href="account#personal-info">Thông tin khách hàng</a></li>
+                        <li><a href="account#orders">Đơn hàng đã đặt</a></li>
+                        <li><a href="logout">Đăng xuất</a></li>
+                    `);
+                });
+
             } else {
                 cartBadge.text(null);
+                accountDropdown.html(`
+                    <li><a href="login">Đăng nhập</a></li>
+                    <li><a href="register">Đăng ký</a></li>
+                `);
             }
         });
     }
@@ -60,6 +81,6 @@ $(document).ready(function () {
     }
 
     initHoverDropdown();
-    updateCartBadge();
+    loadCustomerProps();
     setClickListeners();
 });

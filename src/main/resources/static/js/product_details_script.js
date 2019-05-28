@@ -4,7 +4,7 @@ $(document).ready(function () {
         brand$ = $('a.brand-link'),
         name$ = $('h3.product-name'),
         price$ = $('p.price'),
-        available$ = $('span.available'),
+        availability = $('p.availability-info'),
         quantity = $('.product-quantity'),
         quantityUp = $('button.quantity-up'),
         quantityDown = $('button.quantity-down'),
@@ -131,9 +131,11 @@ $(document).ready(function () {
             addToCartBtn.attr('disabled', 'disabled');
 
             // And let customer know about this
-            $('p.availability-info')
-                .text('Sản phẩm đã hết hàng')
-                .css('color', '#ec1d31');
+            availability.text('Sản phẩm đã hết hàng').css('color', '#ec1d31');
+
+        } else {
+            availability.html(`Còn <span class="text-wt-bold">${valib.toString(maxQty)}</span> sản phẩm trong kho hàng`)
+                .css('color', '#555');
         }
     }
 
@@ -171,7 +173,6 @@ $(document).ready(function () {
             price$.text(obj.product.price.toLocaleString() + 'đ');
 
             maxQty = obj.product.available;
-            available$.text(maxQty);
             checkAvailability();
 
             // Get data for table of product details

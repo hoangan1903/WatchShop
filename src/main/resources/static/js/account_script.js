@@ -4,16 +4,12 @@ $(document).ready(function () {
         inputAddress = $('#inputCustomerAddress'),
         invalidInfoAlert = $('#invalidInfoAlert');
 
-    function getCustomerInfo() {
-        valib.ajaxGET('/rest/me', function (obj) {
-            var name = obj.name || '&nbsp;',
-                phone = obj.phone || '&nbsp;',
-                address = obj.address || '&nbsp;';
-
-            $('.card-entry.customer-name p').html(name);
-            $('.card-entry.customer-phone p').html(phone);
-            $('.card-entry.customer-address p').html(address);
-        });
+    function formatDateTime(datetime) {
+        var regDate = /\d{4}-.*(?=T\d\d:\d\d:\d\d)/;
+        var regTime = /(?<=\d{4}-\d\d-\d\dT)\d\d:\d\d:\d\d/;
+        var date = regDate.exec(datetime)[0];
+        var time = regTime.exec(datetime)[0];
+        return date + ' ' + time;
     }
 
     function setClickListeners() {
@@ -68,8 +64,47 @@ $(document).ready(function () {
         });
     }
 
-    getCustomerInfo();
-    setClickListeners();
+    function getCustomerInfo() {
+        valib.ajaxGET('/rest/me', function (obj) {
+            var name = obj.name || '&nbsp;',
+                phone = obj.phone || '&nbsp;',
+                address = obj.address || '&nbsp;';
 
-    // setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
+            $('.card-entry.customer-name p').html(name);
+            $('.card-entry.customer-phone p').html(phone);
+            $('.card-entry.customer-address p').html(address);
+        });
+    }
+
+    function getOrders() {
+        valib.ajaxGET('/rest/customers/orders', function (obj) {
+            console.log(obj);
+
+            var html = '';
+            obj.forEach((order, index) => {
+                var number = index + 1,
+                    price = order.price,
+                    status = order.orderStatusO.orderStatus,
+                    payment = order.paymentO.name,
+                    dateTime = formatDateTime(order.createAt);
+
+                html += `
+                <tr>
+                    <th scope="row">${number}</th>
+                    <td>${price}</td>
+                    <td>${status}</td>
+                    <td>${payment}</td>
+                    <td>${dateTime}</td>
+                </tr>
+                `;
+            });
+            $('#customerOrderTable tbody').html(html);
+        });
+    }
+
+    setClickListeners();
+    getCustomerInfo();
+    getOrders();
+
+    setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
 });

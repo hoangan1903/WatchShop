@@ -202,7 +202,7 @@
 		var regTime = /(?<=\d{4}-\d\d-\d\dT)\d\d:\d\d:\d\d/;
 		var date = regDate.exec(datetime)[0];
 		var time = regTime.exec(datetime)[0];
-		return date + ' ' + time;
+		return time + ' ' + date;
 	}
 	function delay(callback, ms) {
 	    var timer = 0;
