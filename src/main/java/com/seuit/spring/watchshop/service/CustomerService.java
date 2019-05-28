@@ -25,4 +25,6 @@ public interface CustomerService {
 	Optional<Customer> getCustomerById(Integer id);
 	
 	List<Order> getCustomerOrders();
+	
+	public Integer updateCustomer(Customer customer);
 }

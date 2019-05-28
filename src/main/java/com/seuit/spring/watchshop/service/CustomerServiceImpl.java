@@ -176,4 +176,19 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = this.getCustomerById(idCustomer).get();
 		return customer.getOrders();
 	}
+
+	@Override
+	public Integer updateCustomer(Customer customer) {
+		Session session = this.getSession();
+		Integer idCustomer = this.getIdCustomerByPrincipal();
+		if (idCustomer == null) {
+			return 0;
+		}
+		Customer customerNew = session.get(Customer.class, idCustomer);
+		customerNew.setName(customer.getName());
+		customerNew.setAddress(customer.getAddress());
+		customerNew.setPhone(customer.getPhone());
+		session.merge(customerNew);
+		return 1;
+	}
 }

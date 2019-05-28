@@ -71,4 +71,8 @@ public class CustomerRestController {
 		return customerService.getCustomerOrders();
 	}
 	
+	@PutMapping("/customers/update")
+	private Integer updateCustomer(@RequestBody Customer customer) {
+		return customerService.updateCustomer(customer);
+	}
 }
