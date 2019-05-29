@@ -10,15 +10,30 @@ $(document).ready(function () {
         quantityDown = $('button.quantity-down'),
         addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
-        cartBadge = $('#cart-count-badge'),
-        popover = $('a#cart');
+        cartBadge = $('#cart-count-badge');
 
     const id = parseInt(valib.getValueFromURL('id'));
 
-    const POPOVER_TIMEOUT = 6000;
+    const POPOVER_TIMEOUT = 5000;
 
     var minQty = 1,
         maxQty;
+
+    // if timeout <= 0 then the popover never closes
+    function showCartPopover(message, timeout) {
+        $('a#cart')
+            .attr('data-content', message)
+            .popover('show');
+
+        if (timeout && timeout > 0) {
+            setTimeout(() => $('a#cart').popover('hide'), timeout);
+        }
+    }
+
+    function showWarning(message) {
+        $('#productDetailsWarning p').html(message);
+        $('#productDetailsWarning').show();
+    }
 
     function initStickyNavbar() {
         $('.section-product-overview').waypoint({
@@ -91,11 +106,10 @@ $(document).ready(function () {
                                     var brand = obj.product.firm.name,
                                         codeName = obj.product.codeName;
 
-                                    popover
-                                        .attr('data-content', `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`)
-                                        .popover('show');
-
-                                    setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
+                                    showCartPopover(
+                                        `Sản phẩm: ${brand} ${codeName} (x${data.amount}) đã được thêm vào giỏ hàng.`,
+                                        POPOVER_TIMEOUT
+                                    );
                                 });
 
                                 // Update cart badge
@@ -106,18 +120,16 @@ $(document).ready(function () {
                                 });
 
                             } else {
-                                popover
-                                    .attr('data-content', 'Không thể thêm vào giỏ hàng vì sẽ vượt quá số lượng có sẵn của sản phẩm.')
-                                    .popover('show');
-
-                                setTimeout(() => popover.popover('hide'), POPOVER_TIMEOUT);
+                                showCartPopover(
+                                    'Không thể thêm vào giỏ hàng vì sẽ vượt quá số lượng có sẵn của sản phẩm.',
+                                    POPOVER_TIMEOUT
+                                );
                             }
                         }
                     });
 
                 } else {
-                    // Redirect to Login page
-                    window.location.href = 'login';
+                    showWarning('Vui lòng <strong>đăng nhập</strong> trước khi thêm sản phẩm vào giỏ hàng.');
                 }
             });
         });
@@ -141,7 +153,6 @@ $(document).ready(function () {
 
     function getData() {
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
-            console.log(obj);
             var brand = obj.product.firm.name,
                 codeName = obj.product.codeName,
                 carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),

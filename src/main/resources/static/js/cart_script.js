@@ -62,11 +62,6 @@ $(document).ready(function () {
                                     </div>
 
                                     <div class="card-item-actions d-flex justify-content-end">
-                                        <a href="#" class="card-item-action" onclick="return false;">
-                                            <ion-icon name="ios-heart"
-                                                class="cart-action-icon wishlist-icon small-icon">
-                                            </ion-icon>
-                                        </a>
                                         <a href="#" class="card-item-action remove-cart-item" onclick="return false;">
                                             <ion-icon name="ios-trash"
                                                 class="cart-action-icon remove-icon small-icon">
