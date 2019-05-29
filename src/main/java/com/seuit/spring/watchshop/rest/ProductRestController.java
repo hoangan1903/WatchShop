@@ -141,15 +141,15 @@ public class ProductRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		map.put("top", DAHelper.getInstance().processSubMapWithTotalLimit("top", listTop, maxSizeResultListForIndex));
+		map.put("top", DAHelper.getInstance().processSubMapWithTotalLimit("products", listTop, maxSizeResultListForIndex));
 		map.put("citizens",
-				DAHelper.getInstance().processSubMapWithTotalLimit("citizens", listCITIZEN, maxSizeResultListForIndex));
+				DAHelper.getInstance().processSubMapWithTotalLimit("products", listCITIZEN, maxSizeResultListForIndex));
 		map.put("ogivals",
-				DAHelper.getInstance().processSubMapWithTotalLimit("ogivals", listOGIVAL, maxSizeResultListForIndex));
+				DAHelper.getInstance().processSubMapWithTotalLimit("products", listOGIVAL, maxSizeResultListForIndex));
 		map.put("orients",
-				DAHelper.getInstance().processSubMapWithTotalLimit("orients", listORIENT, maxSizeResultListForIndex));
+				DAHelper.getInstance().processSubMapWithTotalLimit("products", listORIENT, maxSizeResultListForIndex));
 		map.put("bulovas",
-				DAHelper.getInstance().processSubMapWithTotalLimit("bulovas", listBULOVA, maxSizeResultListForIndex));
+				DAHelper.getInstance().processSubMapWithTotalLimit("products", listBULOVA, maxSizeResultListForIndex));
 		return map;
 	}
 
