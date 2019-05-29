@@ -39,40 +39,19 @@ public class HomeController {
 	public String showSearchPage() {
 		return "client/products";
 	}
-	
+
 	@GetMapping(value = { "/products/brand" })
 	public String showProductsByBrand() {
 		return "client/products";
 	}
-	
+
 	@GetMapping(value = { "/products/model" })
 	public String showProductsByModel() {
 		return "client/products";
 	}
-	
-	
+
 	@GetMapping(value = { "/products/origin" })
 	public String showProductsByOrigin() {
-		return "client/products";
-	}
-
-	@GetMapping(value = { "/citizen-watches" })
-	public String showCitizen() {
-		return "client/products";
-	}
-
-	@GetMapping(value = { "/ogival-watches" })
-	public String showOgival() {
-		return "client/products";
-	}
-
-	@GetMapping(value = { "/orient-watches" })
-	public String showOrient() {
-		return "client/products";
-	}
-
-	@GetMapping(value = { "/bulova-watches" })
-	public String showBulova() {
 		return "client/products";
 	}
 

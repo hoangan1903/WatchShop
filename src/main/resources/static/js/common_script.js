@@ -28,17 +28,17 @@ $(document).ready(function () {
                                     <em>Xin chào, <span class="text-wt-bold">${name}</span>!</em>
                                 </p>
                             </li>
-                            <li><a href="account#personal-info">Thông tin khách hàng</a></li>
-                            <li><a href="account#orders">Đơn hàng đã đặt</a></li>
-                            <li><a href="logout">Đăng xuất</a></li>
+                            <li><a href="/account#personal-info">Thông tin khách hàng</a></li>
+                            <li><a href="/account#orders">Đơn hàng đã đặt</a></li>
+                            <li><a href="/logout">Đăng xuất</a></li>
                         `);
                 });
 
             } else {
                 cartBadge.text(null);
                 accountDropdown.html(`
-                    <li><a href="login">Đăng nhập</a></li>
-                    <li><a href="register">Đăng ký</a></li>
+                    <li><a href="/login">Đăng nhập</a></li>
+                    <li><a href="/register">Đăng ký</a></li>
                 `);
             }
         });
@@ -79,7 +79,7 @@ $(document).ready(function () {
             firms.forEach(item => {
                 brandDropdown.append(`
                     <li class="dropdown-item">
-                        <a href="products/brand?id=${item.id}">Đồng hồ ${item.name}</a>
+                        <a href="/products/brand?id=${item.id}">Đồng hồ ${item.name}</a>
                     </li>
                 `);
             });
@@ -87,7 +87,7 @@ $(document).ready(function () {
             models.forEach(item => {
                 modelDropdown.append(`
                     <li class="dropdown-item">
-                        <a href="products/model?id=${item.id}">${item.name}</a>
+                        <a href="/products/model?id=${item.id}">${item.name}</a>
                     </li>
                 `);
             });
@@ -95,7 +95,7 @@ $(document).ready(function () {
             origins.forEach(item => {
                 originDropdown.append(`
                     <li class="dropdown-item">
-                        <a href="products/origin?id=${item.id}">${item.name}</a>
+                        <a href="/products/origin?id=${item.id}">${item.name}</a>
                     </li>
                 `);
             });

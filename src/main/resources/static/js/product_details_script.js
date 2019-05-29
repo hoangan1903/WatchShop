@@ -141,6 +141,7 @@ $(document).ready(function () {
 
     function getData() {
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
+            console.log(obj);
             var brand = obj.product.firm.name,
                 codeName = obj.product.codeName,
                 carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
@@ -165,7 +166,7 @@ $(document).ready(function () {
             });
 
             // Get product info
-            brand$.text(brand).attr('href', `${brand.toLowerCase()}-watches`);
+            brand$.text(brand).attr('href', `/products/brand?id=${obj.product.firm.id}`);
             name$.text(codeName);
             document.title = `UIT Watchshop - ${brand} ${codeName}`;
 

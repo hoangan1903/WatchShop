@@ -20,21 +20,20 @@ $(document).ready(function () {
         );
     }
 
-    function getProductsByBrand(brandId) {
-        paginator(
-            {
-                info: {
-                    type: 'show-products',
-                    brand: brandId,
-                    pageSize: 8
-                },
-                selectors: {
-                    container: '.section-product-list .row',
-                    pagination: '.section-pagination-links .pagination'
-                },
-                paginationStyle: 'advanced'
-            }
-        );
+    function getProducts(by, id) {
+        paginator({
+            info: {
+                type: 'show-products',
+                by: by,
+                id: id,
+                pageSize: 8
+            },
+            selectors: {
+                container: '.section-product-list .row',
+                pagination: '.section-pagination-links .pagination'
+            },
+            paginationStyle: 'advanced'
+        });
     }
 
     function init() {
@@ -42,29 +41,10 @@ $(document).ready(function () {
 
         if (pathName.includes('search')) {
 
-            var keyword = valib.getValueFromURL('q');
+            const keyword = valib.getValueFromURL('q');
+
             title.text("Kết quả tìm kiếm cho '" + keyword + "'");
             getSearchResults(keyword);
-
-        } else if (pathName.includes('citizen-watches')) {
-
-            title.text("Đồng hồ Citizen");
-            getProductsByBrand(1);
-
-        } else if (pathName.includes('ogival-watches')) {
-
-            title.text("Đồng hồ Ogival");
-            getProductsByBrand(2);
-
-        } else if (pathName.includes('orient-watches')) {
-
-            title.text("Đồng hồ Orient");
-            getProductsByBrand(6);
-
-        } else if (pathName.includes('bulova-watches')) {
-
-            title.text("Đồng hồ Bulova");
-            getProductsByBrand(4);
 
         } else if (pathName.includes('products')) {
 
@@ -72,12 +52,24 @@ $(document).ready(function () {
 
             if (pathName.includes('brand')) {
 
-                getProductsByBrand(id);
+                valib.ajaxGET('/rest/firms/' + id, function (obj) {
+                    title.text('Đồng hồ ' + obj.name);
+                });
+                getProducts('firm', id);
 
             } else if (pathName.includes('model')) {
 
+                valib.ajaxGET('/rest/models/' + id, function (obj) {
+                    title.text('Đồng hồ ' + obj.name);
+                });
+                getProducts('model', id);
+
             } else if (pathName.includes('origin')) {
 
+                valib.ajaxGET('/rest/origins/' + id, function (obj) {
+                    title.text('Đồng hồ ' + obj.name);
+                });
+                getProducts('origin', id);
             }
         }
     }

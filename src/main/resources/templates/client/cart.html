@@ -5,8 +5,8 @@
     <th:block th:include="fragments/head.html :: head"></th:block>
 
     <!-- CSS files -->
-    <link href="css/cart_styles.css" rel="stylesheet">
-    <link href="css/cart_responsive.css" rel="stylesheet">
+    <link th:href="@{/css/cart_styles.css}" rel="stylesheet">
+    <link th:href="@{/css/cart_responsive.css}" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Giỏ hàng</title>
@@ -87,7 +87,7 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
-    <script src="js/cart_script.js"></script>
+    <script th:src="@{/js/cart_script.js}"></script>
 
 </body>
 

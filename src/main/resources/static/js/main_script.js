@@ -102,7 +102,7 @@ $(document).ready(function () {
                     <div class="card-body">
                         <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
                         <p class="price">${item.price.toLocaleString()}đ</p>
-                        <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
+                        <a href="/product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>
                 `;

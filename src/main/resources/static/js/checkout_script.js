@@ -64,7 +64,7 @@ $(document).ready(function () {
                         <div class="flex-grow-1 d-flex flex-column">
                             <div class="item-details flex-grow-1 d-flex flex-column">
                                 <div class="mb-1">
-                                    <a href="product-details?id=${product.id}" class="order-product-link">${product.firm.name} ${product.codeName}</a>
+                                    <a href="/product-details?id=${product.id}" class="order-product-link">${product.firm.name} ${product.codeName}</a>
                                 </div>
                                 <p class="card-text price-small mb-1">${product.price.toLocaleString()}đ</p>
                                 <div>

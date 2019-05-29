@@ -40,11 +40,14 @@
                 keyword: info.keyword
             });
         } else if (info.type === 'show-products') {
-            url = valib.getURLWithParams('/rest/products', {
+
+            let paramsObject = {
                 page: pageId,
-                size: info.pageSize,
-                firm: info.brand
-            });
+                size: info.pageSize
+            };
+            paramsObject[info.by] = info.id;
+
+            url = valib.getURLWithParams('/rest/products', paramsObject);
         }
 
         return url;
@@ -61,7 +64,7 @@
                     <div class="card-body">
                         <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
                         <p class="price">${item.price.toLocaleString()}đ</p>
-                        <a href="product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
+                        <a href="/product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -257,12 +260,11 @@
 
         valib.ajaxGET(url, function (obj) {
             totalPages = obj.pageCountTotal;
-
-            const html = getHTMLOf(obj.products);
-            container.html(html);
-
-            buildPagination();
-
+            if (totalPages > 0) {
+                const html = getHTMLOf(obj.products);
+                container.html(html);
+                buildPagination();
+            }
             hideLoadingScreen(450);
         });
     }

@@ -5,8 +5,8 @@
     <th:block th:include="fragments/head.html :: head"></th:block>
 
     <!-- CSS files -->
-    <link href="css/account_styles.css" rel="stylesheet">
-    <link href="css/account_responsive.css" rel="stylesheet">
+    <link th:href="@{/css/account_styles.css}" rel="stylesheet">
+    <link th:href="@{/css/account_responsive.css}" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Tài khoản</title>
@@ -147,7 +147,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-end">
-                        <a href="logout" class="btn btn-danger">
+                        <a href="/logout" class="btn btn-danger">
                             Đăng xuất
                         </a>
                     </div>
@@ -161,7 +161,7 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
-    <script src="js/account_script.js"></script>
+    <script th:src="@{/js/account_script.js}"></script>
 
 </body>
 

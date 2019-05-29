@@ -33,7 +33,7 @@ $(document).ready(function () {
                             <div class="cart-item-content d-flex flex-row">
                                 <div class="cart-item-summary flex-grow-1">
                                     <div class="mb-2">
-                                        <a href="product-details?id=${product.id}" class="cart-product-link">${product.firm.name} ${product.codeName}</a>
+                                        <a href="/product-details?id=${product.id}" class="cart-product-link">${product.firm.name} ${product.codeName}</a>
                                     </div>
                                     <p class="card-text">Giá</p>
                                     <p class="card-text price">${product.price.toLocaleString()}đ</p>

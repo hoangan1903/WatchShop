@@ -33,7 +33,7 @@ $(document).ready(function () {
                     const item = products[index];
                     html += `
                     <li>
-                        <a class="product-link" href="product-details?id=${item.id}">
+                        <a class="product-link" href="/product-details?id=${item.id}">
                             <div class="suggestion-item d-flex flex-row p-3">
                                 <div class="d-flex align-items-start mr-3" style="width: 20%;">
                                     <img src="${item.image}" class="search-item-img" alt="...">

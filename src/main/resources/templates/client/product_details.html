@@ -5,8 +5,8 @@
     <th:block th:include="fragments/head.html :: head"></th:block>
 
     <!-- CSS files -->
-    <link href="css/product_details_styles.css" rel="stylesheet">
-    <link href="css/product_details_responsive.css" rel="stylesheet">
+    <link th:href="@{/css/product_details_styles.css}" rel="stylesheet">
+    <link th:href="@{/css/product_details_responsive.css}" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Chi tiết sản phẩm</title>
@@ -33,15 +33,15 @@
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner">
                                 <!-- <div class="carousel-item active">
-                                    <img src="images/citizen-watch-03-2.jpg" class="d-block w-100"
+                                    <img src="/images/citizen-watch-03-2.jpg" class="d-block w-100"
                                         alt="BL8144-89H img-2">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="images/citizen-watch-03-3.jpg" class="d-block w-100"
+                                    <img src="/images/citizen-watch-03-3.jpg" class="d-block w-100"
                                         alt="BL8144-89H img-3">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="images/citizen-watch-03-4.jpg" class="d-block w-100"
+                                    <img src="/images/citizen-watch-03-4.jpg" class="d-block w-100"
                                         alt="BL8144-89H img-4">
                                 </div> -->
                             </div>
@@ -65,9 +65,9 @@
                     <div class="d-flex flex-column">
                         <div class="product-name-container d-flex flex-column">
                             <div class="mb-1">
-                                <a href="#" class="brand-link" style="text-transform: uppercase;">Brand</a>
+                                <a href="#" class="brand-link" style="text-transform: uppercase;"></a>
                             </div>
-                            <h3 class="product-name">Code name</h3>
+                            <h3 class="product-name"></h3>
                         </div>
 
                         <div class="item-divider d-flex flex-column">
@@ -226,7 +226,7 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
-    <script src="js/product_details_script.js"></script>
+    <script th:src="@{/js/product_details_script.js}"></script>
 </body>
 
 </html>
