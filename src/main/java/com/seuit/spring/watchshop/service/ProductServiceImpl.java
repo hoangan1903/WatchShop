@@ -23,6 +23,7 @@ import com.seuit.spring.watchshop.entity.Origin;
 import com.seuit.spring.watchshop.entity.Product;
 import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.ProductDetail;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.repository.FirmRepository;
 import com.seuit.spring.watchshop.repository.ModelRepository;
 import com.seuit.spring.watchshop.repository.OriginRepository;
@@ -33,8 +34,6 @@ import javassist.NotFoundException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
-	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@Autowired
 	private EntityManager entityManager;
@@ -245,8 +244,6 @@ public class ProductServiceImpl implements ProductService {
 		String sqlCount = "SELECT count(p.id) FROM Product p";
 		Query queryCount = session.createQuery(sqlCount);
 		Long count = (Long) queryCount.getSingleResult();
-		logger.info(count.toString());
-
 		return count;
 
 	}

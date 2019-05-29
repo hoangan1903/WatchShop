@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.Banner;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.service.BannerService;
 
 @RestController
@@ -26,10 +27,7 @@ public class BannerRestController {
 	
 	@GetMapping(value = "/banners")
 	private Map<String,Object> getListBanner(){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("banners", bannerService.getListBanner());
-		map.put("total", bannerService.getTotalBanners());
-		return map;
+		return DAHelper.getInstance().processSubMapWithTotal("banners", bannerService.getListBanner());
 	}
 	@PostMapping(value="/banners")
 	private void createBanner(@Valid @RequestBody Banner banner) {

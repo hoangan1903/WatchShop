@@ -33,6 +33,7 @@ import com.seuit.spring.watchshop.entity.Model;
 import com.seuit.spring.watchshop.entity.Product;
 import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.ProductDetail;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.service.ProductService;
 
 import javassist.NotFoundException;
@@ -65,8 +66,9 @@ public class ProductRestController {
 		return "Update Success";
 	}
 
-	@GetMapping(value = "/products",params = {"page","size"})
-	Map<String, Object> findAllProductByPaginated(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm) {
+	@GetMapping(value = "/products", params = { "page", "size" })
+	Map<String, Object> findAllProductByPaginated(@RequestParam("page") Integer page,
+			@RequestParam("size") Integer size, @RequestParam(name = "firm", required = false) Integer idFirm) {
 		return productService.findPaginated(page, size, idFirm);
 	}
 
@@ -112,8 +114,10 @@ public class ProductRestController {
 	}
 
 	@GetMapping("/products/find")
-	Map<String,Object> findProductByKeyword(@RequestParam(name="keyword") String keyword,@RequestParam(name="page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size) {
-		return productService.getListProductBykeyword(page,size,keyword);
+	Map<String, Object> findProductByKeyword(@RequestParam(name = "keyword") String keyword,
+			@RequestParam(name = "page", required = false) Integer page,
+			@RequestParam(name = "size", required = false) Integer size) {
+		return productService.getListProductBykeyword(page, size, keyword);
 	}
 
 	@GetMapping("/products/catalogue")
@@ -125,12 +129,7 @@ public class ProductRestController {
 		List<Product> listORIENT = new ArrayList<Product>();
 		List<Product> listBULOVA = new ArrayList<Product>();
 		/*
-		 * '1','Citizen' 
-		 * '2','Ogival'
-		 * '3', 'Elixa' 
-		 * '4', 'Bulova' 
-		 * '5', 'OP' 
-		 * '6','Orient' 
+		 * '1','Citizen' '2','Ogival' '3', 'Elixa' '4', 'Bulova' '5', 'OP' '6','Orient'
 		 * '7', 'Seiko'
 		 */
 		try {
@@ -142,32 +141,28 @@ public class ProductRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		map.put("top", createMapProduct(listTop));
-		map.put("citizens", createMapProduct(listCITIZEN));
-		map.put("ogivals", createMapProduct(listOGIVAL));
-		map.put("orients", createMapProduct(listORIENT));
-		map.put("bulovas", createMapProduct(listBULOVA));
+		map.put("top", DAHelper.getInstance().processSubMapWithTotalLimit("top", listTop, maxSizeResultListForIndex));
+		map.put("citizens",
+				DAHelper.getInstance().processSubMapWithTotalLimit("top", listCITIZEN, maxSizeResultListForIndex));
+		map.put("ogivals",
+				DAHelper.getInstance().processSubMapWithTotalLimit("top", listOGIVAL, maxSizeResultListForIndex));
+		map.put("orients",
+				DAHelper.getInstance().processSubMapWithTotalLimit("top", listORIENT, maxSizeResultListForIndex));
+		map.put("bulovas",
+				DAHelper.getInstance().processSubMapWithTotalLimit("top", listBULOVA, maxSizeResultListForIndex));
 		return map;
 	}
 
-	private Map<String, Object> createMapProduct(List<Product> list) {
-		Map<String, Object> mapList = new HashMap<String, Object>();
-		Integer size = list.size();
-		if (size > maxSizeResultListForIndex) {
-			list = list.subList(0, maxSizeResultListForIndex);
-		}
-		mapList.put("products", list);
-		mapList.put("total", list.size());
-		return mapList;
-	}
-	
-	@GetMapping(value = "/products/sort",params = {"page","size"})
-	Map<String, Object> findAllProductByPaginatedSort(@RequestParam("page") Integer page, @RequestParam("size") Integer size,@RequestParam(name = "firm",required = false) Integer idFirm, @RequestParam(name = "type") Integer type) {
+	@GetMapping(value = "/products/sort", params = { "page", "size" })
+	Map<String, Object> findAllProductByPaginatedSort(@RequestParam("page") Integer page,
+			@RequestParam("size") Integer size, @RequestParam(name = "firm", required = false) Integer idFirm,
+			@RequestParam(name = "type") Integer type) {
 		return productService.findPaginatedSort(page, size, idFirm, type);
 	}
-	
-	@PostMapping(value="/products/updown",params = {"id","quantity"})
-	Integer updownQuantityProduct(@RequestParam(name = "id",required = true) Integer id,@RequestParam(name="quantity",required = true) Integer quantity) {
+
+	@PostMapping(value = "/products/updown", params = { "id", "quantity" })
+	Integer updownQuantityProduct(@RequestParam(name = "id", required = true) Integer id,
+			@RequestParam(name = "quantity", required = true) Integer quantity) {
 		return productService.updownQuantityProduct(id, quantity);
 	}
 

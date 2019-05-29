@@ -48,19 +48,4 @@ public class DBFileStorageServiceImpl implements DBFileStorageService{
                 .orElseThrow(() -> new NotFoundException("File not found with id " + fileId));
     }
     
-    @Override
-    public File convert(MultipartFile file) {
-		File convFile = new File(file.getOriginalFilename());
-		try {
-			convFile.createNewFile();
-			FileOutputStream fos = new FileOutputStream(convFile);
-			fos.write(file.getBytes());
-			fos.close();
-			return convFile;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 }

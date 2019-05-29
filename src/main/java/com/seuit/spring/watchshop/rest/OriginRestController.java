@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.seuit.spring.watchshop.entity.Firm;
 import com.seuit.spring.watchshop.entity.Model;
 import com.seuit.spring.watchshop.entity.Origin;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.service.OriginService;
 
 @RestController
@@ -27,11 +28,7 @@ public class OriginRestController {
 	
 	@GetMapping("/origins")
 	public Map<String,Object> getAll(){
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<Origin> origins = originService.getList();
-		map.put("total",origins.size());
-		map.put("origins", origins);
-		return map;
+		return DAHelper.getInstance().processSubMapWithTotal("origins", originService.getList());
 	}
 	
 	@PostMapping("/origins")

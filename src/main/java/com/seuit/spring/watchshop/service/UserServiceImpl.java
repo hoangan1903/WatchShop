@@ -30,7 +30,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.seuit.spring.watchshop.entity.User;
-
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.repository.UserRepository;
 
 import javassist.NotFoundException;
@@ -61,8 +61,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-
-	private Logger logger = Logger.getLogger(this.getClass().getName());
 
 	private Integer findRoleIdByRoleName(String roleName) {
 		Integer roleId = null;
@@ -106,7 +104,7 @@ public class UserServiceImpl implements UserService {
 			return 0;
 		} else {
 
-			logger.info(user.getEmail());
+			DAHelper.getInstance().createLoggerMessager(this.getClass().getName(), user.getEmail());
 			// Note : @ManyToMany bidirectional
 
 			// Tạo Session để kết nối tới database
@@ -143,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
 				session.merge(userOld);
 			}
-			mailSender.send(this.constructEmail(subject,body,user));
+			mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
 			return 1;
 			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
@@ -247,17 +245,6 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public SimpleMailMessage constructEmail(String subject, String body, User user) {
-		// TODO Auto-generated method stub
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setSubject(subject);
-		email.setText(body);
-		email.setTo(user.getEmail());
-		email.setFrom(env.getProperty("email.support.from"));
-		return email;
-	}
-
-	@Override
 	public String validatePasswordResetToken(long id, String token) {
 		PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
 
@@ -305,7 +292,7 @@ public class UserServiceImpl implements UserService {
 	    String url = request.getContextPath() + "/user/changePassword?id=" + 
 			     user.getId() + "&token=" + token;
 	    body=mess+"\r\n"+url;
-	    mailSender.send(this.constructEmail(subject,body,user));
+	    mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
 	}
 
 	@Override
@@ -316,7 +303,7 @@ public class UserServiceImpl implements UserService {
 		      (User) SecurityContextHolder.getContext()
 		                                  .getAuthentication().getPrincipal();
 		    this.changeUserPassword(user, newPassword);
-		    mailSender.send(this.constructEmail(subject,body,user));
+		    mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
 	}
 
 	@Override

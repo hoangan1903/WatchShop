@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.Banner;
 import com.seuit.spring.watchshop.entity.Firm;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.service.FirmService;
 
 @RestController
@@ -28,10 +29,7 @@ public class FirmRestController {
 	
 	@GetMapping("/firms")
 	public Map<String,Object> getAllFirm(){
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("firms", firmService.getListFirm());
-		map.put("total", firmService.getTotalFirm());
-		return map;
+		return DAHelper.getInstance().processSubMapWithTotal("firms", firmService.getListFirm());
 	}
 	
 	@PostMapping(value="/firms")

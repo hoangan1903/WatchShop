@@ -27,6 +27,7 @@ import com.seuit.spring.watchshop.entity.Customer;
 import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.entity.User;
+import com.seuit.spring.watchshop.helper.DAHelper;
 import com.seuit.spring.watchshop.helper.ProductExcelHelper;
 import com.seuit.spring.watchshop.service.CustomerService;
 import com.seuit.spring.watchshop.service.DBFileStorageService;
@@ -45,9 +46,6 @@ public class AdminController {
 	
 	@Autowired
 	private ProductService productService;
-
-	@Autowired
-	private DBFileStorageService dbFileStorageService;
 
 	@Autowired
 	private CustomerService customerService;
@@ -81,7 +79,7 @@ public class AdminController {
 	@PostMapping(value = "/CRUD_Products/importFromExcel")
 	public String importExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirect) {
 		ProductExcelHelper productExcelHelper = new ProductExcelHelper();
-		File excelFile = dbFileStorageService.convert(file);
+		File excelFile = DAHelper.getInstance().convert(file);
 		List<ProductApi> productApis;
 		try {
 			productApis = productExcelHelper.saveProductsFromExcelFile(excelFile);

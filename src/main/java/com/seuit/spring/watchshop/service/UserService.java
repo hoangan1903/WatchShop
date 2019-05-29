@@ -42,8 +42,6 @@ public interface UserService {
 
 	void createPasswordResetTokenForUser(User user, String token);
 
-	SimpleMailMessage constructEmail(String subject, String body, User user);
-
 	void savePasswordAfterChanged(HttpServletRequest request, String newPassword);
 
 	String validatePasswordResetToken(long id, String token);
