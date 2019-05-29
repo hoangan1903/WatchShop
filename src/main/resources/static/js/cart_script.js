@@ -9,7 +9,7 @@ $(document).ready(function () {
         valib.ajaxGET('/rest/cart', function (obj) {
             let items = obj.cart || [],
                 count = obj.totalAmount || 0,
-                total = obj.total || 0;
+                total = obj.totals || 0;
 
             const cartIsEmpty = (items.length == 0);
 

@@ -4,7 +4,7 @@
 <div th:fragment="scripts">
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/libs/jquery-3.4.1.js"></script>
+    <script th:src="@{/js/libs/jquery-3.4.1.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
@@ -14,12 +14,12 @@
 
     <!-- Additional plugins and libraries -->
     <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
-    <script src="plugins/waypoints/jquery.waypoints.js"></script>
-    <script src="plugins/owl-carousel/owl.carousel.js"></script>
-    <script src="js/libs/valib.js"></script>
-    <script src="js/global.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/common_script.js"></script>
+    <script th:src="@{/plugins/waypoints/jquery.waypoints.js}"></script>
+    <script th:src="@{/plugins/owl-carousel/owl.carousel.js}"></script>
+    <script th:src="@{/js/libs/valib.js}"></script>
+    <script th:src="@{/js/global.js}"></script>
+    <script th:src="@{/js/search.js}"></script>
+    <script th:src="@{/js/common_script.js}"></script>
 
 </div>
 

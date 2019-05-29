@@ -69,7 +69,7 @@ $(document).ready(function () {
         inner = carousel.eq(1);
 
         valib.ajaxGET('/rest/banners', function (obj) {
-            if (obj.total > 0) {
+            if (obj.totals > 0) {
                 carousel.empty();
                 obj.banners.forEach((banner, index) => {
                     indicators.append(`<li data-target="#mainCarouselIndicators" data-slide-to="${index}"></li>`);

@@ -488,47 +488,6 @@ img.search-item-img {
     transform: rotate(360deg);
   }
 }
-/* The container <div> - needed to position the dropdown content */
-.account-dropdown {
-  position: relative;
-  display: inline-block;
-  z-index: 2000;
-  /* Show the dropdown menu on hover */
-  /* Dropdown Content (Hidden by Default) */
-}
-.account-dropdown:hover .dropdown-content {
-  display: block;
-}
-.account-dropdown ul.dropdown-content {
-  display: none;
-  position: absolute;
-  right: -28px;
-  background-color: #fff;
-  min-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 4px;
-  border: 1px solid #d9d9d9;
-}
-.account-dropdown ul.dropdown-content li {
-  display: block;
-  /* Links inside the dropdown */
-}
-.account-dropdown ul.dropdown-content li a {
-  color: #555;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  /* Change color of dropdown links on hover */
-}
-.account-dropdown ul.dropdown-content li a:hover {
-  background-color: #f1f1f1;
-}
-.account-dropdown ul.dropdown-content li a:active {
-  color: #fff;
-  background-color: #757575;
-}
-
 /* Defines big reusable components like the header and the footer */
 header nav.navigation {
   background-color: #f9f9f9;
@@ -609,6 +568,105 @@ header nav.navigation ul.search-suggestion .suggestion-item:hover, header nav.na
 }
 .hamburger-menu.show {
   display: block;
+}
+
+.account-dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 2000;
+  /* Show the dropdown menu on hover */
+  /* Dropdown Content (Hidden by Default) */
+}
+.account-dropdown:hover ul.dropdown-content {
+  display: block;
+}
+.account-dropdown ul.dropdown-content {
+  display: none;
+  position: absolute;
+  right: -28px;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.25s ease;
+}
+.account-dropdown ul.dropdown-content li {
+  display: block;
+  /* Links inside the dropdown */
+}
+.account-dropdown ul.dropdown-content li a {
+  color: #555;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.account-dropdown ul.dropdown-content li a:hover {
+  background-color: #f1f1f1;
+}
+.account-dropdown ul.dropdown-content li a:active {
+  color: #fff;
+  background-color: #757575;
+}
+
+.product-classification-dropdown ul.dropdown-menu {
+  padding-top: 0;
+  padding-bottom: 0;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.product-classification-dropdown ul.dropdown-menu li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.product-classification-dropdown ul.dropdown-menu li:hover {
+  background-color: #f1f1f1;
+}
+.product-classification-dropdown ul.dropdown-menu li a {
+  text-decoration: none;
+  color: #555;
+  height: 100%;
+  width: 100%;
+}
+.product-classification-dropdown ul.dropdown-menu li a:hover {
+  background-color: #f1f1f1;
+}
+.product-classification-dropdown .dropdown-submenu {
+  position: relative;
+}
+.product-classification-dropdown .dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 4px;
+}
+.product-classification-dropdown .dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+.product-classification-dropdown .dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.product-classification-dropdown .dropdown-submenu:hover > a:after {
+  border-left-color: #fff;
+}
+.product-classification-dropdown .dropdown-submenu.pull-left {
+  float: none;
+}
+.product-classification-dropdown .dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 4px;
 }
 
 footer {

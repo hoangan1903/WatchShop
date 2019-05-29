@@ -2,27 +2,6 @@
 
 $(document).ready(function () {
 
-    function initHoverDropdown() {
-
-        function toggleDropdown(e) {
-            const _d = $(e.target).closest('.dropdown');
-            const _m = $('.dropdown-menu', _d);
-
-            setTimeout(function () {
-                const shouldOpen = e.type !== 'click' && _d.is(':hover');
-
-                _m.toggleClass('show', shouldOpen);
-                _d.toggleClass('show', shouldOpen);
-                $('[data-toggle="dropdown"]', _d).attr('aria-expanded', shouldOpen);
-
-            }, e.type === 'mouseleave' ? 200 : 0);
-        }
-
-        $('body')
-            .on('mouseenter mouseleave', '.dropdown', toggleDropdown)
-            .on('click', '.dropdown-menu a', toggleDropdown);
-    }
-
     function loadCustomerProps() {
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
             const isLoggedIn = Boolean(parseInt(obj));
@@ -40,16 +19,19 @@ $(document).ready(function () {
                 valib.ajaxGET('/rest/me', function (obj) {
                     // Get customer's name
                     var name = obj.name;
-                    accountDropdown.html(`
-                        <li>
-                            <p class="m-0 p-3">
-                                <em>Xin chào, <span class="text-wt-bold">${name}</span>!</em>
-                            </p>
-                        </li>
-                        <li><a href="account#personal-info">Thông tin khách hàng</a></li>
-                        <li><a href="account#orders">Đơn hàng đã đặt</a></li>
-                        <li><a href="logout">Đăng xuất</a></li>
-                    `);
+
+                    accountDropdown
+                        .css('width', '230px')
+                        .html(`
+                            <li>
+                                <p class="m-0 p-3">
+                                    <em>Xin chào, <span class="text-wt-bold">${name}</span>!</em>
+                                </p>
+                            </li>
+                            <li><a href="account#personal-info">Thông tin khách hàng</a></li>
+                            <li><a href="account#orders">Đơn hàng đã đặt</a></li>
+                            <li><a href="logout">Đăng xuất</a></li>
+                        `);
                 });
 
             } else {
@@ -80,7 +62,47 @@ $(document).ready(function () {
         });
     }
 
-    initHoverDropdown();
+    function getProductClassification() {
+        valib.ajaxGET('/rest/menu', function (obj) {
+            var firms = obj.firms.firms,
+                models = obj.models.models,
+                origins = obj.origins.origins;
+
+            var brandDropdown = $('#productsByBrandDropdown'),
+                modelDropdown = $('#productsByModelDropdown'),
+                originDropdown = $('#productsByOriginDropdown');
+
+            brandDropdown.empty();
+            modelDropdown.empty();
+            originDropdown.empty();
+
+            firms.forEach(item => {
+                brandDropdown.append(`
+                    <li class="dropdown-item">
+                        <a href="products/brand?id=${item.id}">Đồng hồ ${item.name}</a>
+                    </li>
+                `);
+            });
+
+            models.forEach(item => {
+                modelDropdown.append(`
+                    <li class="dropdown-item">
+                        <a href="products/model?id=${item.id}">${item.name}</a>
+                    </li>
+                `);
+            });
+
+            origins.forEach(item => {
+                originDropdown.append(`
+                    <li class="dropdown-item">
+                        <a href="products/origin?id=${item.id}">${item.name}</a>
+                    </li>
+                `);
+            });
+        });
+    }
+
     loadCustomerProps();
     setClickListeners();
+    getProductClassification();
 });

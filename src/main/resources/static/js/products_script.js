@@ -65,6 +65,20 @@ $(document).ready(function () {
 
             title.text("Đồng hồ Bulova");
             getProductsByBrand(4);
+
+        } else if (pathName.includes('products')) {
+
+            const id = parseInt(valib.getValueFromURL('id'));
+
+            if (pathName.includes('brand')) {
+
+                getProductsByBrand(id);
+
+            } else if (pathName.includes('model')) {
+
+            } else if (pathName.includes('origin')) {
+
+            }
         }
     }
 

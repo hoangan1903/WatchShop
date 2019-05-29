@@ -22,49 +22,9 @@
                     </div>
 
                     <ul class="search-suggestion">
+
                         <!-- Search suggestion will show up here whenever user enters a keyword -->
-                        <!-- <li>
-                            <a class="product-link" href="#">
-                                <div class="suggestion-item d-flex flex-row p-3">
-                                    <div class="d-flex align-items-start mr-3" style="width: 20%;">
-                                        <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                            alt="Citizen BL8144-89H">
-                                    </div>
-                                    <div class="item-details flex-grow-1 d-flex flex-column">
-                                        <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                        <p class="card-text price-small">16,500,000Ä‘</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="product-link" href="#">
-                                <div class="suggestion-item d-flex flex-row p-3">
-                                    <div class="d-flex align-items-start mr-3" style="width: 20%;">
-                                        <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                            alt="Citizen BL8144-89H">
-                                    </div>
-                                    <div class="item-details flex-grow-1 d-flex flex-column">
-                                        <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                        <p class="card-text price-small">16,500,000Ä‘</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="product-link" href="#">
-                                <div class="suggestion-item d-flex flex-row p-3">
-                                    <div class="d-flex align-items-start mr-3" style="width: 20%;">
-                                        <img src="images/citizen-watch-03.jpg" style="width: 100%;"
-                                            alt="Citizen BL8144-89H">
-                                    </div>
-                                    <div class="item-details flex-grow-1 d-flex flex-column">
-                                        <h6 class="product-name mb-1">Citizen BL8144-89H</h6>
-                                        <p class="card-text price-small">16,500,000Ä‘</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li> -->
+
                     </ul>
                 </div>
 
@@ -92,24 +52,48 @@
             <div class="row pt-lg-0 pt-md-1">
                 <div class="col-lg-3 col-md-4">
                     <div class="stretched-container d-flex justify-content-start align-items-end">
-                        <div class="dropdown">
+                        <div class="dropdown product-classification-dropdown">
                             <button class="btn btn-square-bottom btn-success dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
+                                id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Danh mục sản phẩm
                             </button>
 
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Đồng hồ Citizen</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Đồng hồ Ogival</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Đồng hồ Orient</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Đồng hồ Seiko</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Đồng hồ Bulova</a>
-                            </div>
+                            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item mr-3" href="#" onclick="return false;">
+                                        Theo hãng
+                                    </a>
+                                    <ul id="productsByBrandDropdown" class="dropdown-menu">
+                                        <!-- <li class="dropdown-item"><a href="#">Đồng hồ Citizen</a></li>
+                                        <li class="dropdown-item"><a href="#">Đồng hồ Bulova</a></li>
+                                        <li class="dropdown-item"><a href="#">Đồng hồ Orient</a></li>
+                                        <li class="dropdown-item"><a href="#">Đồng hồ Ogival</a></li>
+                                        <li class="dropdown-item"><a href="#">Đồng hồ Seiko</a></li> -->
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item mr-3" href="#" onclick="return false;">
+                                        Theo kiểu máy
+                                    </a>
+                                    <ul id="productsByModelDropdown" class="dropdown-menu">
+                                        <!-- <li class="dropdown-item"><a href="#">Second level</a></li>
+                                        <li class="dropdown-item"><a href="#">Second level</a></li> -->
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item mr-3" href="#" onclick="return false;">
+                                        Theo xuất xứ
+                                    </a>
+                                    <ul id="productsByOriginDropdown" class="dropdown-menu">
+                                        <!-- <li class="dropdown-item"><a href="#">Second level</a></li>
+                                        <li class="dropdown-item"><a href="#">Second level</a></li>
+                                        <li class="dropdown-item"><a href="#">Second level</a></li> -->
+                                    </ul>
+                                </li>
+                            </ul>
+
                         </div>
                     </div>
                 </div>

@@ -5,8 +5,8 @@
     <th:block th:include="fragments/head.html :: head"></th:block>
 
     <!-- CSS files -->
-    <link href="css/products_styles.css" rel="stylesheet">
-    <link href="css/products_responsive.css" rel="stylesheet">
+    <link th:href="@{/css/products_styles.css}" rel="stylesheet">
+    <link th:href="@{/css/products_responsive.css}" rel="stylesheet">
 
     <!-- Page title -->
     <title>UIT Watchshop - Các sản phẩm</title>
@@ -101,8 +101,8 @@
     <th:block th:include="fragments/scripts.html :: scripts"></th:block>
 
     <!-- Scripts -->
-    <script src="js/paginator.js"></script>
-    <script src="js/products_script.js"></script>
+    <script th:src="@{/js/paginator.js}"></script>
+    <script th:src="@{/js/products_script.js}"></script>
 </body>
 
 </html>
