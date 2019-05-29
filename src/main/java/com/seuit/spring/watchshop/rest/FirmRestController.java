@@ -52,4 +52,9 @@ public class FirmRestController {
 		return firmService.getListBykeyword(keyword);
 	}
 	
+	@GetMapping("/firms/{id}")
+	private Object findById(@PathVariable(name="id",required = true) Integer id) {
+		return firmService.getByID(id);
+	}
+	
 }

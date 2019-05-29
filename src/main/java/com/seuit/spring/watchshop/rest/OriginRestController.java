@@ -48,4 +48,8 @@ public class OriginRestController {
 	private List<Origin> findByKeyword(@PathVariable(name="keyword") String keyword) {
 		return originService.getListBykeyword(keyword);
 	}
+	@GetMapping("/origins/{id}")
+	private Object findById(@PathVariable(name="id",required = true) Integer id) {
+		return originService.getByID(id);
+	}
 }

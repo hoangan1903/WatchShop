@@ -49,4 +49,9 @@ public class ModelRestController {
 	private List<Model> findByKeyword(@PathVariable(name="keyword") String keyword) {
 		return modelService.getListBykeyword(keyword);
 	}
+	
+	@GetMapping("/models/{id}")
+	private Object findById(@PathVariable(name="id",required = true) Integer id) {
+		return modelService.getByID(id);
+	}
 }

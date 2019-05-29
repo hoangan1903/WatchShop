@@ -67,6 +67,12 @@ public class FirmServiceImpl implements FirmService{
 	        return query.getResultList();
 	}
 
+	@Override
+	public Object getByID(Integer id) {
+		// TODO Auto-generated method stub
+		return firmRepository.findById(id).isPresent()==true?firmRepository.findById(id).get():null;
+	}
+
 	
 	
 	

@@ -12,4 +12,5 @@ public interface FirmService {
 	public void deleteAllFirm();
 	public Long getTotalFirm();
 	List<Firm> getListBykeyword(String keyword);
+	public Object getByID(Integer id);
 }

@@ -9,4 +9,5 @@ public interface OriginService {
 	public void deleteById(Integer id);
 	public void deleteAll();
 	List<Origin> getListBykeyword(String keyword);
+	public Object getByID(Integer id);
 }

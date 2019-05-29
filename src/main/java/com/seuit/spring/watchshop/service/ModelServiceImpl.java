@@ -60,6 +60,12 @@ public class ModelServiceImpl implements ModelService {
         query.setParameter("code", "%" + keyword + "%");
         return query.getResultList();
 	}
+
+	@Override
+	public Object getByID(Integer id) {
+		// TODO Auto-generated method stub
+		return modelRepository.findById(id).isPresent()==true?modelRepository.findById(id).get():null;
+	}
 	
 	
 	

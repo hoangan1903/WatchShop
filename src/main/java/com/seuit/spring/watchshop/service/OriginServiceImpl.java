@@ -61,6 +61,10 @@ public class OriginServiceImpl implements OriginService {
         return query.getResultList();
 	}
 	
-	
+	@Override
+	public Object getByID(Integer id) {
+		// TODO Auto-generated method stub
+		return originRepository.findById(id).isPresent()==true?originRepository.findById(id).get():null;
+	}
 	
 }

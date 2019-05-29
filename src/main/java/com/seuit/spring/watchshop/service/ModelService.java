@@ -9,4 +9,5 @@ public interface ModelService {
 	public void deleteById(Integer id);
 	public void deleteAll();
 	List<Model> getListBykeyword(String keyword);
+	public Object getByID(Integer id);
 }
