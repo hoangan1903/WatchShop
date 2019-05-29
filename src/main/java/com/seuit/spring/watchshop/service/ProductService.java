@@ -24,7 +24,7 @@ public interface ProductService {
 	List<Product> listProductByIdFirm(Integer id) throws NotFoundException;
 	List<Product> listProductByIdModel(Integer id);
 	List<Product> listProductByIdOrigin(Integer id);
-	Map<String, Object> findPaginated(Integer page,Integer size,Integer idFirm);
+	Map<String, Object> findPaginated(Integer page,Integer size,Integer idObject,String styleObject);
 	Long countProduct();
 	Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword);
 	List<Product> listProductTopOrder();

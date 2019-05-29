@@ -68,8 +68,30 @@ public class ProductRestController {
 
 	@GetMapping(value = "/products", params = { "page", "size" })
 	Map<String, Object> findAllProductByPaginated(@RequestParam("page") Integer page,
-			@RequestParam("size") Integer size, @RequestParam(name = "firm", required = false) Integer idFirm) {
-		return productService.findPaginated(page, size, idFirm);
+			@RequestParam("size") Integer	 size, @RequestParam(name = "firm", required = false) Integer idFirm,
+			@RequestParam(name = "model", required = false) Integer idModel,
+			@RequestParam(name = "origin", required = false) Integer idOrigin) {
+		Integer idObject = null;
+		String styleObject = null;
+		
+		if ((idFirm != null && idModel != null && idModel != null) || (idFirm != null && idModel != null)
+				|| (idFirm != null && idOrigin != null) || (idModel != null && idOrigin != null)) {
+			return null;
+		}
+		if(idFirm!=null) {
+			idObject = idFirm;
+			styleObject = "Firm";
+		}
+		if(idModel!=null) {
+			idObject = idModel;
+			styleObject = "Model";
+		}
+		if(idOrigin!=null) {
+			idObject = idOrigin;
+			styleObject = "Origin";
+		}
+		
+		return productService.findPaginated(page, size, idObject,styleObject);
 	}
 
 	@GetMapping("/products/count")
@@ -141,7 +163,8 @@ public class ProductRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		map.put("top", DAHelper.getInstance().processSubMapWithTotalLimit("products", listTop, maxSizeResultListForIndex));
+		map.put("top",
+				DAHelper.getInstance().processSubMapWithTotalLimit("products", listTop, maxSizeResultListForIndex));
 		map.put("citizens",
 				DAHelper.getInstance().processSubMapWithTotalLimit("products", listCITIZEN, maxSizeResultListForIndex));
 		map.put("ogivals",

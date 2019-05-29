@@ -202,32 +202,50 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public Map<String, Object> findPaginated(Integer page, Integer size,Integer idFirm) {
+	public Map<String, Object> findPaginated(Integer page, Integer size, Integer idObject, String styleObject) {
+		System.out.println("start");
 		Session session = getSession();
 		String sql = null;
-		Query query;
+		Query query = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
-		List<Product>listProduct = null;
-		if(idFirm!=null) {
-			sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm";
-			query = session.createQuery(sql);
-			query.setParameter("idFirm", idFirm);
+		List<Product> listProduct = null;
+		if (idObject != null) {
+			if (styleObject == "Firm") {
+				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idObject";
+				query = session.createQuery(sql);
+				query.setParameter("idObject", idObject);
+				System.out.println("firm");
+			} else {
+				// model && origin
+				if (styleObject == "Model") {
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Model f on pd.model.id =f.id WHERE f.id=:idObject";
+					System.out.println("model");
+				}
+				if (styleObject == "Origin") {
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Origin f on pd.origin.id =f.id WHERE f.id=:idObject";
+					System.out.println("origin");
+				}
+				query = session.createQuery(sql);
+				query.setParameter("idObject", idObject);
+			}
 			listProduct = query.getResultList();
-			if(listProduct.size()%size==0) {//chia het cho size
-				pageCount = listProduct.size()/size;
-			}else {
-				pageCount = listProduct.size()/size + 1;
+			DAHelper.getInstance().createLoggerMessager(this.getClass().getName(), sql);
+			if (listProduct.size() % size == 0) {// chia het cho size
+				pageCount = listProduct.size() / size;
+			} else {
+				pageCount = listProduct.size() / size + 1;
 			}
 			query.setFirstResult(page * size).setMaxResults(size);
-		}else {
+		} else {
+			System.out.println("no");
 			sql = "FROM Product";
 			query = session.createQuery(sql);
 			listProduct = query.getResultList();
-			if(listProduct.size()%size==0) {//chia het cho size
-				pageCount = listProduct.size()/size;
-			}else {
-				pageCount = listProduct.size()/size + 1;
+			if (listProduct.size() % size == 0) {// chia het cho size
+				pageCount = listProduct.size() / size;
+			} else {
+				pageCount = listProduct.size() / size + 1;
 			}
 			query.setFirstResult(page * size).setMaxResults(size);
 		}
@@ -251,26 +269,26 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public Map<String, Object> getListProductBykeyword(Integer page,Integer size,String keyword) {
+	public Map<String, Object> getListProductBykeyword(Integer page, Integer size, String keyword) {
 		// TODO Auto-generated method stub
 		Session session = getSession();
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
-		List<Product>listProduct = null;
+		List<Product> listProduct = null;
 		String sql = "SELECT p FROM Product p WHERE p.codeName like :code";
 		Query query = session.createQuery(sql);
 		query.setParameter("code", "%" + keyword + "%");
 		listProduct = query.getResultList();
-		
-		if(page==null && size==null) {
+
+		if (page == null && size == null) {
 			map.put("products", listProduct);
 			return map;
 		}
-		
-		if(listProduct.size()%size==0) {//chia het cho size
-			pageCount = listProduct.size()/size;
-		}else {
-			pageCount = listProduct.size()/size + 1;
+
+		if (listProduct.size() % size == 0) {// chia het cho size
+			pageCount = listProduct.size() / size;
+		} else {
+			pageCount = listProduct.size() / size + 1;
 		}
 		query.setFirstResult(page * size).setMaxResults(size);
 		map.put("pageCountTotal", pageCount);
@@ -284,9 +302,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> listProductTopOrder() {
 		// TODO Auto-generated method stub
 		Session session = this.getSession();
-		String sql = "SELECT p FROM Product p inner join OrderDetail o "
-				+ "on p.id=o.productO.id "
-				+ "group by p.id "
+		String sql = "SELECT p FROM Product p inner join OrderDetail o " + "on p.id=o.productO.id " + "group by p.id "
 				+ "order by count(p.id)desc";
 		Query query = session.createQuery(sql);
 		return query.getResultList();
@@ -295,40 +311,39 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public Map<String, Object> findPaginatedSort(Integer page, Integer size,Integer idFirm, Integer type) {
+	public Map<String, Object> findPaginatedSort(Integer page, Integer size, Integer idFirm, Integer type) {
 		Session session = getSession();
 		String sql = null;
 		Query query;
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
-		List<Product>listProduct = null;
-		if(idFirm!=null) {
-			if(type == 0) {
+		List<Product> listProduct = null;
+		if (idFirm != null) {
+			if (type == 0) {
 				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm order by p.price asc";
-			}
-			else if(type == 1) {
+			} else if (type == 1) {
 				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idFirm order by p.price desc";
 			}
 			query = session.createQuery(sql);
 			query.setParameter("idFirm", idFirm);
 			listProduct = query.getResultList();
-			if(listProduct.size()%size==0) {//chia het cho size
-				pageCount = listProduct.size()/size;
-			}else {
-				pageCount = listProduct.size()/size + 1;
+			if (listProduct.size() % size == 0) {// chia het cho size
+				pageCount = listProduct.size() / size;
+			} else {
+				pageCount = listProduct.size() / size + 1;
 			}
 			query.setFirstResult(page * size).setMaxResults(size);
-		}else {
-			if(type == 0)
+		} else {
+			if (type == 0)
 				sql = "FROM Product p order by p.price asc";
 			else
 				sql = "FROM Product p order by p.price desc";
 			query = session.createQuery(sql);
 			listProduct = query.getResultList();
-			if(listProduct.size()%size==0) {//chia het cho size
-				pageCount = listProduct.size()/size;
-			}else {
-				pageCount = listProduct.size()/size + 1;
+			if (listProduct.size() % size == 0) {// chia het cho size
+				pageCount = listProduct.size() / size;
+			} else {
+				pageCount = listProduct.size() / size + 1;
 			}
 			query.setFirstResult(page * size).setMaxResults(size);
 		}
@@ -339,35 +354,33 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public Integer updownQuantityProduct(Integer id,Integer quantity) {
+	public Integer updownQuantityProduct(Integer id, Integer quantity) {
 		// TODO Auto-generated method stub
 		Session session = this.getSession();
-		Integer sum=0;
-	    Product product = session.get(Product.class, id);
-	    if(product.getId()==null) return 0;
-	    if(quantity + this.getAvailableProduct(id) <=0) sum=0;
-	    else
-	    	sum=quantity+this.getAvailableProduct(id);
-	    product.setAvailable(sum);
-	    session.merge(product);
-	    return 1;
+		Integer sum = 0;
+		Product product = session.get(Product.class, id);
+		if (product.getId() == null)
+			return 0;
+		if (quantity + this.getAvailableProduct(id) <= 0)
+			sum = 0;
+		else
+			sum = quantity + this.getAvailableProduct(id);
+		product.setAvailable(sum);
+		session.merge(product);
+		return 1;
 	}
 
 	@Override
 	public synchronized Integer getAvailableProduct(Integer id) {
 		// TODO Auto-generated method stub
-	    	Optional<Product> product = productRepository.findById(id);
-	    	try {
-				product.orElseThrow(()->new NotFoundException("cant find"));
-			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	return product.get().getAvailable();
+		Optional<Product> product = productRepository.findById(id);
+		try {
+			product.orElseThrow(() -> new NotFoundException("cant find"));
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return product.get().getAvailable();
 	}
 
-	
-	
-	
-	
 }
