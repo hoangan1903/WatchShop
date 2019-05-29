@@ -35,7 +35,7 @@ public class CartRestController {
 	private Map<String,Object> listCartDetail(){
 		Map<String, Object> map = new HashMap<>();
 		map.put("totalAmount", cartService.getTotalAmount());
-		map.put("total", cartService.getTotalPrice(cartService.listCartDetail()));
+		map.put("totals", cartService.getTotalPrice(cartService.listCartDetail()));
 		map.put("cart", cartService.listCartDetail());
 		return map;
 	}
