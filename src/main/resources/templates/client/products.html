@@ -9,7 +9,7 @@
     <link th:href="@{/css/products_responsive.css}" rel="stylesheet">
 
     <!-- Page title -->
-    <title>UIT Watchshop - Các sản phẩm</title>
+    <title>UIT Watchshop - Sản phẩm</title>
 </head>
 
 <body>
@@ -34,28 +34,16 @@
     <section class="section-sort-filter">
         <div class="container">
             <div class="row">
-                <!-- Filter and sorter go here -->
-                <!-- <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="inputState" style="font-weight: 500;">Lọc theo</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Chọn...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div> -->
-
                 <div class="col-xl-4 col-md-6">
                     <div class="form-group">
-                        <label for="inputState" style="font-weight: 500;">Sắp xếp</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Nổi bật nhất</option>
-                            <option>Giá tăng dần</option>
-                            <option>Giá giảm dần</option>
+                        <label for="sortInput" style="font-weight: 500;">Sắp xếp</label>
+                        <select id="sortInput" class="form-control">
+                            <option value="-1" selected>Nổi bật nhất</option>
+                            <option value="asc">Giá tăng dần</option>
+                            <option value="desc">Giá giảm dần</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="col-xl-8 col-md-6"></div>
             </div>
         </div>

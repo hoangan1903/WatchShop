@@ -34,11 +34,18 @@
             pageId = currentPage - 1;
 
         if (info.type === 'search') {
-            url = valib.getURLWithParams('/rest/products/find', {
+
+            let paramsObject = {
                 page: pageId,
                 size: info.pageSize,
                 keyword: info.keyword
-            });
+            };
+            if (info.sort) {
+                paramsObject.sort = info.sort;
+            }
+
+            url = valib.getURLWithParams('/rest/products/find', paramsObject);
+
         } else if (info.type === 'show-products') {
 
             let paramsObject = {
@@ -46,6 +53,9 @@
                 size: info.pageSize
             };
             paramsObject[info.by] = info.id;
+            if (info.sort) {
+                paramsObject.sort = info.sort;
+            }
 
             url = valib.getURLWithParams('/rest/products', paramsObject);
         }

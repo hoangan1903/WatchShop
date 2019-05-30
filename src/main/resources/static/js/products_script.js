@@ -1,15 +1,19 @@
 /* Products page functionality implementation */
 
 $(document).ready(function () {
-    var title = $('h2.section-heading');
+    const pathName = location.pathname;
 
-    function getSearchResults(keyword) {
+    var title = $('h2.section-heading');
+    var func;
+
+    function getSearchResults(keyword, sort) {
         paginator(
             {
                 info: {
                     type: 'search',
                     keyword: keyword,
-                    pageSize: 8
+                    pageSize: 8,
+                    sort: sort
                 },
                 selectors: {
                     container: '.section-product-list .row',
@@ -20,13 +24,14 @@ $(document).ready(function () {
         );
     }
 
-    function getProducts(by, id) {
+    function getProducts(by, id, sort) {
         paginator({
             info: {
                 type: 'show-products',
                 by: by,
                 id: id,
-                pageSize: 8
+                pageSize: 8,
+                sort: sort
             },
             selectors: {
                 container: '.section-product-list .row',
@@ -37,14 +42,14 @@ $(document).ready(function () {
     }
 
     function init() {
-        var pathName = location.pathname;
 
         if (pathName.includes('search')) {
 
             const keyword = valib.getValueFromURL('q');
 
             title.text("Kết quả tìm kiếm cho '" + keyword + "'");
-            getSearchResults(keyword);
+
+            func = getSearchResults.bind(this, keyword);
 
         } else if (pathName.includes('products')) {
 
@@ -55,24 +60,36 @@ $(document).ready(function () {
                 valib.ajaxGET('/rest/firms/' + id, function (obj) {
                     title.text('Đồng hồ ' + obj.name);
                 });
-                getProducts('firm', id);
+
+                func = getProducts.bind(this, 'firm', id);
 
             } else if (pathName.includes('model')) {
 
                 valib.ajaxGET('/rest/models/' + id, function (obj) {
                     title.text('Đồng hồ ' + obj.name);
                 });
-                getProducts('model', id);
+
+                func = getProducts.bind(this, 'model', id);
 
             } else if (pathName.includes('origin')) {
 
                 valib.ajaxGET('/rest/origins/' + id, function (obj) {
                     title.text('Đồng hồ ' + obj.name);
                 });
-                getProducts('origin', id);
+
+                func = getProducts.bind(this, 'origin', id);
             }
         }
+
+        func(null);
     }
+
+    $('#sortInput').change(function () {
+        const selectedValue = $(this).val();
+        const sort = isNaN(parseInt(selectedValue)) ? selectedValue : null;
+
+        func(sort);
+    });
 
     init();
 });
