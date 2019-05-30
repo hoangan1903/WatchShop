@@ -42,7 +42,6 @@ public class Comment {
 	
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="id_customer")
-	@JsonIgnore
 	private Customer customer;
 	
 	@JoinColumn(name="create_at",nullable = false,updatable = false)
@@ -80,6 +79,7 @@ public class Comment {
 		return customer;
 	}
 
+	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
@@ -87,6 +87,7 @@ public class Comment {
 	public Date getCreateAt() {
 		return createAt;
 	}
+	 
 
 	
 	

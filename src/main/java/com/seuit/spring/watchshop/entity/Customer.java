@@ -127,7 +127,7 @@ public class Customer {
 	}
 
 	
-
+	@JsonIgnore
 	public List<Comment> getComment() {
 		return comments;
 	}
