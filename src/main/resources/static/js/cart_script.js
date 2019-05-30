@@ -8,10 +8,10 @@ $(document).ready(function () {
         REMOVE_ALL_FAILED: "Xóa tất cả sản phẩm khỏi giỏ hàng không thành công.",
         INCRE_QTY_FAILED: "Không thể tăng số lượng. Đã đạt số lượng tối đa có sẵn của sản phẩm.",
         DECRE_QTY_FAILED: "Giảm số lượng sản phẩm không thành công.",
-        PROCEED_TO_CHECKOUT_FAILED: "Không thể tiến hành thanh toán. Vui lòng kiểm tra lại giỏ hàng."
+        PROCEED_TO_CHECKOUT_FAILED: "Không thể tiến hành thanh toán. Vui lòng kiểm tra lại sản phẩm trong giỏ hàng."
     };
 
-    let productId;
+    let productId, allProductsAreAvailable = true;
 
     function showWarning(message) {
         $('#cartWarning p').html(message);
@@ -51,6 +51,10 @@ $(document).ready(function () {
                 items.forEach(item => {
                     const product = item.product;
 
+                    if (allProductsAreAvailable && product.available === 0) {
+                        allProductsAreAvailable = false;
+                    }
+
                     html += `
                     <div id="${product.id}-cart-item" class="cart-item card mb-3" style="width: auto;">
                         <div class="card-body">
@@ -75,6 +79,9 @@ $(document).ready(function () {
                                                 <div class="product-quantity d-flex align-items-center px-3">${valib.toString(item.amount)}</div>
                                                 <button type="button" class="increase-qty btn btn-secondary">&plus;</button>
                                             </div>
+                                            <p class="card-text mt-3">
+                                                Còn lại: <span class="text-wt-bold">${valib.toString(product.available)}</span>
+                                            </p>
                                         </div>
                                     </div>
 
@@ -235,10 +242,10 @@ $(document).ready(function () {
             valib.ajaxGET('/rest/cart', function (obj) {
                 const cartIsEmpty = (obj.cart.length == 0);
 
-                if (!cartIsEmpty) {
+                if (!cartIsEmpty && allProductsAreAvailable) {
                     window.location.href = 'checkout';
                 } else {
-                    console.log('Cannot go to Checkout. Cart is empty.');
+                    console.log('Something wrong while attempting to proceed to Checkout.');
                     showDialog(Message.PROCEED_TO_CHECKOUT_FAILED);
                     showAlert(Message.PROCEED_TO_CHECKOUT_FAILED);
                 }

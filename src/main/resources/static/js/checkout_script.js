@@ -91,6 +91,10 @@ $(document).ready(function () {
                                     <p class="card-text" style="display: inline-block;">Số lượng: </p>
                                     <p class="card-text bold" style="display: inline-block;">${valib.toString(item.amount)}</p>
                                 </div>
+                                <div>
+                                    <p class="card-text" style="display: inline-block;">Còn lại: </p>
+                                    <p class="card-text bold" style="display: inline-block;">${valib.toString(product.available)}</p>
+                                </div>
                             </div>
 
                             <div class="item-price d-flex justify-content-end mt-3">
