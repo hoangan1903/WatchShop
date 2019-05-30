@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -202,7 +204,8 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public Map<String, Object> findPaginated(Integer page, Integer size, Integer idObject, String styleObject) {
+	public Map<String, Object> findPaginated(Integer page, Integer size, Integer idObject, String styleObject,
+			String sort) {
 		System.out.println("start");
 		Session session = getSession();
 		String sql = null;
@@ -249,8 +252,25 @@ public class ProductServiceImpl implements ProductService {
 			}
 			query.setFirstResult(page * size).setMaxResults(size);
 		}
+		listProduct = query.getResultList();
+		if (sort != null) {
+			switch (sort) {
+			case "asc":
+				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice))
+						.collect(Collectors.toList());
+				break;
+			case "desc":
+				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice).reversed())
+						.collect(Collectors.toList());
+				break;
+
+			default:
+				break;
+			}
+
+		}
 		map.put("pageCountTotal", pageCount);
-		map.put("products", query.getResultList());
+		map.put("products", listProduct);
 		return map;
 	}
 
@@ -269,7 +289,7 @@ public class ProductServiceImpl implements ProductService {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public Map<String, Object> getListProductBykeyword(Integer page, Integer size, String keyword) {
+	public Map<String, Object> getListProductBykeyword(Integer page, Integer size, String keyword,String sort) {
 		// TODO Auto-generated method stub
 		Session session = getSession();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -291,8 +311,25 @@ public class ProductServiceImpl implements ProductService {
 			pageCount = listProduct.size() / size + 1;
 		}
 		query.setFirstResult(page * size).setMaxResults(size);
+		listProduct = query.getResultList();
+		if (sort != null) {
+			switch (sort) {
+			case "asc":
+				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice))
+						.collect(Collectors.toList());
+				break;
+			case "desc":
+				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice).reversed())
+						.collect(Collectors.toList());
+				break;
+
+			default:
+				break;
+			}
+
+		}
 		map.put("pageCountTotal", pageCount);
-		map.put("products", query.getResultList());
+		map.put("products", listProduct);
 		return map;
 	}
 
