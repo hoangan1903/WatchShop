@@ -737,6 +737,12 @@ section.section-all-details table#details td:nth-child(even) {
   color: #404040;
 }
 
-section.section-similar-products {
-  background-color: #f4f4f4;
+section.section-comments {
+  padding-bottom: 45px;
+}
+section.section-comments img.comment-avatar {
+  height: 64px;
+  border-radius: 50%;
+  margin-right: 12px;
+  vertical-align: middle;
 }

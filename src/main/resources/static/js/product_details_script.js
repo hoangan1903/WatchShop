@@ -35,6 +35,11 @@ $(document).ready(function () {
         $('#productDetailsWarning').show();
     }
 
+    function showDialog(message) {
+        $('#productDetailsModal .modal-body').html(message);
+        $('#productDetailsModal').modal('toggle');
+    }
+
     function initStickyNavbar() {
         $('.section-product-overview').waypoint({
             handler: function (direction) {
@@ -133,6 +138,7 @@ $(document).ready(function () {
                         Vui lòng <strong>đăng nhập</strong> trước khi thêm sản phẩm vào giỏ hàng.
                         <a href="/login" class="regular-link" style="display: inline-block; color: #28a745;">Đăng nhập</a>
                     `);
+                    showDialog('Vui lòng <strong>đăng nhập</strong> trước khi thêm sản phẩm vào giỏ hàng.');
                 }
             });
         });
@@ -236,53 +242,87 @@ $(document).ready(function () {
         });
     }
 
-    /*
-    function getComments() {
-        valib.ajaxGET('/rest/comments/productDetail/' + id, function (obj) {
-            if (obj.length > 0) {
-                var html = '';
 
-                // Process retrieved data into HTML
+    function initComments() {
+        var commentTextarea = $('#commentTextarea'),
+            commenter = $('#commenterName');
 
-                $('.comment-container').html(html);
-            } else {
+        function getComments() {
+            valib.ajaxGET('/rest/comments/product/' + id, function (obj) {
+                if (obj && obj.length > 0) {
+                    var html = '';
+                    obj.forEach(comment => {
+                        html += `
+                            <div class="media mb-4" style="border-bottom: 1px solid #dfdfdf">
+                                <img class="comment-avatar" src="/images/person.jpg" alt="Customer">
+                                <div class="media-body ml-2">
+                                    <h5 class="mt-0">${comment.customer.name}</h5>
+                                    <p class="m-0 p-0">${comment.content}</p>
+                                    <p class="mt-2 mb-1 pr-1" style="font-size: 80%; text-align: end;">
+                                        ${valib.formatDateTime(comment.createAt)}
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    $('#commentContainer').html(html);
+                }
+            });
+        }
 
-            }
+        $('#postComment').click(function () {
+            valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
+                var isLoggedIn = Boolean(parseInt(obj));
+                if (isLoggedIn) {
+                    const commentText = commentTextarea.val();
+                    if (commentText) {
+
+                        // 1. Make comment object
+                        const cmtObject = {
+                            content: commentText,
+                            idProduct: id
+                        };
+
+                        // 2. Post this object to server
+                        valib.ajaxPOST({
+                            url: '/rest/comments',
+                            data: cmtObject,
+                            onSuccess: function (response) {
+                                var successful = Boolean(parseInt(response));
+                                if (successful) {
+                                    commentTextarea.val('');
+                                    getComments();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    showWarning(`
+                        Vui lòng <strong>đăng nhập</strong> trước khi bình luận.
+                        <a href="/login" class="regular-link" style="display: inline-block; color: #28a745;">Đăng nhập</a>
+                    `);
+                    showDialog('Vui lòng <strong>đăng nhập</strong> trước khi bình luận.');
+                }
+            });
         });
-    }
 
-    function postComment() {
+        // Get commenter's name
         valib.ajaxGET('/rest/users/isLoggedIn', function (obj) {
             var isLoggedIn = Boolean(parseInt(obj));
             if (isLoggedIn) {
-                // 1. Make comment object from Comment Form
-
-                // 2. Post this object to server
-                valib.ajaxPOST({
-                    url: '/url where you want to submit your data',
-                    data: 'data you want to submit to server',
-                    onSuccess: function (response) {
-                        var successful = Boolean(parseInt(response));
-                        if (successful) {
-                            // 3. Do something when the request is successful
-                            // e.g Refresh the comments to see the new comment
-                            getComments();
-                        }
-                    }
-                });
+                valib.ajaxGET('/rest/me',
+                    obj => commenter.html(`<em>Bình luận với tư cách là <strong>${obj.name}</strong>:</em>`));
+            } else {
+                commenter.html(`<em>Vui lòng <strong>đăng nhập</strong> trước khi bình luận.</em>`);
             }
         });
-    }
 
-    function initComments() {
         getComments();
-        $('button.post-comment').click(postComment);
     }
-    */
 
     initStickyNavbar();
-
     initComponents();
     setClickListeners();
     getData();
+    initComments();
 });

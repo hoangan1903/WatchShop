@@ -4,14 +4,6 @@ $(document).ready(function () {
         inputAddress = $('#inputCustomerAddress'),
         invalidInfoAlert = $('#invalidInfoAlert');
 
-    function formatDateTime(datetime) {
-        var regDate = /\d{4}-.*(?=T\d\d:\d\d:\d\d)/;
-        var regTime = /(?<=\d{4}-\d\d-\d\dT)\d\d:\d\d:\d\d/;
-        var date = regDate.exec(datetime)[0];
-        var time = regTime.exec(datetime)[0];
-        return date + ' ' + time;
-    }
-
     function showNotification(message) {
         $('#accountNotification p').html(message);
         $('#accountNotification').show();
@@ -100,7 +92,7 @@ $(document).ready(function () {
                     price = order.price.toLocaleString() + 'đ',
                     status = order.orderStatusO.orderStatus,
                     payment = order.paymentO.name,
-                    dateTime = formatDateTime(order.createAt);
+                    dateTime = valib.formatDateTime(order.createAt);
 
                 html += `
                 <tr>

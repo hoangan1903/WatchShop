@@ -3,8 +3,8 @@
  * Requires jQuery and includes Sizzle CSS Selector Engine
  * Some ES6 syntax and features are used in this library
  * 
- * Created 04/09/2019 - Updated 05/23/2019
- * Current version: 1.5.5
+ * Created 04/09/2019 - Updated 05/30/2019
+ * Current version: 1.5.6
 */
 (function (global, jQuery, factory) {
 
@@ -2405,7 +2405,7 @@
 
     valib.extend(valib, {
 
-        version: '1.5.5',
+        version: '1.5.6',
 
         isObject: function (obj) {
             var type = typeof obj;
@@ -2611,6 +2611,14 @@
         toString: function (num) {
             var result = num < 10 ? '0' + num.toString() : num.toString();
             return result;
+        },
+
+        formatDateTime: function (datetime) {
+            var regDate = /\d{4}-.*(?=T\d\d:\d\d:\d\d)/;
+            var regTime = /(?<=\d{4}-\d\d-\d\dT)\d\d:\d\d:\d\d/;
+            var date = regDate.exec(datetime)[0];
+            var time = regTime.exec(datetime)[0];
+            return date + ' ' + time;
         }
     });
 
