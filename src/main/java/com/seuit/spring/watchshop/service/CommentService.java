@@ -7,6 +7,6 @@ import com.seuit.spring.watchshop.entity.CommentAPI;
 
 public interface CommentService {
 	List<Comment> getComments();
-	void createComment(CommentAPI cmt);
+	Integer createComment(CommentAPI cmt);
 	List<Comment> getCommentsWithIdProductDetails(Integer id);
 }

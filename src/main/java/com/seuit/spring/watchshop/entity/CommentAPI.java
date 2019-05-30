@@ -1,34 +1,24 @@
 package com.seuit.spring.watchshop.entity;
 
-import java.util.Date;
-
 public class CommentAPI{
-	private Comment comment;
-	private Integer idProductDetail;
-	private Integer idCustomer;
-	public Integer getIdProductDetail() {
-		return idProductDetail;
+	private String content;
+	private Integer idProduct;
+	public String getContent() {
+		return content;
 	}
-	public void setIdProductDetail(Integer idProductDetail) {
-		this.idProductDetail = idProductDetail;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public Integer getIdCustomer() {
-		return idCustomer;
+	public Integer getIdProduct() {
+		return idProduct;
 	}
-	public void setIdCustomer(Integer idCustomer) {
-		this.idCustomer = idCustomer;
+	public void setIdProduct(Integer idProduct) {
+		this.idProduct = idProduct;
 	}
-	public Comment getComment() {
-		return comment;
-	}
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
-	public CommentAPI(Comment comment, Integer idProductDetail, Integer idCustomer) {
+	public CommentAPI(String content, Integer idProduct) {
 		super();
-		this.comment = comment;
-		this.idProductDetail = idProductDetail;
-		this.idCustomer = idCustomer;
+		this.content = content;
+		this.idProduct = idProduct;
 	}
 	public CommentAPI() {
 		super();
@@ -36,11 +26,8 @@ public class CommentAPI{
 	}
 	@Override
 	public String toString() {
-		return "CommentAPI [comment=" + comment + ", idProductDetail=" + idProductDetail + ", idCustomer=" + idCustomer
-				+ "]";
+		return "CommentAPI [content=" + content + ", idProduct=" + idProduct + "]";
 	}
-	
-	
 	
 	
 }

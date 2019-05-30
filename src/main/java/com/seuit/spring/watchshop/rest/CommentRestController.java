@@ -29,10 +29,10 @@ public class CommentRestController {
 	}
 	
 	@PostMapping("")
-	private void createComment(@Valid @RequestBody CommentAPI cmt) {
-		commentService.createComment(cmt);	
+	private Integer createComment(@Valid @RequestBody CommentAPI cmt) {
+		return commentService.createComment(cmt);	
 	}
-	@GetMapping("/productDetail/{id}")
+	@GetMapping("/product/{id}")
 	private List<Comment> listCommentWithIdProductDetail(@PathVariable(name = "id") Integer id){
 		return commentService.getCommentsWithIdProductDetails(id);
 	}

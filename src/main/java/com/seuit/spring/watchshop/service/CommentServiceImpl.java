@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import com.seuit.spring.watchshop.entity.Comment;
 import com.seuit.spring.watchshop.entity.CommentAPI;
 import com.seuit.spring.watchshop.entity.Customer;
+import com.seuit.spring.watchshop.entity.Product;
 import com.seuit.spring.watchshop.entity.ProductDetail;
 import com.seuit.spring.watchshop.repository.CommentRepository;
 import com.seuit.spring.watchshop.repository.CustomerRepository;
 import com.seuit.spring.watchshop.repository.ProductDetailRepository;
+import com.seuit.spring.watchshop.repository.ProductRepository;
 
 @Service
 @Transactional
@@ -26,7 +28,10 @@ public class CommentServiceImpl implements CommentService {
 	private CustomerRepository customerRepository;
 	
 	@Autowired 
-	private ProductDetailRepository productDetailRepository;
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private CustomerService customerService;
 
 	@Override
 	public List<Comment> getComments() {
@@ -35,22 +40,31 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void createComment(CommentAPI cmt) {
+	public Integer createComment(CommentAPI cmt) {
 		// TODO Auto-generated method stub
 		 Comment comment = new Comment();
-		 Customer cus = customerRepository.findById(cmt.getIdCustomer()).get();
-		 ProductDetail pro = productDetailRepository.findById(cmt.getIdProductDetail()).get();
-		 comment.setContent(cmt.getComment().getContent());
-		 comment.setCustomer(cus);
-		 comment.setProductDetail(pro);
+		 Integer idCustomer = customerService.getIdCustomerByPrincipal();
+		 Customer customer = customerRepository.findById(idCustomer).isPresent()?customerRepository.findById(idCustomer).get():null;
+		 Product product = productRepository.findById(cmt.getIdProduct()).isPresent()?productRepository.findById(cmt.getIdProduct()).get():null;
+		 if(customer==null||product==null) {
+			 return 0;
+		 }
+		 ProductDetail productDetail = product.getProductDetail();
+		 comment.setContent(cmt.getContent());
+		 comment.setCustomer(customer);
+		 comment.setProductDetail(productDetail);
 		 commentRepository.save(comment);
+		 return 1;
 	}
 
 	@Override
 	public List<Comment> getCommentsWithIdProductDetails(Integer id) {
 		// TODO Auto-generated method stub
-		ProductDetail pro = productDetailRepository.findById(id).get();
-		return pro.getComments();
+		Product product = productRepository.findById(id).isPresent()?productRepository.findById(id).get():null;
+		 if(product==null) {
+			 return null;
+		 }
+		return product.getProductDetail().getComments();
 	}
 	
 	
