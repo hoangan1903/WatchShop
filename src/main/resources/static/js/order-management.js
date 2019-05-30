@@ -86,13 +86,11 @@ function loadOrderProductWithAPI(id, status) {
                     '<p><b>ID:</b><a href="#">#' + product.id + '</a></p>' +
                     '<p><b>CODE: </b>' + product.codeName + '</p>' +
                     '<p><b>FIRM: </b>' + product.firm.name + '</p>' +
-                    '<p><b>AVAILABLE: </b>' + chooseAvailable(product.available) + '</p>' +
                     '<p><b>AMOUNT: </b>' + value.amount + '</p>' +
                     '<p><b>TOTAL PRICE: </b>' + formatNumber(product.price * value.amount) + ' đồng</p>' +
                     '<img alt="Product Image" src="' + product.image + '" width="100" height="100"></img>' +
                     '<hr>'
             })
-            console.log(productAppend);
             customerAppend = '<p><b>ID: </b><a href="#">#' + customer.id + '</a></p>' +
                 '<p><b>NAME: </b>' + customer.name + '</p>' +
                 '<p><b>PHONE: </b>' + customer.phone + '</p>' +
@@ -157,19 +155,6 @@ function getDateTimeWithRegularEx(dateTimeFromAPI) {
 
 function viewProduct(id, status) {
     loadOrderProductWithAPI(id, status);
-}
-
-function chooseAvailable(availableId) {
-    switch (availableId) {
-        case 0:
-            return 'Mặt hàng đã hết';
-            break;
-        case 1:
-            return 'Mặt hàng vẫn còn';
-            break;
-        default:
-            break;
-    }
 }
 
 function confirmedOrder(id, isSuccess) {
