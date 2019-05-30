@@ -1,5 +1,6 @@
 package com.seuit.spring.watchshop.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -62,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		Product product = productRepository.findById(id).isPresent()?productRepository.findById(id).get():null;
 		 if(product==null) {
-			 return null;
+			 return Collections.emptyList() ;
 		 }
 		return product.getProductDetail().getComments();
 	}
