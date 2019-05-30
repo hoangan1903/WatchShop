@@ -15,6 +15,58 @@
 <body>
     <header th:include="fragments/header.html :: header"></header>
 
+    <!-- Alerts -->
+    <div id="checkoutAlert" class="alert alert-danger alert-dismissible collapse m-3" role="alert">
+        <p class="m-0"></p>
+        <button type="button" class="close" onclick="$('#checkoutAlert').hide();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="checkoutAlertModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Message
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" class="btn btn-success px-4" data-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="placeOrderConfirmModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Tiến hành đặt hàng?
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" id="placeOrderConfirm" class="btn btn-success px-4">
+                        Có
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">
+                        Không
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Page content here -->
     <section>
         <div class="container">

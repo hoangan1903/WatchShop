@@ -2,8 +2,26 @@ $(document).ready(function () {
     var placeOrderBtn = $('button#place-order'),
         itemContainer = $('.order-item-container');
 
+    const PLACE_ORDER_FAILED =
+        "Có vấn đề khi tiến đặt hàng. Vui lòng kiểm tra lại thông tin của bạn và sản phẩm.";
+
+    function showAlert(message) {
+        $('#checkoutAlert p').html(message);
+        $('#checkoutAlert').show();
+    }
+
+    function showDialog(message) {
+        $('#checkoutAlertModal .modal-body').html(message);
+        $('#checkoutAlertModal').modal('toggle');
+    }
+
     function setClickListeners() {
-        placeOrderBtn.click(function () {
+        placeOrderBtn.click(() => $('#placeOrderConfirmModal').modal('toggle'));
+
+        $('#placeOrderConfirm').click(function () {
+            // Dismiss the modal
+            $('#placeOrderConfirmModal').modal('toggle');
+
             // Get payment method from input
             const paymentMethodId = $('#paymentMethods input:checked').val();
 
@@ -14,11 +32,13 @@ $(document).ready(function () {
                 onSuccess: function (response) {
                     var successful = Boolean(parseInt(response));
                     if (successful) {
-                        // Back to homepage if order is successful
+                        // Back to homepage or go to Order Success page if order is successful
                         window.location.href = '/';
                     } else {
                         // Notify user that their order was not successfully placed
                         console.log('Order not successful');
+                        showAlert(PLACE_ORDER_FAILED);
+                        showDialog(PLACE_ORDER_FAILED);
                     }
                 }
             });

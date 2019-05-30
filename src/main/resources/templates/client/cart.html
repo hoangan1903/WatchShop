@@ -22,6 +22,87 @@
         </div>
     </div>
 
+    <!-- Alerts -->
+    <div id="cartWarning" class="alert alert-warning alert-dismissible collapse m-3" role="alert">
+        <p class="m-0"></p>
+        <button type="button" class="close" onclick="$('#cartWarning').hide();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div id="cartAlert" class="alert alert-danger alert-dismissible collapse m-3" role="alert">
+        <p class="m-0"></p>
+        <button type="button" class="close" onclick="$('#cartAlert').hide();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="cartAlertModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Message
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" class="btn btn-success px-4" data-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removeAllModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Bạn có chắc chắn muốn xóa tất cả sản phẩm khỏi giỏ hàng?
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" id="removeAllConfirm" class="btn btn-success px-4">
+                        Có
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">
+                        Không
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removeItemModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" id="removeItemConfirm" class="btn btn-success px-4">
+                        Có
+                    </button>
+
+                    <button type="button" class="btn btn-outline-secondary px-4" data-dismiss="modal">
+                        Không
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Page content here -->
     <section class="section-shopping-cart">
         <div class="container">
@@ -73,7 +154,7 @@
                                 </div>
                             </div>
                             <button type="button" id="go-to-checkout" class="btn btn-success full-width mt-3" disabled>
-                                Chuyển đến Thanh toán
+                                Tiến hành Thanh toán
                             </button>
                         </div>
                     </div>

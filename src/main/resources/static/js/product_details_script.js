@@ -129,7 +129,10 @@ $(document).ready(function () {
                     });
 
                 } else {
-                    showWarning('Vui lòng <strong>đăng nhập</strong> trước khi thêm sản phẩm vào giỏ hàng.');
+                    showWarning(`
+                        Vui lòng <strong>đăng nhập</strong> trước khi thêm sản phẩm vào giỏ hàng.
+                        <a href="/login" class="regular-link" style="display: inline-block; color: #28a745;">Đăng nhập</a>
+                    `);
                 }
             });
         });

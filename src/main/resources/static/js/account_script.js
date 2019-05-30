@@ -12,6 +12,16 @@ $(document).ready(function () {
         return date + ' ' + time;
     }
 
+    function showNotification(message) {
+        $('#accountNotification p').html(message);
+        $('#accountNotification').show();
+    }
+
+    function showAlert(message) {
+        $('#accountAlert p').html(message);
+        $('#accountAlert').show();
+    }
+
     function setClickListeners() {
 
         // Set click listener for "Edit Customer Info"
@@ -26,13 +36,16 @@ $(document).ready(function () {
                 inputAddress.val(address);
             });
 
-            $("#editCustomerInfoModal").modal("toggle");
+            $('#editCustomerInfoModal').modal('toggle');
 
             return false;
         });
 
         // Set click listener for "Save Info"
         $('#saveCustomerInfo').click(function () {
+            // Dismiss the modal
+            $('#editCustomerInfoModal').modal('toggle');
+
             var name = inputName.val(),
                 phone = inputPhone.val(),
                 address = inputAddress.val();
@@ -51,10 +64,11 @@ $(document).ready(function () {
                         var successful = Boolean(parseInt(response));
                         if (successful) {
                             getCustomerInfo();
+                            showNotification('Chỉnh sửa thông tin thành công');
                         } else {
                             console.log("Customer's info not successfully updated");
+                            showAlert('Chỉnh sửa thông tin không thành công. Có vấn đề xảy ra khi lưu thông tin chỉnh sửa của bạn');
                         }
-                        $("#editCustomerInfoModal").modal("toggle");
                     }
                 });
 
@@ -83,7 +97,7 @@ $(document).ready(function () {
             var html = '';
             obj.forEach((order, index) => {
                 var number = index + 1,
-                    price = order.price,
+                    price = order.price.toLocaleString() + 'đ',
                     status = order.orderStatusO.orderStatus,
                     payment = order.paymentO.name,
                     dateTime = formatDateTime(order.createAt);

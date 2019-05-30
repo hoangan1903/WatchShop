@@ -1,8 +1,32 @@
 $(document).ready(function () {
 
     let goToCheckout = $('button#go-to-checkout'),
-        removeAll = $('a.cart-remove-all'),
         itemContainer = $('.cart-item-container');
+
+    const Message = {
+        REMOVE_ITEM_FAILED: "Xóa sản phẩm khỏi giỏ hàng không thành công.",
+        REMOVE_ALL_FAILED: "Xóa tất cả sản phẩm khỏi giỏ hàng không thành công.",
+        INCRE_QTY_FAILED: "Không thể tăng số lượng. Đã đạt số lượng tối đa có sẵn của sản phẩm.",
+        DECRE_QTY_FAILED: "Giảm số lượng sản phẩm không thành công.",
+        PROCEED_TO_CHECKOUT_FAILED: "Không thể tiến hành thanh toán. Vui lòng kiểm tra lại giỏ hàng."
+    };
+
+    let productId;
+
+    function showWarning(message) {
+        $('#cartWarning p').html(message);
+        $('#cartWarning').show();
+    }
+
+    function showAlert(message) {
+        $('#cartAlert p').html(message);
+        $('#cartAlert').show();
+    }
+
+    function showDialog(message) {
+        $('#cartAlertModal .modal-body').html(message);
+        $('#cartAlertModal').modal('toggle');
+    }
 
     // Get user's cart from server
     function fetchCart() {
@@ -92,35 +116,66 @@ $(document).ready(function () {
 
     function setClickListeners() {
 
-        // Set click listener for "Remove all" button
-        removeAll.click(function () {
+        $('a.cart-remove-all').click(function () {
             valib.ajaxGET('/rest/cart', function (obj) {
                 const cartIsEmpty = (obj.cart.length == 0);
 
                 if (!cartIsEmpty) {
-                    showLoadingScreen();
-
-                    valib.ajaxDELETE({
-                        url: '/rest/cart/all',
-                        onSuccess: function (response) {
-                            var successful = Boolean(parseInt(response));
-                            if (!successful) {
-                                console.log('Remove all products unsuccessfully');
-                            }
-
-                            // Refresh cart to see changes
-                            fetchCart();
-                            hideLoadingScreen(500);
-                        }
-                    });
+                    $('#removeAllModal').modal('toggle');
                 }
             });
             return false;
         });
 
+        $('button#removeAllConfirm').click(function () {
+            // Dismiss the modal
+            $('#removeAllModal').modal('toggle');
+
+            showLoadingScreen();
+
+            valib.ajaxDELETE({
+                url: '/rest/cart/all',
+                onSuccess: function (response) {
+                    var successful = Boolean(parseInt(response));
+                    if (!successful) {
+                        console.log('Remove all products unsuccessfully');
+                        showDialog(Message.REMOVE_ALL_FAILED);
+                        showAlert(Message.REMOVE_ALL_FAILED);
+                    }
+
+                    // Refresh cart to see changes
+                    fetchCart();
+                    hideLoadingScreen(500);
+                }
+            });
+        });
+
+        $('button#removeItemConfirm').click(function () {
+            // Dismiss the modal
+            $('#removeItemModal').modal('toggle');
+
+            showLoadingScreen();
+
+            valib.ajaxDELETE({
+                url: '/rest/cart/product/' + productId,
+                onSuccess: function (response) {
+                    var successful = Boolean(parseInt(response));
+                    if (!successful) {
+                        console.log('Remove product unsuccessfully');
+                        showDialog(Message.REMOVE_ITEM_FAILED);
+                        showAlert(Message.REMOVE_ITEM_FAILED);
+                    }
+
+                    // Refresh cart to see changes
+                    fetchCart();
+                    hideLoadingScreen(null);
+                }
+            });
+        });
+
         // Handle: clicking on buttons inside a cart item
         itemContainer.click(function (e) {
-            let clicked, domId, productId, currentQty;
+            let clicked, domId, currentQty;
 
             clicked = $(e.target);
             domId = clicked.closest('.cart-item').attr('id');
@@ -139,6 +194,8 @@ $(document).ready(function () {
                         var successful = Boolean(parseInt(response));
                         if (!successful) {
                             console.log('Increase quantity unsuccessfully');
+                            showDialog(Message.INCRE_QTY_FAILED);
+                            showWarning(Message.INCRE_QTY_FAILED);
                         }
 
                         // Refresh cart to see changes
@@ -159,6 +216,8 @@ $(document).ready(function () {
                         var successful = Boolean(parseInt(response));
                         if (!successful) {
                             console.log('Decrease quantity unsuccessfully');
+                            showDialog(Message.DECRE_QTY_FAILED);
+                            showAlert(Message.DECRE_QTY_FAILED);
                         }
 
                         // Refresh cart to see changes
@@ -168,20 +227,7 @@ $(document).ready(function () {
                 });
 
             } else if (clicked.parent().hasClass('remove-cart-item')) {
-                showLoadingScreen();
-                valib.ajaxDELETE({
-                    url: '/rest/cart/product/' + productId,
-                    onSuccess: function (response) {
-                        var successful = Boolean(parseInt(response));
-                        if (!successful) {
-                            console.log('Remove product unsuccessfully');
-                        }
-
-                        // Refresh cart to see changes
-                        fetchCart();
-                        hideLoadingScreen(null);
-                    }
-                });
+                $('#removeItemModal').modal('toggle');
             }
         });
 
@@ -193,6 +239,8 @@ $(document).ready(function () {
                     window.location.href = 'checkout';
                 } else {
                     console.log('Cannot go to Checkout. Cart is empty.');
+                    showDialog(Message.PROCEED_TO_CHECKOUT_FAILED);
+                    showAlert(Message.PROCEED_TO_CHECKOUT_FAILED);
                 }
             });
         });
@@ -202,6 +250,6 @@ $(document).ready(function () {
 
     fetchCart();
     setClickListeners();
-    
+
     setInterval(checkLogin, LOGIN_CHECK_INTERVAL);
 });
