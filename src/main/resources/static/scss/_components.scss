@@ -227,6 +227,56 @@ header {
     }
 }
 
+ul.social-links {
+    li {
+        margin-right: 16px;
+    }
+
+    a {
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $color-secondary-text;
+        }
+
+        ion-icon {
+
+            &.social-icon {
+                transition: color $transtion-time;
+            }
+
+            &.facebook-icon {
+                @include hover-color($color-facebook-icon);
+            }
+
+            &.twitter-icon {
+                @include hover-color($color-twitter-icon);
+            }
+
+            &.googleplus-icon {
+                @include hover-color($color-googleplus-icon);
+            }
+
+            &.instagram-icon {
+                @include hover-color($color-instagram-icon);
+            }
+
+            &.pinterest-icon {
+                @include hover-color($color-pinterest-icon);
+            }
+
+            &.github-icon {
+                @include hover-color($color-github-icon);
+            }
+
+            &.linkedin-icon {
+                @include hover-color($color-linkedin-icon);
+            }
+        }
+    }
+}
+
 footer {
     // position: fixed;
     // bottom: 0;
@@ -240,56 +290,6 @@ footer {
         &.footer-nav {
             li {
                 margin-right: 16px;
-            }
-        }
-
-        &.social-links {
-            li {
-                margin-right: 16px;
-            }
-
-            a {
-
-                &:link,
-                &:visited {
-                    text-decoration: none;
-                    color: $color-secondary-text;
-                }
-
-                ion-icon {
-
-                    &.social-icon {
-                        transition: color $transtion-time;
-                    }
-
-                    &.facebook-icon {
-                        @include hover-color($color-facebook-icon);
-                    }
-
-                    &.twitter-icon {
-                        @include hover-color($color-twitter-icon);
-                    }
-
-                    &.googleplus-icon {
-                        @include hover-color($color-googleplus-icon);
-                    }
-
-                    &.instagram-icon {
-                        @include hover-color($color-instagram-icon);
-                    }
-
-                    &.pinterest-icon {
-                        @include hover-color($color-pinterest-icon);
-                    }
-
-                    &.github-icon {
-                        @include hover-color($color-github-icon);
-                    }
-
-                    &.linkedin-icon {
-                        @include hover-color($color-linkedin-icon);
-                    }
-                }
             }
         }
     }

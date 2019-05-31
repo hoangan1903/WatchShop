@@ -669,6 +669,38 @@ header nav.navigation ul.search-suggestion .suggestion-item:hover, header nav.na
   border-radius: 4px;
 }
 
+ul.social-links li {
+  margin-right: 16px;
+}
+ul.social-links a:link, ul.social-links a:visited {
+  text-decoration: none;
+  color: #888;
+}
+ul.social-links a ion-icon.social-icon {
+  transition: color 0.25s;
+}
+ul.social-links a ion-icon.facebook-icon:hover, ul.social-links a ion-icon.facebook-icon:active {
+  color: #3b5998;
+}
+ul.social-links a ion-icon.twitter-icon:hover, ul.social-links a ion-icon.twitter-icon:active {
+  color: #00aced;
+}
+ul.social-links a ion-icon.googleplus-icon:hover, ul.social-links a ion-icon.googleplus-icon:active {
+  color: #dd4b39;
+}
+ul.social-links a ion-icon.instagram-icon:hover, ul.social-links a ion-icon.instagram-icon:active {
+  color: #ce2d95;
+}
+ul.social-links a ion-icon.pinterest-icon:hover, ul.social-links a ion-icon.pinterest-icon:active {
+  color: #e60023;
+}
+ul.social-links a ion-icon.github-icon:hover, ul.social-links a ion-icon.github-icon:active {
+  color: #1b1f23;
+}
+ul.social-links a ion-icon.linkedin-icon:hover, ul.social-links a ion-icon.linkedin-icon:active {
+  color: #0077b5;
+}
+
 footer {
   padding: 48px 0 30px 0;
   background-color: #f3f3f3;
@@ -676,41 +708,42 @@ footer {
 footer ul.footer-nav li {
   margin-right: 16px;
 }
-footer ul.social-links li {
-  margin-right: 16px;
-}
-footer ul.social-links a:link, footer ul.social-links a:visited {
-  text-decoration: none;
-  color: #888;
-}
-footer ul.social-links a ion-icon.social-icon {
-  transition: color 0.25s;
-}
-footer ul.social-links a ion-icon.facebook-icon:hover, footer ul.social-links a ion-icon.facebook-icon:active {
-  color: #3b5998;
-}
-footer ul.social-links a ion-icon.twitter-icon:hover, footer ul.social-links a ion-icon.twitter-icon:active {
-  color: #00aced;
-}
-footer ul.social-links a ion-icon.googleplus-icon:hover, footer ul.social-links a ion-icon.googleplus-icon:active {
-  color: #dd4b39;
-}
-footer ul.social-links a ion-icon.instagram-icon:hover, footer ul.social-links a ion-icon.instagram-icon:active {
-  color: #ce2d95;
-}
-footer ul.social-links a ion-icon.pinterest-icon:hover, footer ul.social-links a ion-icon.pinterest-icon:active {
-  color: #e60023;
-}
-footer ul.social-links a ion-icon.github-icon:hover, footer ul.social-links a ion-icon.github-icon:active {
-  color: #1b1f23;
-}
-footer ul.social-links a ion-icon.linkedin-icon:hover, footer ul.social-links a ion-icon.linkedin-icon:active {
-  color: #0077b5;
-}
 footer p.copyright-footer {
   width: 100%;
   margin-top: 16px;
   text-align: center;
   font-size: 80%;
   color: #888;
+}
+
+.contact_info_box {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #FFFFFF;
+  text-align: center;
+  background: #28a745;
+  font-style: italic;
+}
+
+.contact-main-container {
+  font-family: "Montserrat", sans-serif;
+}
+.contact-main-container .contact_text p {
+  font-size: 15px;
+  font-weight: 400;
+  color: #7d8293;
+  line-height: 200%;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+.contact-main-container .contact_info {
+  font-size: 14px;
+  font-weight: 500;
+  color: #131a2f;
+}
+.contact-main-container .contact_info p {
+  margin-bottom: 20px;
 }

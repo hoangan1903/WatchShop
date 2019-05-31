@@ -3,3 +3,38 @@
 @import "rules.scss";
 @import "reusables.scss";
 @import "components.scss";
+
+.contact_info_box {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+    background: $color-accent;
+    font-style: italic;
+}
+
+.contact-main-container {
+    font-family: 'Montserrat', sans-serif;
+
+    .contact_text p {
+        font-size: 15px;
+        font-weight: 400;
+        color: #7d8293;
+        line-height: 200%;
+        text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+    }
+
+    .contact_info {
+        font-size: 14px;
+        font-weight: 500;
+        color: #131a2f;
+
+        p {
+            margin-bottom: 20px;
+        }
+    }
+}
