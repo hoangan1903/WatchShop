@@ -38,7 +38,7 @@ $(document).ready(function () {
                 url: valib.getURLWithParams('/rest/products/updown', data),
                 data: data,
                 onSuccess: function (response) {
-                    const successful = Boolean(parseInt(response));
+                    var successful = Boolean(parseInt(response));
                     if (successful) {
                         window.location.reload();
                     } else {

@@ -278,14 +278,13 @@ $(document).ready(function () {
                 if (isLoggedIn) {
                     const commentText = commentTextarea.val();
                     if (commentText) {
-
                         // 1. Make comment object
                         const cmtObject = {
                             content: commentText,
                             idProduct: id
                         };
 
-                        // 2. Post this object to server
+                        // 2. Post the comment to server
                         valib.ajaxPOST({
                             url: '/rest/comments',
                             data: cmtObject,
@@ -294,6 +293,8 @@ $(document).ready(function () {
                                 if (successful) {
                                     commentTextarea.val('');
                                     getComments();
+                                } else {
+                                    showDialog('Có lỗi xảy ra khi đăng bình luận. Vui lòng thử lại sau.');
                                 }
                             }
                         });

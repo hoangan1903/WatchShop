@@ -16,6 +16,26 @@
 <body>
     <header th:include="fragments/header.html :: header"></header>
 
+    <div class="modal fade" id="indexModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid transparent;">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body px-4 py-3">
+
+                    Message
+
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid transparent;">
+                    <button type="button" class="btn btn-success px-4" data-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Page content here -->
     <section class="section-banners">
         <div class="container">
@@ -304,33 +324,32 @@
                     <form>
                         <div class="form-group">
                             <label for="inputName">Tên</label>
-                            <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp"
-                                placeholder="Tên của bạn" required>
+                            <input type="text" class="form-control" id="inputName" placeholder="Tên của bạn" required>
                         </div>
 
                         <div class="form-group">
                             <label for="inputEmail">Email</label>
-                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
-                                placeholder="name@example.com" required>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
                             <small id="emailHelp" class="form-text text-muted">
                                 Chúng tôi sẽ không chia sẻ email của bạn cho bất kỳ ai.
                             </small>
                         </div>
 
                         <div class="form-group">
-                            <label>Lời nhắn</label>
-                            <textarea name="message" class="form-control form-message"
+                            <label for="inputSubject">Chủ đề</label>
+                            <input type="text" class="form-control" id="inputSubject" placeholder="Chủ đề" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputMessage">Lời nhắn</label>
+                            <textarea class="form-control form-message" id="inputMessage"
                                 placeholder="Lời nhắn của bạn"></textarea>
                         </div>
 
-                        <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input" id="check">
-                            <label class="form-check-label" for="check">Cập nhật thông tin mới nhất qua email
-                                này</label>
-                        </div>
-
                         <div class="btn-form-submit-container full-width mt-4">
-                            <button type="submit" class="btn-form-submit btn btn-success">Gửi</button>
+                            <button id="submitFeedback" type="button" class="btn-form-submit btn btn-success">
+                                Gửi
+                            </button>
                         </div>
                     </form>
                 </div>
