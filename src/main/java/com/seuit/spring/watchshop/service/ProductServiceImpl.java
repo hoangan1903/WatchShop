@@ -213,36 +213,36 @@ public class ProductServiceImpl implements ProductService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
 		List<Product> listProduct = null;
+		String sortClause = "";
+		if(sort!=null) {
+			sortClause = "ORDER BY p.price "+sort;
+		}
 		if (idObject != null) {
 			if (styleObject == "Firm") {
-				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idObject";
+				sql = "Select p FROM Product p inner join Firm f on p.firm.id=f.id WHERE f.id=:idObject "+sortClause;
 				query = session.createQuery(sql);
 				query.setParameter("idObject", idObject);
-				System.out.println("firm");
 			} else {
 				// model && origin
 				if (styleObject == "Model") {
-					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Model f on pd.model.id =f.id WHERE f.id=:idObject";
-					System.out.println("model");
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Model f on pd.model.id =f.id WHERE f.id=:idObject ORDER BY p.price "+ sortClause;
 				}
 				if (styleObject == "Origin") {
-					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Origin f on pd.origin.id =f.id WHERE f.id=:idObject";
-					System.out.println("origin");
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Origin f on pd.origin.id =f.id WHERE f.id=:idObject ORDER BY p.price " + sortClause;
 				}
 				query = session.createQuery(sql);
 				query.setParameter("idObject", idObject);
 			}
 			listProduct = query.getResultList();
-			DAHelper.getInstance().createLoggerMessager(this.getClass().getName(), sql);
 			if (listProduct.size() % size == 0) {// chia het cho size
 				pageCount = listProduct.size() / size;
 			} else {
 				pageCount = listProduct.size() / size + 1;
 			}
+			
 			query.setFirstResult(page * size).setMaxResults(size);
 		} else {
-			System.out.println("no");
-			sql = "FROM Product";
+			sql = "FROM Product :sortClause "+ sortClause;
 			query = session.createQuery(sql);
 			listProduct = query.getResultList();
 			if (listProduct.size() % size == 0) {// chia het cho size
@@ -253,22 +253,6 @@ public class ProductServiceImpl implements ProductService {
 			query.setFirstResult(page * size).setMaxResults(size);
 		}
 		listProduct = query.getResultList();
-		if (sort != null) {
-			switch (sort) {
-			case "asc":
-				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice))
-						.collect(Collectors.toList());
-				break;
-			case "desc":
-				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice).reversed())
-						.collect(Collectors.toList());
-				break;
-
-			default:
-				break;
-			}
-
-		}
 		map.put("pageCountTotal", pageCount);
 		map.put("products", listProduct);
 		return map;
