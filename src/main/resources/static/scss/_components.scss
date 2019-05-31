@@ -281,6 +281,14 @@ footer {
                     &.pinterest-icon {
                         @include hover-color($color-pinterest-icon);
                     }
+
+                    &.github-icon {
+                        @include hover-color($color-github-icon);
+                    }
+
+                    &.linkedin-icon {
+                        @include hover-color($color-linkedin-icon);
+                    }
                 }
             }
         }

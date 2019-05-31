@@ -701,6 +701,12 @@ footer ul.social-links a ion-icon.instagram-icon:hover, footer ul.social-links a
 footer ul.social-links a ion-icon.pinterest-icon:hover, footer ul.social-links a ion-icon.pinterest-icon:active {
   color: #e60023;
 }
+footer ul.social-links a ion-icon.github-icon:hover, footer ul.social-links a ion-icon.github-icon:active {
+  color: #1b1f23;
+}
+footer ul.social-links a ion-icon.linkedin-icon:hover, footer ul.social-links a ion-icon.linkedin-icon:active {
+  color: #0077b5;
+}
 footer p.copyright-footer {
   width: 100%;
   margin-top: 16px;
