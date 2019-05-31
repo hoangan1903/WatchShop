@@ -3,6 +3,9 @@
 $(document).ready(function () {
     const pathName = location.pathname;
 
+    // Determines how many items will be displayed each page
+    const PAGE_SIZE = 8;
+
     var title = $('h2.section-heading');
     var func;
 
@@ -12,8 +15,8 @@ $(document).ready(function () {
                 info: {
                     type: 'search',
                     keyword: keyword,
-                    pageSize: 8,
-                    sort: sort
+                    sort: sort,
+                    pageSize: PAGE_SIZE
                 },
                 selectors: {
                     container: '.section-product-list .row',
@@ -30,8 +33,8 @@ $(document).ready(function () {
                 type: 'show-products',
                 by: by,
                 id: id,
-                pageSize: 8,
-                sort: sort
+                sort: sort,
+                pageSize: PAGE_SIZE
             },
             selectors: {
                 container: '.section-product-list .row',
@@ -76,6 +79,11 @@ $(document).ready(function () {
                 });
 
                 func = getProducts.bind(this, 'origin', id);
+
+            } else if (pathName.includes('all')) {
+
+                title.text("Tất cả sản phẩm");
+                func = getProducts.bind(this, null, null);
             }
         }
 

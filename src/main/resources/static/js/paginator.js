@@ -52,7 +52,9 @@
                 page: pageId,
                 size: info.pageSize
             };
-            paramsObject[info.by] = info.id;
+            if (info.by && info.id) {
+                paramsObject[info.by] = info.id;
+            }
             if (info.sort) {
                 paramsObject.sort = info.sort;
             }
