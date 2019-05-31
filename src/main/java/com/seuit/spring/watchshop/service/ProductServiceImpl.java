@@ -213,7 +213,7 @@ public class ProductServiceImpl implements ProductService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
 		List<Product> listProduct = null;
-		String sortClause = "";
+		String sortClause = " ";
 		if(sort!=null) {
 			sortClause = "ORDER BY p.price "+sort;
 		}
@@ -242,7 +242,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			query.setFirstResult(page * size).setMaxResults(size);
 		} else {
-			sql = "FROM Product :sortClause "+ sortClause;
+			sql = "FROM Product "+ sortClause;
 			query = session.createQuery(sql);
 			listProduct = query.getResultList();
 			if (listProduct.size() % size == 0) {// chia het cho size
@@ -279,7 +279,11 @@ public class ProductServiceImpl implements ProductService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer pageCount;
 		List<Product> listProduct = null;
-		String sql = "SELECT p FROM Product p WHERE p.codeName like :code";
+		String sortClause = " ";
+		if(sort!=null) {
+			sortClause = "ORDER BY p.price "+sort;
+		}
+		String sql = "SELECT p FROM Product p WHERE p.codeName like :code "+sortClause;
 		Query query = session.createQuery(sql);
 		query.setParameter("code", "%" + keyword + "%");
 		listProduct = query.getResultList();
@@ -296,22 +300,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 		query.setFirstResult(page * size).setMaxResults(size);
 		listProduct = query.getResultList();
-		if (sort != null) {
-			switch (sort) {
-			case "asc":
-				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice))
-						.collect(Collectors.toList());
-				break;
-			case "desc":
-				listProduct = listProduct.stream().sorted(Comparator.comparing(Product::getPrice).reversed())
-						.collect(Collectors.toList());
-				break;
-
-			default:
-				break;
-			}
-
-		}
 		map.put("pageCountTotal", pageCount);
 		map.put("products", listProduct);
 		return map;
