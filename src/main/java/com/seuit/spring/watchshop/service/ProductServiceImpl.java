@@ -225,10 +225,10 @@ public class ProductServiceImpl implements ProductService {
 			} else {
 				// model && origin
 				if (styleObject == "Model") {
-					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Model f on pd.model.id =f.id WHERE f.id=:idObject ORDER BY p.price "+ sortClause;
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Model f on pd.model.id =f.id WHERE f.id=:idObject "+ sortClause;
 				}
 				if (styleObject == "Origin") {
-					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Origin f on pd.origin.id =f.id WHERE f.id=:idObject ORDER BY p.price " + sortClause;
+					sql = "Select p FROM Product p inner join ProductDetail pd on p.productDetail.id=pd.id inner join Origin f on pd.origin.id =f.id WHERE f.id=:idObject " + sortClause;
 				}
 				query = session.createQuery(sql);
 				query.setParameter("idObject", idObject);
@@ -242,7 +242,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			query.setFirstResult(page * size).setMaxResults(size);
 		} else {
-			sql = "FROM Product "+ sortClause;
+			sql = "FROM Product p "+ sortClause;
 			query = session.createQuery(sql);
 			listProduct = query.getResultList();
 			if (listProduct.size() % size == 0) {// chia het cho size
