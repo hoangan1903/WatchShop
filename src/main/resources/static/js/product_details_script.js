@@ -163,16 +163,18 @@ $(document).ready(function () {
     function getData() {
         valib.ajaxGET('/rest/products/details/' + id, function (obj) {
             var brand = obj.product.firm.name,
-                codeName = obj.product.codeName,
-                carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner'),
-                indicators, inner;
+                codeName = obj.product.codeName;
 
-            indicators = carousel.eq(0);
-            inner = carousel.eq(1);
+            var carousel = $('.product-carousel .carousel-indicators, .product-carousel .carousel-inner');
+            var indicators = carousel.eq(0),
+                inner = carousel.eq(1);
+
+            // Add the main image of the product to the beginning of the array
+            var images = [{ id: -1, url: obj.product.image }].concat(obj.images);
 
             // Get images for product carousel
             carousel.empty();
-            obj.images.forEach((image, index) => {
+            images.forEach((image, index) => {
                 indicators.append(`<li data-target="#productCarouselIndicators" data-slide-to="${index}"></li>`);
                 inner.append(`
                     <div class="carousel-item">
@@ -313,7 +315,7 @@ $(document).ready(function () {
                 valib.ajaxGET('/rest/me',
                     obj => commenter.html(`<em>Bình luận với tư cách là <strong>${obj.name}</strong>:</em>`));
             } else {
-                commenter.html(`<em>Vui lòng <strong>đăng nhập</strong> trước khi bình luận.</em>`);
+                commenter.html(`<em><strong>Đăng nhập</strong> để bình luận về sản phẩm này.</em>`);
             }
         });
 

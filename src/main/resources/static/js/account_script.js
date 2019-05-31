@@ -4,6 +4,32 @@ $(document).ready(function () {
         inputAddress = $('#inputCustomerAddress'),
         invalidInfoAlert = $('#invalidInfoAlert');
 
+    const orderStatus = {
+        UNCONFIRMED: '#ff9800',
+        CONFIRMED: '#2196f3',
+        PAID: '#4caf50',
+        UNPAID: '#f44336'
+    };
+
+    function getTdStatus(status) {
+        var hex = '#212529';
+        switch (status) {
+            case 'unconfirmed':
+                hex = orderStatus.UNCONFIRMED;
+                break;
+            case 'confirmed':
+                hex = orderStatus.CONFIRMED;
+                break;
+            case 'paid':
+                hex = orderStatus.PAID;
+                break;
+            case 'unpaid':
+                hex = orderStatus.UNPAID;
+                break;
+        }
+        return `<td style="color: ${hex};">${status}</td>`;
+    }
+
     function showNotification(message) {
         $('#accountNotification p').html(message);
         $('#accountNotification').show();
@@ -98,7 +124,9 @@ $(document).ready(function () {
                 <tr>
                     <th scope="row">${number}</th>
                     <td>${price}</td>
-                    <td>${status}</td>
+                    `
+                    + getTdStatus(status) +
+                    `
                     <td>${payment}</td>
                     <td>${dateTime}</td>
                 </tr>
