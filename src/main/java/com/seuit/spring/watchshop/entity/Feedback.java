@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "feedback")
@@ -15,15 +17,20 @@ public class Feedback {
 	@Column(name = "ID")
 	private Integer id;
 
+	@NotBlank
 	@Column(name = "NAME")
 	private String name;
 
+	@NotBlank
+	@Email
 	@Column(name = "EMAIL")
 	private String email;
 
+	@NotBlank
 	@Column(name = "TITLE")
 	private String title;
 
+	@NotBlank
 	@Column(name = "CONTENT")
 	private String content;
 

@@ -5,7 +5,7 @@ import java.util.List;
 import com.seuit.spring.watchshop.entity.Feedback;
 
 public interface FeedbackService {
-	void saveFeedback(Feedback feedback);
+	Integer saveFeedback(Feedback feedback);
 
 	List<Feedback> getAllFeedback();
 

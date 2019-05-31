@@ -27,9 +27,10 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	public void saveFeedback(Feedback feedback) {
+	public Integer saveFeedback(Feedback feedback) {
 		feedback.setStatus(0);
 		feedbackRepository.save(feedback);
+		return 1;
 	}
 
 	@Override

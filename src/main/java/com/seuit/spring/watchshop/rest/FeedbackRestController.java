@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,9 +23,11 @@ public class FeedbackRestController {
 	FeedbackService feedbackService;
 
 	@PostMapping("/feedback")
-	String saveFeedback(@Valid @RequestBody Feedback feedback) {
-		feedbackService.saveFeedback(feedback);
-		return "Save success";
+	Integer saveFeedback(@Valid @RequestBody Feedback feedback, BindingResult result) {
+		if(result.hasErrors()) {
+			return 0;
+		}
+		return feedbackService.saveFeedback(feedback);
 	}
 	
 	@GetMapping(value="/feedback")
