@@ -40,6 +40,11 @@ public class HomeController {
 		return "client/products";
 	}
 
+	@GetMapping(value = { "/products/all" })
+	public String showAllProducts() {
+		return "client/products";
+	}
+
 	@GetMapping(value = { "/products/brand" })
 	public String showProductsByBrand() {
 		return "client/products";
@@ -60,6 +65,11 @@ public class HomeController {
 		return "client/product_details";
 	}
 
+	@GetMapping(value = { "/contact" })
+	public String showContacts() {
+		return "client/contact";
+	}
+	
 	@GetMapping(value = { "/cart" })
 	public String showCart() {
 		return "client/cart";
@@ -132,4 +142,6 @@ public class HomeController {
 	public void savePassword(HttpServletRequest request, @RequestParam(name = "newPassword") String newPassword) {
 		userService.savePasswordAfterChanged(request, newPassword);
 	}
+	
+	
 }
