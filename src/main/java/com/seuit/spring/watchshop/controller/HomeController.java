@@ -65,11 +65,6 @@ public class HomeController {
 		return "client/product_details";
 	}
 
-	@GetMapping(value = { "/contact" })
-	public String showContacts() {
-		return "client/contact";
-	}
-	
 	@GetMapping(value = { "/cart" })
 	public String showCart() {
 		return "client/cart";
@@ -83,6 +78,16 @@ public class HomeController {
 	@GetMapping(value = { "/account" })
 	public String showAccount() {
 		return "client/account";
+	}
+
+	@GetMapping(value = { "/contact" })
+	public String showContact() {
+		return "client/contact";
+	}
+
+	@GetMapping(value = { "/checkout/success" })
+	public String showOrderSuccess() {
+		return "client/order_success";
 	}
 
 	@GetMapping("/login")
@@ -142,6 +147,5 @@ public class HomeController {
 	public void savePassword(HttpServletRequest request, @RequestParam(name = "newPassword") String newPassword) {
 		userService.savePasswordAfterChanged(request, newPassword);
 	}
-	
-	
+
 }

@@ -279,7 +279,7 @@ $(document).ready(function () {
                     const commentText = commentTextarea.val();
                     if (commentText) {
                         // 1. Make comment object
-                        const cmtObject = {
+                        const commentObj = {
                             content: commentText,
                             idProduct: id
                         };
@@ -287,7 +287,7 @@ $(document).ready(function () {
                         // 2. Post the comment to server
                         valib.ajaxPOST({
                             url: '/rest/comments',
-                            data: cmtObject,
+                            data: commentObj,
                             onSuccess: function (response) {
                                 var successful = Boolean(parseInt(response));
                                 if (successful) {
