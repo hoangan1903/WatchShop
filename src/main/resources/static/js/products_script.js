@@ -46,9 +46,7 @@ $(document).ready(function () {
         if (pathName.includes('search')) {
 
             const keyword = valib.getValueFromURL('q');
-
             title.text("Kết quả tìm kiếm cho '" + keyword + "'");
-
             func = getSearchResults.bind(this, keyword);
 
         } else if (pathName.includes('products')) {

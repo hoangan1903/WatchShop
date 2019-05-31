@@ -11,7 +11,7 @@ $(document).ready(function () {
         keyword = search.val();
 
         if (keyword.length > 0) {
-            destURL = valib.getURLWithParams('search', { q: keyword });
+            destURL = valib.getURLWithParams('/search', { q: keyword });
             window.location.href = destURL;
         }
     }
