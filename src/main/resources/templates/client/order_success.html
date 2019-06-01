@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="fragments/head.html :: head"></th:block>
+
+    <!-- CSS files -->
+    <link th:href="@{/css/order_success_styles.css}" rel="stylesheet">
+    <link th:href="@{/css/order_success_responsive.css}" rel="stylesheet">
+
+    <!-- Page title -->
+    <title>Đặt hàng thành công</title>
+</head>
+
+<body>
+    <header th:include="fragments/header.html :: header"></header>
+
+    <!-- Page content here -->
+    <section class="section-thank-you">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex flex-column align-items-center">
+                        <img class="img-success" src="/images/success.png" alt="order-success">
+                        <h1 class="success-heading">Đơn hàng đã được đặt thành công!</h1>
+                        <p class="thank-you-text">
+                            Cảm ơn bạn vì đã lựa chọn chúng tôi. Hi vọng bạn đã có một buổi mua sắm thú vị.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-suggestions">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-center">
+                        <a href="/" class="btn btn-success px-3 py-2 mr-3" role="button">
+                            Tiếp tục mua sắm
+                        </a>
+                        <a href="/account#orders" class="btn btn-outline-success px-3 py-2" role="button">
+                            Xem đơn hàng
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:include="fragments/footer.html :: footer"></footer>
+
+    <th:block th:include="fragments/scripts.html :: scripts"></th:block>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/order_success_script.js}"></script>
+
+</body>
+
+</html>

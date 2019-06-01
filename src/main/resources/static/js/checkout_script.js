@@ -33,7 +33,7 @@ $(document).ready(function () {
                     var successful = Boolean(parseInt(response));
                     if (successful) {
                         // Back to homepage or go to Order Success page if order is successful
-                        window.location.href = '/';
+                        window.location.href = '/checkout/success';
                     } else {
                         // Notify user that their order was not successfully placed
                         console.log('Order not successful');

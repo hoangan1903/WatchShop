@@ -79,7 +79,7 @@ $(document).ready(function () {
             firms.forEach(item => {
                 brandDropdown.append(`
                     <li class="dropdown-item">
-                        <a href="/products/brand?id=${item.id}">Đồng hồ ${item.name}</a>
+                        <a href="/products/brand?id=${item.id}">${item.name}</a>
                     </li>
                 `);
             });

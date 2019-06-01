@@ -1,0 +1,30 @@
+@import "values.scss";
+@import "mixins.scss";
+@import "rules.scss";
+@import "reusables.scss";
+@import "components.scss";
+
+section.section-thank-you {
+    padding-top: 90px;
+
+    img.img-success {
+        margin-bottom: 48px;
+    }
+
+    h1.success-heading {
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+}
+
+section.section-suggestions {
+    padding-top: 30px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
