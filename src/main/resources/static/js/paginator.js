@@ -74,8 +74,9 @@
                 <div class="card product-card" style="width: auto;">
                     <img src="${item.image}" class="card-img-top card-product-img" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${item.firm.name} ${item.codeName}</h5>
-                        <p class="price">${item.price.toLocaleString()}đ</p>
+                        <h5 class="card-title m-0">${item.firm.name}</h5>
+                        <h5 class="card-title">${item.codeName}</h5>
+                        <p class="price m-0">${item.price.toLocaleString()}đ</p>
                         <a href="/product-details?id=${item.id}" class="btn btn-outline-success">Xem chi tiết</a>
                     </div>
                 </div>
