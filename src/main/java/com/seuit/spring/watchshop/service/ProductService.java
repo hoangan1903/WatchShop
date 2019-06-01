@@ -31,4 +31,5 @@ public interface ProductService {
 	Map<String, Object> findPaginatedSort(Integer page, Integer size, Integer idFirm, Integer type);
 	Integer updownQuantityProduct(Integer id,Integer quantity); 
 	Integer getAvailableProduct(Integer id);
+	void addProduct(ProductApi productAPI);
 }

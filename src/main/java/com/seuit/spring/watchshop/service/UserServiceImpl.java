@@ -103,8 +103,6 @@ public class UserServiceImpl implements UserService {
 		if (userTemp.isPresent()) {
 			return 0;
 		} else {
-
-			DAHelper.getInstance().createLoggerMessager(this.getClass().getName(), user.getEmail());
 			// Note : @ManyToMany bidirectional
 
 			// Tạo Session để kết nối tới database
@@ -141,7 +139,7 @@ public class UserServiceImpl implements UserService {
 
 				session.merge(userOld);
 			}
-			mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
+			mailSender.send(constructEmail(subject,body,user));
 			return 1;
 			// Đóng phiên @Transactional sẽ lưu user vào database = commit
 		}
@@ -260,6 +258,8 @@ public class UserServiceImpl implements UserService {
 		User user = passToken.getUser();
 		Authentication auth = new UsernamePasswordAuthenticationToken(user, null,
 				Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+		System.out.println(auth.getName());
+		System.out.println(auth.getPrincipal());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return null;
 	}
@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
 	    String url = request.getContextPath() + "/user/changePassword?id=" + 
 			     user.getId() + "&token=" + token;
 	    body=mess+"\r\n"+url;
-	    mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
+	    mailSender.send(constructEmail(subject,body,user));
 	}
 
 	@Override
@@ -303,7 +303,7 @@ public class UserServiceImpl implements UserService {
 		      (User) SecurityContextHolder.getContext()
 		                                  .getAuthentication().getPrincipal();
 		    this.changeUserPassword(user, newPassword);
-		    mailSender.send(DAHelper.getInstance().constructEmail(subject,body,user));
+		    mailSender.send(constructEmail(subject,body,user));
 	}
 
 	@Override
@@ -315,6 +315,14 @@ public class UserServiceImpl implements UserService {
 		session.merge(manager);
 	}
 	
-	
+	private SimpleMailMessage constructEmail(String subject, String body, User user) {
+		// TODO Auto-generated method stub
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setSubject(subject);
+		email.setText(body);
+		email.setTo(user.getEmail());
+		email.setFrom(env.getProperty("email.support.from"));
+		return email;
+	}
 
 }

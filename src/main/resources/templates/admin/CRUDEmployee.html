@@ -9,6 +9,7 @@
 
 
 <script type="text/javascript">
+
 	var pageId = Number(selectPage());
 	console.log("page id : " + pageId);
 	var size = Number(5);
@@ -75,100 +76,108 @@
 	$(document)
 			.ready(
 					function() {
-						
+
 						//search Input field
 						$("#myInput")
 								.on(
 										"keyup",
-										delay(function() {
-											$('#mytable tbody').empty();
-											$('#ulPagination').empty();
+										delay(
+												function() {
+													$('#mytable tbody').empty();
+													$('#ulPagination').empty();
 
-											if (isSelectSearchInputEmpty() == true) {
-												getCountAllEmployee(size);
-											}
-											var url = selectUrlGetEmployee(
-													pageId, size, $("#myInput")
-															.val());
-											var xhttp = new XMLHttpRequest();
-											xhttp.onreadystatechange = function() {
-												if (this.readyState == 4
-														&& this.status == 200) {
-													obj = JSON
-															.parse(this.responseText);
-
-													console.log(obj);
-													if (isSelectSearchInputEmpty() == false) {
-														countEmployee = Object
-																.keys(obj).length;
-														numberPage = countEmployee
-																/ size;
-														console.log(numberPage);
-
-														for (var i = 0; i < numberPage; i++) {
-															$('#ulPagination')
-																	.append(
-																			'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
-																					+ i
-																					+ '&size=3">'
-																					+ (i + 1)
-																					+ '</a></li>')
-														}
+													if (isSelectSearchInputEmpty() == true) {
+														getCountAllEmployee(size);
 													}
+													var url = selectUrlGetEmployee(
+															pageId, size, $(
+																	"#myInput")
+																	.val());
+													var xhttp = new XMLHttpRequest();
+													xhttp.onreadystatechange = function() {
+														if (this.readyState == 4
+																&& this.status == 200) {
+															obj = JSON
+																	.parse(this.responseText);
 
-													$
-															.each(
-																	obj,
-																	function(
-																			key,
-																			value) {
-																		$(
-																				'#mytable tbody')
-																				.append(
-																						'<tr>'
-																								+ '<td>'
-																								+ value.id
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.name
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.gender
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.birthdate
-																								+ '</td>'
-																								+ '<td>'
-																								+ value.user.email
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-primary" data-title="Edit"'
-																								+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '<td>'
-																								+ '<button class="btn btn-danger" data-title="Delete"'
-																								+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
-																								+ value.id
-																								+ ')">'
-																								+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
-																								+ '</span>'
-																								+ '</button>'
-																								+ '</p>'
-																								+ '</td>'
-																								+ '</tr>');
+															console.log(obj);
+															if (isSelectSearchInputEmpty() == false) {
+																countEmployee = Object
+																		.keys(obj).length;
+																numberPage = countEmployee
+																		/ size;
+																if(numberPage !== parseInt(numberPage)){
+																	numberPage++;
+																}
+																numberPage = parseInt(numberPage);
 
-																	});
-												}
-											};
-											xhttp.open("GET", url, true);
-											xhttp.send();
-										},500));
+																for (var i = 0; i < numberPage; i++) {
+																	$(
+																			'#ulPagination')
+																			.append(
+																					'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
+																							+ i
+																							+ '&size=3">'
+																							+ (i + 1)
+																							+ '</a></li>')
+																}
+															}
+
+															$
+																	.each(
+																			obj,
+																			function(
+																					key,
+																					value) {
+																				$(
+																						'#mytable tbody')
+																						.append(
+																								'<tr>'
+																										+ '<td>'
+																										+ value.id
+																										+ '</td>'
+																										+ '<td>'
+																										+ value.name
+																										+ '</td>'
+																										+ '<td>'
+																										+ value.gender
+																										+ '</td>'
+																										+ '<td>'
+																										+ value.birthdate
+																										+ '</td>'
+																										+ '<td>'
+																										+ value.user.email
+																										+ '</td>'
+																										+ '<td>'
+																										+ '<button class="btn btn-primary" data-title="Edit"'
+																										+ 'data-toggle="modal" data-target="#edit" onclick="editOnClick('
+																										+ value.id
+																										+ ')">'
+																										+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+																										+ '</span>'
+																										+ '</button>'
+																										+ '</p>'
+																										+ '</td>'
+																										+ '<td>'
+																										+ '<button class="btn btn-danger" data-title="Delete"'
+																										+ 'data-toggle="modal" data-target="#delete" onclick="deleteOnClick('
+																										+ value.id
+																										+ ')">'
+																										+ '<span class="icon text-white-50"><i class="material-icons">delete</i>'
+																										+ '</span>'
+																										+ '</button>'
+																										+ '</p>'
+																										+ '</td>'
+																										+ '</tr>');
+
+																			});
+														}
+													};
+													xhttp
+															.open("GET", url,
+																	true);
+													xhttp.send();
+												}, 500));
 
 					});
 
@@ -375,13 +384,9 @@
 				console.log(numberPage);
 
 				for (var i = 0; i < numberPage; i++) {
-					$('#ulPagination')
-							.append(
-									'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
-											+ i
-											+ '&size=3">'
-											+ (i + 1)
-											+ '</a></li>')
+					$('#ulPagination').append(
+							'<li class="page-item"><a class="page-link" href="/admin/CRUD_Employees?page='
+									+ i + '&size=3">' + (i + 1) + '</a></li>')
 				}
 
 			}
@@ -390,14 +395,14 @@
 		xhttp.send();
 	}
 	function delay(callback, ms) {
-	    var timer = 0;
-	    return function () {
-	        var context = this, args = arguments;
-	        clearTimeout(timer);
-	        timer = setTimeout(function () {
-	            callback.apply(context, args);
-	        }, ms || 0);
-	    };
+		var timer = 0;
+		return function() {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				callback.apply(context, args);
+			}, ms || 0);
+		};
 	}
 </script>
 </head>
@@ -422,58 +427,61 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<!-- content -->
-				<div class="group-control">
-					<div class="row">
+					<div class="group-control">
+						<div class="row">
 
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-9">
-									<h4>Employees</h4>
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-sm-9">
+										<h4>Employees</h4>
+									</div>
+									<div class="col-sm-2">
+										<button class="btn btn-info add-new" data-title="add"
+											data-toggle="modal" data-target="#add" onclick="addOnClick()">Add
+											Employee</button>
+									</div>
 								</div>
-								<div class="col-sm-2">
-									<button class="btn btn-info add-new" data-title="add"
-										data-toggle="modal" data-target="#add" onclick="addOnClick()">Add Employee</button>
+								<br> <br>
+								<p>Type name of Employee in the Search</p>
+								<input class="form-control" id="myInput" type="text"
+									placeholder="Search.."> <br> <br>
+								<div class="table-responsive">
+
+									<table id="mytable" class="table table-bordred table-striped">
+
+										<thead>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Gender</th>
+											<th>Year Of Birth</th>
+											<th>Email</th>
+											<th>Edit</th>
+											<th>Delete</th>
+										</thead>
+
+										<tbody>
+
+										</tbody>
+
+									</table>
+
+									<div class="clearfix">
+										<nav aria-label="Page navigation example">
+											<div class="d-flex justify-content-end" id="pagination">
+												<ul class="pagination" id="ulPagination">
+
+												</ul>
+											</div>
+										</nav>
+									</div>
 								</div>
+
 							</div>
-							<br> <br>
-							<p>Type name of Employee in the Search</p>
-							<input class="form-control" id="myInput" type="text"
-								placeholder="Search.."> <br> <br>
-							<div class="table-responsive">
-
-								<table id="mytable" class="table table-bordred table-striped">
-
-									<thead>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Gender</th>
-										<th>Year Of Birth</th>
-										<th>Email</th>
-										<th>Edit</th>
-										<th>Delete</th>
-									</thead>
-
-									<tbody>
-
-									</tbody>
-
-								</table>
-
-								<div class="clearfix">
-									<nav aria-label="Page navigation example">
-										<ul class="pagination" id="ulPagination">
-
-										</ul>
-									</nav>
-								</div>
-							</div>
-
 						</div>
 					</div>
+					<!-- end content -->
 				</div>
-				<!-- end content -->
-				</div>
-				
+
 
 				<div class="modal fade" id="edit" tabindex="-1" role="dialog"
 					aria-labelledby="edit" aria-hidden="true">

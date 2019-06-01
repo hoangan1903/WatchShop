@@ -18,11 +18,16 @@ import org.springframework.stereotype.Service;
 
 import com.seuit.spring.watchshop.entity.Alert;
 import com.seuit.spring.watchshop.entity.CustomUserDetail;
+import com.seuit.spring.watchshop.entity.User;
 import com.seuit.spring.watchshop.repository.AlertRepository;
+import com.seuit.spring.watchshop.repository.UserRepository;
 
 @Service
 @Transactional
 public class AlertServiceImpl implements AlertService {
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private AlertRepository alertRepository;
@@ -40,16 +45,20 @@ public class AlertServiceImpl implements AlertService {
 		// TODO Auto-generated method stub
 		List<String> listRoleName = null;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetail user = (CustomUserDetail) auth.getPrincipal();
-		System.out.println(user);
+		User user = (CustomUserDetail) auth.getPrincipal();
+		User userTemp = userRepository.findById(user.getId()).isPresent()?userRepository.getOne(user.getId()):null;
+		if(userTemp==null) {
+			return;
+		}
 		user.getRoles().forEach((c)->System.out.println(c.getName()));
 		listRoleName = user.getRoles().stream().map((r)->r.getName()).collect(Collectors.toList());
 		for(String str: listRoleName) {
 		    if(str.trim().contentEquals("admin"))
 		    {
-		    	user.getAlerts().add(alert);
-				alert.setStatus(0);
-				alertRepository.save(alert);
+		    	//CÓ BUG KHÔNG LƯU USER ID
+		    	alert.setStatus(0);
+		    	userTemp.getAlerts().add(alert);
+			   userRepository.save(userTemp);
 		    }
 		}
 	}

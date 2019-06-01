@@ -23,9 +23,6 @@ public class DAHelper {
 			return instance;
 	}
 	
-	@Autowired
-	private Environment env;
-	
 	public Map<String, Object> processSubMapWithTotal(String key, List list) {
 		// TODO Auto-generated method stub
 		Map<String,Object> submap = new HashMap<String, Object>();
@@ -43,36 +40,5 @@ public class DAHelper {
 		submap.put(key, list);
 		submap.put("totals", list.size());
 		return submap;
-	}
-	
-	public File convert(MultipartFile file) {
-		File convFile = new File(file.getOriginalFilename());
-		try {
-			convFile.createNewFile();
-			FileOutputStream fos = new FileOutputStream(convFile);
-			fos.write(file.getBytes());
-			fos.close();
-			return convFile;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public void createLoggerMessager(String nameClass,String messager) {
-		Logger logger = Logger.getLogger(nameClass);
-		logger.info(messager);
-	}
-	
-	public SimpleMailMessage constructEmail(String subject, String body, User user) {
-		// TODO Auto-generated method stub
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setSubject(subject);
-		email.setText(body);
-		email.setTo(user.getEmail());
-		email.setFrom(env.getProperty("email.support.from"));
-		return email;
-	}
-	
+	}	
 }

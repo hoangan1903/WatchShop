@@ -27,66 +27,70 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<!-- content -->
-				<div class="group-control">
-					<div class="row">
+					<div class="group-control">
+						<div class="row">
 
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-sm-9">
-									<h4 id="functionName">Name function</h4>
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-sm-9">
+										<h4 id="functionName">Name function</h4>
+									</div>
+									<div class="d-flex justify-content-end">
+										<button class="btn btn-info add-new" data-title="add"
+											data-toggle="modal" data-target="#add" onclick="addOnClick()">New</button>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<button class="btn btn-danger" data-title="deleteAll"
+											data-toggle="modal" data-target="#deleteAll">Delete
+											all</button>
+									</div>
 								</div>
-								<div class="d-flex justify-content-end">
-									<button class="btn btn-info add-new" data-title="add"
-										data-toggle="modal" data-target="#add" onclick="addOnClick()">New</button>
+								<br>
+								<div class="d-flex justify-content-center">
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOtherFunction(1)" class="label info">Firms</button>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<button class="btn btn-danger" data-title="deleteAll"
-										data-toggle="modal" data-target="#deleteAll">Delete all</button>
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOtherFunction(2)" class="label warning">Origins</button>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<button style="width: 12%; height: 12%;"
+										onclick="fliterOtherFunction(3)" class="label success">Models</button>
 								</div>
-							</div>
-							<br>	
-							<div class="d-flex justify-content-center">
-							<button style="width: 12%; height: 12%;" onclick="fliterOtherFunction(1)" class="label info">Firms</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button style="width: 12%; height: 12%;" onclick="fliterOtherFunction(2)" class="label warning">Origins</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<button style="width: 12%; height: 12%;" onclick="fliterOtherFunction(3)" class="label success">Models</button>
-							</div>
-							 <br>
-							<p id="titleSearch">Type name of ... in the Search</p>
-							<input class="form-control" id="mySearch" type="text"
-								placeholder="Search.."> <br> <br>
-							<div class="table-responsive">
-								<table id="mytable" class="table table-bordred table-striped">
-									<thead>
-										
-									</thead>
+								<br>
+								<p id="titleSearch">Type name of ... in the Search</p>
+								<input class="form-control" id="mySearch" type="text"
+									placeholder="Search.."> <br> <br>
+								<div class="table-responsive">
+									<table id="mytable" class="table table-bordred table-striped">
+										<thead>
 
-									<tbody>
+										</thead>
 
-									</tbody>
-								</table>
-								<div class="clearfix">
-									<nav aria-label="Page navigation example">
-										<ul class="pagination" id="ulPagination">
+										<tbody>
 
-										</ul>
-									</nav>
+										</tbody>
+									</table>
+									<div class="clearfix">
+										<nav aria-label="Page navigation example">
+											<div class="d-flex justify-content-end" id="pagination">
+												<ul class="pagination" id="ulPagination">
+
+												</ul>
+											</div>
+										</nav>
+									</div>
 								</div>
-							</div>
 
+							</div>
 						</div>
 					</div>
+					<!-- end content -->
 				</div>
-				<!-- end content -->
-				</div>
-				
+
 
 				<div class="modal fade" id="add" tabindex="-1" role="dialog"
 					aria-labelledby="add" aria-hidden="true">
 					<div class="modal-dialog">
-						<div class="modal-content" id="addArea">
-							
-						</div>
+						<div class="modal-content" id="addArea"></div>
 						<!-- /.modal-content -->
 					</div>
 					<!-- /.modal-dialog -->
@@ -127,7 +131,7 @@
 					</div>
 					<!-- /.modal-dialog -->
 				</div>
-				
+
 				<div class="modal fade" id="deleteAll" tabindex="-1" role="dialog"
 					aria-labelledby="edit" aria-hidden="true">
 					<div class="modal-dialog">
@@ -156,6 +160,38 @@
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">
 									<span class="glyphicon glyphicon-remove"></span>No
+								</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				
+				<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+					aria-labelledby="edit" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+								<h4 class="modal-title custom_align" id="Heading">Edit</h4>
+							</div>
+							<div class="modal-body">
+
+								<div class="form-group">
+									<input class="form-control " type="hidden" id="id">
+								</div>
+								<div class="form-group">
+									Name : <input class="form-control " type="text"
+										id="editName">
+							</div>
+							<div class="modal-footer ">
+								<button type="button" class="btn btn-warning btn-lg"
+									style="width: 100%;" onclick="submitEdit()">
+									Update
 								</button>
 							</div>
 						</div>

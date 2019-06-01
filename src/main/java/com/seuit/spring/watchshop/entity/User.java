@@ -81,7 +81,7 @@ public class User {
    	@JsonIgnore
     private Customer customer;
     
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Alert> alerts = new ArrayList<Alert>();
 

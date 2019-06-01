@@ -49,7 +49,7 @@ public class ProductRestController {
 
 	@PostMapping("/products")
 	String newProduct(@Valid @RequestBody ProductApi productApi) {
-		productService.saveOrUpdate(productApi, null);
+		productService.addProduct(productApi);
 		return "Add success";
 	}
 

@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.Firm;
@@ -27,8 +29,8 @@ public class OriginRestController {
 	private OriginService originService;
 	
 	@GetMapping("/origins")
-	public Map<String,Object> getAll(){
-		return DAHelper.getInstance().processSubMapWithTotal("origins", originService.getList());
+	public Map<String,Object> getAll(@RequestParam(name="page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size){
+		return DAHelper.getInstance().processSubMapWithTotal("origins", originService.getList(page,size));
 	}
 	
 	@PostMapping("/origins")
@@ -51,5 +53,10 @@ public class OriginRestController {
 	@GetMapping("/origins/{id}")
 	private Object findById(@PathVariable(name="id",required = true) Integer id) {
 		return originService.getByID(id);
+	}
+	
+	@PutMapping("/origins")
+	private void updateById(@RequestBody @Valid Origin origin) {
+		originService.edit(origin);	
 	}
 }

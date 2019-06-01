@@ -12,4 +12,5 @@ import javassist.NotFoundException;
 public interface DBFileStorageService {
 	DBFile storeFile(MultipartFile file) throws FileUploadException;
 	DBFile getFile(String fileId) throws NotFoundException;
+	File convert(MultipartFile file);
 }

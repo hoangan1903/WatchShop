@@ -12,14 +12,12 @@ function pagination(){
             var obj = JSON.parse(this.responseText);
             var elementSize = document.getElementById('chooseSize');
             var size = elementSize.options[elementSize.selectedIndex].value;
-            var countNumberPage = obj/size; 
-            countNumberPage = Math.round(countNumberPage);
-            var soDu = obj%size;
-            if(soDu<5){
-                countNumberPage++;
-            }
-            console.log(countNumberPage);
-            for(var i=0;i<countNumberPage;i++){
+            var numberPage = obj/size; 
+            if(numberPage !== parseInt(numberPage)){
+				numberPage++;
+			}
+			numberPage = parseInt(numberPage);
+            for(var i=0;i<numberPage;i++){
                 $('#pagination ul').append('<li class="page-item"><a class="page-link" href="#" onclick="return chooseURLForListOrderPagination('+i+')">'+(i+1)+'</a></li>');
             }
         }

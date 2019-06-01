@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seuit.spring.watchshop.entity.Banner;
@@ -28,8 +30,8 @@ public class FirmRestController {
 	private FirmService firmService;
 	
 	@GetMapping("/firms")
-	public Map<String,Object> getAllFirm(){
-		return DAHelper.getInstance().processSubMapWithTotal("firms", firmService.getListFirm());
+	public Map<String,Object> getAllFirm(@RequestParam(name="page",required = false) Integer page,@RequestParam(name="size",required = false) Integer size){
+		return DAHelper.getInstance().processSubMapWithTotal("firms", firmService.getListFirm(page,size));
 	}
 	
 	@PostMapping(value="/firms")
@@ -57,4 +59,8 @@ public class FirmRestController {
 		return firmService.getByID(id);
 	}
 	
+	@PutMapping("/firms")
+	private void updateById(@RequestBody @Valid Firm firm) {
+		firmService.edit(firm);	
+	}
 }

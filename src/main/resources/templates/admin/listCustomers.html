@@ -21,8 +21,12 @@
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				obj = JSON.parse(this.responseText);
-				$.each(obj, function(key, customer) {
-									$('#mytable tbody').append(
+				$
+						.each(
+								obj,
+								function(key, customer) {
+									$('#mytable tbody')
+											.append(
 													'<tr>'
 															+ '<td class="username">'
 															+ customer.id
@@ -51,67 +55,93 @@
 		xhttp.open("GET", url, true);
 		xhttp.send();
 
-		$(document).ready(function() {
+		$(document)
+				.ready(
+						function() {
 							//search Input field
-							$("#myInput").on( "keyup", delay(function() {
-												$('#mytable tbody').empty();
-												$('#ulPagination').empty();
+							$("#myInput")
+									.on(
+											"keyup",
+											delay(
+													function() {
+														$('#mytable tbody')
+																.empty();
+														$('#ulPagination')
+																.empty();
 
-												if (isSelectSearchInputEmpty() == true) {
-													getCountAllCustomer(size);
-												}
-
-												var url = selectUrlGetCustomer(
-														pageId, size, $("#myInput").val());
-												var xhttp = new XMLHttpRequest();
-												xhttp.onreadystatechange = function() {
-													if (this.readyState == 4
-															&& this.status == 200) {
-														obj = JSON
-																.parse(this.responseText);
-														if (isSelectSearchInputEmpty() == false) {
-															countCustomer = Objectkeys(obj).length;
-															numberPage = countCustomer/size;
-															for (var i = 0; i < numberPage; i++) {
-																$('#ulPagination').append('<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
-																						+ i
-																						+ '&size=3">'
-																						+ (i + 1)
-																						+ '</a></li>')
-															}
+														if (isSelectSearchInputEmpty() == true) {
+															getCountAllCustomer(size);
 														}
 
-														$.each(obj, function(key, customer) {
-																			$('#mytable tbody').append(
-																							'<tr>'
-																									+ '<td class="username">'
-																									+ customer.id
-																									+ '</td>'
-																									+ '<td>'
-																									+ customer.name
-																									+ '</td>'
-																									+ '<td>'
-																									+ customer.phone
-																									+ '</td>'
-																									+ '<td>'
-																									+ customer.address
-																									+ '</td>'
-																									+ '<td>'
-																									+
-																									//	         	                   	'<a href="#">View</a>'+
-																									'<button class="btn btn-success" type="submit"'
-																									+ 'data-toggle="modal" data-target="#view" onclick= "showDetail('
-																									+ customer.id
-																									+ ')">View</button>'
-																									+ '</a>'
-																									+ '</td>'
-																									+ '</tr>');
-																		});
-													}
-												};
-												xhttp.open("GET", url, true);
-												xhttp.send();
-											},500));
+														var url = selectUrlGetCustomer(
+																pageId, size,
+																$("#myInput")
+																		.val());
+														var xhttp = new XMLHttpRequest();
+														xhttp.onreadystatechange = function() {
+															if (this.readyState == 4
+																	&& this.status == 200) {
+																obj = JSON
+																		.parse(this.responseText);
+																if (isSelectSearchInputEmpty() == false) {
+																	countCustomer = Objectkeys(obj).length;
+																	numberPage = countCustomer
+																			/ size;
+																	if(numberPage !== parseInt(numberPage)){
+																		numberPage++;
+																	}
+																	numberPage = parseInt(numberPage);
+																	for (var i = 0; i < numberPage; i++) {
+																		$(
+																				'#ulPagination')
+																				.append(
+																						'<li class="page-item"><a class="page-link" href="/admin/list_Customers?page='
+																								+ i
+																								+ '&size=3">'
+																								+ (i + 1)
+																								+ '</a></li>')
+																	}
+																}
+
+																$
+																		.each(
+																				obj,
+																				function(
+																						key,
+																						customer) {
+																					$(
+																							'#mytable tbody')
+																							.append(
+																									'<tr>'
+																											+ '<td class="username">'
+																											+ customer.id
+																											+ '</td>'
+																											+ '<td>'
+																											+ customer.name
+																											+ '</td>'
+																											+ '<td>'
+																											+ customer.phone
+																											+ '</td>'
+																											+ '<td>'
+																											+ customer.address
+																											+ '</td>'
+																											+ '<td>'
+																											+
+																											//	         	                   	'<a href="#">View</a>'+
+																											'<button class="btn btn-success" type="submit"'
+																											+ 'data-toggle="modal" data-target="#view" onclick= "showDetail('
+																											+ customer.id
+																											+ ')">View</button>'
+																											+ '</a>'
+																											+ '</td>'
+																											+ '</tr>');
+																				});
+															}
+														};
+														xhttp.open("GET", url,
+																true);
+														xhttp.send();
+													}, 500));
 
 						});
 	}
@@ -205,14 +235,14 @@
 		return time + ' ' + date;
 	}
 	function delay(callback, ms) {
-	    var timer = 0;
-	    return function () {
-	        var context = this, args = arguments;
-	        clearTimeout(timer);
-	        timer = setTimeout(function () {
-	            callback.apply(context, args);
-	        }, ms || 0);
-	    };
+		var timer = 0;
+		return function() {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				callback.apply(context, args);
+			}, ms || 0);
+		};
 	}
 </script>
 </head>
@@ -271,9 +301,11 @@
 
 										<div class="clearfix">
 											<nav aria-label="Page navigation example">
-												<ul class="pagination" id="ulPagination">
+												<div class="d-flex justify-content-end" id="pagination">
+													<ul class="pagination" id="ulPagination">
 
-												</ul>
+													</ul>
+												</div>
 											</nav>
 										</div>
 									</div>

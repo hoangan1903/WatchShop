@@ -40,7 +40,6 @@ public class ProductExcelHelper {
 				while (cells.hasNext()) {
 					Cell cell = cells.next();
 					int columnIndex = cell.getColumnIndex();
-					Image image = new Image();
 					switch (columnIndex) {
 					case 0:
 						productApi.getProduct().setCodeName((String) getCellValue(cell));

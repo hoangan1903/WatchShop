@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.seuit.spring.watchshop.repository.ProductRepository;
 import com.seuit.spring.watchshop.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.seuit.spring.watchshop.entity.Customer;
+import com.seuit.spring.watchshop.entity.Product;
 import com.seuit.spring.watchshop.entity.ProductApi;
 import com.seuit.spring.watchshop.entity.Role;
 import com.seuit.spring.watchshop.entity.User;
@@ -41,6 +44,7 @@ import javax.transaction.Transactional;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
+	
 	@Autowired
 	private UserService userService;
 	
@@ -49,6 +53,9 @@ public class AdminController {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private DBFileStorageService dbFile;
 	//ADMIN AREA
 	
 	@GetMapping("/CRUD_Alert")
@@ -79,12 +86,14 @@ public class AdminController {
 	@PostMapping(value = "/CRUD_Products/importFromExcel")
 	public String importExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirect) {
 		ProductExcelHelper productExcelHelper = new ProductExcelHelper();
-		File excelFile = DAHelper.getInstance().convert(file);
+		File excelFile = dbFile.convert(file);
 		List<ProductApi> productApis;
 		try {
 			productApis = productExcelHelper.saveProductsFromExcelFile(excelFile);
 			productApis.stream().forEach((productApi) -> {
-				productService.saveOrUpdate(productApi, null);
+				if(productApi.getIdFirm()!=null) {
+					productService.addProduct(productApi);
+				}
 			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

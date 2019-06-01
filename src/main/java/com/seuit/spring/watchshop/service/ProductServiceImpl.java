@@ -68,7 +68,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void saveOrUpdate(ProductApi productApi, Integer id) {
+		if(productApi.getIdFirm()==null) {
+			return;
+		}
 		Product product = productApi.getProduct();
+		
 		Optional<Firm> firm = firmRepository.findById(productApi.getIdFirm());
 		Optional<Model> model = modelRepository.findById(productApi.getIdModel());
 		Optional<Origin> origin = originRepository.findById(productApi.getIdOrigin());
@@ -80,8 +84,9 @@ public class ProductServiceImpl implements ProductService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		// Add Product without ID
-		if (id == null) {
+		if (id == null ) {
 			productRepository.save(ExecProductAPI(productApi, product, firm, model, origin));
 		} else {
 			// Update Product With ID
@@ -392,4 +397,22 @@ public class ProductServiceImpl implements ProductService {
 		return product.get().getAvailable();
 	}
 
+	@Override
+	@Transactional
+	public void addProduct(ProductApi productAPI) {
+		if(productAPI.getIdFirm()==null) {
+			return;
+		}
+		Optional<Product> pro = productRepository.findByCodeName(productAPI.getProduct().getCodeName());
+		if(pro.isPresent()==false) {
+			this.saveOrUpdate(productAPI, null);
+		}else {
+			Integer idProductInProductAPI = pro.get().getId();
+			Integer productQuantityInProductAPI = productAPI.getProduct().getAvailable();
+			this.updownQuantityProduct(idProductInProductAPI, productQuantityInProductAPI);
+		}
+	}
+
+	
+	
 }

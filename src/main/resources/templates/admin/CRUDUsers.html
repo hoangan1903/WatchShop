@@ -17,99 +17,145 @@
 		var url = selectUrlGetUser(pageId, size, $("#myInput").val());
 		$('#mytable tbody').empty();
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
+		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				obj = JSON.parse(this.responseText);
 
-				$.each(obj, function (key, user) {
-					$('#mytable tbody')
-						.append(
-							'<tr>' +
-							'<td class="username">' +
-							user.username +
-							'</td>' +
-							'<td>' +
-							user.email +
-							'</td>' +
-							'<td>' +
-							user.roles[0].name +
-							'</td>' +
-							'<td>' +
-							'<button class="btn btn-primary" data-title="Edit" data-target="#edit"' +
-							'onclick=" editOnClick('+ user.id+ ')" data-toggle="modal">' +
-							'<span class="icon text-white-50"> <i class="material-icons">edit</i>' +
-							'</span>' +
-							'</button>' +	
-							'<td>' +
-							'<button class="btn btn-danger" data-title="Delete" data-target="#delete"'+
-							'onclick="onClick('+ user.id+ ')" data-toggle="modal">' +
-							'<span class="icon text-white-50"> <i class="material-icons">delete</i>' +
-							'</span>' +
-							'</button>' +
-							'</td>' +
-							'</tr>');
-				})
+				$
+						.each(
+								obj,
+								function(key, user) {
+									$('#mytable tbody')
+											.append(
+													'<tr>'
+															+ '<td class="username">'
+															+ user.username
+															+ '</td>'
+															+ '<td>'
+															+ user.email
+															+ '</td>'
+															+ '<td>'
+															+ user.roles[0].name
+															+ '</td>'
+															+ '<td>'
+															+ '<button class="btn btn-primary" data-title="Edit" data-target="#edit"'
+															+ 'onclick=" editOnClick('
+															+ user.id
+															+ ')" data-toggle="modal">'
+															+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '<td>'
+															+ '<button class="btn btn-danger" data-title="Delete" data-target="#delete"'
+															+ 'onclick="onClick('
+															+ user.id
+															+ ')" data-toggle="modal">'
+															+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+															+ '</span>'
+															+ '</button>'
+															+ '</td>' + '</tr>');
+								})
 			}
 		};
 		xhttp.open("GET", url, true);
 		xhttp.send();
 
-		$(document).ready(function () {
-			//search Input field
-			$("#myInput").on("keyup", delay(function () {
-				$('#mytable tbody').empty();
-				$('#ulPagination').empty();
+		$(document)
+				.ready(
+						function() {
+							//search Input field
+							$("#myInput")
+									.on(
+											"keyup",
+											delay(
+													function() {
+														$('#mytable tbody')
+																.empty();
+														$('#ulPagination')
+																.empty();
 
-				if (isSelectSearchInputEmpty() == true) {
-					getCountAllUser(size);
-				}
-				var url = selectUrlGetUser(
-					pageId, size, $(
-						"#myInput")
-					.val());
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function () {
-					if (this.readyState == 4 &&
-						this.status == 200) {
-						obj = JSON
-							.parse(this.responseText);
-						console.log(obj);
-						if (isSelectSearchInputEmpty() == false) {
-							countUser = Object
-								.keys(obj).length;
-							numberPage = countUser /
-								size;
-							console
-								.log(numberPage);
+														if (isSelectSearchInputEmpty() == true) {
+															getCountAllUser(size);
+														}
+														var url = selectUrlGetUser(
+																pageId, size,
+																$("#myInput")
+																		.val());
+														var xhttp = new XMLHttpRequest();
+														xhttp.onreadystatechange = function() {
+															if (this.readyState == 4
+																	&& this.status == 200) {
+																obj = JSON
+																		.parse(this.responseText);
+																console
+																		.log(obj);
+																if (isSelectSearchInputEmpty() == false) {
+																	countUser = Object
+																			.keys(obj).length;
+																	numberPage = countUser
+																			/ size;
+																	if(numberPage !== parseInt(numberPage)){
+																		numberPage++;
+																	}
+																	numberPage = parseInt(numberPage);
 
-							for (var i = 0; i < numberPage; i++) {
-								$('#ulPagination')
-									.append('<li class="page-item"><a class="page-link" href="/admin/CRUD_User?page=' + i + '&size=3">' + (i + 1) +
-										'</a></li>')
-							}
-						}
-						$.each(obj, function (key, user) {
-							$('#mytable tbody').append('<tr>' + '<td class="username">' +
-								user.username + '</td>' + '<td>' + user.email + '</td>' + '<td>' + user.roles[0].name + '</td>' + '<td>' +
-								'<button class="btn btn-primary" data-target="#edit" data-title="Edit"'  +
-								'onclick="editOnClick('+ user.id+ ')" data-toggle="modal">' +
-								'<span class="icon text-white-50"> <i class="material-icons">edit</i>' + '</span>' + '</button>' +
-								'<td>' +
-								'<button class="btn btn-danger" data-title="Delete" data-target="#delete"'+
-								'onclick="onClick('+ user.id+ ')" data-toggle="modal">' +
-								'<span class="icon text-white-50"> <i class="material-icons">delete</i>' +
-								'</span>' +
-								'</button>' +
-								'</td>' +
-								'</tr>');
+																	for (var i = 0; i < numberPage; i++) {
+																		$(
+																				'#ulPagination')
+																				.append(
+																						'<li class="page-item"><a class="page-link" href="/admin/CRUD_User?page='
+																								+ i
+																								+ '&size=3">'
+																								+ (i + 1)
+																								+ '</a></li>')
+																	}
+																}
+																$
+																		.each(
+																				obj,
+																				function(
+																						key,
+																						user) {
+																					$(
+																							'#mytable tbody')
+																							.append(
+																									'<tr>'
+																											+ '<td class="username">'
+																											+ user.username
+																											+ '</td>'
+																											+ '<td>'
+																											+ user.email
+																											+ '</td>'
+																											+ '<td>'
+																											+ user.roles[0].name
+																											+ '</td>'
+																											+ '<td>'
+																											+ '<button class="btn btn-primary" data-target="#edit" data-title="Edit"'
+																											+ 'onclick="editOnClick('
+																											+ user.id
+																											+ ')" data-toggle="modal">'
+																											+ '<span class="icon text-white-50"> <i class="material-icons">edit</i>'
+																											+ '</span>'
+																											+ '</button>'
+																											+ '<td>'
+																											+ '<button class="btn btn-danger" data-title="Delete" data-target="#delete"'
+																											+ 'onclick="onClick('
+																											+ user.id
+																											+ ')" data-toggle="modal">'
+																											+ '<span class="icon text-white-50"> <i class="material-icons">delete</i>'
+																											+ '</span>'
+																											+ '</button>'
+																											+ '</td>'
+																											+ '</tr>');
+																				});
+															}
+														};
+														xhttp.open("GET", url,
+																true);
+														xhttp.send();
+													}, 500));
+
 						});
-					}
-				};
-				xhttp.open("GET", url, true);
-				xhttp.send();
-			}, 500));
-
-		});
 	}
 
 	function getCountAllUser(size) {
@@ -149,7 +195,7 @@
 	}
 
 	function selectUrlGetUser(pageId, size, keyword) {
-		
+
 		var url = "";
 		if (isSelectSearchInputEmpty() == true) {
 			url = '/rest/users?page=' + String(pageId) + '&size='
@@ -181,28 +227,28 @@
 		}
 	}
 	function delay(callback, ms) {
-	    var timer = 0;
-	    return function () {
-	        var context = this, args = arguments;
-	        clearTimeout(timer);
-	        timer = setTimeout(function () {
-	            callback.apply(context, args);
-	        }, ms || 0);
-	    };
+		var timer = 0;
+		return function() {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				callback.apply(context, args);
+			}, ms || 0);
+		};
 	}
-	
-	function onClick(id){
+
+	function onClick(id) {
 		document.getElementById("id").value = id;
 	}
-	
-	function editOnClick(id){
+
+	function editOnClick(id) {
 		document.getElementById("id").value = id;
-		$(document).ready(function () {
+		$(document).ready(function() {
 			var url = "/rest/users/" + id;
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("GET", url, true);
 			xhttp.send();
-			xhttp.onreadystatechange = function () {
+			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					console.log(obj)
 					obj = JSON.parse(this.responseText);
@@ -214,23 +260,24 @@
 			}
 		});
 	}
-	
-	function editManager(){
-		var user ={};
+
+	function editManager() {
+		var user = {};
 		if (document.getElementById("id")) {
 			var id = document.getElementById("id").value;
 		}
 		var url = "/rest/users/" + id;
 		var xhttp = new XMLHttpRequest();
-		
+
 		user.id = Number(id);
 		user.email = $('#email').val();
 		var json = JSON.stringify(user);
 		console.log("json edit : " + json);
 		console.log(url);
 		xhttp.open("PUT", url, true);
-		xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-		xhttp.onload = function () {
+		xhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
+		xhttp.onload = function() {
 			if (xhttp.readyState == 4 && xhttp.status == "200") {
 				console.log("edit ok");
 				alert("Edit Manager Success");
@@ -241,40 +288,42 @@
 			}
 		}
 		xhttp.send(json);
-		
-	}
-	
-	function addManager(){
-		$(document).ready(function(){
-			var data = {};
-			var user = {};
-			var url = "/rest/users";
-			var xhttp = new XMLHttpRequest();
 
-			user.username = $('#addname').val();
-			user.email = $('#addemail').val();
-			user.password = $('#addpassword').val();
-			
-			data.user = user;
-			var json =JSON.stringify(user);
-			console.log("json add : " + json);
-			
-			xhttp.open("POST", url, true);
-			xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-			xhttp.onload = function() {
-				if (xhttp.readyState == 4 && xhttp.status == "200") {
-					console.log("Add ok");
-					alert("Add Manager Success");
-					location.reload();
-				} else {
-					console.log("Add error");
-					alert("Add Manager Error");
-				}
-			}
-			xhttp.send(json);
-		});
 	}
-	function deleteManager(){
+
+	function addManager() {
+		$(document).ready(
+				function() {
+					var data = {};
+					var user = {};
+					var url = "/rest/users";
+					var xhttp = new XMLHttpRequest();
+
+					user.username = $('#addname').val();
+					user.email = $('#addemail').val();
+					user.password = $('#addpassword').val();
+
+					data.user = user;
+					var json = JSON.stringify(user);
+					console.log("json add : " + json);
+
+					xhttp.open("POST", url, true);
+					xhttp.setRequestHeader('Content-type',
+							'application/json; charset=utf-8');
+					xhttp.onload = function() {
+						if (xhttp.readyState == 4 && xhttp.status == "200") {
+							console.log("Add ok");
+							alert("Add Manager Success");
+							location.reload();
+						} else {
+							console.log("Add error");
+							alert("Add Manager Error");
+						}
+					}
+					xhttp.send(json);
+				});
+	}
+	function deleteManager() {
 		var xhttp = new XMLHttpRequest();
 		if (document.getElementById("id")) {
 			var id = document.getElementById("id").value;
@@ -293,7 +342,6 @@
 		}
 		xhttp.send();
 	}
-	
 </script>
 
 
@@ -328,8 +376,8 @@
 										<h4>Users</h4>
 									</div>
 									<div class="col-sm-2">
-											<button class="btn btn-info add-new" data-title="add" 
-												data-toggle="modal" data-target="#add">Add User</button>
+										<button class="btn btn-info add-new" data-title="add"
+											data-toggle="modal" data-target="#add">Add User</button>
 									</div>
 								</div>
 								<br> <br>
@@ -358,9 +406,11 @@
 
 										<div class="clearfix">
 											<nav aria-label="Page navigation example">
-												<ul class="pagination" id="ulPagination">
+												<div class="d-flex justify-content-end" id="pagination">
+													<ul class="pagination" id="ulPagination">
 
-												</ul>
+													</ul>
+												</div>
 											</nav>
 										</div>
 									</div>
@@ -369,123 +419,127 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="modal fade" id="edit" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Edit
-									Manager Detail</h4>
-							</div>
-							<div class="modal-body">
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Edit
+										Manager Detail</h4>
+								</div>
+								<div class="modal-body">
 
-								<div class="form-group">
-									<input class="form-control " type="hidden" id="id">
-								</div>
-								<div class="form-group">
-									Name : <input class="form-control " type="text" id="name" disabled>
-								</div>
-								<div class="form-group">
-									Email : <input class="form-control " type="text" id="email">
-								</div>
-								<div class="form-group">
-									Password : <input class="form-control " type="password" id="password" disabled>
-								</div>
+									<div class="form-group">
+										<input class="form-control " type="hidden" id="id">
+									</div>
+									<div class="form-group">
+										Name : <input class="form-control " type="text" id="name"
+											disabled>
+									</div>
+									<div class="form-group">
+										Email : <input class="form-control " type="text" id="email">
+									</div>
+									<div class="form-group">
+										Password : <input class="form-control " type="password"
+											id="password" disabled>
+									</div>
 
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-warning btn-lg"
+										style="width: 100%;" onclick="editManager()">
+										<span class="glyphicon glyphicon-ok-sign"></span>Update
+									</button>
+								</div>
 							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;" onclick="editManager()">
-									<span class="glyphicon glyphicon-ok-sign"></span>Update
-								</button>
-							</div>
+							<!-- /.modal-content -->
 						</div>
-						<!-- /.modal-content -->
+						<!-- /.modal-dialog -->
 					</div>
-					<!-- /.modal-dialog -->
-				</div>
-				
-				<div class="modal fade" id="add" tabindex="-1" role="dialog"
-					aria-labelledby="add" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Add New
-									Manager Detail</h4>
-							</div>
-							<div class="modal-body">
 
-								<div class="form-group">
-									<input class="form-control " type="hidden" id="addid">
+					<div class="modal fade" id="add" tabindex="-1" role="dialog"
+						aria-labelledby="add" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Add New
+										Manager Detail</h4>
 								</div>
-								<div class="form-group">
-									Name : <input class="form-control " type="text" id="addname">
-									
-								</div>
-								<div class="form-group">
-									Email : <input class="form-control " type="email" id="addemail">
-								</div>
-								<div class="form-group">
-									Password : <input class="form-control " type="password" id="addpassword">
-								</div>
+								<div class="modal-body">
 
+									<div class="form-group">
+										<input class="form-control " type="hidden" id="addid">
+									</div>
+									<div class="form-group">
+										Name : <input class="form-control " type="text" id="addname">
+
+									</div>
+									<div class="form-group">
+										Email : <input class="form-control " type="email"
+											id="addemail">
+									</div>
+									<div class="form-group">
+										Password : <input class="form-control " type="password"
+											id="addpassword">
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-warning btn-lg"
+										style="width: 100%;" onclick="addManager()">
+										<span class="glyphicon glyphicon-ok-sign"></span>Add
+									</button>
+								</div>
 							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;" onclick="addManager()">
-									<span class="glyphicon glyphicon-ok-sign"></span>Add
-								</button>
-							</div>
+							<!-- /.modal-content -->
 						</div>
-						<!-- /.modal-content -->
+						<!-- /.modal-dialog -->
 					</div>
-					<!-- /.modal-dialog -->
-				</div>
-				
-				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-					aria-labelledby="delete" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Delete
-									this entry</h4>
-							</div>
-							<div class="modal-body">
 
-								<div class="alert alert-danger">
-									<span class="glyphicon glyphicon-warning-sign"></span> Are you
-									sure you want to delete this Record?
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="delete" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Delete
+										this entry</h4>
 								</div>
+								<div class="modal-body">
 
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span> Are you
+										sure you want to delete this Record?
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-success"
+										onclick="deleteManager()">
+										<span class="glyphicon glyphicon-ok-sign"></span>Yes
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="glyphicon glyphicon-remove"></span>No
+									</button>
+								</div>
 							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-success"
-									onclick="deleteManager()">
-									<span class="glyphicon glyphicon-ok-sign"></span>Yes
-								</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span>No
-								</button>
-							</div>
+							<!-- /.modal-content -->
 						</div>
-						<!-- /.modal-content -->
+						<!-- /.modal-dialog -->
 					</div>
-					<!-- /.modal-dialog -->
-				</div>
 					<!-- End of Main Content -->
 				</div>
 

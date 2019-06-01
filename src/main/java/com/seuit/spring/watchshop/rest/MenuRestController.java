@@ -35,9 +35,9 @@ public class MenuRestController {
 		Map<String,Object> submapFirm = new HashMap<String, Object>();
 		Map<String,Object> submapModel = new HashMap<String, Object>();
 		Map<String,Object> submapOrign = new HashMap<String, Object>();
-		submapFirm = DAHelper.getInstance().processSubMapWithTotal("firms", firmService.getListFirm());
-		submapOrign = DAHelper.getInstance().processSubMapWithTotal("origins", originService.getList());
-		submapModel = DAHelper.getInstance().processSubMapWithTotal("models", modelService.getList());
+		submapFirm = DAHelper.getInstance().processSubMapWithTotal("firms", firmService.getListFirm(null,null));
+		submapOrign = DAHelper.getInstance().processSubMapWithTotal("origins", originService.getList(null,null));
+		submapModel = DAHelper.getInstance().processSubMapWithTotal("models", modelService.getList(null,null));
 		map.put("firms", submapFirm);
 		map.put("origins", submapOrign);
 		map.put("models", submapModel);

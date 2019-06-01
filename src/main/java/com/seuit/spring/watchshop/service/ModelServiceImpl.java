@@ -1,6 +1,7 @@
 package com.seuit.spring.watchshop.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seuit.spring.watchshop.entity.Firm;
 import com.seuit.spring.watchshop.entity.Model;
 import com.seuit.spring.watchshop.repository.ModelRepository;
 
@@ -27,9 +29,12 @@ public class ModelServiceImpl implements ModelService {
 	private ModelRepository modelRepository;
 
 	@Override
-	public List<Model> getList() {
+	public List<Model> getList(Integer pageId,Integer size) {
 		// TODO Auto-generated method stub
-		return modelRepository.findAll();
+		if(pageId==null && size == null) {
+			return modelRepository.findAll();
+		}
+		return this.pagination(pageId, size, modelRepository.findAll());
 	}
 
 	@Override
@@ -66,7 +71,24 @@ public class ModelServiceImpl implements ModelService {
 		// TODO Auto-generated method stub
 		return modelRepository.findById(id).isPresent()==true?modelRepository.findById(id).get():null;
 	}
+
+	@Override
+	public List<Model> pagination(Integer pageId, Integer size, List<Model> list) {
+		// TODO Auto-generated method stub
+		Integer start = pageId*size;
+		return list.stream().filter((c)->list.indexOf(c)>=start).limit(size).collect(Collectors.toList());
+	}
 	
-	
+	@Override
+	@Transactional
+	public void edit(Model model) {
+		// TODO Auto-generated method stub
+		if(model.getId()==null) {
+			return;
+		}
+		Model modelInDB = modelRepository.getOne(model.getId());
+		modelInDB.setName(model.getName());
+		modelRepository.save(modelInDB);
+	}
 	
 }
