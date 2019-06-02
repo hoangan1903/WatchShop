@@ -90,6 +90,24 @@ header {
                 }
             }
         }
+
+        button.btn-main-search {
+
+            ion-icon.search-icon {
+                font-size: 20px;
+                margin: 0;
+                padding: 0;
+                color: $color-accent;
+                transition: color $transtion-time;
+            }
+
+            &:hover,
+            &:active {
+                ion-icon.search-icon {
+                    color: #fff;
+                }
+            }
+        }
     }
 }
 

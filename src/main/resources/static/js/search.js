@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     var search = $('#main-search'),
         suggestion = $('.search-suggestion'),
-        searchBtn = $('#btn-main-search');
+        searchBtn = $('#mainSearch');
 
     function goToSearchResults() {
         var keyword, destURL;

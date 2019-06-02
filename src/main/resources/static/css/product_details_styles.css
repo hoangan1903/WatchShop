@@ -556,6 +556,16 @@ header nav.navigation ul.search-suggestion .suggestion-item {
 header nav.navigation ul.search-suggestion .suggestion-item:hover, header nav.navigation ul.search-suggestion .suggestion-item:active {
   background-color: #f8f8f8;
 }
+header nav.navigation button.btn-main-search ion-icon.search-icon {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  color: #28a745;
+  transition: color 0.25s;
+}
+header nav.navigation button.btn-main-search:hover ion-icon.search-icon, header nav.navigation button.btn-main-search:active ion-icon.search-icon {
+  color: #fff;
+}
 
 .hamburger-menu {
   display: none;
