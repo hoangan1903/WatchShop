@@ -489,6 +489,33 @@ img.search-item-img {
   }
 }
 /* Defines big reusable components like the header and the footer */
+button.btn-search ion-icon.search-icon {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  color: #28a745;
+  transition: color 0.25s;
+}
+button.btn-search:hover ion-icon.search-icon, button.btn-search:active ion-icon.search-icon {
+  color: #fff;
+}
+
+.suggestion-item {
+  border-bottom: 1px solid #e2e2e2;
+}
+.suggestion-item:hover, .suggestion-item:active {
+  background-color: #f8f8f8;
+}
+
+h6.product-name {
+  color: #555;
+  font-weight: 500;
+}
+
+a.product-link:link, a.product-link:visited {
+  text-decoration: none;
+}
+
 header nav.navigation {
   background-color: #f9f9f9;
   transition: all 0.5s ease;
@@ -558,32 +585,11 @@ header nav.navigation ul.search-suggestion {
   width: 360px;
   z-index: 1000;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  height: 572px;
+  overflow: auto;
 }
 header nav.navigation ul.search-suggestion.show {
   display: block;
-}
-header nav.navigation ul.search-suggestion h6.product-name {
-  color: #555;
-  font-weight: 500;
-}
-header nav.navigation ul.search-suggestion a.product-link:link, header nav.navigation ul.search-suggestion a.product-link:visited {
-  text-decoration: none;
-}
-header nav.navigation ul.search-suggestion .suggestion-item {
-  border-bottom: 1px solid #e2e2e2;
-}
-header nav.navigation ul.search-suggestion .suggestion-item:hover, header nav.navigation ul.search-suggestion .suggestion-item:active {
-  background-color: #f8f8f8;
-}
-header nav.navigation button.btn-main-search ion-icon.search-icon {
-  font-size: 20px;
-  margin: 0;
-  padding: 0;
-  color: #28a745;
-  transition: color 0.25s;
-}
-header nav.navigation button.btn-main-search:hover ion-icon.search-icon, header nav.navigation button.btn-main-search:active ion-icon.search-icon {
-  color: #fff;
 }
 
 .hamburger-menu-container {
@@ -594,12 +600,11 @@ header nav.navigation button.btn-main-search:hover ion-icon.search-icon, header 
   height: 100%;
   padding: 8px;
   color: #555;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.99);
   z-index: 1000;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  background-color: rgba(255, 255, 255, 0.99);
 }
 .hamburger-menu-container.show {
   display: block;
@@ -628,6 +633,62 @@ header nav.navigation button.btn-main-search:hover ion-icon.search-icon, header 
 .hamburger-menu-container ul.hamburger-menu li.hamburger-item p.account-greetings {
   margin: 0;
   padding: 12px 16px;
+}
+
+.search-view-m {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  background-color: white;
+  z-index: 2200;
+}
+.search-view-m.show {
+  display: block;
+}
+.search-view-m .search-header-m {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+.search-view-m .search-header-m .search-title-m {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+.search-view-m .search-header-m .search-title-m h5 {
+  margin: 0;
+}
+.search-view-m .search-header-m .search-exit-m button {
+  margin: 0;
+  padding: 0;
+}
+.search-view-m .search-header-m .search-exit-m button ion-icon.close-search-icon {
+  font-size: 32px;
+  transition: color 0.25s;
+}
+.search-view-m .search-header-m .search-exit-m button:hover ion-icon.close-search-icon, .search-view-m .search-header-m .search-exit-m button:active ion-icon.close-search-icon {
+  color: #dc3545;
+}
+.search-view-m ul.search-suggestion-m {
+  margin-top: 16px;
+  width: 100%;
+  height: 760px;
+  overflow: auto;
+}
+.search-view-m ul.search-suggestion-m li {
+  display: block;
+}
+.search-view-m ul.search-suggestion-m li a {
+  text-decoration: none;
+}
+.search-view-m ul.search-suggestion-m li a img {
+  object-fit: cover;
+  height: 80px;
 }
 
 .account-dropdown {

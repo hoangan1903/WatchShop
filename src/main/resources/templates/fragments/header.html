@@ -14,10 +14,10 @@
 
                 <div class="col-lg-7 col-md-6">
                     <div class="input-group">
-                        <input type="text" id="main-search" class="form-control" placeholder="Tìm kiếm sản phẩm"
+                        <input type="text" id="main-search" class="form-control" placeholder="Tìm kiếm sản phẩm..."
                             aria-label="Search">
                         <div class="input-group-append">
-                            <button id="mainSearch" class="btn btn-outline-success btn-main-search py-0" type="button">
+                            <button id="mainSearch" class="btn btn-outline-success btn-search py-0" type="button">
                                 <div class="stretched-container d-flex align-items-center">
                                     <ion-icon name="ios-search" class="search-icon"></ion-icon>
                                 </div>
@@ -203,6 +203,30 @@
     </div>
 
     <div class="search-view-m">
+        <div class="search-header-m">
+            <div class="search-title-m">
+                <h5>Tìm kiếm</h5>
+            </div>
+            <div class="search-exit-m">
+                <button id="btn-search-exit-m" type="button" class="btn">
+                    <div class="stretched-container d-flex align-items-center">
+                        <ion-icon name="ios-close" class="close-search-icon"></ion-icon>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="text" id="search-input-m" class="form-control" placeholder="Tìm kiếm sản phẩm..."
+                aria-label="Search">
+            <div class="input-group-append">
+                <button id="btn-search-m" class="btn btn-outline-success btn-search py-0" type="button">
+                    <div class="stretched-container d-flex align-items-center">
+                        <ion-icon name="ios-search" class="search-icon"></ion-icon>
+                    </div>
+                </button>
+            </div>
+        </div>
+
         <ul class="search-suggestion-m">
             <!-- Search suggestion will show up here whenever user enters a keyword -->
         </ul>
