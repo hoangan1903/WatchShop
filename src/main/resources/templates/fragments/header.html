@@ -120,26 +120,93 @@
     </nav>
 
     <nav class="navigation mobile-navigation">
-        <div class="container">
-            <div class="row py-2">
-                <div class="col-6">
-                    <div class="navbar-header stretched-container d-flex align-items-center">
-                        <a class="navbar-brand" href="#">UIT Watchshop</a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="hamburger btn btn-light">
-                            <ion-icon name="ios-menu" class="hamburger-icon large-icon">
-                            </ion-icon>
-                        </button>
-                    </div>
-                </div>
+        <div class="navbar-container-m">
+
+            <div class="btn-hamburger-container">
+                <button type="button" class="hamburger btn btn-light">
+                    <ion-icon name="ios-menu" class="hamburger-icon large-icon"></ion-icon>
+                </button>
             </div>
+
+            <div class="navbar-header-m">
+                <a class="navbar-brand" href="/">UIT Watchshop</a>
+            </div>
+
+            <div class="navbar-icons-m">
+                <a id="search-m" class="regular-link" href="#" onclick="return false;">
+                    <ion-icon name="ios-search" class="regular-icon"></ion-icon>
+                </a>
+
+                <a id="cart-m" class="regular-link mx-3" href="/cart" title="Giỏ hàng" data-toggle="popover"
+                    data-placement="bottom" data-content="">
+                    <ion-icon name="ios-cart" class="regular-icon"></ion-icon>
+                    <span id="cart-count-badge-m" class="badge badge-pill badge-danger">0</span>
+                </a>
+            </div>
+
         </div>
     </nav>
 
-    <div class="hamburger-menu"></div>
+    <div class="hamburger-menu-container">
+        <ul class="hamburger-menu mr-auto">
+            <li class="hamburger-item active">
+                <a class="hamburger-link" href="/">Trang chủ</a>
+            </li>
+            <li class="hamburger-item">
+                <a class="hamburger-link" href="/contact">Liên hệ</a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="hamburger-item">
+                <a class="hamburger-link" href="/products/all">Tất cả sản phẩm</a>
+            </li>
+            <li class="hamburger-item">
+                <a class="hamburger-link" data-toggle="collapse" href="#collapseByBrand" role="button"
+                    aria-expanded="false" aria-controls="collapseByBrand">
+                    Theo hãng&nbsp;&nbsp;&#9660;
+                </a>
+                <div class="collapse" id="collapseByBrand">
+                    <div class="card card-body">
+
+                        <ul class="collapse-menu"></ul>
+
+                    </div>
+                </div>
+            </li>
+            <li class="hamburger-item">
+                <a class="hamburger-link" data-toggle="collapse" href="#collapseByModel" role="button"
+                    aria-expanded="false" aria-controls="collapseByModel">
+                    Theo kiểu máy&nbsp;&nbsp;&#9660;
+                </a>
+                <div class="collapse" id="collapseByModel">
+                    <div class="card card-body">
+
+                        <ul class="collapse-menu"></ul>
+
+                    </div>
+                </div>
+            </li>
+            <li class="hamburger-item">
+                <a class="hamburger-link" data-toggle="collapse" href="#collapseByOrigin" role="button"
+                    aria-expanded="false" aria-controls="collapseByOrigin">
+                    Theo xuất xứ&nbsp;&nbsp;&#9660;
+                </a>
+                <div class="collapse" id="collapseByOrigin">
+                    <div class="card card-body">
+
+                        <ul class="collapse-menu"></ul>
+
+                    </div>
+                </div>
+            </li>
+            <div class="dropdown-divider"></div>
+        </ul>
+    </div>
+
+    <div class="search-view-m">
+        <ul class="search-suggestion-m">
+            <!-- Search suggestion will show up here whenever user enters a keyword -->
+        </ul>
+    </div>
 
 </div>
 

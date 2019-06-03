@@ -7,21 +7,6 @@ $(document).ready(function () {
         $('#indexModal').modal('toggle');
     }
 
-    // Define sticky navigation bar behavior
-    // when to appear and when to disappear
-    function initStickyNavbar() {
-        $('.section-banners').waypoint({
-            handler: function (direction) {
-                if (direction === 'down') {
-                    $('.navigation').addClass('stick');
-                } else {
-                    $('.navigation').removeClass('stick');
-                }
-            },
-            offset: -1
-        });
-    }
-
     function initSliders() {
         let prevButtons = $('.custom-slider-nav.prev'),
             nextButtons = $('.custom-slider-nav.next');
@@ -167,7 +152,6 @@ $(document).ready(function () {
     }
 
     $('a#home-page-link').addClass('nav-link-active');
-    initStickyNavbar();
     initSliders();
     initFeedback();
     getBanners();

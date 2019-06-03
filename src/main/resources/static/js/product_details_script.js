@@ -10,7 +10,7 @@ $(document).ready(function () {
         quantityDown = $('button.quantity-down'),
         addToCartBtn = $('button.add-to-cart'),
         table = $('table#details'),
-        cartBadge = $('#cart-count-badge');
+        cartIcons = $('a#cart, a#cart-m');
 
     const id = parseInt(valib.getValueFromURL('id'));
 
@@ -21,12 +21,18 @@ $(document).ready(function () {
 
     // if timeout <= 0 then the popover never closes
     function showCartPopover(message, timeout) {
-        $('a#cart')
-            .attr('data-content', message)
-            .popover('show');
+        cartIcons.attr('data-content', message);
+
+        if ($('nav.mobile-navigation').css('display') === 'none') {
+            // Desktop
+            cartIcons.eq(0).popover('show');
+        } else {
+            // Mobile
+            cartIcons.eq(1).popover('show');
+        }
 
         if (timeout && timeout > 0) {
-            setTimeout(() => $('a#cart').popover('hide'), timeout);
+            setTimeout(() => cartIcons.popover('hide'), timeout);
         }
     }
 
@@ -38,19 +44,6 @@ $(document).ready(function () {
     function showDialog(message) {
         $('#productDetailsModal .modal-body').html(message);
         $('#productDetailsModal').modal('toggle');
-    }
-
-    function initStickyNavbar() {
-        $('.section-product-overview').waypoint({
-            handler: function (direction) {
-                if (direction === 'down') {
-                    $('.navigation').addClass('stick');
-                } else {
-                    $('.navigation').removeClass('stick');
-                }
-            },
-            offset: -1
-        });
     }
 
     function initComponents() {
@@ -121,7 +114,7 @@ $(document).ready(function () {
                                 valib.ajaxGET('/rest/cart', function (obj) {
                                     // Get cart count (total items)
                                     var count = obj.totalAmount;
-                                    cartBadge.text(count);
+                                    $('#cart-count-badge, #cart-count-badge-m').text(count);
                                 });
 
                             } else {
@@ -323,7 +316,6 @@ $(document).ready(function () {
         getComments();
     }
 
-    initStickyNavbar();
     initComponents();
     setClickListeners();
     getData();

@@ -38,7 +38,7 @@ $(document).ready(function () {
             const cartIsEmpty = (items.length == 0);
 
             // Show total products in cart
-            $('#cart-count-badge').text(count);
+            $('#cart-count-badge, #cart-count-badge-m').text(count);
             $('#cart-count').text(count);
 
             // Show total prices
