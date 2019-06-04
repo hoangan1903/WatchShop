@@ -1,1 +1,52 @@
 @import "common_responsive.scss";
+
+@media only screen and (max-width: 767px) {
+    body {
+        section {
+            padding: 30px 0 !important;
+
+            &.section-product-overview {
+                font-size: 90% !important;
+
+                h3.product-name {
+                    font-size: 24px !important;
+                }
+
+                p.price,
+                .quantity-control-group {
+                    margin-bottom: 16px !important;
+                }
+            }
+
+            &.section-all-details {
+                table#details {
+                    font-size: 90% !important;
+
+                    td:nth-child(odd) {
+                        width: 33% !important;
+                    }
+                }
+            }
+
+            &.section-comments {
+                .card {
+                    margin-top: 4px !important;
+                    margin-bottom: 18px !important;
+                }
+
+                h5.commenter-name {
+                    font-size: 18px !important;
+                }
+            }
+
+            h2.section-heading {
+                font-size: 133% !important;
+                margin-bottom: 20px !important;
+
+                &::after {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}

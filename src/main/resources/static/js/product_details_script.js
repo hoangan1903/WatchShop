@@ -251,7 +251,7 @@ $(document).ready(function () {
                             <div class="media mb-4" style="border-bottom: 1px solid #dfdfdf">
                                 <img class="comment-avatar" src="/images/person.jpg" alt="Customer">
                                 <div class="media-body ml-2">
-                                    <h5 class="mt-0">${comment.customer.name}</h5>
+                                    <h5 class="commenter-name mt-0">${comment.customer.name}</h5>
                                     <p class="m-0 p-0">${comment.content}</p>
                                     <p class="mt-2 mb-1 pr-1" style="font-size: 80%; text-align: end;">
                                         ${valib.formatDateTime(comment.createAt)}
