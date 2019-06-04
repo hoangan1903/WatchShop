@@ -16,3 +16,45 @@
     display: block;
   }
 }
+@media only screen and (max-width: 767px) {
+  body section:not(.section-testimonials) {
+    padding: 30px 0 !important;
+    font-size: 80% !important;
+  }
+  body section:not(.section-testimonials) h2.section-heading {
+    margin-bottom: 8px !important;
+  }
+  body section:not(.section-testimonials) h2.section-heading::after {
+    display: none;
+  }
+  body section.section-banners {
+    padding: 0 !important;
+  }
+  body section.section-banners .carousel.main-carousel {
+    padding-left: 38px !important;
+    padding-right: 0 !important;
+  }
+  body section.section-banners .carousel.main-carousel .carousel-inner .carousel-item img {
+    height: 360px;
+  }
+  body section.section-testimonials {
+    padding: 45px 0 !important;
+  }
+  body section.section-testimonials h2.section-heading {
+    font-size: 135% !important;
+    margin-bottom: 20px !important;
+  }
+  body section.section-testimonials h2.section-heading::after {
+    display: none;
+  }
+  body section.section-testimonials blockquote {
+    font-size: 100% !important;
+    margin-bottom: 0 !important;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .carousel.main-carousel {
+    padding-left: 60px !important;
+    padding-right: 20px !important;
+  }
+}

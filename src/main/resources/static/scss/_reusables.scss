@@ -378,6 +378,9 @@ p {
     }
 
     &.main-carousel {
+        padding-left: 120px !important;
+        padding-right: 50px !important;
+
         .carousel-inner {
             .carousel-item {
                 img {

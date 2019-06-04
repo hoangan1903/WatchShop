@@ -321,8 +321,12 @@ p.bold {
   object-fit: cover;
   width: 100%;
 }
+.carousel.main-carousel {
+  padding-left: 120px !important;
+  padding-right: 50px !important;
+}
 .carousel.main-carousel .carousel-inner .carousel-item img {
-  height: 400px;
+  height: 480px;
 }
 .carousel.product-carousel .carousel-inner .carousel-item img {
   height: 360px;
@@ -843,19 +847,7 @@ footer p.copyright-footer {
 section.section-banners {
   padding: 30px 0;
 }
-section.section-banners .brand-logos {
-  width: 100%;
-}
-section.section-banners .brand-logos ul {
-  display: inline-block;
-}
-section.section-banners .brand-logos ul li {
-  margin-right: 50px;
-}
-section.section-banners .brand-logos ul li:last-child {
-  margin-right: 0;
-}
-section.section-banners .brand-logos ul li img.brand-logo {
+section.section-banners img.brand-logo {
   height: 100px;
   width: auto;
 }

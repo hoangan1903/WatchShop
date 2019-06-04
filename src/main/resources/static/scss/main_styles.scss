@@ -16,25 +16,9 @@ $height-brand-logo: 100px;
 section.section-banners {
     padding: $spacing-y-small 0;
 
-    .brand-logos {
-        width: 100%;
-
-        ul {
-            display: inline-block;
-
-            li {
-                margin-right: $spacing-brand-logo;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-
-                img.brand-logo {
-                    height: $height-brand-logo;
-                    width: auto;
-                }
-            }
-        }
+    img.brand-logo {
+        height: $height-brand-logo;
+        width: auto;
     }
 }
 
