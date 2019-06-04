@@ -16,3 +16,18 @@
     display: block;
   }
 }
+@media only screen and (max-width: 767px) {
+  body section {
+    font-size: 80% !important;
+  }
+  body section.section-page-title {
+    padding-top: 30px !important;
+  }
+  body section.section-page-title h2.section-heading::after {
+    margin-top: 12px;
+  }
+  body section.section-pagination-links {
+    padding-top: 15px !important;
+    padding-bottom: 30px !important;
+  }
+}

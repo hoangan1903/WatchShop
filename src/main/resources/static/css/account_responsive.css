@@ -16,3 +16,14 @@
     display: block;
   }
 }
+@media only screen and (max-width: 767px) {
+  body section {
+    padding-top: 30px !important;
+  }
+  body section.section-customer-orders table {
+    font-size: 90% !important;
+  }
+  body section.section-customer-actions {
+    padding-bottom: 30px !important;
+  }
+}

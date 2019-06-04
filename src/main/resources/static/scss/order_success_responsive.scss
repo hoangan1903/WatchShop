@@ -1,1 +1,37 @@
 @import "common_responsive.scss";
+
+@media only screen and (max-width: 991px) {
+    body {
+        section {
+
+            &.section-thank-you {
+
+                h1.success-heading {
+                    font-size: 32px !important;
+                }
+            }
+
+            &.section-suggestions {
+                padding-top: 0 !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        section {
+
+            &.section-thank-you {
+
+                h1.success-heading {
+                    font-size: 28px !important;
+                }
+            }
+
+            &.section-suggestions {
+                padding-top: 0 !important;
+            }
+        }
+    }
+}

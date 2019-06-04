@@ -16,3 +16,21 @@
     display: block;
   }
 }
+@media only screen and (max-width: 767px) {
+  body section {
+    padding: 30px 0 !important;
+  }
+  body section h2.section-heading {
+    font-size: 140% !important;
+    margin-bottom: 15px;
+  }
+  body section h2.section-heading::after {
+    margin-top: 15px;
+  }
+  body section .contact-info-container {
+    margin: 32px 0 !important;
+  }
+  body section .contact_form_container {
+    font-size: 90% !important;
+  }
+}

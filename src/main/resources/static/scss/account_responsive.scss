@@ -1,1 +1,19 @@
 @import "common_responsive.scss";
+
+@media only screen and (max-width: 767px) {
+    body {
+        section {
+            padding-top: 30px !important;
+
+            &.section-customer-orders {
+                table {
+                    font-size: 90% !important;
+                }
+            }
+
+            &.section-customer-actions {
+                padding-bottom: 30px !important;
+            }
+        }
+    }
+}

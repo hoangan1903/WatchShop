@@ -1,1 +1,22 @@
 @import "common_responsive.scss";
+
+@media only screen and (max-width: 767px) {
+    body {
+        section {
+            font-size: 80% !important;
+
+            &.section-page-title {
+                padding-top: 30px !important;
+
+                h2.section-heading::after {
+                    margin-top: 12px;
+                }
+            }
+
+            &.section-pagination-links {
+                padding-top: 15px !important;
+                padding-bottom: 30px !important;
+            }
+        }
+    }
+}

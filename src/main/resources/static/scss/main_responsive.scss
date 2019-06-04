@@ -1,5 +1,12 @@
 @import "common_responsive.scss";
 
+@media only screen and (max-width: 991px) {
+    .carousel.main-carousel {
+        padding-left: 60px !important;
+        padding-right: 20px !important;
+    }
+}
+
 @media only screen and (max-width: 767px) {
     body {
         section {
@@ -53,12 +60,5 @@
                 }
             }
         }
-    }
-}
-
-@media only screen and (max-width: 991px) {
-    .carousel.main-carousel {
-        padding-left: 60px !important;
-        padding-right: 20px !important;
     }
 }
