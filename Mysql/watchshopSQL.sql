@@ -131,7 +131,7 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `id_comment` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) NOT NULL,
-  `create_at` date DEFAULT NULL,
+  `create_at` datetime DEFAULT NULL,
   `id_customer` int(11) DEFAULT NULL,
   `id_product_detail` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_comment`),
