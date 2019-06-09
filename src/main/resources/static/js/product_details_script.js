@@ -195,7 +195,7 @@ $(document).ready(function () {
             table.html(`
             <tr>
                 <td class="spec-title">Bảo hành/Bảo hiểm</td>
-                <td class="spec-content">${obj.insurance}</td>
+                <td class="spec-content">${obj.insurance} năm</td>
             </tr>
             <tr>
                 <td class="spec-title">Đổi trả</td>
@@ -223,7 +223,7 @@ $(document).ready(function () {
             </tr>
             <tr>
                 <td class="spec-title">Kích cỡ</td>
-                <td class="spec-content">${obj.size}</td>
+                <td class="spec-content">${obj.size}mm</td>
             </tr>
             <tr>
                 <td class="spec-title">Chất liệu</td>
@@ -231,7 +231,7 @@ $(document).ready(function () {
             </tr>
             <tr>
                 <td class="spec-title">Khả năng chịu nước</td>
-                <td class="spec-content">${obj.waterResistance}</td>
+                <td class="spec-content">${obj.waterResistance}m</td>
             </tr>
             `);
         });
