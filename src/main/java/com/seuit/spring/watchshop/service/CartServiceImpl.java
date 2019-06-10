@@ -237,8 +237,18 @@ public class CartServiceImpl implements CartService {
 	@Transactional
 	public Long getTotalAmount() {
 		// TODO Auto-generated method stub
-		String sql = "SELECT sum(c.amount) FROM CartDetail c";
+		Integer id = customerService.getIdCustomerByPrincipal();
+//		String sql = "SELECT sum(c.amount) FROM CartDetail c where id=:idcustomer";	
+//		Query query = this.getSession().createQuery(sql);
+//		query.setParameter("idcustomer", id);
+		Customer cus = customerService.getCustomerById(id).isPresent()?customerService.getCustomerById(id).get():null;
+		if(cus==null) {
+			return 0L;
+		}
+		Integer idCart = cus.getCart().getId();
+		String sql = "SELECT SUM (c.amount) FROM CartDetail c group by c.cart having c.cart.id=:id_cart";
 		Query query = this.getSession().createQuery(sql);
+		query.setParameter("id_cart", idCart);
 		return (Long) query.getSingleResult();
 	}
 
