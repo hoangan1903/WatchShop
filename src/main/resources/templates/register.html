@@ -21,8 +21,11 @@
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link th:href="@{/css/spinner.css}" rel="stylesheet">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	th:src="@{/js/libs/jquery-3.4.1.js}"></script>
+<script
+	th:src="@{/js/spinner.js}"></script>
 <script type="text/javascript">
 var allowSubmit = false;
 	$(function() {
@@ -58,8 +61,11 @@ var allowSubmit = false;
 		$('#submit')
 				.click(
 						function(e) {
+							showSpinner('Loading...');
+							
 							if( !isEmail($('#email').val())) { 
-								document.getElementById("errorEmail").innerHTML = 'Email is correct';
+								document.getElementById("errorEmail").innerHTML = 'Email is incorrect';
+								hideSpinner();
 							}
 							console.log(allowSubmit);
 							console.log(validateForm());
@@ -84,6 +90,7 @@ var allowSubmit = false;
 								xhttp.onload = function() {
 									if (xhttp.readyState == 4
 											&& xhttp.status == "200") {
+										hideSpinner();
 										console.log(this.responseText);
 										if (this.responseText == "1") {
 											window.location.href = "/login";
@@ -134,6 +141,12 @@ var allowSubmit = false;
 </head>
 
 <body class="bg-gradient-light">
+	<div class="screen-cover hidden">
+		<div class="spinner-border text-success" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+		<p class="loading-message"></p>
+	</div>
 
 	<div class="container">
 
