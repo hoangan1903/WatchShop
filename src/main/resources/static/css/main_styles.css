@@ -541,7 +541,7 @@ header nav.navigation.mobile-navigation .navbar-container-m {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 8px;
+  padding: 12px 8px 4px 8px;
 }
 header nav.navigation.mobile-navigation .navbar-container-m .navbar-header-m {
   display: flex;
@@ -615,6 +615,8 @@ header nav.navigation ul.search-suggestion.show {
 }
 .hamburger-menu-container ul.hamburger-menu {
   list-style: none;
+  height: 80%;
+  overflow: auto;
 }
 .hamburger-menu-container ul.hamburger-menu li.hamburger-item {
   display: block;
