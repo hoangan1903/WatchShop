@@ -32,15 +32,16 @@ var allowSubmit = false;
 		$('#username').keyup(function(e) {
 			if ($('#username').val() != null) {
 				document.getElementById("errorUsername").innerHTML = "";
-				allowSubmit = true ;
+				
 			}
 		});
 		$('#email').keyup(function(e) {
 			if ($('#email').val() != null) {
 				document.getElementById("errorEmail").innerHTML = "";
-				allowSubmit = true ;
+				
 			}
 		});
+		
 
 		$('#confpass')
 				.keyup(
@@ -68,7 +69,6 @@ var allowSubmit = false;
 								hideSpinner();
 							}
 							console.log(allowSubmit);
-							console.log(validateForm());
 							if (validateForm() == true && allowSubmit == true && minPass()==true) {
 								var xhttp = new XMLHttpRequest();
 								var url = "/rest/customers";
@@ -115,11 +115,14 @@ var allowSubmit = false;
 			var c = $('#email').val();
 			var d = $('#password').val();
 			var e = $('#confpass').val();
-			if (a == null || a == "", b == null || b == "", c == null
-					|| c == "", d == null || d == "", e == null || e == "") {
+			if ((a == null || a == "")  || (b == null || b == "") || (c == null
+					|| c == "") || (d == null || d == "") || (e == null || e == "")) {
+				allowSubmit = false ;
+				hideSpinner();
 				alert("Please Fill All Required Field");
 				return false;
 			}else{
+				allowSubmit = true ;
 				return true;
 			}
 		}
